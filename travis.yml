@@ -1,0 +1,12 @@
+# Documentation: http://docs.travis-ci.com/user/languages/julia/
+language: julia
+os:
+  - linux
+julia:
+  - 0.6
+notifications:
+  email: false
+script:
+  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+  - julia -e 'Pkg.add("Documenter"); Pkg.clone("https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git");'
+  - julia -e 'cd(ENV["TRAVIS_BUILD_DIR"]); ENV["DOCUMENTER_DEBUG"] = "true"; include(joinpath("docs", "make.jl"))'

@@ -1,7 +1,7 @@
 using Documenter, HomotopyContinuation
 
 makedocs(format   = :html,
-         sitename = "JuliaImages",
+         sitename = "Julia Homotopy Continuation",
          pages    = ["Home"=>"index.md",
                      ],
          html_edit_branch = "source")

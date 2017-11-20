@@ -2,7 +2,14 @@ using Documenter, HomotopyContinuation
 
 makedocs(format   = :html,
          sitename = "Julia Homotopy Continuation",
-         pages    = ["Home"=>"index.md",
+         pages    = ["Introduction"=>"index.md",
+                  "Examples"=>"examples.md",
+                  "Setting up homotopies with Homotopy.jl"=>"Homotopy.md",
+                  "Solving homotopies"=>"solve.md",
+                  "Pathtracking"=>"pathtracker.md",
+                  "Endgame"=>"endgame.md",
+                  "How to set up your own homotopy"=>"set_up_homotopy.md",
+                  "How to set up your own pathtracker"=>"set_up_pathtracker.md",
                      ],
          html_edit_branch = "source")
 

@@ -9,7 +9,6 @@ V = { x^2 + y^2 - z^2 = 0 }
 The degree of ``V`` is the number of intersection points of ``V`` with a generic line.  
 Let us see what it is. First we initialize the defining equation of ``V``.
 ```julia
-using HomotopyContinuation
 import DynamicPolynomials: @polyvar
 
 @polyvar x y z
@@ -21,6 +20,7 @@ L = randn(1,3) * [x; y; z]
 ```
 Now we compute the number of solutions to ``[f=0, L=0]``.
 ```julia
+using HomotopyContinuation
 solve([f; L])
 ```
 We find two distinct solutions and conclude that the degree of ``V`` is 2.
@@ -29,7 +29,6 @@ We find two distinct solutions and conclude that the degree of ``V`` is 2.
 In this example we compute the angles sθ, cθ of the triangle with sides of length 3, 4 and 5. The corresponding system is.
 
 ```julia
-using HomotopyContinuation
 import DynamicPolynomials: @polyvar
 
 a = 5
@@ -42,6 +41,7 @@ f = [cθ^2 + sθ^2 - 1, (a * cθ - b)^2 + (a * sθ)^2 - c^2]
 To set up a [totaldegree](@ref totaldegree) homotopy of type StraightLineHomotopy we have to write
 
 ```julia
+using HomotopyContinuation
 H, s = totaldegree(StraightLineHomotopy, f)
 ```
 
@@ -63,6 +63,55 @@ The angles are of course only the real solutions of f = 0. We get them by using
 ```julia
 solution(ans, success=true, at_infinity=true, only_real=true, singular=true)
 ```
+
+## Using different types of pathrackers
+The following polynomial system is what is called a binding polynomial in chemistry.
+
+```julia
+import DynamicPolynomials: @polyvar
+
+@polyvar w1 w2 w3 w4 w5 w6
+
+f = [11*(2*w1+3*w3+5*w5)+13*(2*w2+3*w4+5*w6),
+    11*(6*w1*w3+10*w1*w5+15*w3*w5)+13*(6*w2*w4+10*w2*w6+15*w4*w6),
+    330*w1*w3*w5+390*w2*w4*w6,
+    143*(2*w1*w2+3*w3*w4+5*w5*w6),
+    143*(6*w1*w2*w3*w4+10*w1*w2*w5*w6+15*w3*w4*w5*w6),
+    4290*w1*w2*w3*w4*w5*w6]
+```
+
+Suppose we wanted to solve ``f(w)=a``, where
+
+```julia
+a=[71, 73, 79, 101, 103, 107]
+```
+
+To get an initial solution we compute a random forward solution with `FixedPolynomials.jl`. We use `Julia's` `convert` function to convert ``f`` into the correct type. Then, we use the ` ` `evaluate` command from `FixedPolynomials.jl`.
+
+```julia
+const FP = FixedPolynomials
+w_0 = vec(randn(6,1))
+a_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, f), w_0)
+```
+
+Now we set up the homotopy.
+
+```julia
+H = StraightLineHomotopy(f-a_0, f-a)
+```
+
+and compute backward solution with starting value ``w_0``
+
+```julia
+solve(H, w_0)
+```
+
+By default the `solve` function uses `SphericalPredictorCorrector` as the pathtracking routing. To use the `AffinePredictorCorrector` instead we must write
+
+```julia
+solve(H, w_0, AffinePredictorCorrector())
+```
+
 
 ## The 6R Robot
 ```julia

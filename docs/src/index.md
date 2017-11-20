@@ -90,6 +90,6 @@ Complex{Float64}[2]
 -1.00… + 2.72e-15…im
 -1.00… + 1.44e-15…im
 ```
-which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` .
+which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` according to our needs.
 
 We solve some more elaborate systems in the [example section](@ref examples).

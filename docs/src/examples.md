@@ -100,7 +100,7 @@ Now we set up the homotopy.
 H = StraightLineHomotopy(f-a_0, f-a)
 ```
 
-and compute backward solution with starting value ``w_0``
+and compute a backward solution with starting value ``w_0`` by
 
 ```julia
 solve(H, w_0)

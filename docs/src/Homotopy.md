@@ -54,7 +54,7 @@ GeodesicOnTheSphere
 
 ## [Higher level constructs](@id higherlevelconstructs)
 
-### Total degree homotopy
+### [Total degree homotopy](@id totaldegree)
 ```@docs
 totaldegree
 TotalDegreeSolutionIterator

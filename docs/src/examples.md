@@ -39,13 +39,13 @@ c = 3
 @polyvar sθ cθ
 f = [cθ^2 + sθ^2 - 1, (a * cθ - b)^2 + (a * sθ)^2 - c^2]
 ```
-To set up a totaldegree homotopy of type StraightLineHomotopy we have to write
+To set up a [totaldegree](@ref totaldegree) homotopy of type StraightLineHomotopy we have to write
 
 ```julia
 H, s = totaldegree(StraightLineHomotopy, f)
 ```
 
-The command `totaldegree` sets up a homotopy `H` of the specified type using a random starting system that comes with a vector `s` of solutions. To solve for f = 0 we execute
+This sets up a homotopy `H` of the specified type using a random starting system that comes with a vector `s` of solutions. To solve for f = 0 we execute
 
 ```julia
 solve(H, s)

@@ -28,31 +28,43 @@ using HomotopyContinuation # load the module HomotopyContinuation
 solve(f) # solves for f=0
 ```
 
-The last command will return a type `HomotopyContinuation.Result{Complex{Float64}}` of length 4 (one entry for each solution). Let us see what is the information that we get. To access the first solution in that array we write
-```julia-repl
-> ans[1]
+The last command will return a type `HomotopyContinuation.Result{Complex{Float64}}` of length 4 (one entry for each solution):
 
->  HomotopyContinuation.PathResult{Complex{Float64}}:
-  * returncode: success
-  * solution: Complex{Float64}[-1.11022e-16-1.0im, 1.0-3.33067e-16im]
-  * singular: false
-  ---------------------------------------------
-  * iterations: 7
-  * endgame iterations: 5
-  * npredictions: 2
-  ---------------------------------------------
-  * newton_residual: 2.412e-16
-  * residual: 2.776e-16
-  * log10 of the condition_number: 1.149e-01
-  * windingnumber: 1
-  * angle to infinity: 0.615
-  * real solution: false
+```julia-repl
+julia> ans
+
+julia> HomotopyContinuation.Result{Complex{Float64}}
+# paths → 4
+# successfull paths → 4
+# solutions at infinity → 0
+HomotopyContinuation.PathResult{Complex{Float64}}[4]
+```
+
+Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. To access the first solution in the array we write
+
+```julia-repl
+julia> ans[1]
+
+julia> HomotopyContinuation.PathResult{Complex{Float64}}
+returncode → :success
+solution → Complex{Float64}[2]
+singular → false
+residual → 1.02e-15…
+newton_residual → 8.95e-16…
+log10_condition_number → 0.133…
+windingnumber → 1
+angle_to_infinity → 0.615…
+real_solution → true
+startvalue → Complex{Float64}[2]
+iterations → 17
+endgame_iterations → 5
+npredictions → 2
 ```
 The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider [this](@ref result) section).
 
-- `solution`: the zero that is computed (here it is ``[-i,1]``).
+- `solution`: the zero that is computed (here it is ``[-1,-1]``).
 - `singular`: boolean that shows whether the zero is singular.
-- `residual`: the computed value of ``|f([-i,1])|``.
+- `residual`: the computed value of ``|f([-1,-1])|``.
 - `angle_to_infinity`: the algorithms homogenizes the system ``f`` and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is ``0``.
 -  `real_solution`: boolean that shows whether the zero is real.
 
@@ -62,8 +74,8 @@ solutions(solve(f), success=true, at_infinity=true, only_real=true, singular=tru
 ```
 Indeed, we have
 ```julia-repl
-> [ans[i].solution for i=1:2]
-> Vector{Complex{Float64}}[2]
+julia> [ans[i].solution for i=1:2]
+julia> Vector{Complex{Float64}}[2]
 Complex{Float64}[2]
 -1.00… - 2.50e-16…im
 -1.00… + 5.27e-16…im

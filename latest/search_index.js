@@ -425,11 +425,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "pathtracker.html#HomotopyContinuation.AffinePredictorCorrector",
+    "location": "pathtracker.html#HomotopyContinuation.Pathtracker",
     "page": "Pathtracking",
-    "title": "HomotopyContinuation.AffinePredictorCorrector",
+    "title": "HomotopyContinuation.Pathtracker",
     "category": "Type",
-    "text": "AffinePredictorCorrector\n\nThis algorithm uses as an prediction step an explicit Euler method. Therefore the prediciton step looks like\n\nx_k+1 = x_k - tJ_H(x t)^-1fracHt(x t)\n\nand the correction step looks like\n\nx_k+1 = x_k+1 - J_H(x t)^-1H(x t)\n\nThis algorithm tracks the path in the affine space.\n\n\n\n"
+    "text": "Pathtracker(H::AbstractHomotopy{T}, alg, [HT::Type=widen(T)]; kwargs...)\n\nConstruct a Pathtracker object. This contains all informations to track a single path for H with the given pathtracking algorithm alg. The optional type HT is used if the pathracker decides to switch to a high precision mode.\n\nThe following keyword arguments are supported:\n\npath_precision=1e-6: The precision for which a correction step is decleared successfull.\ncorrector_maxiters=3: The maximal number of correction iterations. A higher value as 3 is not recommended.\ninitial_steplength=0.1: The initial steplength a preditor-corrector algorithm uses.\nconsecutive_successfull_steps_until_steplength_increase=3:   The number of consecutive successfull steps until the step length is increased multiplied   with the factor steplength_increase_factor.\nsteplength_increase_factor=2.0\nsteplength_decrease_factor=inv(steplength_increase_factor): If a correction step fails the step length is multiplied   with this factor.\nmaxiters=10_000: The maximum number of iterations.\nvebose=false: Print additional informations / warnings during the computation.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#Pathtracking-routines-1",
+    "page": "Pathtracking",
+    "title": "Pathtracking routines",
+    "category": "section",
+    "text": "Pathtracking is at the core of each homotopy continuation method. It is the routine to track a given homotopy H(x t) from a start value x_1 at time t_1 to a target value x_0 at time t_0.At the heart of the pathtracking routine is the  mutable struct Pathtracker.Pathtracker"
+},
+
+{
+    "location": "pathtracker.html#Examples-1",
+    "page": "Pathtracking",
+    "title": "Examples",
+    "category": "section",
+    "text": "The follwing example demonstrates the usual workflow. You first create a Pathtracker object, then you can track a path from a given start value and finally you create a PathtrackerResult.pathtracker = Pathtracker(H, SphericalPredictorCorrector())\ntrack!(H, x, 1.0, 0.0)\nresult = PathtrackerResult(H)You can reuse (and should!) resuse a Pathtracker for multiple pathspathtracker = Pathtracker(H, SphericalPredictorCorrector())\nresults = map(xs) do x\n  track!(H, x, 1.0, 0.0)\n  PathtrackerResult(H)\nendPathtracker also supports the iterator interface. This returns the complete Pathtracker object at each iteration. This enables all sort of nice features. For example you could store the actual path the pathtracker takes:pathtracker = Pathtracker(H, SphericalPredictorCorrector())\nsetup_pathtracker!(H, x, 1.0, 0.0)\npath = []\nfor t in pathtracker\n  push!(path, current_value(t))\nend"
 },
 
 {
@@ -441,11 +457,51 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "pathtracker.html#Pathtracking-routines-1",
+    "location": "pathtracker.html#HomotopyContinuation.AffinePredictorCorrector",
     "page": "Pathtracking",
-    "title": "Pathtracking routines",
+    "title": "HomotopyContinuation.AffinePredictorCorrector",
+    "category": "Type",
+    "text": "AffinePredictorCorrector\n\nThis algorithm uses as an prediction step an explicit Euler method. Therefore the prediciton step looks like\n\nx_k+1 = x_k - tJ_H(x t)^-1fracHt(x t)\n\nand the correction step looks like\n\nx_k+1 = x_k+1 - J_H(x t)^-1H(x t)\n\nThis algorithm tracks the path in the affine space.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#Algorithms-1",
+    "page": "Pathtracking",
+    "title": "Algorithms",
     "category": "section",
-    "text": "Currently, there are kinds of pathtracking routines implementedAffinePredictorCorrector\nSphericalPredictorCorrector"
+    "text": "Currently, the following pathtracking routines are implementedSphericalPredictorCorrector\nAffinePredictorCorrector"
+},
+
+{
+    "location": "pathtracker.html#HomotopyContinuation.track!",
+    "page": "Pathtracking",
+    "title": "HomotopyContinuation.track!",
+    "category": "Function",
+    "text": "track!(pathtracker, x0, s_start, s_target)\n\nTrack a startvalue x0 from s_start to s_target using the given pathtracker.\n\ntrack!(pathtracker)\n\nRun the given pathtracker. You can use this in combination with setup_pathtracker!.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#HomotopyContinuation.setup_pathtracker!",
+    "page": "Pathtracking",
+    "title": "HomotopyContinuation.setup_pathtracker!",
+    "category": "Function",
+    "text": "setup_pathtracker!(tracker, x0, s_start, s_end)\n\nReset the given pathtracker tracker and set it up to track x0 form s_start to s_end.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#HomotopyContinuation.current_value",
+    "page": "Pathtracking",
+    "title": "HomotopyContinuation.current_value",
+    "category": "Function",
+    "text": "current_value(pathtracker)\n\nGet the current value of the pathtracker.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#Reference-1",
+    "page": "Pathtracking",
+    "title": "Reference",
+    "category": "section",
+    "text": "track!\nsetup_pathtracker!\ncurrent_value"
 },
 
 {

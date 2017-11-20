@@ -3,6 +3,13 @@
 
 The aim of this project is twofold: establishing a fast numerical polynomial solver in `Julia` and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.
 
+Since this package is pre-release and also relies on couple of unreleased packages. To satisfy all dependencies you have to install it via
+
+```julia
+Pkg.clone("https://github.com/JuliaHomotopyContinuation/Homotopy.jl");
+Pkg.clone("https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git")
+```
+
 ## A first example
 HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we wanted to solve the following system
 
@@ -77,12 +84,12 @@ Indeed, we have
 julia> [ans[i].solution for i=1:2]
 julia> Vector{Complex{Float64}}[2]
 Complex{Float64}[2]
--1.00… - 2.50e-16…im
--1.00… + 5.27e-16…im
+1.00… - 2.66e-15…im
+-1.00… + 1.33e-15…im
 Complex{Float64}[2]
-1.00… + 2.50e-16…im
--1.00… + 5.27e-16…im
+-1.00… + 2.72e-15…im
+-1.00… + 1.44e-15…im
 ```
-which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` .
+which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` according to our needs.
 
 We solve some more elaborate systems in the [example section](@ref examples).

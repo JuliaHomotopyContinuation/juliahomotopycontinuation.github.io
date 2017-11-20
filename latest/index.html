@@ -4,24 +4,29 @@
 @polyvar x y # initialize the variables x y
 f = [x^2+y, y^2-1]</code></pre><p>To solve  <span>$f=0$</span> we execute the following command.</p><pre><code class="language-julia">using HomotopyContinuation # load the module HomotopyContinuation
 
-solve(f) # solves for f=0</code></pre><p>The last command will return a type <code>HomotopyContinuation.Result{Complex{Float64}}</code> of length 4 (one entry for each solution). Let us see what is the information that we get. To access the first solution in that array we write</p><pre><code class="language-julia-repl">&gt; ans[1]
+solve(f) # solves for f=0</code></pre><p>The last command will return a type <code>HomotopyContinuation.Result{Complex{Float64}}</code> of length 4 (one entry for each solution):</p><pre><code class="language-julia-repl">julia&gt; ans
 
-&gt;  HomotopyContinuation.PathResult{Complex{Float64}}:
-  * returncode: success
-  * solution: Complex{Float64}[-1.11022e-16-1.0im, 1.0-3.33067e-16im]
-  * singular: false
-  ---------------------------------------------
-  * iterations: 7
-  * endgame iterations: 5
-  * npredictions: 2
-  ---------------------------------------------
-  * newton_residual: 2.412e-16
-  * residual: 2.776e-16
-  * log10 of the condition_number: 1.149e-01
-  * windingnumber: 1
-  * angle to infinity: 0.615
-  * real solution: false</code></pre><p>The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider <a href="solve.html#result-1">this</a> section).</p><ul><li><p><code>solution</code>: the zero that is computed (here it is <span>$[-i,1]$</span>).</p></li><li><p><code>singular</code>: boolean that shows whether the zero is singular.</p></li><li><p><code>residual</code>: the computed value of <span>$|f([-i,1])|$</span>.</p></li><li><p><code>angle_to_infinity</code>: the algorithms homogenizes the system <span>$f$</span> and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is <span>$0$</span>.</p></li><li><p><code>real_solution</code>: boolean that shows whether the zero is real.</p></li></ul><p>Suppose we were only interested in the real solutions. The command to extract them is</p><pre><code class="language-julia">solutions(solve(f), success=true, at_infinity=true, only_real=true, singular=true)</code></pre><p>Indeed, we have</p><pre><code class="language-julia-repl">&gt; [ans[i].solution for i=1:2]
-&gt; Vector{Complex{Float64}}[2]
+julia&gt; HomotopyContinuation.Result{Complex{Float64}}
+# paths → 4
+# successfull paths → 4
+# solutions at infinity → 0
+HomotopyContinuation.PathResult{Complex{Float64}}[4]</code></pre><p>Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. To access the first solution in the array we write</p><pre><code class="language-julia-repl">julia&gt; ans[1]
+
+julia&gt; HomotopyContinuation.PathResult{Complex{Float64}}
+returncode → :success
+solution → Complex{Float64}[2]
+singular → false
+residual → 1.02e-15…
+newton_residual → 8.95e-16…
+log10_condition_number → 0.133…
+windingnumber → 1
+angle_to_infinity → 0.615…
+real_solution → true
+startvalue → Complex{Float64}[2]
+iterations → 17
+endgame_iterations → 5
+npredictions → 2</code></pre><p>The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider <a href="solve.html#result-1">this</a> section).</p><ul><li><p><code>solution</code>: the zero that is computed (here it is <span>$[-1,-1]$</span>).</p></li><li><p><code>singular</code>: boolean that shows whether the zero is singular.</p></li><li><p><code>residual</code>: the computed value of <span>$|f([-1,-1])|$</span>.</p></li><li><p><code>angle_to_infinity</code>: the algorithms homogenizes the system <span>$f$</span> and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is <span>$0$</span>.</p></li><li><p><code>real_solution</code>: boolean that shows whether the zero is real.</p></li></ul><p>Suppose we were only interested in the real solutions. The command to extract them is</p><pre><code class="language-julia">solutions(solve(f), success=true, at_infinity=true, only_real=true, singular=true)</code></pre><p>Indeed, we have</p><pre><code class="language-julia-repl">julia&gt; [ans[i].solution for i=1:2]
+julia&gt; Vector{Complex{Float64}}[2]
 Complex{Float64}[2]
 -1.00… - 2.50e-16…im
 -1.00… + 5.27e-16…im

@@ -74,47 +74,47 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "Homotopy.html#",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
+    "title": "Setting up homotopies",
     "category": "page",
     "text": ""
 },
 
 {
-    "location": "Homotopy.html#Setting-up-homotopies-with-Homotopy.jl-1",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Setting up homotopies with Homotopy.jl",
+    "location": "Homotopy.html#Setting-up-homotopies-1",
+    "page": "Setting up homotopies",
+    "title": "Setting up homotopies",
     "category": "section",
-    "text": "Homotopy.jl is a package for constructing (polynomial) homotopies H(xt).Each homotopy has the same Interface so that you can switch easily between different homotopy types. Based on this interface there are also some convenient higher level constructs provided; e.g., the construction of a total degree system and its start solutions.Homotopy.jl provides an interface to DynamicPolynomials.jl for human-readable input and output. Most of the examples in this introduction are written with DynamicPolynomials.jl . Internally, Homotopy.jl uses FixedPolynomials.jl for fast evaluation."
+    "text": "Homotopies.jl is a package for constructing (polynomial) homotopies H(xt). For the convient use we export in HomotopyContinuation every function from Homotopies.Each homotopy has the same Interface so that you can switch easily between different homotopy types. Based on this interface there are also some convenient higher level constructs provided; e.g., the construction of a total degree system and its start solutions.Homotopies.jl provides an interface to DynamicPolynomials.jl for human-readable input and output. Most of the examples in this introduction are written with DynamicPolynomials.jl . Internally, Homotopies.jl uses FixedPolynomials.jl for fast evaluation."
 },
 
 {
     "location": "Homotopy.html#Example-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Example",
     "category": "section",
     "text": "As an example we construct a homotopy between the polynomial systemsf= beginbmatrix x + y^3  x^2y-2yendbmatrixquad  \ng= beginbmatrixx^3+2 y^3+2endbmatrixCurrently, there are two types of homotopies implemented:StraightLineHomotopy\nGeodesicOnTheSphereThe code to initialize a StraightLineHomotopy is as follows.using HomotopyContinuation\nimport DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.\n@polyvar x y # initilize the variables x y\n\nf = [x + y^3, x^2*y-2y]\ng = [x^3+2, y^3+2]\n\nH = StraightLineHomotopy(f, g) # H is now StraightLineHomotopy{Int64}\n\n# to avoid unnecessary conversions one could also have\nH = StraightLineHomotopy{Complex128}([x + y^3, x^2*y-2y], [x^3+2, y^3+2])\n\n# we can now evaluate H\nevaluate(H, rand(Complex128, 2), 0.42)\n# or alternatively\nH(rand(Complex128, 2), 0.42)"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.StraightLineHomotopy",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.StraightLineHomotopy",
+    "location": "Homotopy.html#Homotopies.StraightLineHomotopy",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.StraightLineHomotopy",
     "category": "Type",
     "text": "StraightLineHomotopy(start, target)\n\nConstruct the homotopy t * start + (1-t) * target.\n\nstart and target have to match and to be one of the following\n\nVector{<:MP.AbstractPolynomial} where MP is MultivariatePolynomials\nMP.AbstractPolynomial\nVector{<:FP.Polynomial} where FP is FixedPolynomials\n\nStraightLineHomotopy{T}(start, target)\n\nYou can also force a specific coefficient type T.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.GeodesicOnTheSphere",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.GeodesicOnTheSphere",
+    "location": "Homotopy.html#Homotopies.GeodesicOnTheSphere",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.GeodesicOnTheSphere",
     "category": "Type",
     "text": "GeodesicOnTheSphere(start, target)\n\nHomotopy is the geodesic from g=start/|start| (t=1) to f=target/|target| (t=0):\n\nH(x,t) = (cos(tα) - sin (tα)cos(α)/sin(α)) f + sin(tα) / sin(α) * g\n\nwhere  = cos fg. The constructor automatically homgenizes start and target.\n\nstart and target have to match and to be one of the following\n\nVector{<:MP.AbstractPolynomial} where MP is MultivariatePolynomials\nMP.AbstractPolynomial\nVector{<:FP.Polynomial} where FP is FixedPolynomials\n\nGeodesicOnTheSphere{T}(start, target)\n\nYou can also force a specific coefficient type T.\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Homotopies-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Homotopies",
     "category": "section",
     "text": "The following homotopies are implemented. They are subtypes of AbstractPolynomialHomotopyStraightLineHomotopy\nGeodesicOnTheSphere"
@@ -122,63 +122,63 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "Homotopy.html#higherlevelconstructs-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Higher level constructs",
     "category": "section",
     "text": ""
 },
 
 {
-    "location": "Homotopy.html#Homotopy.totaldegree",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.totaldegree",
+    "location": "Homotopy.html#Homotopies.totaldegree",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.totaldegree",
     "category": "Function",
     "text": "totaldegree(H::Type{AbstractPolynomialHomotopy}, F, [unitroots=false])\n\nConstruct a  total degree homotopy of type H with F and an iterator of its solutions. This is the homotopy with start system\n\nbeginalign*\n    z_1^d_1 - b_1\n    z_1^d_2 - b_2\n    vdots \n    z_n^d_n - b_n\nendalign*\n\nand target system F, where d_i is the degree of the i-th polynomial of F. If unitroots=true then b_i=1 otherwise b_i is a random complex number (with real and imaginary part in the unit interval).\n\nExample\n\nH, startsolutions = totaldegree(StraightLineHomotopy{Complex128}, [x^2+y+1, x^3*y-2])\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.TotalDegreeSolutionIterator",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.TotalDegreeSolutionIterator",
+    "location": "Homotopy.html#Homotopies.TotalDegreeSolutionIterator",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.TotalDegreeSolutionIterator",
     "category": "Type",
     "text": "TotalDegreeSolutionIterator(degrees, b)\n\nGiven the Vectors degrees and b TotalDegreeSolutionIterator enumerates all solutions of the system\n\nbeginalign*\n    z_1^d_1 - b_1 = 0 \n    z_1^d_2 - b_2 = 0 \n    vdots \n    z_n^d_n - b_n = 0 \nendalign*\n\nwhere d_i is degrees[i] and b_i is b[i].\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.totaldegree_startsystem",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.totaldegree_startsystem",
+    "location": "Homotopy.html#Homotopies.totaldegree_startsystem",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.totaldegree_startsystem",
     "category": "Function",
     "text": "totaldegree_startsystem(F::Vector{FP.Polynomial{<:Complex}}, [unit_roots=false])\n\nReturn the system\n\nbeginalign*\n    z_1^d_1 - b_1\n    z_1^d_2 - b_2\n    vdots \n    z_n^d_n - b_n\nendalign*\n\nwhere d_i is the degree of the i-th polynomial of F and an iterator of its solutions. If unitroots=true then b_i=1 otherwise b_i is a random complex number (with real and imaginary part in the unit interval).\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#totaldegree-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Total degree homotopy",
     "category": "section",
     "text": "totaldegree\nTotalDegreeSolutionIterator\ntotaldegree_startsystem"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.randomhomotopy",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.randomhomotopy",
+    "location": "Homotopy.html#Homotopies.randomhomotopy",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.randomhomotopy",
     "category": "Function",
     "text": "randomhomotopy(::Type{AbstractPolynomialHomotopy{T}}, size::Int; kwargs...)\n\nCreate a total degree homotopy where the target system is a randomsystem(T, size, size; kwargs...).\n\nExample\n\njulia> H, solutions = randomhomotopy(StraightLineHomotopy{Complex128}, 2, mindegree=3, maxdegree=6);\njulia> length(H)\n3\njulia> nvariables(H)\n3\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.randomsystem",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.randomsystem",
+    "location": "Homotopy.html#Homotopies.randomsystem",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.randomsystem",
     "category": "Function",
     "text": "randomsystem([T=Complex128,] nequations::Int, nvars::Int; mindegree=0, maxdegree=5, rng=Base.Random.GLOBAL_RNG, density=rand() * 0.8 + 0.1)\n\nCreates a random polynomial system of nequations equations with nvars variables (named x_1, ...x_nvars). Each polynomial has a total degree uniformly drawn from mindegree maxdegree. The coefficients are drawn independently from the given rng. With density you can control how many coefficients are non-zero. A value of 1.0 creates a dense polynomial (i.e. every coefficient is non-zero). A value of 0.5 creates a polynomial where only half of all monomials are non zero.\n\nrandomsystem([T=Complex128,] degrees::Vector{Int}, variables::Vector{Symbol}; rng=N(0,1))\n\nCreate a random polynomial system with the given degrees and variables.\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Random-homotopies-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Random homotopies",
     "category": "section",
     "text": "randomhomotopy\nrandomsystem"
@@ -186,183 +186,183 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "Homotopy.html#Interface-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Interface",
     "category": "section",
     "text": ""
 },
 
 {
-    "location": "Homotopy.html#Homotopy.evaluate",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.evaluate",
+    "location": "Homotopy.html#Homotopies.evaluate",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.evaluate",
     "category": "Function",
     "text": "evaluate(H::AbstractPolynomialHomotopy, x, t)\n\nEvaluate the homotopy H at x to time t, i.e. H(xt).\n\nevaluate(H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nEvaluate the homotopy H at x to time t using the precompuated values in cfg. Note that this is significantly faster than evaluate(H, x, t).\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.evaluate!",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.evaluate!",
+    "location": "Homotopy.html#Homotopies.evaluate!",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.evaluate!",
     "category": "Function",
     "text": "evaluate!(u::Vector, H::AbstractPolynomialHomotopy, x, t)\n\nEvaluate the homotopy H at x to time t, i.e. H(xt), and store the result in u.\n\nevaluate!(u::AbstractVector, H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nEvaluate the homotopy H at x to time t using the precompuated values in cfg and store the result in u.\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Evaluation-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Evaluation",
     "category": "section",
     "text": "evaluate\nevaluate!"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.jacobian",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.jacobian",
+    "location": "Homotopy.html#Homotopies.jacobian",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.jacobian",
     "category": "Function",
     "text": "jacobian(H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute the jacobian of H at x and t using the precomputed values in cfg. The jacobian is constructed w.r.t. x, i.e. it doesn't contain the partial derivatives w.r.t. t.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.jacobian!",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.jacobian!",
+    "location": "Homotopy.html#Homotopies.jacobian!",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.jacobian!",
     "category": "Function",
     "text": "jacobian!(u, H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute the jacobian of H at x and t using the precomputed values in cfg and store the result in u.\n\njacobian!(r::JacobianDiffResult, H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute H(x t) and the jacobian of H at x and t at once using the precomputated values in cfg and store thre result in r. This is faster than computing both values separetely.\n\nExample\n\ncfg = PolynomialHomotopyConfig(H)\nr = JacobianDiffResult(cfg)\njacobian!(r, H, x, t, cfg)\n\nvalue(r) == H(x, t)\njacobian(r) == jacobian(H, x, t, cfg)\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.dt",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.dt",
+    "location": "Homotopy.html#Homotopies.dt",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.dt",
     "category": "Function",
     "text": "dt(H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute the derivative of H w.r.t. t at x and t using the precomputed values in cfg.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.dt!",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.dt!",
+    "location": "Homotopy.html#Homotopies.dt!",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.dt!",
     "category": "Function",
     "text": "dt!(u, H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute the derivative of H w.r.t. t at x and t using the precomputed values in cfg and store the result in u.\n\ndt!(r::DtDiffResult, H::AbstractPolynomialHomotopy, x, t, cfg::PolynomialHomotopyConfig)\n\nCompute the derivative of H w.r.t. t at x and t using the precomputed values in cfg and store the result in r. This is faster than computing both values separetely.\n\nExample\n\ncfg = PolynomialHomotopyConfig(H)\nr = DtDiffResult(cfg)\ndt!(r, H, x, t, cfg)\n\nvalue(r) == H(x, t)\ndt(r) == dt(H, x, t, cfg)\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Differentiation-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Differentiation",
     "category": "section",
     "text": "jacobian\njacobian!\ndt\ndt!"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.homogenize",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.homogenize",
+    "location": "Homotopy.html#Homotopies.homogenize",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.homogenize",
     "category": "Function",
     "text": "homogenize(H::AbstractPolynomialHomotopy)\n\nHomogenize the homotopy H. This adds an additional variable. If H is already homogenized, this is the identity.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.dehomogenize",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.dehomogenize",
+    "location": "Homotopy.html#Homotopies.dehomogenize",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.dehomogenize",
     "category": "Function",
     "text": "dehomogenize(H::AbstractPolynomialHomotopy)\n\nDehomogenize the homotopy H. This removes the first variable. If H is not homogenized, this is the identity.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.ishomogenized",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.ishomogenized",
+    "location": "Homotopy.html#Homotopies.ishomogenized",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.ishomogenized",
     "category": "Function",
     "text": "ishomogenized(H::AbstractPolynomialHomotopy)\n\nCheck whether the homotopy H was homogenized.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.ishomogenous",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.ishomogenous",
+    "location": "Homotopy.html#Homotopies.ishomogenous",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.ishomogenous",
     "category": "Function",
     "text": "ishomogenous(H::AbstractPolynomialHomotopy)\n\nCheck whether the homotopy H is homogenous. This does not imply that H was homogenized.\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Homogenization-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Homogenization",
     "category": "section",
     "text": "homogenize\ndehomogenize\nishomogenized\nishomogenous"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.nvariables",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.nvariables",
+    "location": "Homotopy.html#Homotopies.nvariables",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.nvariables",
     "category": "Function",
     "text": "nvariables(H::AbstractPolynomialHomotopy)\n\nThe number of variables which H expects as input, i.e. to evaluate H(x,t) x has to be a vector of length nvariables(H).\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.weylnorm",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.weylnorm",
+    "location": "Homotopy.html#Homotopies.weylnorm",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.weylnorm",
     "category": "Function",
     "text": "weylnorm(H::AbstractPolynomialHomotopy)\n\nCreates a function with variable t that computes the Weyl norm (or Bombieri norm) of H(xt). See here for details about the Weyl norm.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.gammatrick!",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.gammatrick!",
+    "location": "Homotopy.html#Homotopies.gammatrick!",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.gammatrick!",
     "category": "Function",
     "text": "gammatrick!(H::AbstractPolynomialHomotopy{Complex} [, seed::Int]])\n\nScale the coefficients of the start system of H with a random complex number picked uniformly from the (complex) unit circle. Use this to make the paths z(t) generic.\n\ngammatrick!(H::AbstractPolynomialHomotopy{Complex}, γ::Complex)\n\nYou can also pass a scaling factor directly.\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.gammatrick",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.gammatrick",
+    "location": "Homotopy.html#Homotopies.gammatrick",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.gammatrick",
     "category": "Function",
     "text": "gammatrick(H::AbstractPolynomialHomotopy{Complex} , γ::Number)\n\nScale the coefficients of the start system of H with γ.\n\ngammatrick(H::AbstractPolynomialHomotopy{Complex})\n\nA a random complex number γ is picked uniformly from the (complex) unit circle and then scale the coefficients of the start system of H with γ. This returns the new H and γ.\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Misc-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Misc",
     "category": "section",
     "text": "nvariables\nweylnorm\ngammatrick!\ngammatrick"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.κ",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.κ",
+    "location": "Homotopy.html#Homotopies.κ",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.κ",
     "category": "Function",
     "text": "κ(H, z, t, cfg)\n\nComputes the condition number of H at (z, t) (with config cfg). See Condition^[1] for details\n\nProposition 16.10: κ(f,z) := ‖f‖ ‖ Df(z)^† diag(‖ z ‖^{d_i-1}) ‖\n\n[1]: Condition, Bürgisser and Cucker\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.κ_norm",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.κ_norm",
+    "location": "Homotopy.html#Homotopies.κ_norm",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.κ_norm",
     "category": "Function",
     "text": "κ_norm(H, z, t, cfg)\n\nComputes the condition number of H at (z, t) (with config cfg). See Condition^[1] for details\n\nEq. (16.11): κ_norm(f,z) := ‖f‖ ‖ Df(z)^† diag(√{d_i}‖ z ‖^{d_i-1}) ‖\n\n[1]: Condition, Bürgisser and Cucker\n\n\n\n"
 },
 
 {
-    "location": "Homotopy.html#Homotopy.μ_norm",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopy.μ_norm",
+    "location": "Homotopy.html#Homotopies.μ_norm",
+    "page": "Setting up homotopies",
+    "title": "Homotopies.μ_norm",
     "category": "Function",
     "text": "μ_norm(H, z, t, cfg)\n\nComputes the condition number of H at (z, t) (with config cfg). See Condition^[1] for details\n\nDefinition 16.43: μ_norm(f,z) := ‖f‖ ‖ (Df(z)-(T_z))^{-1} diag(√{d_i}‖ z ‖^{d_i-1}) ‖\n\n[1]: Condition, Bürgisser and Cucker\n\n\n\n"
 },
 
 {
     "location": "Homotopy.html#Condition-numbers-1",
-    "page": "Setting up homotopies with Homotopy.jl",
+    "page": "Setting up homotopies",
     "title": "Condition numbers",
     "category": "section",
     "text": "κ\nκ_norm\nμ_norm"
@@ -437,7 +437,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.PathResult",
     "category": "Type",
-    "text": "PathResult(startvalue, pathtracker_result, endgamer_result, solver)\n\nConstruct a PathResult for a given startvalue. pathtracker_result is the PathtrackerResult until the endgame radius is reached. endgamer_result is the EndgamerResult resulting from the corresponding endgame.\n\nA PathResult contains:\n\nreturncode: One of :success, :at_infinity or any error code from the EndgamerResult\nsolution::Vector{T}: The solution vector. If the algorithm computed in projective space\n\nand the solution is at infinity then the projective solution is given. Otherwise an affine solution is given if the startvalue was affine and a projective solution is given if the startvalue was projective.\n\nresidual::Float64: The value of the infinity norm of H(solution, 0).\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\nlog10_condition_number: A high condition number indicates singularty. See Homotopy.κ for details.   The value is the logarithmic condition number (with base 10).\nwindingnumber: The estimated winding number\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: Indicates whether the solution is real given the defined tolerance at_infinity_tol (from the solver options).\nstartvalue: The startvalue of the path\niterations: The number of iterations the pathtracker needed.\nendgame_iterations: The number of steps in the geometric series the endgamer did.\nnpredictions: The number of predictions the endgamer did.\npredictions: The predictions of the endgamer.\n\n\n\n"
+    "text": "PathResult(startvalue, pathtracker_result, endgamer_result, solver)\n\nConstruct a PathResult for a given startvalue. pathtracker_result is the PathtrackerResult until the endgame radius is reached. endgamer_result is the EndgamerResult resulting from the corresponding endgame.\n\nA PathResult contains:\n\nreturncode: One of :success, :at_infinity or any error code from the EndgamerResult\nsolution::Vector{T}: The solution vector. If the algorithm computed in projective space\n\nand the solution is at infinity then the projective solution is given. Otherwise an affine solution is given if the startvalue was affine and a projective solution is given if the startvalue was projective.\n\nresidual::Float64: The value of the infinity norm of H(solution, 0).\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\nlog10_condition_number: A high condition number indicates singularty. See Homotopies.κ for details.   The value is the logarithmic condition number (with base 10).\nwindingnumber: The estimated winding number\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: Indicates whether the solution is real given the defined tolerance at_infinity_tol (from the solver options).\nstartvalue: The startvalue of the path\niterations: The number of iterations the pathtracker needed.\nendgame_iterations: The number of steps in the geometric series the endgamer did.\nnpredictions: The number of predictions the endgamer did.\npredictions: The predictions of the endgamer.\n\n\n\n"
 },
 
 {
@@ -501,7 +501,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Pathtracking",
     "title": "HomotopyContinuation.PathtrackerResult",
     "category": "Type",
-    "text": "PathtrackerResult(pathtracker, extended_analysis=false)\n\nReads the result from the current pathtracker state. A PathtrackerResult contains:\n\nreturncode: One of :max_iterations, :singularity, :invalid_startvalue, :success.\nsolution::Vector{T}: The solution.\nresidual::Float64: The value of the infinity norm of H(solution, 0).\niterations: The number of iterations the pathtracker needed.\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\n\nIf extended_analysis=true there is also:\n\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\ncondition_number: A high condition number indicates singularty. See Homotopy.κ for details.\n\n\n\n"
+    "text": "PathtrackerResult(pathtracker, extended_analysis=false)\n\nReads the result from the current pathtracker state. A PathtrackerResult contains:\n\nreturncode: One of :max_iterations, :singularity, :invalid_startvalue, :success.\nsolution::Vector{T}: The solution.\nresidual::Float64: The value of the infinity norm of H(solution, 0).\niterations: The number of iterations the pathtracker needed.\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\n\nIf extended_analysis=true there is also:\n\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\ncondition_number: A high condition number indicates singularty. See Homotopies.κ for details.\n\n\n\n"
 },
 
 {
@@ -669,7 +669,7 @@ var documenterSearchIndex = {"docs": [
     "page": "How to set up your own homotopy",
     "title": "How to set up your own homotopy",
     "category": "section",
-    "text": "We shall illustrate how to set up your own homotopy by work out the following example.For a polynomial systems fg we want to define the homotopyH(xt) = t * f( U(t) x ) + (1 - t) * g( U(t) x )where U(t) is a random path in the space of unitary matrices with U(0) = U(1) = I, the identity matrix. I.e.,U(t) = U beginbmatrix\ncos(2 t)  -sin(2 t)  0 cdots  0\nsin(2 t)  cos(2 t)  0 cdots  0\n0  0  1 cdots  0\n0  0  0 cdots  0\n0  0  0 cdots  1\nendbmatrix U^Twith a random unitary matrix U.To start we make a copy of the file straigthline.jl (or of any other appropriate file like geodesic_on_the_sphere.jl) and rename it rotation_and_straightline.jl. Now we have to do two things:Adapt the struct and its constructors.\nAdapt the evaluation functions.\nInclude rotation_and_straightline.jl in Homotopy.jl."
+    "text": "We shall illustrate how to set up your own homotopy by work out the following example.For a polynomial systems fg we want to define the homotopyH(xt) = t * f( U(t) x ) + (1 - t) * g( U(t) x )where U(t) is a random path in the space of unitary matrices with U(0) = U(1) = I, the identity matrix. I.e.,U(t) = U beginbmatrix\ncos(2 t)  -sin(2 t)  0 cdots  0\nsin(2 t)  cos(2 t)  0 cdots  0\n0  0  1 cdots  0\n0  0  0 cdots  0\n0  0  0 cdots  1\nendbmatrix U^Twith a random unitary matrix U.To start we make a copy of the file straigthline.jl (or of any other appropriate file like geodesic_on_the_sphere.jl) and rename it rotation_and_straightline.jl. Now we have to do two things:Adapt the struct and its constructors.\nAdapt the evaluation functions.\nInclude rotation_and_straightline.jl in Homotopies.jl."
 },
 
 {
@@ -689,11 +689,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "set_up_homotopy.html#Include-rotation_and_straightline.jl-in-Homotopy.jl.-1",
+    "location": "set_up_homotopy.html#Include-rotation_and_straightline.jl-in-Homotopies.jl.-1",
     "page": "How to set up your own homotopy",
-    "title": "Include rotation_and_straightline.jl in Homotopy.jl.",
+    "title": "Include rotation_and_straightline.jl in Homotopies.jl.",
     "category": "section",
-    "text": "To enable julia to recognize our new homotopy, we have to include the following line in the Homotopy.jl fileinclude(\"homotopies/rotation_and_straightline.jl\")Now we are ready to use RotationAndStraightLine as homotopy type:import DynamicPolynomials: @polyvar\nusing HomotopyContinuation\n\n@polyvar x y\n\nf = [x^2 - x*y]\nH = RotationAndStraightLine(f,f)\n\nsolve(H,[0.0, 1.0 + im * 0.0])gives another solution of f. The technique of making loops in the space of polynomials to track zeros to other zeros is called monodromy.."
+    "text": "To enable julia to recognize our new homotopy, we have to include the following line in the Homotopies.jl fileinclude(\"homotopies/rotation_and_straightline.jl\")Now we are ready to use RotationAndStraightLine as homotopy type:import DynamicPolynomials: @polyvar\nusing HomotopyContinuation\n\n@polyvar x y\n\nf = [x^2 - x*y]\nH = RotationAndStraightLine(f,f)\n\nsolve(H,[0.0, 1.0 + im * 0.0])gives another solution of f. The technique of making loops in the space of polynomials to track zeros to other zeros is called monodromy.."
 },
 
 {

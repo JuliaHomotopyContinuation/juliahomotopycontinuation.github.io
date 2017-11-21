@@ -34,6 +34,10 @@ results = map(xs) do x
 end
 ```
 
+## Result
+```@docs
+EndgamerResult
+```
 
 ## Algorithms
 

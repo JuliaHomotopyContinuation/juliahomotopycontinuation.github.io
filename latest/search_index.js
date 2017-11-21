@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Introduction",
     "category": "section",
-    "text": "HomotopyContinuation.jl is a package for solving square polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.Since this package is pre-release and also relies on couple of unreleased packages. To satisfy all dependencies you have to install it viaPkg.clone(\"https://github.com/JuliaHomotopyContinuation/Homotopy.jl\");\nPkg.clone(\"https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git\")"
+    "text": "HomotopyContinuation.jl is a package for solving square polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.You can simply install this package via the Julia package managerPkg.add(\"JuliaHomotopyContinuation\");"
 },
 
 {
@@ -706,18 +706,18 @@ var documenterSearchIndex = {"docs": [
 
 {
     "location": "set_up_pathtracker.html#",
-    "page": "How to set up your own pathtracker",
-    "title": "How to set up your own pathtracker",
+    "page": "How to set up your own pathtracking algorithm",
+    "title": "How to set up your own pathtracking algorithm",
     "category": "page",
     "text": ""
 },
 
 {
-    "location": "set_up_pathtracker.html#How-to-set-up-your-own-pathtracker-1",
-    "page": "How to set up your own pathtracker",
-    "title": "How to set up your own pathtracker",
+    "location": "set_up_pathtracker.html#How-to-set-up-your-own-pathtracking-algorithm-1",
+    "page": "How to set up your own pathtracking algorithm",
+    "title": "How to set up your own pathtracking algorithm",
     "category": "section",
-    "text": ""
+    "text": "We want to illustrate how to setup your own pathtracking algorithm by the already implemented AffinePredictorCorrector.First you have to define a subtype of AbstractPathtrackingAlgorithm. This is the user facing part.struct AffinePredictorCorrector <: AbstractPathtrackingAlgorithm\nendNote that you could also allow the user to set certain options, e.g. maybe you want to give him/her the choice between an explicit Euler method and a Runge-Kutta method.You also have to clarify whether the algorithm will work in the projective or affine space. Here we want to work in affine space.is_projective(::AffinePredictorCorrector) = falseNow you have to define a struct which is subtype of AbstractPathtrackerCache. This is used for the internal dispatch and also serves as an cache to avoid memory allocations. We will need a working matrix and a vector. Thus we define the followingstruct AffineCache{T} <: AbstractPathtrackerCache{T}\n    A::Matrix{T}\n    b::Vector{T}\nendThen you have to define a new method for alg_cache(algorithm, homotopy, x) which will create our AffineCache:function alg_cache(alg::AffinePredictorCorrector, H::AbstractHomotopy, x::AbstractVector{T}) where T\n    n = length(x)\n    A = zeros(T, n, n)\n    b = zeros(T, n)\n    AffineCache(A, b)\nendWe are already half way done! Now comes the interesting part. We have to define two methods. The first one is a correction method. For us this is a simple newton iteration.function correct!(x, # the startvalue\n    t, # current 'time'\n    H, # the homotopy itself\n    cfg, # An AbstractHomotopyConfiguration for efficient evaluation\n    abstol::Float64, # the target accuracy\n    maxiters::Int, # the maximal number of iterations\n    cache::AffineCache{Complex{T}} # our defined Cache\n    ) where T\n    @unpack A, b = cache\n    m = size(A,2)\n    k = 0\n    while true\n        k += 1\n        evaluate!(b, H, x, t, cfg)\n\n        if norm(b, Inf) < abstol\n            return true\n        elseif k > maxiters\n            return false\n        end\n\n        # put jacobian in A\n        jacobian!(A, H, x, t, cfg, true)\n\n        # this computes A x = b and stores the result x in b\n        LU = lufact!(A)\n        # there is a bug in v0.6.0 see patches.jl\n        my_A_ldiv_B!(LU, b)\n        x .= x .- b\n    end\nendThis method will be used for the refinement of the final solutions. But we can also use it for the next method. We now want to define the method which will actually be used during the pathtracking! For this we have to define the method perform_step!(pathtracker, values, cache::AffineCache). The Pathtracker will invoke this function at each iteration.function perform_step!(tracker, values::PathtrackerPrecisionValues{T}, cache::AffineCache{Complex{T}}) where T\n    @unpack s, ds = tracker # s is our current 'time', ds the step length\n    @unpack H, cfg, x, xnext = values\n    @unpack A, b = cache\n\n    m = size(A,2)\n\n    # PREDICT\n    # put jacobian in A\n    jacobian!(A, H, x, s, cfg)\n    # put Hdt in b\n    dt!(b, H, x, s, cfg, true)\n\n    # this computes A x = b and stores the result x in b\n    LU = lufact!(A)\n    # there is a bug in v0.6.0 see patches.jl\n    my_A_ldiv_B!(LU, b)\n\n    xnext .= x .- ds .* b\n\n    # CORRECT\n    @unpack abstol, corrector_maxiters = tracker.options\n    tracker.step_sucessfull = correct!(xnext, s + ds, H, cfg, abstol, corrector_maxiters, cache)\n    nothing\nendWith this in place you are ready to go! Now you can simply solve a system using your own pathracking algorithm, e.g. using solve(F, AffinePredictorCorrector())."
 },
 
 ]}

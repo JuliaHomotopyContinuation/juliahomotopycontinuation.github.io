@@ -14,15 +14,15 @@ a `Pathtracker` object, then you can track a path from a given start value
 and finally you create a `PathtrackerResult`.
 ```julia
 pathtracker = Pathtracker(H, SphericalPredictorCorrector())
-track!(H, x, 1.0, 0.0)
-result = PathtrackerResult(H)
+track!(pathtracker, x, 1.0, 0.0)
+result = PathtrackerResult(pathtracker)
 ```
 You can reuse (and should!) resuse a `Pathtracker` for multiple paths
 ```julia
 pathtracker = Pathtracker(H, SphericalPredictorCorrector())
 results = map(xs) do x
-  track!(H, x, 1.0, 0.0)
-  PathtrackerResult(H)
+  track!(pathtracker, x, 1.0, 0.0)
+  PathtrackerResult(pathtracker)
 end
 ```
 
@@ -30,11 +30,16 @@ end
 of nice features. For example you could store the actual path the pathtracker takes:
 ```julia
 pathtracker = Pathtracker(H, SphericalPredictorCorrector())
-setup_pathtracker!(H, x, 1.0, 0.0)
+setup_pathtracker!(pathtracker, x, 1.0, 0.0)
 path = []
 for t in pathtracker
   push!(path, current_value(t))
 end
+```
+
+## Result
+```@docs
+PathtrackerResult
 ```
 
 ## Algorithms

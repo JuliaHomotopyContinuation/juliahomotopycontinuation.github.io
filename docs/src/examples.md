@@ -61,7 +61,7 @@ solve(H, s)
 The angles are of course only the real solutions of f = 0. We get them by using
 
 ```julia
-solution(ans, success=true, at_infinity=true, only_real=true, singular=true)
+solution(ans, only_real=true)
 ```
 
 ## Using different types of pathrackers

@@ -67,6 +67,7 @@ iterations → 17
 endgame_iterations → 5
 npredictions → 2
 ```
+
 The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider [this](@ref result) section).
 
 - `solution`: the zero that is computed (here it is ``[-1,-1]``).
@@ -76,9 +77,11 @@ The returncode tells us that the pathtracking was successfull. What do the entri
 -  `real_solution`: boolean that shows whether the zero is real.
 
 Suppose we were only interested in the real solutions. The command to extract them is
+
 ```julia
 solutions(solve(f), success=true, at_infinity=true, only_real=true, singular=true)
 ```
+
 Indeed, we have
 ```julia-repl
 julia> [ans[i].solution for i=1:2]

@@ -23,7 +23,7 @@ GeodesicOnTheSphere
 ```
 The code to initialize a StraightLineHomotopy is as follows.
 ```julia
-using Homotopy
+using HomotopyContinuation
 import DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.
 @polyvar x y # initilize the variables x y
 

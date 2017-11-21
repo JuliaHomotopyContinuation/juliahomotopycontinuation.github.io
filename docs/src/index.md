@@ -1,5 +1,5 @@
 # Introduction
-`HomotopyContinuation.jl` is a package for solving polynomial systems via homotopy continuation.
+`HomotopyContinuation.jl` is a package for solving square polynomial systems via homotopy continuation.
 
 The aim of this project is twofold: establishing a fast numerical polynomial solver in `Julia` and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.
 

@@ -23,7 +23,7 @@ To start we make a copy of the file `straigthline.jl` (or of any other appropria
 
 - Adapt the struct and its constructors.
 - Adapt the evaluation functions.
-- Include `rotation_and_straightline.jl` in `Homotopy.jl`.
+- Include `rotation_and_straightline.jl` in `Homotopies.jl`.
 
 ## Adapt the struct and its constructors
 
@@ -183,9 +183,9 @@ function weylnorm(H::RotationAndStraightLine{T})  where {T<:Number}
 end
 ```
 
-## Include `rotation_and_straightline.jl` in `Homotopy.jl`.
+## Include `rotation_and_straightline.jl` in `Homotopies.jl`.
 
-To enable `julia` to recognize our new homotopy, we have to include the following line in the `Homotopy.jl` file
+To enable `julia` to recognize our new homotopy, we have to include the following line in the `Homotopies.jl` file
 
 ```julia
 include("homotopies/rotation_and_straightline.jl")

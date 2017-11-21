@@ -1,13 +1,14 @@
-# Setting up homotopies with Homotopy.jl
+# Setting up homotopies
 
-`Homotopy.jl` is a package for constructing (polynomial) [homotopies](https://en.wikipedia.org/wiki/Homotopy) ``H(x,t)``.
+`Homotopies.jl` is a package for constructing (polynomial) [homotopies](https://en.wikipedia.org/wiki/Homotopy) ``H(x,t)``. For the convient use
+we export in `HomotopyContinuation` every function from `Homotopies`.
 
 Each homotopy has the same [Interface](@ref) so that you can switch easily between
 different homotopy types.
 Based on this interface there are also some convenient [higher level constructs](@ref higherlevelconstructs) provided; e.g., the
 construction of a total degree system and its start solutions.
 
-Homotopy.jl provides an interface to [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) for human-readable input and output. Most of the examples in this introduction are written with [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) . Internally, `Homotopy.jl` uses [FixedPolynomials.jl](https://github.com/JuliaAlgebra/FixedPolynomials.jl) for fast evaluation.
+Homotopies.jl provides an interface to [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) for human-readable input and output. Most of the examples in this introduction are written with [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) . Internally, `Homotopies.jl` uses [FixedPolynomials.jl](https://github.com/JuliaAlgebra/FixedPolynomials.jl) for fast evaluation.
 
 
 ## Example

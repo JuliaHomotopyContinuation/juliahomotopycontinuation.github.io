@@ -8,6 +8,9 @@ solve
 The output of `solve` is an array of type `HomotopyContinuation.Result`.
 
 ## [Solver options](@id solveroptions)
+```@docs
+Solver
+```
 
 ## [The solutions function](@id solutions)
 The `solution` function helps to extract information from `HomotopyContinuation.Result` arrays

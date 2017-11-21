@@ -35,6 +35,8 @@ using HomotopyContinuation # load the module HomotopyContinuation
 solve(f) # solves for f=0
 ```
 
+(see [here](@ref solveroptions) for a list of options that can be passed to `solve`).
+
 The last command will return a type `HomotopyContinuation.Result{Complex{Float64}}` of length 4 (one entry for each solution):
 
 ```julia-repl

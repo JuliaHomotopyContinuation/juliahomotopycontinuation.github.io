@@ -26,7 +26,9 @@ solve([f; L])
 We find two distinct solutions and conclude that the degree of ``V`` is 2.
 
 ## Using different types of homotopies
-In this example we compute the angles sθ, cθ of the triangle with sides of length 3, 4 and 5. The corresponding system is.
+the following example is from section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+
+Consider a triangle with sides a,b,c and let θ be the angle opposite of c. The goal is to compute θ from a,b,c. We define sθ := sin θ and cθ := cos θ. The polynomial corresponding system is.
 
 ```julia
 import DynamicPolynomials: @polyvar
@@ -113,7 +115,26 @@ solve(H, w_0, AffinePredictorCorrector())
 ```
 
 
-## The 6R Robot
+## 6-R Serial-Link Robots
+The following example is from section 9.4 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+
+A robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by ``z_1,...,z_6`` the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
+
+```math
+z_i ⋅ z_i = 1
+
+z_i ⋅ z_{i+1} = \cos α_i
+
+a_1 * z_1 × z_2 + ... + a_5 * z_5 × z_6 + a_6 * z_2 + ... + a_9 * z_5 = p
+```
+
+for some (α,a,p) (see [The numerical solution of systems of polynomials, Sommese, Wampler] for a detailed explanation on how these numbers are to be interpreted).
+
+The forward problem consists of computing (α,a,p) given the ``z_i``. The backward problem consists of computing  ``z_i`` that realize some fixed (α,a,p).
+
+We now compute first a forward solution (α_0, a_0, p_0), and then use (α_0, a_0, p_0) to compute a backward solution for the problem imposed by some random (α, a, p).
+
+
 ```julia
 using HomotopyContinuation
 import DynamicPolynomials: @polyvar
@@ -121,6 +142,7 @@ import DynamicPolynomials: @polyvar
 @polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]
 z1 = [1, 0, 0]
 z6 = [1, 0, 0]
+p = [1,1,0]
 z = [z1, z2, z3, z4, z5, z6]
 
 f = [z[i] ⋅ z[i] for i=2:5]
@@ -129,6 +151,7 @@ h = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)
 
 α = randexp(5)
 a = randexp(9)
+p = randexp(3)
 ```
 
 Let us compute a random forward solution.
@@ -151,13 +174,13 @@ z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as i
 
 # evaluate h at z_0
 h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)
-# compute a solution to h(z_0) * a = 0
+# compute a solution to h(z_0) * a = p
 h_0 = reshape(h_0,3,9)
-a_0 = nullspace(h_0)[:,1]
+a_0 = h_0\p
 ```
 Now we have forward solutions ``α_0`` and ``a_0``. From this we construct the following StraightLineHomotopy.
 ```julia
-H = StraightLineHomotopy([f-1; g-α_0; h*a_0], [f-1; g-α; h*a])
+H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])
 ```
 To compute a backward solution with starting value ``z_0`` we finally execute
 ```julia

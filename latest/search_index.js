@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "A first example",
     "category": "section",
-    "text": "HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we wanted to solve the following systemf= beginbmatrix x^2+y y^2-1endbmatrix  First, we have to define f in Julia. For this purpose HomotopyContinuation.jl provides an interface to DynamicPolynomials.jl for human-readable input and output.import DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.\n\n@polyvar x y # initialize the variables x y\nf = [x^2+y, y^2-1]To solve  f=0 we execute the following command.using HomotopyContinuation # load the module HomotopyContinuation\n\nsolve(f) # solves for f=0The last command will return a type HomotopyContinuation.Result{Complex{Float64}} of length 4 (one entry for each solution):julia> ans\n\njulia> HomotopyContinuation.Result{Complex{Float64}}\n# paths → 4\n# successfull paths → 4\n# solutions at infinity → 0\n# singular solutions → 0\n# real solutions → 2\nHomotopyContinuation.PathResult{Complex{Float64}}[4]Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. None of the solutions is singular and two of them are real. To access the first solution in the array we writejulia> ans[1]\n\njulia> HomotopyContinuation.PathResult{Complex{Float64}}\nreturncode → :success\nsolution → Complex{Float64}[2]\nsingular → false\nresidual → 1.02e-15…\nnewton_residual → 8.95e-16…\nlog10_condition_number → 0.133…\nwindingnumber → 1\nangle_to_infinity → 0.615…\nreal_solution → true\nstartvalue → Complex{Float64}[2]\niterations → 17\nendgame_iterations → 5\nnpredictions → 2The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider this section).solution: the zero that is computed (here it is -1-1).\nsingular: boolean that shows whether the zero is singular.\nresidual: the computed value of f(-1-1).\nangle_to_infinity: the algorithms homogenizes the system f and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: boolean that shows whether the zero is real.Suppose we were only interested in the real solutions. The command to extract them issolutions(solve(f), success=true, at_infinity=true, only_real=true, singular=true)Indeed, we havejulia> [ans[i].solution for i=1:2]\njulia> Vector{Complex{Float64}}[2]\nComplex{Float64}[2]\n1.00… - 2.66e-15…im\n-1.00… + 1.33e-15…im\nComplex{Float64}[2]\n-1.00… + 2.72e-15…im\n-1.00… + 1.44e-15…imwhich are the two real zeros of f. By assigning the boolean values in the solutions function we can filter the solutions given by solve(f) according to our needs.We solve some more elaborate systems in the example section."
+    "text": "HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we wanted to solve the following systemf= beginbmatrix x^2+y y^2-1endbmatrix  First, we have to define f in Julia. For this purpose HomotopyContinuation.jl provides an interface to DynamicPolynomials.jl for human-readable input and output.import DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.\n\n@polyvar x y # initialize the variables x y\nf = [x^2+y, y^2-1]To solve  f=0 we execute the following command.using HomotopyContinuation # load the module HomotopyContinuation\n\nsolve(f) # solves for f=0The last command will return a type HomotopyContinuation.Result{Complex{Float64}} of length 4 (one entry for each solution):julia> ans\n\njulia> HomotopyContinuation.Result{Complex{Float64}}\n# paths → 4\n# successfull paths → 4\n# solutions at infinity → 0\n# singular solutions → 0\n# real solutions → 2\nHomotopyContinuation.PathResult{Complex{Float64}}[4]Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. None of the solutions is singular and two of them are real. To access the first solution in the array we writejulia> ans[1]\n\njulia> HomotopyContinuation.PathResult{Complex{Float64}}\nreturncode → :success\nsolution → Complex{Float64}[2]\nsingular → false\nresidual → 1.02e-15…\nnewton_residual → 8.95e-16…\nlog10_condition_number → 0.133…\nwindingnumber → 1\nangle_to_infinity → 0.615…\nreal_solution → true\nstartvalue → Complex{Float64}[2]\niterations → 17\nendgame_iterations → 5\nnpredictions → 2The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider this section).solution: the zero that is computed (here it is -1-1).\nsingular: boolean that shows whether the zero is singular.\nresidual: the computed value of f(-1-1).\nangle_to_infinity: the algorithms homogenizes the system f and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: boolean that shows whether the zero is real.Suppose we were only interested in the real solutions. The command to extract them issolutions(solve(f), only_real=true)(a detailed explanation of the solutions function is here). Indeed, we havejulia> [ans[i].solution for i=1:2]\njulia> Vector{Complex{Float64}}[2]\nComplex{Float64}[2]\n1.00… - 2.66e-15…im\n-1.00… + 1.33e-15…im\nComplex{Float64}[2]\n-1.00… + 2.72e-15…im\n-1.00… + 1.44e-15…imwhich are the two real zeros of f. By assigning the boolean values in the solutions function we can filter the solutions given by solve(f) according to our needs.We solve some more elaborate systems in the example section."
 },
 
 {
@@ -45,7 +45,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Examples",
     "title": "Computing the degree of a variety",
     "category": "section",
-    "text": "Consider the projective variety in the 2-dimensional complex projective space CP^2.V = { x^2 + y^2 - z^2 = 0 }The degree of V is the number of intersection points of V with a generic line.   Let us see what it is. First we initialize the defining equation of V.import DynamicPolynomials: @polyvar\n\n@polyvar x y z\nf = x^2 + y^2 - z^2Let us sample the equation of a random line.L = randn(1,3) * [x; y; z]Now we compute the number of solutions to f=0 L=0.using HomotopyContinuation\nsolve([f; L])We find two distinct solutions and conclude that the degree of V is 2."
+    "text": "Consider the projective variety in the 2-dimensional complex projective space CP^2.V =  x^2 + y^2 - z^2 = 0 The degree of V is the number of intersection points of V with a generic line.   Let us see what it is. First we initialize the defining equation of V.import DynamicPolynomials: @polyvar\n\n@polyvar x y z\nf = x^2 + y^2 - z^2Let us sample the equation of a random line.L = randn(1,3) * [x; y; z]Now we compute the number of solutions to f=0 L=0.using HomotopyContinuation\nsolve([f; L])We find two distinct solutions and conclude that the degree of V is 2."
 },
 
 {
@@ -69,7 +69,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Examples",
     "title": "6-R Serial-Link Robots",
     "category": "section",
-    "text": "The following example is from section 9.4 of[The numerical solution of systems of polynomials, Sommese, Wampler].Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by z_1z_6 the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equationsz_i  z_i = 1\n\nz_i  z_i+1 = cos _i\n\na_1 * z_1  z_2 +  + a_5 * z_5  z_6 + a_6 * z_2 +  + a_9 * z_5 = pfor some (a) and a known p (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).The forward problem consists of computing (a) given the z_i and p. The backward problem consists of computing  z_i that realize some fixed (a).We now compute first a forward solution (_0 a_0), and then use (_0 a_0) to compute a backward solution for the problem imposed by some random ( a).using HomotopyContinuation\nimport DynamicPolynomials: @polyvar\n\n@polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]\nz1 = [1, 0, 0]\nz6 = [1, 0, 0]\np = [1,1,0]\nz = [z1, z2, z3, z4, z5, z6]\n\nf = [z[i] ⋅ z[i] for i=2:5]\ng = [z[i] ⋅ z[i+1] for i=1:5]\nh = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)\n\nα = randexp(5)\na = randexp(9)\np = randexp(3)Let us compute a random forward solution.z_0=rand(3,4); # Compute a random assignment for the variable z\nfor i = 1:4\n    z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1\nendWe want to compute the angles g(z_0) with FixedPolynomials.jl. We use Julia's convert function to convert g into the correct type. Then, we use the  evaluate command from FixedPolynomials.jl.import FixedPolynomials: evaluate\nconst FP = FixedPolynomials\n\nz_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input\n\n# compute the forward solution of α\nα_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0)\n\n# evaluate h at z_0\nh_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)\n# compute a solution to h(z_0) * a = p\nh_0 = reshape(h_0,3,9)\na_0 = h_0\\pNow we have forward solutions _0 and a_0. From this we construct the following StraightLineHomotopy.H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])To compute a backward solution with starting value z_0 we finally executesolve(H, z_0)To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions byH, s = totaldegree(StraightLineHomotopy, [f-1; g-α_0; h*a_0-p])\nsolutions(solve(H, s), singular=false)On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the addprocs() command in Julia it takes about 93 seconds."
+    "text": "The following example is from section 9.4 of[The numerical solution of systems of polynomials, Sommese, Wampler].Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by z_1z_6 the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equationsz_i  z_i = 1\n\nz_i  z_i+1 = cos _i\n\na_1 * z_1  z_2 +  + a_5 * z_5  z_6 + a_6 * z_2 +  + a_9 * z_5 = pfor some (a) and a known p (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).The forward problem consists of computing (a) given the z_i and p. The backward problem consists of computing  z_i that realize some fixed (a).We now compute first a forward solution (_0 a_0), and then use (_0 a_0) to compute a backward solution for the problem imposed by some random ( a).using HomotopyContinuation\nimport DynamicPolynomials: @polyvar\n\n@polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]\nz1 = [1, 0, 0]\nz6 = [1, 0, 0]\np = [1, 1, 0]\nz = [z1, z2, z3, z4, z5, z6]\n\nf = [z[i] ⋅ z[i] for i=2:5]\ng = [z[i] ⋅ z[i+1] for i=1:5]\nh = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)\n\nα = randexp(5)\na = randexp(9)Let us compute a random forward solution.z_0=rand(3,4); # Compute a random assignment for the variable z\nfor i = 1:4\n    z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1\nendWe want to compute the angles g(z_0) with FixedPolynomials.jl. We use Julia's convert function to convert g into the correct type. Then, we use the  evaluate command from FixedPolynomials.jl.import FixedPolynomials: evaluate\nconst FP = FixedPolynomials\n\nz_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input\n\n# compute the forward solution of α\nα_0 = acos.( FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0) )\n\n# evaluate h at z_0\nh_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)\n# compute a solution to h(z_0) * a = p\nh_0 = reshape(h_0,3,9)\na_0 = h_0\\pNow we have forward solutions _0 and a_0. From this we construct the following StraightLineHomotopy.H = StraightLineHomotopy([f-1; g-cos.(α_0); h*a_0-p], [f-1; g-cos.(α); h*a-p])To compute a backward solution with starting value z_0 we finally executesolve(H, z_0)To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions byH, s = totaldegree(StraightLineHomotopy, [f-1; g-cos.(α_0); h*a_0-p])\nsolutions(solve(H, s), singular=false)On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the addprocs() command in Julia it takes about 93 seconds."
 },
 
 {
@@ -97,14 +97,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "Homotopy.html#Homotopies-1",
-    "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopies",
-    "category": "section",
-    "text": "The following homotopies are implemented"
-},
-
-{
     "location": "Homotopy.html#Homotopy.StraightLineHomotopy",
     "page": "Setting up homotopies with Homotopy.jl",
     "title": "Homotopy.StraightLineHomotopy",
@@ -121,11 +113,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "Homotopy.html#Polynomial-homotopies-1",
+    "location": "Homotopy.html#Homotopies-1",
     "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Polynomial homotopies",
+    "title": "Homotopies",
     "category": "section",
-    "text": "These are subtypes of AbstractPolynomialHomotopyStraightLineHomotopy\nGeodesicOnTheSphere"
+    "text": "The following homotopies are implemented. They are subtypes of AbstractPolynomialHomotopyStraightLineHomotopy\nGeodesicOnTheSphere"
 },
 
 {
@@ -381,7 +373,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.solve",
     "category": "Function",
-    "text": "    solve(H::AbstractHomotopy, startvalues_s, [algorithm]; kwargs...)\n\nSolve the homotopy H via homotopy continuation with the given startvalues_s and the given algorithm.\n\n    solve(f::Vector{<:MP.AbstractPolynomial{T}})\n\nSolves the polynomial system f via homotopy continuation. This uses a totaldegree homotopy of type StraightLineHomotopy and the SphericalPredictorCorrector pathtracking routine. To specify homotopy and pathtracker, use\n\nsolve(f::Vector{<:MP.AbstractPolynomial{T}}, [homotopy], [algorithm])\n\nDefault is homotopy = StraightLineHomotopy and algorithm = SphericalPredictorCorrector. For instance, use\n\nsolve(f, StraightLineHomotopy, AffinePredictorCorrector())\n\nfor solving f with a GeodesicOnTheSphere homotopy and the AffinePredictorCorrector pathtracking routine.\n\n\n\n"
+    "text": "    solve(H::AbstractHomotopy, startvalues_s, [algorithm]; kwargs...)\n\nSolve the homotopy H via homotopy continuation with the given startvalues_s and the given algorithm.\n\nkwargs are the keyword arguments for the solver options.\n\nThe default pathtracking algorithm is SphericalPredictorCorrector().\n\nTo specify another pathracking algorithm, e.g.AffinePredictorCorrector(), write\n\n    solve(H::AbstractHomotopy, startvalues_s, AffinePredictorCorrector(); kwargs...)\n\nThe function also takes polynomials as inputs:\n\n    solve(f::Vector{<:MP.AbstractPolynomial{T}})\n\nsolves the polynomial system f via a totaldegree homotopy of type StraightLineHomotopy and the SphericalPredictorCorrector pathtracking routine.\n\nTo specify homotopy and pathtracker, use\n\n    solve(f::Vector{<:MP.AbstractPolynomial{T}}, [homotopy], [algorithm]; kwargs...)\n\nDefault is homotopy = StraightLineHomotopy and algorithm = SphericalPredictorCorrector. For instance,\n\n    solve(f, GeodesicOnTheSphere, AffinePredictorCorrector())\n\nsolves f=0 with a GeodesicOnTheSphere homotopy and the AffinePredictorCorrector pathtracking routine.\n\n\n\n"
 },
 
 {
@@ -390,6 +382,14 @@ var documenterSearchIndex = {"docs": [
     "title": "The solve function",
     "category": "section",
     "text": "The solve function solves homotopies with given starting values.solveThe output of solve is an array of type HomotopyContinuation.Result."
+},
+
+{
+    "location": "solve.html#solveroptions-1",
+    "page": "Solving homotopies",
+    "title": "Solver options",
+    "category": "section",
+    "text": ""
 },
 
 {
@@ -409,11 +409,19 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "solve.html#HomotopyContinuation.PathResult",
+    "page": "Solving homotopies",
+    "title": "HomotopyContinuation.PathResult",
+    "category": "Type",
+    "text": "PathResult(startvalue, pathtracker_result, endgamer_result, solver)\n\nConstruct a PathResult for a given startvalue. pathtracker_result is the PathtrackerResult until the endgame radius is reached. endgamer_result is the EndgamerResult resulting from the corresponding endgame.\n\nA PathResult contains:\n\nreturncode: One of :success, :at_infinity or any error code from the EndgamerResult\nsolution::Vector{T}: The solution vector. If the algorithm computed in projective space\n\nand the solution is at infinity then the projective solution is given. Otherwise an affine solution is given if the startvalue was affine and a projective solution is given if the startvalue was projective.\n\nresidual::Float64: The value of the infinity norm of H(solution, 0).\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\nlog10_condition_number: A high condition number indicates singularty. See Homotopy.κ for details.   The value is the logarithmic condition number (with base 10).\nwindingnumber: The estimated winding number\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: Indicates whether the solution is real given the defined tolerance at_infinity_tol (from the solver options).\nstartvalue: The startvalue of the path\niterations: The number of iterations the pathtracker needed.\nendgame_iterations: The number of steps in the geometric series the endgamer did.\nnpredictions: The number of predictions the endgamer did.\npredictions: The predictions of the endgamer.\n\n\n\n"
+},
+
+{
     "location": "solve.html#result-1",
     "page": "Solving homotopies",
     "title": "The result array",
     "category": "section",
-    "text": "The HomotopyContinuation.PathResult struct carries the following informations.returncode:\nsolution: the zero that is computed (here it is -i1).\nsingular: boolean that shows whether the zero is singular.\nresidual: the computed value of f(-i1).\nnewton_residual:\nlog10_condition_number:\nwindingnumber\nangle_to_infinity: the algorithms homogenizes the system f and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: boolean that shows whether the zero is real.\nstartvalue:\niterations:\nendgame_iterations:\nnpredictions:"
+    "text": "The HomotopyContinuation.PathResult struct carries the following informations.PathResult"
 },
 
 {
@@ -461,7 +469,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Pathtracking",
     "title": "Result",
     "category": "section",
-    "text": "PathtrackerResult"
+    "text": "See also here.PathtrackerResult"
 },
 
 {

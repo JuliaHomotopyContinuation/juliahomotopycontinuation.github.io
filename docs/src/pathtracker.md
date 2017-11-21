@@ -38,6 +38,7 @@ end
 ```
 
 ## Result
+See also [here](@ref result).
 ```@docs
 PathtrackerResult
 ```

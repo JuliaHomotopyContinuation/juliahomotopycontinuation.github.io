@@ -44,9 +44,7 @@ H(rand(Complex128, 2), 0.42)
 
 ## Homotopies
 
-The following homotopies are implemented
-### Polynomial homotopies
-These are subtypes of `AbstractPolynomialHomotopy`
+The following homotopies are implemented. They are subtypes of `AbstractPolynomialHomotopy`
 ```@docs
 StraightLineHomotopy
 GeodesicOnTheSphere

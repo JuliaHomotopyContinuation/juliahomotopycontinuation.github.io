@@ -144,7 +144,7 @@ import DynamicPolynomials: @polyvar
 @polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]
 z1 = [1, 0, 0]
 z6 = [1, 0, 0]
-p = [1,1,0]
+p = [1, 1, 0]
 z = [z1, z2, z3, z4, z5, z6]
 
 f = [z[i] ⋅ z[i] for i=2:5]
@@ -153,7 +153,6 @@ h = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)
 
 α = randexp(5)
 a = randexp(9)
-p = randexp(3)
 ```
 
 Let us compute a random forward solution.
@@ -172,7 +171,7 @@ const FP = FixedPolynomials
 z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input
 
 # compute the forward solution of α
-α_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0)
+α_0 = acos.( FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0) )
 
 # evaluate h at z_0
 h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)
@@ -182,7 +181,7 @@ a_0 = h_0\p
 ```
 Now we have forward solutions ``α_0`` and ``a_0``. From this we construct the following StraightLineHomotopy.
 ```julia
-H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])
+H = StraightLineHomotopy([f-1; g-cos.(α_0); h*a_0-p], [f-1; g-cos.(α); h*a-p])
 ```
 To compute a backward solution with starting value ``z_0`` we finally execute
 ```julia
@@ -192,7 +191,7 @@ solve(H, z_0)
 To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions by
 
 ```julia
-H, s = totaldegree(StraightLineHomotopy, [f-1; g-α_0; h*a_0-p])
+H, s = totaldegree(StraightLineHomotopy, [f-1; g-cos.(α_0); h*a_0-p])
 solutions(solve(H, s), singular=false)
 ```
 

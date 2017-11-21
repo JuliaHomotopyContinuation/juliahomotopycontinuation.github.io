@@ -116,23 +116,25 @@ solve(H, w_0, AffinePredictorCorrector())
 
 
 ## 6-R Serial-Link Robots
-The following example is from section 9.4 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+The following example is from section 9.4 of
 
-A robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by ``z_1,...,z_6`` the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
+[The numerical solution of systems of polynomials, Sommese, Wampler].
+
+Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by ``z_1,...,z_6`` the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
 
 ```math
-z_i ⋅ z_i = 1
+z_i ⋅ z_i = 1\\
 
-z_i ⋅ z_{i+1} = \cos α_i
+z_i ⋅ z_{i+1} = \cos α_i\\
 
 a_1 * z_1 × z_2 + ... + a_5 * z_5 × z_6 + a_6 * z_2 + ... + a_9 * z_5 = p
 ```
 
-for some (α,a,p) (see [The numerical solution of systems of polynomials, Sommese, Wampler] for a detailed explanation on how these numbers are to be interpreted).
+for some ``(α,a)`` and a known ``p`` (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).
 
-The forward problem consists of computing (α,a,p) given the ``z_i``. The backward problem consists of computing  ``z_i`` that realize some fixed (α,a,p).
+The forward problem consists of computing ``(α,a)`` given the ``z_i`` and ``p``. The backward problem consists of computing  ``z_i`` that realize some fixed ``(α,a)``.
 
-We now compute first a forward solution (α_0, a_0, p_0), and then use (α_0, a_0, p_0) to compute a backward solution for the problem imposed by some random (α, a, p).
+We now compute first a forward solution ``(α_0, a_0)``, and then use ``(α_0, a_0)`` to compute a backward solution for the problem imposed by some random ``(α, a)``.
 
 
 ```julia

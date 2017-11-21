@@ -9,7 +9,7 @@ makedocs(format   = :html,
                   "Pathtracking"=>"pathtracker.md",
                   "Endgame"=>"endgame.md",
                   "How to set up your own homotopy"=>"set_up_homotopy.md",
-                  "How to set up your own pathtracker"=>"set_up_pathtracker.md",
+                  "How to set up your own pathtracking algorithm"=>"set_up_pathtracker.md",
                      ],
          html_edit_branch = "source")
 

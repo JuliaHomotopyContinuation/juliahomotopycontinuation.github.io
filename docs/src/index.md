@@ -3,11 +3,9 @@
 
 The aim of this project is twofold: establishing a fast numerical polynomial solver in `Julia` and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.
 
-Since this package is pre-release and also relies on couple of unreleased packages. To satisfy all dependencies you have to install it via
-
+You can simply install this package via the Julia package manager
 ```julia
-Pkg.clone("https://github.com/JuliaHomotopyContinuation/Homotopy.jl");
-Pkg.clone("https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git")
+Pkg.add("JuliaHomotopyContinuation");
 ```
 
 ## A first example

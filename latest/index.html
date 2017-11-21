@@ -5,7 +5,7 @@ Pkg.clone(&quot;https://github.com/JuliaHomotopyContinuation/HomotopyContinuatio
 @polyvar x y # initialize the variables x y
 f = [x^2+y, y^2-1]</code></pre><p>To solve  <span>$f=0$</span> we execute the following command.</p><pre><code class="language-julia">using HomotopyContinuation # load the module HomotopyContinuation
 
-solve(f) # solves for f=0</code></pre><p>The last command will return a type <code>HomotopyContinuation.Result{Complex{Float64}}</code> of length 4 (one entry for each solution):</p><pre><code class="language-julia-repl">julia&gt; ans
+solve(f) # solves for f=0</code></pre><p>(see <a href="solve.html#solveroptions-1">here</a> for a list of options that can be passed to <code>solve</code>).</p><p>The last command will return a type <code>HomotopyContinuation.Result{Complex{Float64}}</code> of length 4 (one entry for each solution):</p><pre><code class="language-julia-repl">julia&gt; ans
 
 julia&gt; HomotopyContinuation.Result{Complex{Float64}}
 # paths → 4

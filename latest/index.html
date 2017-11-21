@@ -11,7 +11,9 @@ julia&gt; HomotopyContinuation.Result{Complex{Float64}}
 # paths → 4
 # successfull paths → 4
 # solutions at infinity → 0
-HomotopyContinuation.PathResult{Complex{Float64}}[4]</code></pre><p>Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. To access the first solution in the array we write</p><pre><code class="language-julia-repl">julia&gt; ans[1]
+# singular solutions → 0
+# real solutions → 2
+HomotopyContinuation.PathResult{Complex{Float64}}[4]</code></pre><p>Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. None of the solutions is singular and two of them are real. To access the first solution in the array we write</p><pre><code class="language-julia-repl">julia&gt; ans[1]
 
 julia&gt; HomotopyContinuation.PathResult{Complex{Float64}}
 returncode → :success

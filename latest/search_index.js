@@ -109,7 +109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Setting up homotopies with Homotopy.jl",
     "title": "Homotopy.GeodesicOnTheSphere",
     "category": "Type",
-    "text": "GeodesicOnTheSphere(start, target)\n\nHomotopy is the geodesic from g=start/|start| (t=1) to f=target/|target|(t=0):H(x,t) = (cos(tα) - sin (tα)cos(α)/sin(α)) f + sin(tα) / sin(α) * g, whereα = cos <f,g>. The constructor automatically homgenizesstartandtarget`.\n\nstart and target have to match and to be one of the following\n\nVector{<:MP.AbstractPolynomial} where MP is MultivariatePolynomials\nMP.AbstractPolynomial\nVector{<:FP.Polynomial} where FP is FixedPolynomials\n\nGeodesicOnTheSphere{T}(start, target)\n\nYou can also force a specific coefficient type T.\n\n\n\n"
+    "text": "GeodesicOnTheSphere(start, target)\n\nHomotopy is the geodesic from g=start/|start| (t=1) to f=target/|target| (t=0):\n\nH(x,t) = (cos(tα) - sin (tα)cos(α)/sin(α)) f + sin(tα) / sin(α) * g\n\nwhere  = cos fg. The constructor automatically homgenizes start and target.\n\nstart and target have to match and to be one of the following\n\nVector{<:MP.AbstractPolynomial} where MP is MultivariatePolynomials\nMP.AbstractPolynomial\nVector{<:FP.Polynomial} where FP is FixedPolynomials\n\nGeodesicOnTheSphere{T}(start, target)\n\nYou can also force a specific coefficient type T.\n\n\n\n"
 },
 
 {
@@ -313,11 +313,27 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "Homotopy.html#Homotopy.gammatrick!",
+    "page": "Setting up homotopies with Homotopy.jl",
+    "title": "Homotopy.gammatrick!",
+    "category": "Function",
+    "text": "gammatrick!(H::AbstractPolynomialHomotopy{Complex} [, seed::Int]])\n\nScale the coefficients of the start system of H with a random complex number picked uniformly from the (complex) unit circle. Use this to make the paths z(t) generic.\n\ngammatrick!(H::AbstractPolynomialHomotopy{Complex}, γ::Complex)\n\nYou can also pass a scaling factor directly.\n\n\n\n"
+},
+
+{
+    "location": "Homotopy.html#Homotopy.gammatrick",
+    "page": "Setting up homotopies with Homotopy.jl",
+    "title": "Homotopy.gammatrick",
+    "category": "Function",
+    "text": "gammatrick(H::AbstractPolynomialHomotopy{Complex} , γ::Number)\n\nScale the coefficients of the start system of H with γ.\n\ngammatrick(H::AbstractPolynomialHomotopy{Complex})\n\nA a random complex number γ is picked uniformly from the (complex) unit circle and then scale the coefficients of the start system of H with γ. This returns the new H and γ.\n\n\n\n"
+},
+
+{
     "location": "Homotopy.html#Misc-1",
     "page": "Setting up homotopies with Homotopy.jl",
     "title": "Misc",
     "category": "section",
-    "text": "nvariables\nweylnorm"
+    "text": "nvariables\nweylnorm\ngammatrick!\ngammatrick"
 },
 
 {
@@ -389,7 +405,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.Solver",
     "category": "Type",
-    "text": "Solver(homotopy, pathtracking_algorithm=SphericalPredictorCorrector(), endgame=CauchyEndgame(); kwargs...)\n\nCreate a mutable Solver struct. This contains a Pathtracker and an Endgamer, everything you need to solve the given homotopy. Solver supports the following options:\n\nendgame_start=0.1: Where the endgame starts\nabstol=1e-12: The desired accuracy of the final roots\nat_infinity_tol=1e-10: An point is at infinity if the maginitude of the homogenous variable\n\nis less than at_infinity_tol.\n\nsingular_tol=1e4: If the winding number is 1 but the condition number is larger than\n\nsingular_tol then the root is declared as singular.\n\nrefinement_maxiters=100: The maximal number of newton iterations to achieve abstol.\nverbose=false: Print additional warnings / informations\npathcrossing_tolerance=1e-8: The tolerance for when two paths are considered to be crossed.\npathcrossing_check=true: Enable the pathcrossing check.\nparallel_type=:pmap: Currently there are two modes: :pmap will use pmap for parallelism\n\nand :none will use the standard map. :pmap is by defautl enabled since it works reliable, but if you develop new algorithms you probably want to disable parallelism.\n\nbatch_size=1: The batch_size for pmap if parallel_type is :pmap.\n\nFor instance, to solve the homotopy H with starting values s with no endgame and a singular tolerance of 1e5, write\n\n    solve(H, s, endgame_start=0.0, singular_tol=1e5)\n\nTo solve the polynomial system f with the same options write\n\n    solve(f, endgame_start=0.0, singular_tol=1e5)\n\n\n\n"
+    "text": "Solver(homotopy, pathtracking_algorithm=SphericalPredictorCorrector(), endgame=CauchyEndgame(); kwargs...)\n\nCreate a mutable Solver struct. This contains a Pathtracker and an Endgamer, everything you need to solve the given homotopy. Solver supports the following options:\n\nendgame_start=0.1: Where the endgame starts\nabstol=1e-12: The desired accuracy of the final roots\nat_infinity_tol=1e-10: An point is at infinity if the maginitude of the homogenous variable\n\nis less than at_infinity_tol.\n\nsingular_tol=1e4: If the winding number is 1 but the condition number is larger than\n\nsingular_tol then the root is declared as singular.\n\nrefinement_maxiters=100: The maximal number of newton iterations to achieve abstol.\nverbose=false: Print additional warnings / informations\napply_gammatrick=true: This modifies the start system to make it generic.\ngamma=apply_gammatrick ? exp(im*2π*rand()) : complex(1.0): You can overwrite the default gamma.   This is useful if you want to rerun only some paths.\npathcrossing_tolerance=1e-8: The tolerance for when two paths are considered to be crossed.\npathcrossing_check=true: Enable the pathcrossing check.\nparallel_type=:pmap: Currently there are two modes: :pmap will use pmap for parallelism\n\nand :none will use the standard map. :pmap is by defautl enabled since it works reliable, but if you develop new algorithms you probably want to disable parallelism.\n\nbatch_size=1: The batch_size for pmap if parallel_type is :pmap.\n\nFor instance, to solve the homotopy H with starting values s with no endgame and a singular tolerance of 1e5, write\n\n    solve(H, s, endgame_start=0.0, singular_tol=1e5)\n\nTo solve the polynomial system f with the same options write\n\n    solve(f, endgame_start=0.0, singular_tol=1e5)\n\n\n\n"
 },
 
 {

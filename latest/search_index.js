@@ -445,7 +445,23 @@ var documenterSearchIndex = {"docs": [
     "page": "Pathtracking",
     "title": "Examples",
     "category": "section",
-    "text": "The follwing example demonstrates the usual workflow. You first create a Pathtracker object, then you can track a path from a given start value and finally you create a PathtrackerResult.pathtracker = Pathtracker(H, SphericalPredictorCorrector())\ntrack!(H, x, 1.0, 0.0)\nresult = PathtrackerResult(H)You can reuse (and should!) resuse a Pathtracker for multiple pathspathtracker = Pathtracker(H, SphericalPredictorCorrector())\nresults = map(xs) do x\n  track!(H, x, 1.0, 0.0)\n  PathtrackerResult(H)\nendPathtracker also supports the iterator interface. This returns the complete Pathtracker object at each iteration. This enables all sort of nice features. For example you could store the actual path the pathtracker takes:pathtracker = Pathtracker(H, SphericalPredictorCorrector())\nsetup_pathtracker!(H, x, 1.0, 0.0)\npath = []\nfor t in pathtracker\n  push!(path, current_value(t))\nend"
+    "text": "The follwing example demonstrates the usual workflow. You first create a Pathtracker object, then you can track a path from a given start value and finally you create a PathtrackerResult.pathtracker = Pathtracker(H, SphericalPredictorCorrector())\ntrack!(pathtracker, x, 1.0, 0.0)\nresult = PathtrackerResult(pathtracker)You can reuse (and should!) resuse a Pathtracker for multiple pathspathtracker = Pathtracker(H, SphericalPredictorCorrector())\nresults = map(xs) do x\n  track!(pathtracker, x, 1.0, 0.0)\n  PathtrackerResult(pathtracker)\nendPathtracker also supports the iterator interface. This returns the complete Pathtracker object at each iteration. This enables all sort of nice features. For example you could store the actual path the pathtracker takes:pathtracker = Pathtracker(H, SphericalPredictorCorrector())\nsetup_pathtracker!(pathtracker, x, 1.0, 0.0)\npath = []\nfor t in pathtracker\n  push!(path, current_value(t))\nend"
+},
+
+{
+    "location": "pathtracker.html#HomotopyContinuation.PathtrackerResult",
+    "page": "Pathtracking",
+    "title": "HomotopyContinuation.PathtrackerResult",
+    "category": "Type",
+    "text": "PathtrackerResult(pathtracker, extended_analysis=false)\n\nReads the result from the current pathtracker state. A PathtrackerResult contains:\n\nreturncode: One of :max_iterations, :singularity, :invalid_startvalue, :success.\nsolution::Vector{T}: The solution.\nresidual::Float64: The value of the infinity norm of H(solution, 0).\niterations: The number of iterations the pathtracker needed.\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\n\nIf extended_analysis=true there is also:\n\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\ncondition_number: A high condition number indicates singularty. See Homotopy.κ for details.\n\n\n\n"
+},
+
+{
+    "location": "pathtracker.html#Result-1",
+    "page": "Pathtracking",
+    "title": "Result",
+    "category": "section",
+    "text": "PathtrackerResult"
 },
 
 {
@@ -513,11 +529,67 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "endgame.html#HomotopyContinuation.Endgamer",
+    "page": "Endgame",
+    "title": "HomotopyContinuation.Endgamer",
+    "category": "Type",
+    "text": "Endgamer(endgame_algorithm, pathtracker, [x, R]; kwargs...)\n\nConstruct an Endgamer object. The Endgamer 'plays' the endgame with the given endgame_algorithm and uses the given pathtracker to move forward. The endgame is start at x to time R (the endgame radius). In each iteration the endgame moves forward and then performs one iteration of the endgame algorithm. In each iteration we could get another prediction and an estimate of the winding number. Convergence is declared if two consecutive predictions are smaller than a defined tolerance (endgame_abstol).\n\nThe following options are available:\n\ngeometric_series_factor=0.5: The Endgamer moves forward using the geometric series   ^kR where  is geometric_series_factor.\nmax_winding_number=16 the maximal winding number we allow. If we get a higher winding number\n\nthe path is declared failed.\n\nendgame_abstol=pathtracker.options.abstol: The tolerance necessary to declare convergence.\n\nEndgamer supports similar to Pathtracker an iterator interface.\n\n\n\n"
+},
+
+{
     "location": "endgame.html#Endgame-1",
     "page": "Endgame",
     "title": "Endgame",
     "category": "section",
-    "text": ""
+    "text": "Assume we want to find the all solutions of the polynomial (x-2)^4 with homotopy continuation. Then the pathtracker gets into severe trouble near the end of the path since the derivative is 0 at x=2.How do we solve that problem? The idea is to split the pathtracking into two parts. We first track the path x(t) until the so called endgame zone (starting by default at t=01). Then we switch to the endgame. The idea is to estimate the value of x(0.0) without tracking the path all the way to t=00(since this would fail due to a singular Jacobian).There are two well known endgame strategies. The Power Series Endgame and the Cauchy Endgame. Currently only the Cauchy Endgame is implemented.At the heart of the endgame routine is the  mutable struct Endgamer.Endgamer"
+},
+
+{
+    "location": "endgame.html#Examples-1",
+    "page": "Endgame",
+    "title": "Examples",
+    "category": "section",
+    "text": "The follwing example demonstrates the usual workflow. You first create an Endgamer object, then you can track a path from a given start value and finally you create a EndgamerResult.endgamer = Endgamer(CauchyEndgame(), pathtracker)\nendgamer!(endgamer, x, 0.1)\nresult = EndgamerResult(endgamer)You can reuse (and should!) resuse an Endgamer for multiple pathsendgamer = Endgamer(CauchyEndgame(), pathtracker))\nresults = map(xs) do x\n  endgame!(endgamer, x, 0.1)\n  EndgamerResult(endgamer)\nend"
+},
+
+{
+    "location": "endgame.html#HomotopyContinuation.CauchyEndgame",
+    "page": "Endgame",
+    "title": "HomotopyContinuation.CauchyEndgame",
+    "category": "Type",
+    "text": "CauchyEndgame(;kwargs...)\n\nThe main idea of the Cauchy Endgame is to use Cauchy's integral formula to predict the solution of the path x(t), i.e. x(0). At each iteration we are at some point (x t). We then track the polygon defined by te^i2kn until we end again at x. Here n is the number of samples we take per loop.\n\nThe following options are available:\n\nsamples_per_loop=8: The number of samples we take at one loop.\nloopclosed_tolerance=1e-5: The tolerance when a loop is considered closed.\nL=0.75 and K=05: These are paramters for heuristics. For more details see \"A Parallel Endgame \" by Bates, Hauenstein and Sommese [1],   page 8 and 9.\n\n[1]: Bates, Daniel J., Jonathan D. Hauenstein, and Andrew J. Sommese. \"A Parallel Endgame.\" Contemp. Math 556 (2011): 25-35.\n\n\n\n"
+},
+
+{
+    "location": "endgame.html#Algorithms-1",
+    "page": "Endgame",
+    "title": "Algorithms",
+    "category": "section",
+    "text": "CauchyEndgame"
+},
+
+{
+    "location": "endgame.html#HomotopyContinuation.endgame!",
+    "page": "Endgame",
+    "title": "HomotopyContinuation.endgame!",
+    "category": "Function",
+    "text": "endgame!(endgamer, x, R)\n\nPlay the endgame for x starting from time R.\n\nendgame!(endgamer)\n\nStart the endgamer. You probably want to setup things in prior with setup_endgamer!.\n\n\n\n"
+},
+
+{
+    "location": "endgame.html#HomotopyContinuation.setup_endgamer!",
+    "page": "Endgame",
+    "title": "HomotopyContinuation.setup_endgamer!",
+    "category": "Function",
+    "text": "setup_endgamer!(endgamer, x, R)\n\nSetup endgamer to play the endgame starting from x at time R.\n\n\n\n"
+},
+
+{
+    "location": "endgame.html#Reference-1",
+    "page": "Endgame",
+    "title": "Reference",
+    "category": "section",
+    "text": "endgame!\nsetup_endgamer!"
 },
 
 {

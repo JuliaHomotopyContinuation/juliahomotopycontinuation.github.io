@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Introduction",
     "category": "section",
-    "text": "HomotopyContinuation.jl is a package for solving polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.Since this package is pre-release and also relies on couple of unreleased packages. To satisfy all dependencies you have to install it viaPkg.clone(\"https://github.com/JuliaHomotopyContinuation/Homotopy.jl\");\nPkg.clone(\"https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git\")"
+    "text": "HomotopyContinuation.jl is a package for solving square polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.Since this package is pre-release and also relies on couple of unreleased packages. To satisfy all dependencies you have to install it viaPkg.clone(\"https://github.com/JuliaHomotopyContinuation/Homotopy.jl\");\nPkg.clone(\"https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl.git\")"
 },
 
 {
@@ -93,7 +93,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Setting up homotopies with Homotopy.jl",
     "title": "Example",
     "category": "section",
-    "text": "As an example we construct a homotopy between the polynomial systemsf= beginbmatrix x + y^3  x^2y-2yendbmatrixquad  \ng= beginbmatrixx^3+2 y^3+2endbmatrixCurrently, there are two types of homotopies implemented:StraightLineHomotopy\nGeodesicOnTheSphereThe code to initialize a StraightLineHomotopy is as follows.using Homotopy\nimport DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.\n@polyvar x y # initilize the variables x y\n\nf = [x + y^3, x^2*y-2y]\ng = [x^3+2, y^3+2]\n\nH = StraightLineHomotopy(f, g) # H is now StraightLineHomotopy{Int64}\n\n# to avoid unnecessary conversions one could also have\nH = StraightLineHomotopy{Complex128}([x + y^3, x^2*y-2y], [x^3+2, y^3+2])\n\n# we can now evaluate H\nevaluate(H, rand(Complex128, 2), 0.42)\n# or alternatively\nH(rand(Complex128, 2), 0.42)"
+    "text": "As an example we construct a homotopy between the polynomial systemsf= beginbmatrix x + y^3  x^2y-2yendbmatrixquad  \ng= beginbmatrixx^3+2 y^3+2endbmatrixCurrently, there are two types of homotopies implemented:StraightLineHomotopy\nGeodesicOnTheSphereThe code to initialize a StraightLineHomotopy is as follows.using HomotopyContinuation\nimport DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.\n@polyvar x y # initilize the variables x y\n\nf = [x + y^3, x^2*y-2y]\ng = [x^3+2, y^3+2]\n\nH = StraightLineHomotopy(f, g) # H is now StraightLineHomotopy{Int64}\n\n# to avoid unnecessary conversions one could also have\nH = StraightLineHomotopy{Complex128}([x + y^3, x^2*y-2y], [x^3+2, y^3+2])\n\n# we can now evaluate H\nevaluate(H, rand(Complex128, 2), 0.42)\n# or alternatively\nH(rand(Complex128, 2), 0.42)"
 },
 
 {

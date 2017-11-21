@@ -81,10 +81,10 @@ The returncode tells us that the pathtracking was successfull. What do the entri
 Suppose we were only interested in the real solutions. The command to extract them is
 
 ```julia
-solutions(solve(f), success=true, at_infinity=true, only_real=true, singular=true)
+solutions(solve(f), only_real=true)
 ```
+(a detailed explanation of the `solutions` function is [here](@ref solutions)). Indeed, we have
 
-Indeed, we have
 ```julia-repl
 julia> [ans[i].solution for i=1:2]
 julia> Vector{Complex{Float64}}[2]

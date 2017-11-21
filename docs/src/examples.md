@@ -3,8 +3,8 @@
 
 ## Computing the degree of a variety
 Consider the projective variety in the 2-dimensional complex projective space ``CP^2``.
-```
-V = { x^2 + y^2 - z^2 = 0 }
+```math
+V = \{ x^2 + y^2 - z^2 = 0 \}
 ```
 The degree of ``V`` is the number of intersection points of ``V`` with a generic line.  
 Let us see what it is. First we initialize the defining equation of ``V``.

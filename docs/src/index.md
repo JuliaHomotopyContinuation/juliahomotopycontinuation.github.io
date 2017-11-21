@@ -68,6 +68,7 @@ startvalue → Complex{Float64}[2]
 iterations → 17
 endgame_iterations → 5
 npredictions → 2
+predictions → Vector{Complex{Float64}}[2]
 ```
 
 The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider [this](@ref result) section).
@@ -98,3 +99,5 @@ Complex{Float64}[2]
 which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` according to our needs.
 
 We solve some more elaborate systems in the [example section](@ref examples).
+
+`JuliaHomotopyContinuation` also supports input of type `BigFloat`.

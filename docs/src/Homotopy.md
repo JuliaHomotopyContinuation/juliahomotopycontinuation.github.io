@@ -93,6 +93,8 @@ ishomogenous
 ```@docs
 nvariables
 weylnorm
+gammatrick!
+gammatrick
 ```
 
 ## Condition numbers

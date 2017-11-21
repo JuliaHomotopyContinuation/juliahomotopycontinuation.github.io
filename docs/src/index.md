@@ -70,6 +70,7 @@ startvalue → Complex{Float64}[2]
 iterations → 17
 endgame_iterations → 5
 npredictions → 2
+predictions → Vector{Complex{Float64}}[2]
 ```
 
 The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider [this](@ref result) section).

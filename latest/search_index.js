@@ -381,7 +381,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.solve",
     "category": "Function",
-    "text": "solve(H::AbstractHomotopy, startvalues_s, [algorithm]; kwargs...)\n\nSolve the homotopy H via homotopy continuation with the given startvalues_s and the given algorithm.\n\nsolve(f::Vector{<:MP.AbstractPolynomial{T}}; homotopytype=GeodesicOnTheSphere, algorithm=SphericalPredictorCorrector(), kwargs...)\nsolve(f::MP.AbstractPolynomial{T}; homotopytype=GeodesicOnTheSphere, algorithm=SphericalPredictorCorrector(), kwargs...)\n\nSolves the polynomial system f via homotopy continuation. This uses a totaldegree homotopy of the given homotopytype and uses the given algorithm for pathtracking.\n\n\n\n"
+    "text": "    solve(H::AbstractHomotopy, startvalues_s, [algorithm]; kwargs...)\n\nSolve the homotopy H via homotopy continuation with the given startvalues_s and the given algorithm.\n\n    solve(f::Vector{<:MP.AbstractPolynomial{T}})\n\nSolves the polynomial system f via homotopy continuation. This uses a totaldegree homotopy of type StraightLineHomotopy and the SphericalPredictorCorrector pathtracking routine. To specify homotopy and pathtracker, use\n\nsolve(f::Vector{<:MP.AbstractPolynomial{T}}, [homotopy], [algorithm])\n\nDefault is homotopy = StraightLineHomotopy and algorithm = SphericalPredictorCorrector. For instance, use\n\nsolve(f, StraightLineHomotopy, AffinePredictorCorrector())\n\nfor solving f with a GeodesicOnTheSphere homotopy and the AffinePredictorCorrector pathtracking routine.\n\n\n\n"
 },
 
 {
@@ -550,6 +550,22 @@ var documenterSearchIndex = {"docs": [
     "title": "Examples",
     "category": "section",
     "text": "The follwing example demonstrates the usual workflow. You first create an Endgamer object, then you can track a path from a given start value and finally you create a EndgamerResult.endgamer = Endgamer(CauchyEndgame(), pathtracker)\nendgamer!(endgamer, x, 0.1)\nresult = EndgamerResult(endgamer)You can reuse (and should!) resuse an Endgamer for multiple pathsendgamer = Endgamer(CauchyEndgame(), pathtracker))\nresults = map(xs) do x\n  endgame!(endgamer, x, 0.1)\n  EndgamerResult(endgamer)\nend"
+},
+
+{
+    "location": "endgame.html#HomotopyContinuation.EndgamerResult",
+    "page": "Endgame",
+    "title": "HomotopyContinuation.EndgamerResult",
+    "category": "Type",
+    "text": "EndgamerResult(endgamer, extended_analysis=false)\n\nReads the result from the current pathtracker state. A EndgamerResult contains:\n\nreturncode: One of :ill_conditioned_zone, :success, :windingnumber_too_high\nsolution::Vector{T}: The solution.\nstartvalue::Vector{T}: The solution.\nresidual::Float64: The value of the infinity norm of H(solution, 0).\niterations: The number of iterations the pathtracker needed.\nnpredictions: The number of predictions\npredictions: All predictions for further introspection (e.g. the path failed)\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nwindingnumber: The estimated winding number\n\n\n\n"
+},
+
+{
+    "location": "endgame.html#Result-1",
+    "page": "Endgame",
+    "title": "Result",
+    "category": "section",
+    "text": "EndgamerResult"
 },
 
 {

@@ -101,3 +101,5 @@ Complex{Float64}[2]
 which are the two real zeros of `f`. By assigning the boolean values in the [`solutions`](@ref solutions) function we can filter the solutions given by `solve(f)` according to our needs.
 
 We solve some more elaborate systems in the [example section](@ref examples).
+
+`JuliaHomotopyContinuation` also supports input of type `BigFloat`.

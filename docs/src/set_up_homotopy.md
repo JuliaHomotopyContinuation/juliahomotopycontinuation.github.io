@@ -27,7 +27,7 @@ To start we make a copy of the file `straigthline.jl` (or of any other appropria
 
 ## Adapt the struct and its constructors
 
-We now assume that the file we copied is `straigthline.jl`. It is convenient to make a search-and-replace on `StraightLineHomotopy` and replace it by `RotationAndStraightLine`. In the code we use the abbreviation `SLH{T}` for `StraightLineHomotopy{T}`. So we also search-and-replace `SLH{T}` by `RSL{T}`.
+We now assume that the file we copied is `straigthline.jl`. It is convenient to make a search-and-replace on `StraightLineHomotopy` and replace it by `RotationAndStraightLine`. 
 
 First we adapt the contructor. Note that in the initialization of the struct we sample a random matrix and extract a unitary matrix ``U`` from its QR-decomposition. From this we define the function ``U(t)`` and save it together with its derivative in the struct.
 
@@ -84,16 +84,16 @@ The conversion functions are adapted easily with copy-and-paste.
 #
 # SHOW
 #
-function Base.deepcopy(H::RSL)
+function Base.deepcopy(H::RotationAndStraightLine)
     RotationAndStraightLine(deepcopy(H.start), deepcopy(H.target))
 end
 #
 # PROMOTION AND CONVERSION
 #ß
-Base.promote_rule(::Type{RSL{T}}, ::Type{RSL{S}}) where {S<:Number,T<:Number} = RSL{promote_type(T,S)}
-Base.promote_rule(::Type{RSL}, ::Type{S}) where {S<:Number} = RSL{S}
-Base.promote_rule(::Type{RSL{T}}, ::Type{S}) where {S<:Number,T<:Number} = RSL{promote_type(T,S)}
-Base.convert(::Type{RSL{T}}, H::RSL) where {T} = RotationAndStraightLine{T}(H.start, H.target)
+Base.promote_rule(::Type{RotationAndStraightLine{T}}, ::Type{RotationAndStraightLine{S}}) where {S<:Number,T<:Number} = RotationAndStraightLine{promote_type(T,S)}
+Base.promote_rule(::Type{RotationAndStraightLine}, ::Type{S}) where {S<:Number} = RotationAndStraightLine{S}
+Base.promote_rule(::Type{RotationAndStraightLine{T}}, ::Type{S}) where {S<:Number,T<:Number} = RotationAndStraightLine{promote_type(T,S)}
+Base.convert(::Type{RotationAndStraightLine{T}}, H::RotationAndStraightLine) where {T} = RotationAndStraightLine{T}(H.start, H.target)
 ```
 
 
@@ -109,7 +109,7 @@ The function that evaluates the homotopy at ``x`` at time ``t`` is
 #
 # EVALUATION + DIFFERENTATION
 #
-function evaluate!(u::AbstractVector, H::RSL{T}, x::Vector, t::Number) where T
+function evaluate!(u::AbstractVector, H::RotationAndStraightLine{T}, x::Vector, t::Number) where T
     y = H.U(t) * x
     for i = 1:length(H.target)
         f = H.target[i]
@@ -118,9 +118,9 @@ function evaluate!(u::AbstractVector, H::RSL{T}, x::Vector, t::Number) where T
     end
     u
 end
-(H::RSL)(x,t) = evaluate(H,x,t)
+(H::RotationAndStraightLine)(x,t) = evaluate(H,x,t)
 
-function evaluate!(u::AbstractVector{T}, H::RSL, x::Vector, t::Number, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function evaluate!(u::AbstractVector{T}, H::RotationAndStraightLine, x::Vector, t::Number, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_start_target!(cfg, H, y, precomputed)
     u .= (one(t) - t) .* value_target(cfg) .+ t .* value_start(cfg)
@@ -130,14 +130,14 @@ end
 The derivative of the homotopy with respect to ``x`` is
 
 ```julia
-function jacobian!(u::AbstractMatrix, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function jacobian!(u::AbstractMatrix, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     U = H.U(t)
     y = U * x
     jacobian_start_target!(cfg, H, y, precomputed)
     u .= ((one(t) - t) .* jacobian_target(cfg) .+ t .* jacobian_start(cfg)) * U
 end
 
-function jacobian!(r::JacobianDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function jacobian!(r::JacobianDiffResult, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     U = H.U(t)
     y = U * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
@@ -151,14 +151,14 @@ end
 The derivative of the homotopy with respect to ``t`` is
 
 ```julia
-function dt!(u, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function dt!(u, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
 
     u .= value_start(cfg) .- value_target(cfg) .+ ((one(t) - t) .* jacobian_target(cfg) .+ t .* jacobian_start(cfg)) * H.U_dot(t) * x
 end
 
-function dt!(r::DtDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function dt!(r::DtDiffResult, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
     r.value .= (one(T) - t) .* value_target(cfg) .+ t .* value_start(cfg)
@@ -170,7 +170,7 @@ end
 Finally, we adapt the function to compute the Weylnorm. Note that precomposing with unitary matrices preserves the Weyl inner product.
 
 ```julia
-function weylnorm(H::RSL{T})  where {T<:Number}
+function weylnorm(H::RotationAndStraightLine{T})  where {T<:Number}
     f = FP.homogenize.(H.start)
     g = FP.homogenize.(H.target)
     λ_1 = FP.weyldot(f,f)
@@ -276,28 +276,28 @@ function RotationAndStraightLine(start, target)
 end
 
 
-const RSL{T} = RotationAndStraightLine{T}
+const RotationAndStraightLine{T} = RotationAndStraightLine{T}
 
 #
 # SHOW
 #
-function Base.deepcopy(H::RSL)
+function Base.deepcopy(H::RotationAndStraightLine)
     RotationAndStraightLine(deepcopy(H.start), deepcopy(H.target))
 end
 
 #
 # PROMOTION AND CONVERSION
 #ß
-Base.promote_rule(::Type{RSL{T}}, ::Type{RSL{S}}) where {S<:Number,T<:Number} = RSL{promote_type(T,S)}
-Base.promote_rule(::Type{RSL}, ::Type{S}) where {S<:Number} = RSL{S}
-Base.promote_rule(::Type{RSL{T}}, ::Type{S}) where {S<:Number,T<:Number} = RSL{promote_type(T,S)}
-Base.convert(::Type{RSL{T}}, H::RSL) where {T} = RotationAndStraightLine{T}(H.start, H.target)
+Base.promote_rule(::Type{RotationAndStraightLine{T}}, ::Type{RotationAndStraightLine{S}}) where {S<:Number,T<:Number} = RotationAndStraightLine{promote_type(T,S)}
+Base.promote_rule(::Type{RotationAndStraightLine}, ::Type{S}) where {S<:Number} = RotationAndStraightLine{S}
+Base.promote_rule(::Type{RotationAndStraightLine{T}}, ::Type{S}) where {S<:Number,T<:Number} = RotationAndStraightLine{promote_type(T,S)}
+Base.convert(::Type{RotationAndStraightLine{T}}, H::RotationAndStraightLine) where {T} = RotationAndStraightLine{T}(H.start, H.target)
 
 
 #
 # EVALUATION + DIFFERENTATION
 #
-function evaluate!(u::AbstractVector, H::RSL{T}, x::Vector, t::Number) where T
+function evaluate!(u::AbstractVector, H::RotationAndStraightLine{T}, x::Vector, t::Number) where T
     y = H.U(t) * x
     for i = 1:length(H.target)
         f = H.target[i]
@@ -306,23 +306,23 @@ function evaluate!(u::AbstractVector, H::RSL{T}, x::Vector, t::Number) where T
     end
     u
 end
-(H::RSL)(x,t) = evaluate(H,x,t)
+(H::RotationAndStraightLine)(x,t) = evaluate(H,x,t)
 
 
-function evaluate!(u::AbstractVector{T}, H::RSL, x::Vector, t::Number, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function evaluate!(u::AbstractVector{T}, H::RotationAndStraightLine, x::Vector, t::Number, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_start_target!(cfg, H, y, precomputed)
     u .= (one(t) - t) .* value_target(cfg) .+ t .* value_start(cfg)
 end
 
-function jacobian!(u::AbstractMatrix, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function jacobian!(u::AbstractMatrix, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     U = H.U(t)
     y = U * x
     jacobian_start_target!(cfg, H, y, precomputed)
     u .= ((one(t) - t) .* jacobian_target(cfg) .+ t .* jacobian_start(cfg)) * U
 end
 
-function jacobian!(r::JacobianDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function jacobian!(r::JacobianDiffResult, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     U = H.U(t)
     y = U * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
@@ -332,14 +332,14 @@ function jacobian!(r::JacobianDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::
     r
 end
 
-function dt!(u, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function dt!(u, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
 
     u .= value_start(cfg) .- value_target(cfg) .+ ((one(t) - t) .* jacobian_target(cfg) .+ t .* jacobian_start(cfg)) * H.U_dot(t) * x
 end
 
-function dt!(r::DtDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
+function dt!(r::DtDiffResult, H::RotationAndStraightLine{T}, x::AbstractVector, t, cfg::PolynomialHomotopyConfig, precomputed=false) where {T<:Number}
     y = H.U(t) * x
     evaluate_and_jacobian_start_target!(cfg, H, y)
     r.value .= (one(T) - t) .* value_target(cfg) .+ t .* value_start(cfg)
@@ -347,7 +347,7 @@ function dt!(r::DtDiffResult, H::RSL{T}, x::AbstractVector, t, cfg::PolynomialHo
     r
 end
 
-function weylnorm(H::RSL{T})  where {T<:Number}
+function weylnorm(H::RotationAndStraightLine{T})  where {T<:Number}
     f = FP.homogenize.(H.start)
     g = FP.homogenize.(H.target)
     λ_1 = FP.weyldot(f,f)

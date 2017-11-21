@@ -186,5 +186,14 @@ H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])
 ```
 To compute a backward solution with starting value ``z_0`` we finally execute
 ```julia
-solve(H,z_0)
+solve(H, z_0)
 ```
+
+To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions by
+
+```julia
+H, s = totaldegree(StraightLineHomotopy, [f-1; g-α_0; h*a_0-p])
+solutions(solve(H, s), singular=false)
+```
+
+On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the `addprocs()` command in `Julia` it takes about 93 seconds.

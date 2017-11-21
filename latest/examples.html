@@ -33,7 +33,7 @@ import DynamicPolynomials: @polyvar
 @polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]
 z1 = [1, 0, 0]
 z6 = [1, 0, 0]
-p = [1, 1, 0]
+p = [1,1,0]
 z = [z1, z2, z3, z4, z5, z6]
 
 f = [z[i] ⋅ z[i] for i=2:5]
@@ -41,7 +41,8 @@ g = [z[i] ⋅ z[i+1] for i=1:5]
 h = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)
 
 α = randexp(5)
-a = randexp(9)</code></pre><p>Let us compute a random forward solution.</p><pre><code class="language-julia">z_0=rand(3,4); # Compute a random assignment for the variable z
+a = randexp(9)
+p = randexp(3)</code></pre><p>Let us compute a random forward solution.</p><pre><code class="language-julia">z_0=rand(3,4); # Compute a random assignment for the variable z
 for i = 1:4
     z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1
 end</code></pre><p>We want to compute the angles <span>$g(z_0)$</span> with <code>FixedPolynomials.jl</code>. We use <code>Julia&#39;s</code> <code>convert</code> function to convert <span>$g$</span> into the correct type. Then, we use the <code></code> <code>evaluate</code> command from <code>FixedPolynomials.jl</code>.</p><pre><code class="language-julia">import FixedPolynomials: evaluate
@@ -50,11 +51,11 @@ const FP = FixedPolynomials
 z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input
 
 # compute the forward solution of α
-α_0 = acos.( FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0) )
+α_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0)
 
 # evaluate h at z_0
 h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)
 # compute a solution to h(z_0) * a = p
 h_0 = reshape(h_0,3,9)
-a_0 = h_0\p</code></pre><p>Now we have forward solutions <span>$α_0$</span> and <span>$a_0$</span>. From this we construct the following StraightLineHomotopy.</p><pre><code class="language-julia">H = StraightLineHomotopy([f-1; g-cos.(α_0); h*a_0-p], [f-1; g-cos.(α); h*a-p])</code></pre><p>To compute a backward solution with starting value <span>$z_0$</span> we finally execute</p><pre><code class="language-julia">solve(H, z_0)</code></pre><p>To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions by</p><pre><code class="language-julia">H, s = totaldegree(StraightLineHomotopy, [f-1; g-cos.(α_0); h*a_0-p])
+a_0 = h_0\p</code></pre><p>Now we have forward solutions <span>$α_0$</span> and <span>$a_0$</span>. From this we construct the following StraightLineHomotopy.</p><pre><code class="language-julia">H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])</code></pre><p>To compute a backward solution with starting value <span>$z_0$</span> we finally execute</p><pre><code class="language-julia">solve(H, z_0)</code></pre><p>To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions by</p><pre><code class="language-julia">H, s = totaldegree(StraightLineHomotopy, [f-1; g-α_0; h*a_0-p])
 solutions(solve(H, s), singular=false)</code></pre><p>On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the <code>addprocs()</code> command in <code>Julia</code> it takes about 93 seconds.</p><footer><hr/><a class="previous" href="index.html"><span class="direction">Previous</span><span class="title">Introduction</span></a><a class="next" href="Homotopy.html"><span class="direction">Next</span><span class="title">Setting up homotopies with Homotopy.jl</span></a></footer></article></body></html>

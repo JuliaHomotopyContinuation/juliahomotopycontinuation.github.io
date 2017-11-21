@@ -69,7 +69,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Examples",
     "title": "6-R Serial-Link Robots",
     "category": "section",
-    "text": "The following example is from section 9.4 of[The numerical solution of systems of polynomials, Sommese, Wampler].Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by z_1z_6 the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equationsz_i  z_i = 1\n\nz_i  z_i+1 = cos _i\n\na_1 * z_1  z_2 +  + a_5 * z_5  z_6 + a_6 * z_2 +  + a_9 * z_5 = pfor some (a) and a known p (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).The forward problem consists of computing (a) given the z_i and p. The backward problem consists of computing  z_i that realize some fixed (a).We now compute first a forward solution (_0 a_0), and then use (_0 a_0) to compute a backward solution for the problem imposed by some random ( a).using HomotopyContinuation\nimport DynamicPolynomials: @polyvar\n\n@polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]\nz1 = [1, 0, 0]\nz6 = [1, 0, 0]\np = [1, 1, 0]\nz = [z1, z2, z3, z4, z5, z6]\n\nf = [z[i] ⋅ z[i] for i=2:5]\ng = [z[i] ⋅ z[i+1] for i=1:5]\nh = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)\n\nα = randexp(5)\na = randexp(9)Let us compute a random forward solution.z_0=rand(3,4); # Compute a random assignment for the variable z\nfor i = 1:4\n    z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1\nendWe want to compute the angles g(z_0) with FixedPolynomials.jl. We use Julia's convert function to convert g into the correct type. Then, we use the  evaluate command from FixedPolynomials.jl.import FixedPolynomials: evaluate\nconst FP = FixedPolynomials\n\nz_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input\n\n# compute the forward solution of α\nα_0 = acos.( FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0) )\n\n# evaluate h at z_0\nh_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)\n# compute a solution to h(z_0) * a = p\nh_0 = reshape(h_0,3,9)\na_0 = h_0\\pNow we have forward solutions _0 and a_0. From this we construct the following StraightLineHomotopy.H = StraightLineHomotopy([f-1; g-cos.(α_0); h*a_0-p], [f-1; g-cos.(α); h*a-p])To compute a backward solution with starting value z_0 we finally executesolve(H, z_0)To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions byH, s = totaldegree(StraightLineHomotopy, [f-1; g-cos.(α_0); h*a_0-p])\nsolutions(solve(H, s), singular=false)On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the addprocs() command in Julia it takes about 93 seconds."
+    "text": "The following example is from section 9.4 of[The numerical solution of systems of polynomials, Sommese, Wampler].Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by z_1z_6 the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equationsz_i  z_i = 1\n\nz_i  z_i+1 = cos _i\n\na_1 * z_1  z_2 +  + a_5 * z_5  z_6 + a_6 * z_2 +  + a_9 * z_5 = pfor some (a) and a known p (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).The forward problem consists of computing (a) given the z_i and p. The backward problem consists of computing  z_i that realize some fixed (a).We now compute first a forward solution (_0 a_0), and then use (_0 a_0) to compute a backward solution for the problem imposed by some random ( a).using HomotopyContinuation\nimport DynamicPolynomials: @polyvar\n\n@polyvar z2[1:3] z3[1:3] z4[1:3] z5[1:3]\nz1 = [1, 0, 0]\nz6 = [1, 0, 0]\np = [1,1,0]\nz = [z1, z2, z3, z4, z5, z6]\n\nf = [z[i] ⋅ z[i] for i=2:5]\ng = [z[i] ⋅ z[i+1] for i=1:5]\nh = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)\n\nα = randexp(5)\na = randexp(9)\np = randexp(3)Let us compute a random forward solution.z_0=rand(3,4); # Compute a random assignment for the variable z\nfor i = 1:4\n    z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1\nendWe want to compute the angles g(z_0) with FixedPolynomials.jl. We use Julia's convert function to convert g into the correct type. Then, we use the  evaluate command from FixedPolynomials.jl.import FixedPolynomials: evaluate\nconst FP = FixedPolynomials\n\nz_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input\n\n# compute the forward solution of α\nα_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0)\n\n# evaluate h at z_0\nh_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)\n# compute a solution to h(z_0) * a = p\nh_0 = reshape(h_0,3,9)\na_0 = h_0\\pNow we have forward solutions _0 and a_0. From this we construct the following StraightLineHomotopy.H = StraightLineHomotopy([f-1; g-α_0; h*a_0-p], [f-1; g-α; h*a-p])To compute a backward solution with starting value z_0 we finally executesolve(H, z_0)To compute all the backward solutions we may perform a totaldegree homotopy. Although the Bezout number of the system is 1024 the generic number of solutions is 16. We find all 16 solutions byH, s = totaldegree(StraightLineHomotopy, [f-1; g-α_0; h*a_0-p])\nsolutions(solve(H, s), singular=false)On a MacBook Pro with 2,6 GHz Intel Core i7 and 16 GB RAM memory the above operation takes about 572 seconds. With parallel computing provided by the addprocs() command in Julia it takes about 93 seconds."
 },
 
 {
@@ -97,6 +97,14 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "Homotopy.html#Homotopies-1",
+    "page": "Setting up homotopies with Homotopy.jl",
+    "title": "Homotopies",
+    "category": "section",
+    "text": "The following homotopies are implemented"
+},
+
+{
     "location": "Homotopy.html#Homotopy.StraightLineHomotopy",
     "page": "Setting up homotopies with Homotopy.jl",
     "title": "Homotopy.StraightLineHomotopy",
@@ -113,11 +121,11 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "Homotopy.html#Homotopies-1",
+    "location": "Homotopy.html#Polynomial-homotopies-1",
     "page": "Setting up homotopies with Homotopy.jl",
-    "title": "Homotopies",
+    "title": "Polynomial homotopies",
     "category": "section",
-    "text": "The following homotopies are implemented. They are subtypes of AbstractPolynomialHomotopyStraightLineHomotopy\nGeodesicOnTheSphere"
+    "text": "These are subtypes of AbstractPolynomialHomotopyStraightLineHomotopy\nGeodesicOnTheSphere"
 },
 
 {
@@ -385,14 +393,6 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "solve.html#solveroptions-1",
-    "page": "Solving homotopies",
-    "title": "Solver options",
-    "category": "section",
-    "text": ""
-},
-
-{
     "location": "solve.html#HomotopyContinuation.solutions",
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.solutions",
@@ -413,7 +413,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "The result array",
     "category": "section",
-    "text": "The HomotopyContinuation.PathResult struct carries the following informations.PathResult"
+    "text": "The HomotopyContinuation.PathResult struct carries the following informations.returncode:\nsolution: the zero that is computed (here it is -i1).\nsingular: boolean that shows whether the zero is singular.\nresidual: the computed value of f(-i1).\nnewton_residual:\nlog10_condition_number:\nwindingnumber\nangle_to_infinity: the algorithms homogenizes the system f and then computes all solutions in projective space. The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: boolean that shows whether the zero is real.\nstartvalue:\niterations:\nendgame_iterations:\nnpredictions:"
 },
 
 {
@@ -461,7 +461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Pathtracking",
     "title": "Result",
     "category": "section",
-    "text": "See also here.PathtrackerResult"
+    "text": "PathtrackerResult"
 },
 
 {

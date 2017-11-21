@@ -125,7 +125,7 @@ z = [z1, z2, z3, z4, z5, z6]
 
 f = [z[i] ⋅ z[i] for i=2:5]
 g = [z[i] ⋅ z[i+1] for i=1:5]
-h = vec(hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...))
+h = hcat([[z[i] × z[i+1] for i=1:5]; [z[i] for i=2:5]]...)
 
 α = randexp(5)
 a = randexp(9)
@@ -150,7 +150,7 @@ z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as i
 α_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0)
 
 # evaluate h at z_0
-h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, h), z_0)
+h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)
 # compute a solution to h(z_0) * a = 0
 h_0 = reshape(h_0,3,9)
 a_0 = nullspace(h_0)[:,1]

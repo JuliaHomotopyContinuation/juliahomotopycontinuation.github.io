@@ -397,7 +397,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "The solve function",
     "category": "section",
-    "text": "The solve function solves homotopies with given starting values.solveThe output of solve is an array of type HomotopyContinuation.Result."
+    "text": "The solve function solves homotopies with given starting values.solve"
 },
 
 {
@@ -417,6 +417,38 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
+    "location": "solve.html#HomotopyContinuation.Result",
+    "page": "Solving homotopies",
+    "title": "HomotopyContinuation.Result",
+    "category": "Type",
+    "text": "Result(pathresults, solver)\n\nA thin wrapper around the PathResults of the Solver instance. Result behaves like an array of PathResults but also contains some additional informations. For example you can obtain the γ which was used for the gammatrick.\n\n\n\n"
+},
+
+{
+    "location": "solve.html#result-1",
+    "page": "Solving homotopies",
+    "title": "Result",
+    "category": "section",
+    "text": "The solve function returns a Result struct:Result"
+},
+
+{
+    "location": "solve.html#HomotopyContinuation.PathResult",
+    "page": "Solving homotopies",
+    "title": "HomotopyContinuation.PathResult",
+    "category": "Type",
+    "text": "PathResult(startvalue, pathtracker_result, endgamer_result, solver)\n\nConstruct a PathResult for a given startvalue. pathtracker_result is the PathtrackerResult until the endgame radius is reached. endgamer_result is the EndgamerResult resulting from the corresponding endgame.\n\nA PathResult contains:\n\nreturncode: One of :success, :at_infinity or any error code from the EndgamerResult\nsolution::Vector{T}: The solution vector. If the algorithm computed in projective space\n\nand the solution is at infinity then the projective solution is given. Otherwise an affine solution is given if the startvalue was affine and a projective solution is given if the startvalue was projective.\n\nresidual::Float64: The value of the infinity norm of H(solution, 0).\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\nlog10_condition_number: A high condition number indicates singularty. See Homotopy.κ for details.   The value is the logarithmic condition number (with base 10).\nwindingnumber: The estimated winding number\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: Indicates whether the solution is real given the defined tolerance at_infinity_tol (from the solver options).\nstartvalue: The startvalue of the path\niterations: The number of iterations the pathtracker needed.\nendgame_iterations: The number of steps in the geometric series the endgamer did.\nnpredictions: The number of predictions the endgamer did.\npredictions: The predictions of the endgamer.\n\n\n\n"
+},
+
+{
+    "location": "solve.html#PathResult-1",
+    "page": "Solving homotopies",
+    "title": "PathResult",
+    "category": "section",
+    "text": "For each tracked path there is a PathResult:PathResult"
+},
+
+{
     "location": "solve.html#HomotopyContinuation.solutions",
     "page": "Solving homotopies",
     "title": "HomotopyContinuation.solutions",
@@ -429,23 +461,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Solving homotopies",
     "title": "The solutions function",
     "category": "section",
-    "text": "The solution function helps to extract information from HomotopyContinuation.Result arrayssolutions"
-},
-
-{
-    "location": "solve.html#HomotopyContinuation.PathResult",
-    "page": "Solving homotopies",
-    "title": "HomotopyContinuation.PathResult",
-    "category": "Type",
-    "text": "PathResult(startvalue, pathtracker_result, endgamer_result, solver)\n\nConstruct a PathResult for a given startvalue. pathtracker_result is the PathtrackerResult until the endgame radius is reached. endgamer_result is the EndgamerResult resulting from the corresponding endgame.\n\nA PathResult contains:\n\nreturncode: One of :success, :at_infinity or any error code from the EndgamerResult\nsolution::Vector{T}: The solution vector. If the algorithm computed in projective space\n\nand the solution is at infinity then the projective solution is given. Otherwise an affine solution is given if the startvalue was affine and a projective solution is given if the startvalue was projective.\n\nresidual::Float64: The value of the infinity norm of H(solution, 0).\nnewton_residual: The value of the 2-norm of J_H(textsolution)^-1H(textsolution 0)\nlog10_condition_number: A high condition number indicates singularty. See Homotopy.κ for details.   The value is the logarithmic condition number (with base 10).\nwindingnumber: The estimated winding number\nangle_to_infinity: The angle to infinity is the angle of the solution to the hyperplane where the homogenizing coordinate is 0.\nreal_solution: Indicates whether the solution is real given the defined tolerance at_infinity_tol (from the solver options).\nstartvalue: The startvalue of the path\niterations: The number of iterations the pathtracker needed.\nendgame_iterations: The number of steps in the geometric series the endgamer did.\nnpredictions: The number of predictions the endgamer did.\npredictions: The predictions of the endgamer.\n\n\n\n"
-},
-
-{
-    "location": "solve.html#result-1",
-    "page": "Solving homotopies",
-    "title": "The result array",
-    "category": "section",
-    "text": "The HomotopyContinuation.PathResult struct carries the following informations.PathResult"
+    "text": "The solution function helps to extract information from a Result:solutions"
 },
 
 {

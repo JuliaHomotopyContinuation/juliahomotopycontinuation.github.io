@@ -26,7 +26,9 @@ solve([f; L])
 We find two distinct solutions and conclude that the degree of ``V`` is 2.
 
 ## Using different types of homotopies
-The following example is from Section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+The following example is from Section 7.3 of
+
+[The numerical solution of systems of polynomials, Sommese, Wampler].
 
 Consider a triangle with sides a,b,c and let θ be the angle opposite of c. The goal is to compute θ from a,b,c. We define sθ := sin θ and cθ := cos θ. The polynomial corresponding system is.
 
@@ -67,7 +69,11 @@ solution(ans, only_real=true)
 ```
 
 ## Using different types of pathrackers
-The following polynomial system is what is called a binding polynomial in chemistry.
+The following polynomial system is the example from Section 5.1 from
+
+[Decoupled molecules with binding polynomials of bidegree (n,2), Ren, Martini, Torres]
+
+It is called a binding polynomial.
 
 ```julia
 using HomotopyContinuation

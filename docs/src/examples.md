@@ -73,14 +73,16 @@ The following polynomial system is what is called a binding polynomial in chemis
 using HomotopyContinuation
 import DynamicPolynomials: @polyvar
 
-@polyvar w1 w2 w3 w4 w5 w6
+@polyvar w[1:6]
 
-f = [11*(2*w1+3*w3+5*w5)+13*(2*w2+3*w4+5*w6),
-    11*(6*w1*w3+10*w1*w5+15*w3*w5)+13*(6*w2*w4+10*w2*w6+15*w4*w6),
-    330*w1*w3*w5+390*w2*w4*w6,
-    143*(2*w1*w2+3*w3*w4+5*w5*w6),
-    143*(6*w1*w2*w3*w4+10*w1*w2*w5*w6+15*w3*w4*w5*w6),
-    4290*w1*w2*w3*w4*w5*w6]
+f = [
+    11*(2*w[1]+3*w[3]+5*w[5])+13*(2*w[2]+3*w[4]+5*w[6]),
+    11*(6*w[1]*w[3]+10*w[1]*w[5]+15*w[3]*w[5])+13*(6*w[2]*w[4]+10*w[2]*w[6]+15*w[4]*w[6]),
+    330*w[1]*w[3]*w[5]+390*w[2]*w[4]*w[6],
+    143*(2*w[1]*w[2]+3*w[3]*w[4]+5*w[5]*w[6]),
+    143*(6*w[1]*w[2]*w[3]*w[4]+10*w[1]*w[2]*w[5]*w[6]+15*w[3]*w[4]*w[5]*w[6]),
+    4290*w[1]*w[2]*w[3]*w[4]*w[5]*w[6]
+    ]
 ```
 
 Suppose we wanted to solve ``f(w)=a``, where
@@ -92,8 +94,8 @@ a=[71, 73, 79, 101, 103, 107]
 To get an initial solution we compute a random forward solution with `FixedPolynomials.jl`.
 
 ```julia
-w_0 = vec(randn(6,1))
-a_0 = evaluate(f, w_0)
+w_0 = randn(6)
+a_0 = map(p -> p(w => w_0), f)
 ```
 
 Now we set up the homotopy.
@@ -163,17 +165,15 @@ for i = 1:4
     z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1
 end
 ```
-We want to compute the angles ``arccos g(z_0)``.
+We want to compute the angles ``\arccos g(z_0)``.
 ```julia
 z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input
 
 # compute the forward solution of α
-α_0 = acos.( evaluate(g, z_0) )
+α_0 = map(p -> acos(p([z2; z3; z4; z5] => z_0)), g)
 
 # evaluate h at z_0
-h_0 = evaluate(vec(h), z_0)
-# compute a solution to h(z_0) * a = p
-h_0 = reshape(h_0,3,9)
+h_0 = map(p -> p([z2; z3; z4; z5] => z_0), h)
 a_0 = h_0\p
 ```
 Now we have forward solutions ``α_0`` and ``a_0``. From this we construct the following StraightLineHomotopy.

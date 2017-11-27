@@ -26,7 +26,7 @@ solve([f; L])
 We find two distinct solutions and conclude that the degree of ``V`` is 2.
 
 ## Using different types of homotopies
-The following example is from section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+The following example is from Section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
 
 Consider a triangle with sides a,b,c and let θ be the angle opposite of c. The goal is to compute θ from a,b,c. We define sθ := sin θ and cθ := cos θ. The polynomial corresponding system is.
 
@@ -116,7 +116,7 @@ solve(H, w_0, AffinePredictorCorrector())
 
 
 ## 6-R Serial-Link Robots
-The following example is from section 9.4 of
+The following example is from Section 9.4 of
 
 [The numerical solution of systems of polynomials, Sommese, Wampler].
 

@@ -121,6 +121,21 @@ By default the `solve` function uses `SphericalPredictorCorrector` as the pathtr
 ```julia
 solve(H, w_0, AffinePredictorCorrector())
 ```
+The system ``f=0`` has 72 simple non-real roots. The command
+
+```julia
+    S = solve(f-a);
+    solutions(S, singular = false)
+```
+
+however, only returns 62. The reason is that the remaining 10 solutions are ill-conditioned. We find all 72 solutions by
+
+```julia
+    S = solve(f-a, singular_tol=1e8);
+    solutions(S, singular = false)
+```
+
+The default of `singular_tol` in `JuliaHomotopyContinuation` is ``1e4``.
 
 
 ## 6-R Serial-Link Robots

@@ -70,6 +70,7 @@ solution(ans, only_real=true)
 The following polynomial system is what is called a binding polynomial in chemistry.
 
 ```julia
+using HomotopyContinuation
 import DynamicPolynomials: @polyvar
 
 @polyvar w1 w2 w3 w4 w5 w6
@@ -88,12 +89,11 @@ Suppose we wanted to solve ``f(w)=a``, where
 a=[71, 73, 79, 101, 103, 107]
 ```
 
-To get an initial solution we compute a random forward solution with `FixedPolynomials.jl`. We use `Julia's` `convert` function to convert ``f`` into the correct type. Then, we use the ` ` `evaluate` command from `FixedPolynomials.jl`.
+To get an initial solution we compute a random forward solution with `FixedPolynomials.jl`.
 
 ```julia
-const FP = FixedPolynomials
 w_0 = vec(randn(6,1))
-a_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, f), w_0)
+a_0 = evaluate(f, w_0)
 ```
 
 Now we set up the homotopy.
@@ -163,18 +163,15 @@ for i = 1:4
     z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1
 end
 ```
-We want to compute the angles ``g(z_0)`` with `FixedPolynomials.jl`. We use `Julia's` `convert` function to convert ``g`` into the correct type. Then, we use the ` ` `evaluate` command from `FixedPolynomials.jl`.
+We want to compute the angles ``g(z_0)`` with `FixedPolynomials.jl`.
 ```julia
-import FixedPolynomials: evaluate
-const FP = FixedPolynomials
-
 z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input
 
 # compute the forward solution of α
-α_0 = acos.( FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, g), z_0) )
+α_0 = acos.( evaluate(g, z_0) )
 
 # evaluate h at z_0
-h_0 = FP.evaluate(convert(Vector{FixedPolynomials.Polynomial{Float64}}, vec(h)), z_0)
+h_0 = evaluate(vec(h), z_0)
 # compute a solution to h(z_0) * a = p
 h_0 = reshape(h_0,3,9)
 a_0 = h_0\p

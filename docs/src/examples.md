@@ -26,7 +26,7 @@ solve([f; L])
 We find two distinct solutions and conclude that the degree of ``V`` is 2.
 
 ## Using different types of homotopies
-the following example is from section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
+The following example is from section 7.3 of [The numerical solution of systems of polynomials, Sommese, Wampler].
 
 Consider a triangle with sides a,b,c and let θ be the angle opposite of c. The goal is to compute θ from a,b,c. We define sθ := sin θ and cθ := cos θ. The polynomial corresponding system is.
 
@@ -120,7 +120,7 @@ The following example is from section 9.4 of
 
 [The numerical solution of systems of polynomials, Sommese, Wampler].
 
-Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground. Let us denote by ``z_1,...,z_6`` the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
+Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground and the last link has a hand. The problem of determining the position of the hand when knowing the arrangement of the joints is called forward problem. The problem of determining any arrangement of joints that realized a fixed position of the hand is called backward problem. Let us denote by ``z_1,...,z_6`` the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
 
 ```math
 z_i ⋅ z_i = 1\\
@@ -132,9 +132,9 @@ a_1 * z_1 × z_2 + ... + a_5 * z_5 × z_6 + a_6 * z_2 + ... + a_9 * z_5 = p
 
 for some ``(α,a)`` and a known ``p`` (see the aforementioned reference for a detailed explanation on how these numbers are to be interpreted).
 
-The forward problem consists of computing ``(α,a)`` given the ``z_i`` and ``p``. The backward problem consists of computing  ``z_i`` that realize some fixed ``(α,a)``.
+In this notation the forward problem consists of computing ``(α,a)`` given the ``z_i`` and ``p``. The backward problem consists of computing  ``z_i`` that realize some fixed ``(α,a,z_1,z_6)`` (knowing ``z_1,z_6`` means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).
 
-We now compute first a forward solution ``(α_0, a_0)``, and then use ``(α_0, a_0)`` to compute a backward solution for the problem imposed by some random ``(α, a)``.
+We now compute first a forward solution ``(α_0, a_0)``, and then use ``(α_0, a_0)`` to compute a solution for the backward problem imposed by some random ``(α, a)``.
 
 
 ```julia
@@ -163,7 +163,7 @@ for i = 1:4
     z_0[:,i] = z_0[:,i]./ norm(z_0[:,i]) # normalize the columns of z_0 to norm 1
 end
 ```
-We want to compute the angles ``g(z_0)`` with `FixedPolynomials.jl`.
+We want to compute the angles ``arccos g(z_0)``.
 ```julia
 z_0 = vec(z_0) # vectorize z_0, because the evaluate function takes vectors as input
 

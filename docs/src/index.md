@@ -71,7 +71,7 @@ npredictions → 2
 predictions → Vector{Complex{Float64}}[2]
 ```
 
-The returncode tells us that the pathtracking was successfull. What do the entries of that table tell us? Let us consider the most relevant (for a complete list of explanations consider [this](@ref result) section).
+The returncode tells us that the pathtracking was successfull. What do the other entries of the table tell us? Let us consider the most relevant  (for a complete list of explanations consider [this](@ref result) section).
 
 - `solution`: the zero that is computed (here it is ``[-1,-1]``).
 - `singular`: boolean that shows whether the zero is singular.

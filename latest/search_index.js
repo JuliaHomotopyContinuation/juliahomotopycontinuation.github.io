@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Introduction",
     "title": "Introduction",
     "category": "section",
-    "text": "HomotopyContinuation.jl is a package for solving square polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.You can simply install this package via the Julia package managerPkg.add(\"JuliaHomotopyContinuation\");"
+    "text": "HomotopyContinuation.jl is a package for solving square polynomial systems via homotopy continuation.The aim of this project is twofold: establishing a fast numerical polynomial solver in Julia and at the same time providing a highly customizable algorithmic environment for researchers for designing and performing individual experiments.You can simply install this package via the Julia package managerPkg.add(\"HomotopyContinuation\");"
 },
 
 {

@@ -16,7 +16,9 @@ f= \begin{bmatrix} x^2+y\\ y^2-1\end{bmatrix}.
 ```
 
 First, we have to define ``f`` in Julia. For this purpose
-HomotopyContinuation.jl provides an interface to [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) for human-readable input and output.
+HomotopyContinuation.jl provides an interface to [MultivariatePolynomials.jl](https://github.com/JuliaAlgebra/MultivariatePolynomials.jl) for human-readable and easy constructable input.
+In the following we will use the [DynamicPolynomials.jl](https://github.com/JuliaAlgebra/DynamicPolynomials.jl) implementation of that interface.
+
 
 ```julia
 import DynamicPolynomials: @polyvar # @polyvar is a function for initializing variables.

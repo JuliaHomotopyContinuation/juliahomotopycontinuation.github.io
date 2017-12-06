@@ -97,7 +97,7 @@ Suppose we wanted to solve ``f(w)=a``, where
 a=[71, 73, 79, 101, 103, 107]
 ```
 
-To get an initial solution we compute a random forward solution with `FixedPolynomials.jl`.
+To get an initial solution we compute a random forward solution.
 
 ```julia
 w_0 = randn(6)

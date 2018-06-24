@@ -2,7 +2,7 @@
 title = "Custom Homotopies"
 description = "We go through how to construct a custom homotopy."
 weight = 10
-draft = true
+draft = false
 toc = true
 bref = "For this guide, we're going to walk through the process to construct a custom homotopy for your specific problem."
 +++
@@ -32,10 +32,11 @@ with a random unitary matrix $U$.
 To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$
 $$H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.$$
 We denote the partial derivative of $H$ w.r.t. $x$ as the *Jacobian* of $H$.
-For simplfication (in the math as well as in the implementation) we introduce the helper homotopy
+For simplification (in the math as well as in the implementation) we introduce the helper homotopy
 $$\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.$$
 Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives
 $$\frac{\partial H}{\partial x}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U(t)$$
+and
 $$\frac{\partial H}{\partial t}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U'(t) x + \frac{\partial \tilde{H}}{\partial t}(U(t)x,t) $$
 where
 $$U'(t)= U
@@ -45,10 +46,11 @@ $$U'(t)= U
 
 <h3 class="section-head" id="h-data-structure"><a href="#h-data-structure">Constructing the homotopy data structures </a></h3>
 
-... something about the API (link to API docs section) ...
-
-Since $\tilde{H}$ is the standard straight-line homotopy all its derivatives are already implemented and we can reuse them.
-Each homotopy is represented as a struct.
+A custom homotopy has to satisfy a [certain interface](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#Interface-for-custom-homotopies-1). We start with the data structure for the homotopy.
+A homotopy is represented by a [`struct`](https://docs.julialang.org/en/stable/manual/types/#Composite-Types-1)
+which is a subtype of [`Homotopies.AbstractHomotopy`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#HomotopyContinuation.HomotopiesBase.AbstractHomotopy).
+Since $\tilde{H}$ is the standard straight-line homotopy we can reuse this implementation to safe us some work since
+homotopies compose easily.
 ```julia
 using HomotopyContinuation
 
@@ -58,8 +60,12 @@ struct RandomUnitaryPath{Start,Target} <: Homotopies.AbstractHomotopy
 end
 ```
 
-.... something about cache...  for performance important to avoid temporary allocations
-
+To get good performance it is important to be careful about memory allocations. It is much much better
+to initialize a chunk of memory *once* and to reuse this memory. To support this optimization we have the concept
+of a *cache*. This is a `struct` with supertype [`Homotopies.AbstractHomotopyCache`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#HomotopyContinuation.HomotopiesBase.AbstractHomotopyCache) where we allocate all memory necessary to evaluate and differentiate our homotopy.
+This is an optimization and not necessary to have at the beginning, but for the best it is necessary to implement it.
+To illustrate how to do this, we will implement here a cache. Don't look with too much detail on the exact type definition for now, we just allocate a bunch of stuff which will make much more sense later.
+As a constructor for the cache we have to define the [`Homotopies.cache`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#HomotopyContinuation.HomotopiesBase.cache) method.
 ```julia
 struct RandomUnitaryPathCache{C, T1, T2} <: Homotopies.AbstractHomotopyCache
     straightline::C
@@ -71,6 +77,7 @@ struct RandomUnitaryPathCache{C, T1, T2} <: Homotopies.AbstractHomotopyCache
     U::Matrix{Complex128} # holds something like U
 end
 
+# A cache is always constructed by this method.
 function Homotopies.cache(H::RandomUnitaryPath, x, t)
     U_t = copy(H.U)
     y = U_t * x

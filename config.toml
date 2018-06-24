@@ -26,6 +26,6 @@ HighlightJS = true
     weight = -100
     url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/"
 [[menu.main]]
-    name = "Faq"
+    name = "FAQ"
     weight = -100
     url = "/faq/"

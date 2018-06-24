@@ -7,3 +7,7 @@ code {
     border-radius: 12px;
     max-width: 50%;
 }
+pre,
+pre code {
+  background: #F0F0F0;
+}

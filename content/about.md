@@ -6,7 +6,7 @@ description = "The people behind HomotopyContinuation.jl"
 
 <div class="row">
     <div class="col col-6">
-        {{<image src="/pic_paul.jpg" class="about-image" >}}
+        {{<image src="/images/pic_paul.jpg" class="about-image" >}}
     </div>
     <div class="col col-6">
         <h2><a href="http://personal-homepages.mis.mpg.de/breiding/">Paul Breiding</a></h2>
@@ -17,7 +17,7 @@ description = "The people behind HomotopyContinuation.jl"
 
 <div class="row">
     <div class="col col-6">
-        {{<image src="/pic_sascha.jpg" class="about-image" >}}
+        {{<image src="/images/pic_sascha.jpg" class="about-image" >}}
     </div>
     <div class="col col-6">
         <h2><a href="http://page.math.tu-berlin.de/~timme/">Sascha Timme</a></h2>

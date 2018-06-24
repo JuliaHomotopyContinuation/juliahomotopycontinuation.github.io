@@ -1,4 +1,4 @@
-baseURL = "https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/"
+baseURL = "/"
 languageCode = "en-us"
 title = "HomotopyContinuation.jl"
 theme = "kube"

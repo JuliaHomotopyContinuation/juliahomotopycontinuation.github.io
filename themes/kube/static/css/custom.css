@@ -1,0 +1,9 @@
+code {
+    color: #B00040;
+    background: none;
+}
+
+.about-image {
+    border-radius: 12px;
+    max-width: 50%;
+}

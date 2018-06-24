@@ -1,0 +1,31 @@
+baseURL = "https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/"
+languageCode = "en-us"
+title = "HomotopyContinuation.jl"
+theme = "kube"
+description = "HomotopyContinuation.jl is a Julia package for solving systems of polynomial equations by numerical homotopy continuation."
+Paginate = 4
+pygmentsUseClassic=true
+pygmentsStyle = "default"
+pygmentsCodeFences = true
+[Params]
+  RSSLink = "/index.xml"
+  github = "JuliaHomotopyContinuation" # add your github profile name
+  twitter = "" # add your twitter profile
+  email = "myemail@myaddress.xxx"
+
+[[menu.main]]
+    name = "Blog"
+    weight = -100
+    url = "/blog/"
+[[menu.main]]
+    name = "Guides"
+    weight = -100
+    url = "/guides/"
+[[menu.main]]
+    name = "API Docs"
+    weight = -100
+    url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/"
+[[menu.main]]
+    name = "Faq"
+    weight = -100
+    url = "/faq/"

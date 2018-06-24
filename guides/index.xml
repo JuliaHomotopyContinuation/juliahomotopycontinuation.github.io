@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Guides on HomotopyContinuation.jl</title>
+    <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/</link>
+    <description>Recent content in Guides on HomotopyContinuation.jl</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Quick Start</title>
+      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/quick-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/quick-start/</guid>
+      <description>This guide assumes that you have Julia 0.6 installed and running. If this is not the case follow the instructions at julialang.org. Installation
+HomotopyContinuation.jl is available through the Julia package manager by
+julia&amp;gt; Pkg.add(&amp;quot;HomotopyContinuation&amp;quot;)  Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $$f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$$
+This can be accomplished as follows
+julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y; # declare the variables x and y julia&amp;gt; result = solve([x^2+2y, y^2-2]) ----------------------------------------------- Paths tracked: 4 # non-singular finite solutions: 4 # singular finite solutions: 0 # solutions at infinity: 0 # failed paths: 0 Random seed used: 622483 -----------------------------------------------  Let us see what is the information that we get.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,69 +3,69 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/welcome/</loc>
+    <loc>/blog/welcome/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/quick-start/</loc>
+    <loc>/guides/quick-start/</loc>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/about/</loc>
+    <loc>/about/</loc>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/</loc>
-    <lastmod>2017-03-02T21:56:55+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/company/</loc>
-  </url>
-  
-  <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/tags/example/</loc>
+    <loc>/blog/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/faq/</loc>
+    <loc>/categories/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/categories/general/</loc>
+    <loc>/company/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/example/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/</loc>
+    <loc>/faq/</loc>
+  </url>
+  
+  <url>
+    <loc>/categories/general/</loc>
+    <lastmod>2017-03-02T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/</loc>
+    <loc>/guides/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/password-recovery/</loc>
+    <loc>/password-recovery/</loc>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/account/</loc>
+    <loc>/account/</loc>
   </url>
   
   <url>
-    <loc>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>

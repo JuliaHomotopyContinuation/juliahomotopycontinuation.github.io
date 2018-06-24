@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>General on HomotopyContinuation.jl</title>
-    <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/categories/general/</link>
+    <link>/categories/general/</link>
     <description>Recent content in General on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Mar 2017 21:56:55 +0100</lastBuildDate>
     
-	<atom:link href="https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/categories/general/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/general/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome!</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/welcome/</link>
+      <link>/blog/welcome/</link>
       <pubDate>Thu, 02 Mar 2017 21:56:55 +0100</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/welcome/</guid>
+      <guid>/blog/welcome/</guid>
       <description>Welcome to our new homepage! Hi there!
 We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
     </item>

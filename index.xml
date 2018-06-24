@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>HomotopyContinuation.jl</title>
-    <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/</link>
+    <link>/</link>
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 02 Mar 2017 21:56:55 +0100</lastBuildDate>
     
-	<atom:link href="https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Welcome!</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/welcome/</link>
+      <link>/blog/welcome/</link>
       <pubDate>Thu, 02 Mar 2017 21:56:55 +0100</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/blog/welcome/</guid>
+      <guid>/blog/welcome/</guid>
       <description>Welcome to our new homepage! Hi there!
 We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
     </item>
     
     <item>
       <title>Quick Start</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/quick-start/</link>
+      <link>/guides/quick-start/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/guides/quick-start/</guid>
+      <guid>/guides/quick-start/</guid>
       <description>This guide assumes that you have Julia 0.6 installed and running. If this is not the case follow the instructions at julialang.org. Installation
 HomotopyContinuation.jl is available through the Julia package manager by
 julia&amp;gt; Pkg.add(&amp;quot;HomotopyContinuation&amp;quot;)  Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $$f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$$
@@ -36,10 +36,10 @@ julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y; # declare t
     
     <item>
       <title>About</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/about/</guid>
+      <guid>/about/</guid>
       <description> Paul Breiding I am a Postdoc in the group Nonlinear Algebra at the Max-Planck-Institute for Mathematics in the Sciences in Leipzig.
    Sascha Timme I am a PhD student at Technische Universität Berlin working on solving system of polynomial equations by numerical methods.
   </description>
@@ -47,29 +47,29 @@ julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y; # declare t
     
     <item>
       <title>Company</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/company/</link>
+      <link>/company/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/company/</guid>
+      <guid>/company/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Password Recovery</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/password-recovery/</link>
+      <link>/password-recovery/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/password-recovery/</guid>
+      <guid>/password-recovery/</guid>
       <description>Your email    Send Back to Log In
  </description>
     </item>
     
     <item>
       <title>Sign In</title>
-      <link>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/account/</link>
+      <link>/account/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://juliahomotopycontinuation.github.io/juliahomotopycontinuation.org/account/</guid>
+      <guid>/account/</guid>
       <description>Email   Password   Log in
 Forgot password?
 If you have any questions about authorization or you&#39;re our customer but haven&#39;t receive your login credentials, just send us a short email at support@company.com and we&#39;ll fix it right away.

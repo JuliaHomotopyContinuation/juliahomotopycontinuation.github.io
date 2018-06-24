@@ -11,16 +11,27 @@
     
     
     <item>
-      <title>Quick Start</title>
-      <link>/guides/quick-start/</link>
+      <title>Get started</title>
+      <link>/guides/latest/get-started/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/guides/quick-start/</guid>
+      <guid>/guides/latest/get-started/</guid>
       <description>This guide assumes that you have Julia 0.6 installed and running. If this is not the case follow the instructions at julialang.org. Installation
 HomotopyContinuation.jl is available through the Julia package manager by
 julia&amp;gt; Pkg.add(&amp;quot;HomotopyContinuation&amp;quot;)  Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $$f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$$
 This can be accomplished as follows
 julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y; # declare the variables x and y julia&amp;gt; result = solve([x^2+2y, y^2-2]) ----------------------------------------------- Paths tracked: 4 # non-singular finite solutions: 4 # singular finite solutions: 0 # solutions at infinity: 0 # failed paths: 0 Random seed used: 622483 -----------------------------------------------  Let us see what is the information that we get.</description>
+    </item>
+    
+    <item>
+      <title>Examples</title>
+      <link>/guides/latest/examples/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/latest/examples/</guid>
+      <description>Minimize over the sphere We want to solve following optimization problem $$\text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1$$
+The strategy to find the global optimum is to use the method of Lagrange multipliers to find all critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.
+julia&amp;gt; @polyvar x y z; julia&amp;gt; J = 3x^3*y+y^2*z^2-2x*y-x*4z^3; julia&amp;gt; g = x^2+y^2+z^2-1; # Introduce auxillary variable for Lagrangian julia&amp;gt; @polyvar λ; # define Lagrangian julia&amp;gt; L = J - λ * g;  In order to compute all critical points we have to solve the equation $$\nabla_{(x,y.</description>
     </item>
     
   </channel>

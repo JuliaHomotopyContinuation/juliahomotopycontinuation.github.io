@@ -1,6 +1,6 @@
 +++
 title = "Solving square systems of polynomial equations"
-description = "We go through a couple of examples"
+description = "We explain the basic idea of homotopy continuation algorithms and go through a couple of examples"
 weight = -900
 draft = false
 toc = true

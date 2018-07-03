@@ -13,9 +13,9 @@ Consider the situation in which one has to solve a specific instance of a *param
 $$P = \\{f(x_1,\ldots,x_n,a) = (f_1(x_1,\ldots,x_n,a), \ldots, f_n(x_1\ldots,x_n,a)) \mid a \in \mathbb{R}^m\\}.$$
 Often, there is a number $N$, such that a generic member $f\in P$ has exactly $N$ solutions $x\in\mathbb{R}^n$ with $f(x)=0$. This $N$ might be very considerably smaller than the number of solutions of an arbitrary polynomial system not in $P$. To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
 
-The basic 'solve' of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. For this reason, we implemented *parametrized homotopies* into HomotopyContinuation.jl. The next example explains its usage.
+The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. For this reason, we implemented *parametrized homotopies* into HomotopyContinuation.jl. The next example explains its usage.
 
-<h3 class="section-head" id="ellipses"><a href="#ellipses">When are two ellipses tangent?</a></h3>
+<h3 class="section-head" id="ellipses"><a href="#ellipses">Example: When are two ellipses tangent?</a></h3>
 The following example is inspired by topological data analysis: suppose that you have a point sample from a manifold $M\subset \mathbb{R}^n$. An approach to estimate topological features of $M$ from the sample is by [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology). The idea is as follows. Around each point one puts a ball of radius $r$. Then one computes the [Čech complex](https://en.wikipedia.org/wiki/Čech_complex) of the union of those balls. [It was argued](https://arxiv.org/pdf/1802.09436.pdf) that it could be favorable to replace balls by *ellipses*. The obstacle in this approach is to compute when two growing ellipses first meet. This problem can be solved by using homotopy continuation.
 
 In dimension 2 the precise computational problem is as follows. Let the two ellipses be centered at $p_1,p_2$, respectively, and be given by two symmetric matrices $Q_1, Q_2$:

@@ -11,7 +11,7 @@ bref = "We're tracking a solution of an overdetermined system"
 
 A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called *overdetermined*, if it has more equations than variables; i.e., when $n>m$. HomotopyContinuation.jl features [Newtons method for overdetermined systems](https://www.ams.org/journals/mcom/2000-69-231/S0025-5718-99-01115-1/S0025-5718-99-01115-1.pdf) for tracking solutions. We show in an example how it can be used.
 
-<h3 class="section-head" id="Rational_normal_curve"><a href="#Rational_normal_curve">The rational normal curve</a></h3>
+<h3 class="section-head" id="Rational_normal_curve"><a href="#Rational_normal_curve">Example: the rational normal curve</a></h3>
 
 The [rational normal curve](https://en.wikipedia.org/wiki/Rational_normal_curve) is a 1-dimensional algebraic variety within the 3-dimensional complex space:
 $$C = \\{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\\}.$$

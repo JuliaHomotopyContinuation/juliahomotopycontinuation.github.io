@@ -91,9 +91,9 @@ Consider a robot that consists of 7 links connected by 6 joints. The first link 
 
 * $ a_1\, (z_1 \times z_2) + \cdots + a_5\, (z_5 \times z_6) + a_6 \,z_2 + \cdots + a_9  \,z_5= p.$
 
-for some $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and a known $p$ (see the above reference for a detailed explanation on how these numbers are to be interpreted). Here $\times$ is the cross product in $\mathbb{R}^3$.
+for $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and $p=(p_1,p_2,p_3)$ (see the above reference for a detailed explanation on how these numbers are to be interpreted). Here $\times$ is the cross product in $\mathbb{R}^3$.
 
-In this notation the forward problem consists of computing $(\alpha,a)$ given the $z_i$ and $p$ and the backward problem consists of computing  $z_2,\ldots,z_5$ that realize some fixed $(\alpha,a,z_1,z_6)$ (knowing $z_1,z_6$ means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).
+In this notation the forward problem consists of computing $(\alpha,a)$ given the $z_i$ and $p$ and the backward problem consists of computing  $z_2,\ldots,z_5$ that realize some fixed $(\alpha,a,p,z_1,z_6)$ (knowing $z_1,z_6$ means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).
 
 Assume that $z_1 = z_6 = (1,0,0)$ and $p=(1,1,0)$ and some random $a$ and $\alpha$. We compute all backward solutions:
 ```julia

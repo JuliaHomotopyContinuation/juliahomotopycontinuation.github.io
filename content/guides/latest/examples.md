@@ -1,6 +1,6 @@
 +++
-title = "Examples"
-description = "We go through a couple of examples."
+title = "Solving systems of polynomial equations"
+description = "We go through a couple of examples"
 weight = -900
 draft = false
 toc = true

@@ -23,35 +23,33 @@ $$E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\},\; i=1
 We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. For a generic choice of $Q_1$ and $Q_2$ we have that $\vert E_1(r^\star)\cap E_2(r^\star) \vert =1$ and $E_1(r^\star)$, $E_2(r^\star)$ are tangent. In Julia we translate this into a polynomial system:
 
 ```julia
-    using HomotopyContinuation
+using HomotopyContinuation
 
-    # generate the variables
-    @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2]
-    @polyvar x[1:2] r
-    z₁ = x - p₁
-    z₂ = x - p₂
+# generate the variables
+@polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2]
+@polyvar x[1:2] r
+z₁ = x - p₁
+z₂ = x - p₂
 
-    # initialize the equations for E₁ and E₂
-    f₁ = (Q₁*z₁) ⋅ (Q₁*z₁) - r^2
-    f₂ = (Q₂*z₂) ⋅ (Q₂*z₂) - r^2
+# initialize the equations for E₁ and E₂
+f₁ = (Q₁*z₁) ⋅ (Q₁*z₁) - r^2
+f₂ = (Q₂*z₂) ⋅ (Q₂*z₂) - r^2
 
-    # initialize the equation for E₁ and E₂ being tangent
-    @polyvar λ
-    g =  (transpose(Q₁) * Q₁) * z₁ - λ .* (transpose(Q₂) * Q₂) * z₂
+# initialize the equation for E₁ and E₂ being tangent
+@polyvar λ
+g =  (transpose(Q₁) * Q₁) * z₁ - λ .* (transpose(Q₂) * Q₂) * z₂
 
-    # gather everything in one system
-    F = [f₁; f₂; g]
+# gather everything in one system
+F = [f₁; f₂; g]
 ```
 
 An initial solution is given by two circles, each of radius 1,  centered at $(1,0)$ and $(-1,0)$, respectively.
 
-```julia
-    map(F) do f
-        f(vec(Q₁) => vec(eye(2)), vec(Q₂) => vec(eye(2)),
-        x => [0,0], p₁ => [1,0], p₂ => [-1,0], λ => -1, r => 1)
-    end
-
-    4-element Array{Float64,1}:
+```julia-repl
+julia> map(F) do f
+    f(vec(Q₁) => vec(eye(2)), vec(Q₂) => vec(eye(2)), x => [0,0], p₁ => [1,0], p₂ => [-1,0], λ => -1, r => 1)
+end
+ 4-element Array{Float64,1}:
      0.0
      0.0
      0.0
@@ -63,41 +61,37 @@ Let us track this solution to the system given by $p_1 = [7,5], p_2 = [1,2], Q_1
 That is, the *parameters* are $p_1,p_2,Q_1,Q_2$ and the *variables* are $x,r,λ$.
 
 
-```julia
-    parameter_variables = [vec(Q₁); vec(Q₂); p₁; p₂]
-    variables = [x; r; λ]
-
-    start_parameter = [vec(eye(2)); vec(eye(2)); [1,0]; [-1, 0]]
-    target_parameter = [vec([1 2; 2 5]); vec([0 3; 3 1]); [7, 5]; [1, 2]]
-
-    start_solution = [0, 0, 1, -1]
-
-    # Now we track the starting solution towards the target system
-    S = solve(F, parameter_variables, start_parameter, target_parameter, [start_solution])
-
-    -----------------------------------------------
-    Paths tracked: 1
-    # non-singular finite solutions:  1
-    # singular finite solutions:  0
-    # solutions at infinity:  0
-    # failed paths:  0
-    Random seed used: 619167
-    -----------------------------------------------
+```julia-repl
+julia> parameter_variables = [vec(Q₁); vec(Q₂); p₁; p₂]
+julia> variables = [x; r; λ]
+julia> start_parameter = [vec(eye(2)); vec(eye(2)); [1,0]; [-1, 0]]
+julia> target_parameter = [vec([1 2; 2 5]); vec([0 3; 3 1]); [7, 5]; [1, 2]]
+julia> start_solution = [0, 0, 1, -1]
+# Now we track the starting solution towards the target system
+julia> S = solve(F, parameter_variables, start_parameter, target_parameter, [start_solution])
+-----------------------------------------------
+Paths tracked: 1
+# non-singular finite solutions:  1
+# singular finite solutions:  0
+# solutions at infinity:  0
+# failed paths:  0
+Random seed used: 619167
+-----------------------------------------------
 ```
 The computation reveals that $r^\star \approx 10.89$. We can plot the two ellipses:
 ```julia
-    r = solution(S[1])[3]
-    r = real(r)
-    E₁ = [r .* (inv([1 2; 2 5]) * [cos(2*pi*t); sin(2*pi*t)]) + [7; 5] for t in 0:0.01:1]
-    E₂ = [r .* (inv([0 3; 3 1]) * [cos(2*pi*t); sin(2*pi*t)]) + [1; 2] for t in 0:0.01:1]
+r = solution(S[1])[3]
+r = real(r)
+E₁ = [r .* (inv([1 2; 2 5]) * [cos(2π*t); sin(2π*t)]) + [7; 5] for t in 0:0.01:1]
+E₂ = [r .* (inv([0 3; 3 1]) * [cos(2π*t); sin(2π*t)]) + [1; 2] for t in 0:0.01:1]
 
-    # convert E₁, E₂ into matrices
-    E₁, E₂ = hcat(E₁...), hcat(E₂...)
+# convert E₁, E₂ into matrices
+E₁, E₂ = hcat(E₁...), hcat(E₂...)
 
-    # Plot. The Plots package must be installed for this
-    using Plots
-    plot(E₁[1,:], E₁[2,:], label="Ellipse 1")
-    plot!(E₂[1,:], E₂[2,:], label="Ellipse 2")
+# Plot. The Plots package must be installed for this
+using Plots
+plot(E₁[1,:], E₁[2,:], label="Ellipse 1")
+plot!(E₂[1,:], E₂[2,:], label="Ellipse 2")
 ```
 This gives the following picture.
 

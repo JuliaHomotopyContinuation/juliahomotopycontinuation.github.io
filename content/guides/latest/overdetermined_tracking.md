@@ -28,15 +28,18 @@ f = [x*z-y^2, y-z^2, x-y*z]
 One is tempted to compute $C\cap L$ by executing `solve([f;ℓ])` and simply compute *all* solutions. But this command will return an error message.
 ```julia
 solve([f;ℓ])
-ERROR: AssertionError: length(degrees) == length(degree_idxs)
+ERROR: AssertionError: The input system is overdetermined therefore it necessary to provide an explicit start system.
+See
+    https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
+for details.
 ```
 The problem here is that for overdetermined system we can't construct generic starting systems. The reason is simple: a generic overdetermined system has no solutions at all. Nevertheless, if we have a starting system and some of its solutions at hand, we can track them towards $[f, \ell]$.
 
 For instance, the point $p=(1, 1, 1)$ lies both on $C$ and $\\{(x,y,z)\in \mathbb{C}^3 \mid x-y+z -1= 0\\}$. We can track this solution towards $[f, \ell]$ by executing the following:
-```julia
-ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1]
-p = [1, 1, 1, 1]
-S = solve([f; ℓ₁], [f; ℓ], [p])
+```julia-repl
+julia> ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
+julia> p = [1, 1, 1, 1];
+julia> S = solve([f; ℓ₁], [f; ℓ], [p])
 -----------------------------------------------
 Paths tracked: 1
 # non-singular finite solutions:  1

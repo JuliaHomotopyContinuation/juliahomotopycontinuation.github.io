@@ -110,6 +110,8 @@ Assume that $z_1 = z_6 = (1,0,0)$ and $p=(1,1,0)$ and some random $a$ and $\alph
   g = [z[i] ⋅ z[i+1] for i=1:5]
   h = sum( a[i] .* (z[i] × z[i+1]) for i=1:3) + sum(a[i+4] .* z[i] for i=2:5)
   F = [f - 1; g - cos.(α); h - p]
+
+  # assign values to z₁ and z₂
   F = [f(z₁ => [1, 0, 0], z₂ => z₂, z₃ => z₃, z₄ => z₄, z₅ => z₅, z₆ => [1,0,0]) for f in F]
 
   #solve the system

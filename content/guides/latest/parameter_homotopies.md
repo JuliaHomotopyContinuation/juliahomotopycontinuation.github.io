@@ -18,7 +18,7 @@ The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy
 <h3 class="section-head" id="ellipses"><a href="#ellipses">Example: When are two ellipses tangent?</a></h3>
 The following example is inspired by topological data analysis: suppose that you have a point sample from a manifold $M\subset \mathbb{R}^n$. An approach to estimate topological features of $M$ from the sample is by [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology). The idea is as follows. Around each point one puts a ball of radius $r$. Then one computes the [Čech complex](https://en.wikipedia.org/wiki/Čech_complex) of the union of those balls. [It was argued](https://arxiv.org/pdf/1802.09436.pdf) that it could be beneficial to replace balls by *ellipses*. The obstacle in this approach is to compute when two growing ellipses first meet. This problem can be solved by using homotopy continuation.
 
-In dimension 2 the precise computational problem is as follows. Let the two ellipses be centered at $p_1,p_2$, respectively, and be given by two symmetric matrices $Q_1, Q_2$:
+In dimension 2 the computational problem is as follows. Let the two ellipses be centered at $p_1,p_2$, respectively, and be given by two symmetric matrices $Q_1, Q_2$:
 $$E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\},\; i=1,2.$$
 We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. For a generic choice of $Q_1$ and $Q_2$ we have that $\vert E_1(r^\star)\cap E_2(r^\star) \vert =1$ and $E_1(r^\star)$, $E_2(r^\star)$ are tangent. In Julia we translate this into a polynomial system:
 

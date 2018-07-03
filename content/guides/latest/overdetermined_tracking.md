@@ -28,8 +28,7 @@ f = [x*z-y^2, y-z^2, x-y*z]
 One is tempted to compute $C\cap L$ by executing `solve([f;ℓ])` and simply compute *all* solutions. But this command will return an error message.
 ```julia
 solve([f;ℓ])
-ERROR: AssertionError: The input system is overdetermined therefore it necessary to provide an explicit start system.
-See
+ERROR: AssertionError: The input system is overdetermined. Therefore it is necessary to provide an explicit start system. See
     https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
 for details.
 ```

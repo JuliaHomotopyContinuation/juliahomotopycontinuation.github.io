@@ -95,7 +95,7 @@ for some $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and a know
 
 In this notation the forward problem consists of computing $(\alpha,a)$ given the $z_i$ and $p$ and the backward problem consists of computing  $z_2,\ldots,z_5$ that realize some fixed $(\alpha,a,z_1,z_6)$ (knowing $z_1,z_6$ means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).
 
-Assume that $z_1 = z_6 = (1,0,0)$ and $p=(1,1,0)$ and some random $a$ and $\alpha$. We compute all backward solutions as follows:
+Assume that $z_1 = z_6 = (1,0,0)$ and $p=(1,1,0)$ and some random $a$ and $\alpha$. We compute all backward solutions:
 ```julia
   using HomotopyContinuation
   # initialize the variables

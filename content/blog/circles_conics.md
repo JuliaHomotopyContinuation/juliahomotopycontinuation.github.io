@@ -69,10 +69,10 @@ We make a random experiment by sampling 200 instances of the above system and co
 
 ```julia
 number_of_real_solutions = zeros(200)
-rands = [rand(6) for _ in 1:200]
+rands = [rand(6,3) for _ in 1:200]
 
 for (i, X) in enumerate(rands)
-    F = [f[1](circle_vars => circle_vars, conic_vars => X) for _ in 1:3]
+    F = [f[1](circle_vars => circle_vars, conic_vars => X[:,j]) for j in 1:3]
     S = solve(F)
     all_solutions = results(S, onlynonsingular = false)
     number_of_real_solutions[i] = length(real(all_solutions))/2

@@ -20,5 +20,14 @@
       <description></description>
     </item>
     
+    <item>
+      <title>News</title>
+      <link>/tags/news/</link>
+      <pubDate>Tue, 03 Jul 2018 18:56:55 +0100</pubDate>
+      
+      <guid>/tags/news/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

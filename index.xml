@@ -17,7 +17,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/latest/get-started/</guid>
-      <description>This guide assumes that you have Julia 0.6 installed and running. If this is not the case follow the instructions at julialang.org. Installation
+      <description>This guide assumes that you have Julia 0.6 installed and running.
+If this is not the case follow the instructions at julialang.org. Installation
 HomotopyContinuation.jl is available through the Julia package manager by
 julia&amp;gt; Pkg.add(&amp;quot;HomotopyContinuation&amp;quot;)  Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $$f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$$
 This can be accomplished as follows
@@ -25,14 +26,21 @@ julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y; # declare t
     </item>
     
     <item>
-      <title>Examples</title>
+      <title>Solving square systems of polynomial equations</title>
       <link>/guides/latest/examples/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/latest/examples/</guid>
-      <description>Minimize over the sphere We want to solve following optimization problem $$\text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1$$
-The strategy to find the global optimum is to use the method of Lagrange multipliers to find all critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.
-julia&amp;gt; @polyvar x y z; julia&amp;gt; J = 3x^3*y+y^2*z^2-2x*y-x*4z^3; julia&amp;gt; g = x^2+y^2+z^2-1; # Introduce auxillary variable for Lagrangian julia&amp;gt; @polyvar λ; # define Lagrangian julia&amp;gt; L = J - λ * g;  In order to compute all critical points we have to solve the equation $$\nabla_{(x,y.</description>
+      <description>Solving square systems of polynomial equations The basic idea of homotopy continuation algorithms is explained quickly. Suppose that you have a square system of polynomials $$f(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)).$$ Here, &amp;ldquo;square&amp;rdquo; means that the system should have as many equations as variables. The goal is to find solutions $x\in \mathbb{R}^n$ with $f(x)=0$. For this we need another system of equations, say $g(x)=(g_1(x_1,\ldots,x_n),\ldots,g_n(x_1,\ldots,x_n))$, and a solution $x_0$ with $g(x_0)=0$. The basic algorithm consists in connecting the polynomials $f$ and $g$ by a path and tracking the solution $x_0$ from $g$ to $f$ using Newton&amp;rsquo;s method (Remark: the space of polynomial systems form a vector space, in which the notion of path is well-defined).</description>
+    </item>
+    
+    <item>
+      <title>Solutions in projective space</title>
+      <link>/guides/latest/projective/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/latest/projective/</guid>
+      <description>Solving systems defined in projective space In the guides so far we were computing solutions in $\mathbb{R}^n$ or $\mathbb{C}^n$. In some applications, however, it is required to compute solutions in projective space $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems defined over projective space and adjusts the output. Next, we show an example.</description>
     </item>
     
     <item>
@@ -53,6 +61,64 @@ We are excited to launch the new homepage for HomotopyContinuation.jl. We plan t
       <guid>/guides/latest/custom-homotopy/</guid>
       <description>Introduction To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy $$H(x,t) := (1-t)F+tG\;.$$ But this is in general not the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.
 In the following we will illustrate how to setup a custom homotopy on the following example.</description>
+    </item>
+    
+    <item>
+      <title>Macaulay2 interface for HomotopyContinuation.jl</title>
+      <link>/blog/macaulay2/</link>
+      <pubDate>Tue, 03 Jul 2018 18:56:55 +0100</pubDate>
+      
+      <guid>/blog/macaulay2/</guid>
+      <description>Tim Duff pushed a very first version of a Macaulay2 interface to his Github repo. It is available in the &amp;ldquo;Julia&amp;rdquo; branch. The current version lets you export polynomials into .jl files or call HomotopyContinuation.jl directly from Macaulay2.
+For instance, the following M2 code generates the file mypolynomial.jl (we assume that the functions from the Julia branch have been loaded into the current session).
+R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.</description>
+    </item>
+    
+    <item>
+      <title>The number of circles that are tangent to 3 given conics</title>
+      <link>/blog/circles_conics/</link>
+      <pubDate>Tue, 03 Jul 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/blog/circles_conics/</guid>
+      <description>In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
+Consider the problem of computing all circles that are tangent to 3 given conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
+    </item>
+    
+    <item>
+      <title>Parameter Homotopies</title>
+      <link>/guides/latest/parameter_homotopies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/latest/parameter_homotopies/</guid>
+      <description>Parameter Homotopies Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems $$P = \{f(x_1,\ldots,x_n,a) = (f_1(x_1,\ldots,x_n,a), \ldots, f_n(x_1\ldots,x_n,a)) \mid a \in \mathbb{R}^m\}.$$ Often, there is a number $N$, such that a generic member $f\in P$ has exactly $N$ solutions $x\in\mathbb{R}^n$ with $f(x)=0$. This $N$ might be very considerably smaller than the number of solutions of an arbitrary polynomial system not in $P$.</description>
+    </item>
+    
+    <item>
+      <title>Sascha @ International Congress on Mathematical Software</title>
+      <link>/blog/icms/</link>
+      <pubDate>Tue, 03 Jul 2018 19:56:55 +0100</pubDate>
+      
+      <guid>/blog/icms/</guid>
+      <description>Sascha will present the features of HomotopyContinuation.jl at the International Congress on Mathematical Software at Notre Dame this year.</description>
+    </item>
+    
+    <item>
+      <title>Overdetermined systems</title>
+      <link>/guides/latest/overdetermined_tracking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/latest/overdetermined_tracking/</guid>
+      <description>Overdetermined systems A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots, f_n(x_1,\ldots,x_m))$ is called overdetermined, if it has more equations than variables; i.e., when $n&amp;gt;m$. HomotopyContinuation.jl features Newtons method for overdetermined systems for tracking solutions. We show in an example how it can be used.
+Example: the rational normal curve The rational normal curve is a 1-dimensional algebraic variety within the 3-dimensional complex space: $$C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.</description>
+    </item>
+    
+    <item>
+      <title>Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig</title>
+      <link>/blog/nag_summer_school/</link>
+      <pubDate>Tue, 03 Jul 2018 20:56:55 +0100</pubDate>
+      
+      <guid>/blog/nag_summer_school/</guid>
+      <description>To use the true power of homotopy continuation algorithms the user should be familiar with both algebraic geometry and numerical mathematics. If you want to learn more about the relations of those two, you should come to the Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig.</description>
     </item>
     
     <item>

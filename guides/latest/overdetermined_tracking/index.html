@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.42.1" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Overdetermined systems </title>
+
+  
+  <meta name="description" content="How to track solutions of systems with more equations than variables."> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="Overdetermined systems" />
+<meta property="og:description" content="How to track solutions of systems with more equations than variables." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/latest/overdetermined_tracking/" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/latest/overdetermined_tracking/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+ <link href="/css/custom.css" rel="stylesheet" type="text/css">
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+  
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/init-highlight.js"></script>
+    
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/" >API Docs</a></li>
+    
+    <li><a href="/blog/" >Blog</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/guides/" >Guides</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+  <div id="main">
+    <div id="hero">
+      <h1> Overdetermined systems </h1>
+      <p class="hero-lead">
+           We're tracking a solution of an overdetermined system.
+      </p>
+
+    </div> 
+    <div id="kube-component" class="content">
+    
+<nav id="contents">
+    <ol class="js-toc">
+    </ol>
+</nav>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded",
+function(){
+tocbot.init({
+
+tocSelector: '.js-toc',
+
+contentSelector: '.content',
+
+headingSelector: 'h3'
+})
+}
+);
+</script>
+
+
+
+    <h3 class="section-head" id="overdetermined_systems"><a href="#overdetermined_systems">Overdetermined systems</a></h3>
+
+<p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl features <a href="https://www.ams.org/journals/mcom/2000-69-231/S0025-5718-99-01115-1/S0025-5718-99-01115-1.pdf">Newtons method for overdetermined systems</a> for tracking solutions. We show in an example how it can be used.</p>
+
+<h3 class="section-head" id="Rational_normal_curve"><a href="#Rational_normal_curve">Example: the rational normal curve</a></h3>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">rational normal curve</a> is a 1-dimensional algebraic variety within the 3-dimensional complex space:
+$$C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.$$
+Since $C$ is cut out by 3 equations one might expect it to be 0-dimensional, but it is not. In fact, the rational normal curve is a first example of a <a href="https://en.wikipedia.org/wiki/Complete_intersection">non-complete intersection</a>.</p>
+
+<p><h3 class="section-head" id="tracking_overdetermined"><a href="#tracking_overdetermined">Intersecting the rational normal curve with a linear space</a></h3>
+Let $L$ be a random linear space of dimension 2. Then, almost surely, the intersection $C\cap L$ is finite. The goal of this example is to compute one of the points in $C\cap L$. First, let us generate the equations of $C$ and $L$.</p>
+
+<pre><code class="language-julia">using HomotopyContinuation
+@polyvar x y z
+f = [x*z-y^2, y-z^2, x-y*z]
+ℓ = rand(Complex128, 4) ⋅ [x, y, z, 1]
+</code></pre>
+
+<p>One is tempted to compute $C\cap L$ by executing <code>solve([f;ℓ])</code> and simply compute <em>all</em> solutions. But this command will return an error message.</p>
+
+<pre><code class="language-julia">solve([f;ℓ])
+ERROR: AssertionError: The input system is overdetermined. Therefore it is necessary to provide an explicit start system. See
+    https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
+for details.
+</code></pre>
+
+<p>The problem here is that for overdetermined system we can&rsquo;t construct generic starting systems. The reason is simple: a generic overdetermined system has no solutions at all. Nevertheless, if we have a starting system and some of its solutions at hand, we can track them towards $[f, \ell]$.</p>
+
+<p>For instance, the point $p=(1, 1, 1)$ lies both on $C$ and $\{(x,y,z)\in \mathbb{C}^3 \mid x-y+z -1= 0\}$. We can track this solution towards $[f, \ell]$ by executing the following:</p>
+
+<pre><code class="language-julia-repl">julia&gt; ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
+julia&gt; p = [1, 1, 1, 1];
+julia&gt; S = solve([f; ℓ₁], [f; ℓ], [p])
+-----------------------------------------------
+Paths tracked: 1
+# non-singular finite solutions:  1
+# singular finite solutions:  0
+# solutions at infinity:  0
+# failed paths:  0
+Random seed used: 141277
+-----------------------------------------------
+</code></pre>
+
+<p>The syntax <code>[p]</code> is because solve takes as input an <em>array</em> of solutions.</p>
+
+
+    
+    </div>
+    </div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript"> renderMathInElement(document.body, {delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "``", right: "``", display: false},
+      
+      
+      
+    ]});</script>
+</body>
+
+</html>

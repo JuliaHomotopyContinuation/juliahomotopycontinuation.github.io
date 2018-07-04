@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blogs on HomotopyContinuation.jl</title>
-    <link>/blog/</link>
-    <description>Recent content in Blogs on HomotopyContinuation.jl</description>
+    <title>News on HomotopyContinuation.jl</title>
+    <link>/tags/news/</link>
+    <description>Recent content in News on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Mar 2017 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jul 2018 18:56:55 +0100</lastBuildDate>
     
-	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/news/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Welcome!</title>
-      <link>/blog/welcome/</link>
-      <pubDate>Thu, 02 Mar 2017 21:56:55 +0100</pubDate>
-      
-      <guid>/blog/welcome/</guid>
-      <description>Welcome to our new homepage! Hi there!
-We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
-    </item>
     
     <item>
       <title>Macaulay2 interface for HomotopyContinuation.jl</title>
@@ -30,16 +20,6 @@ We are excited to launch the new homepage for HomotopyContinuation.jl. We plan t
       <description>Tim Duff pushed a very first version of a Macaulay2 interface to his Github repo. It is available in the &amp;ldquo;Julia&amp;rdquo; branch. The current version lets you export polynomials into .jl files or call HomotopyContinuation.jl directly from Macaulay2.
 For instance, the following M2 code generates the file mypolynomial.jl (we assume that the functions from the Julia branch have been loaded into the current session).
 R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.</description>
-    </item>
-    
-    <item>
-      <title>The number of circles that are tangent to 3 given conics</title>
-      <link>/blog/circles_conics/</link>
-      <pubDate>Tue, 03 Jul 2018 21:56:55 +0100</pubDate>
-      
-      <guid>/blog/circles_conics/</guid>
-      <description>In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
-Consider the problem of computing all circles that are tangent to 3 given conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
     </item>
     
     <item>

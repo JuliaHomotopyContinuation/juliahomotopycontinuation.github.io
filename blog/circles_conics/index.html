@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.42.1" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> The number of circles that are tangent to 3 given conics </title>
+
+  
+  <meta name="description" content="We use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul">
+
+
+  <meta property="og:title" content="The number of circles that are tangent to 3 given conics" />
+<meta property="og:description" content="We use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/circles_conics/" />
+
+
+
+<meta property="article:published_time" content="2018-07-03T21:56:55&#43;01:00"/>
+
+<meta property="article:modified_time" content="2018-07-03T21:56:55&#43;01:00"/>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/blog/circles_conics/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+ <link href="/css/custom.css" rel="stylesheet" type="text/css">
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+  
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/init-highlight.js"></script>
+    
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/" >API Docs</a></li>
+    
+    <li><a href="/blog/" >Blog</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/guides/" >Guides</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    
+<meta itemprop="name" content="The number of circles that are tangent to 3 given conics">
+<meta itemprop="description" content="We use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl">
+
+
+<meta itemprop="datePublished" content="2018-07-03T21:56:55&#43;01:00" />
+<meta itemprop="dateModified" content="2018-07-03T21:56:55&#43;01:00" />
+<meta itemprop="wordCount" content="522">
+
+
+
+<meta itemprop="keywords" content="example," />
+
+<div id="hero">
+    <h1 itemprop="headline">  The number of circles that are tangent to 3 given conics</h1>
+    
+<blockquote itemprop="description">We use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>3 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2018-07-03T21:56:55&#43;01:00">3 Jul, 2018</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.</p>
+
+<p>Consider the problem of computing all circles that are tangent to 3 given <a href="https://en.wikipedia.org/wiki/Conic_section">conics</a> $C_1,C_2,C_3 \subset \mathbb{R}^2$. <a href="http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf">Emiris and Tzoumas</a> write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</p>
+
+<ul>
+<li><p>$(x-a_1)^2 + (y-a_2)^2 = r$,</p></li>
+
+<li><p>$(x,y)\in C_i, 1\leq i\leq 3$, and</p></li>
+
+<li><p>$\overline{x}-\overline{a_1} + \overline{y}-\overline{a_2}$ spans the normal space of $C_i$ at $(x,y)$ for $1\leq i\leq 3$.</p></li>
+</ul>
+
+<p>We wish to explore the solution space. In particular, we wish to know how many real solutions are possible, because only real solutions give circles in the real plane.</p>
+
+<p>We use Macaulay2 to eliminate the existence quantifier in the above equations. The following M2 code creates a file <a href="https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b"><code>circles_conics.jl</code></a>.</p>
+
+<pre><code class="language-julia">  R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
+
+  f = (x-a_1)^2 + (y-a_2)^2 - r^2
+  g = b_1*x^2 + b_2 *x*y + b_3*y^2 + b_4*x + b_5*y + b_6
+
+  Jac = diff(matrix {{x, y}}, matrix {{f}, {g}})
+  K = ideal(f, g, det Jac)
+  J = eliminate({x,y}, K)
+
+  writeSys(PolySystem {J_0}, &quot;circles_conics.jl&quot;)
+</code></pre>
+
+<p>In a Julia session we include this polynomial by writing</p>
+
+<pre><code class="language-julia">using HomotopyContinuation
+include(&quot;circles_conics.jl&quot;)
+</code></pre>
+
+<p>Now, the session contains a variable <code>f</code> which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. Let us generate 3 random assignments of the $b_i$.</p>
+
+<pre><code class="language-julia">circle_vars = [a_1, a_2, r]
+conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
+F = [f[1](circle_vars =&gt; circle_vars, conic_vars =&gt; rand(6)) for _ in 1:3]
+</code></pre>
+
+<p>Computing the circles that are tangent to the three conics means computing the zeros of $F$. HomotopyContinuation.jl&rsquo;s <code>solve</code> command does this</p>
+
+<pre><code class="language-julia-repl">julia&gt; S = solve(F)
+-----------------------------------------------
+Paths tracked: 512
+# non-singular finite solutions:  364
+# singular finite solutions:  2
+# solutions at infinity:  146
+# failed paths:  0
+Random seed used: 24622
+-----------------------------------------------
+</code></pre>
+
+<p>Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.</p>
+
+<p>We make a random experiment by sampling 200 instances of the above system and counting the real solutions.</p>
+
+<pre><code class="language-julia">number_of_real_solutions = zeros(200)
+rands = [rand(6,3) for _ in 1:200]
+
+for (i, X) in enumerate(rands)
+    F = [f[1](circle_vars =&gt; circle_vars, conic_vars =&gt; X[:,j]) for j in 1:3]
+    S = solve(F)
+    all_solutions = results(S, onlynonsingular = false)
+    number_of_real_solutions[i] = length(real(all_solutions))/2
+end
+</code></pre>
+
+<p>Let us plot a histogram of what we got.</p>
+
+<pre><code class="language-julia">using Plots #The Plots package must be installed for this
+histogram(number_of_real_solutions, label=&quot;b_i uniform in [0,1]&quot;, bins = 184)
+</code></pre>
+
+<p><img src="/images/hist1.pdf" alt="img" /></p>
+
+<p>The <code>rand()</code> command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using <code>randn()</code> (standard normal numbers) and <code>rand(-20:20)</code> (integers uniformly between $-20$ and $20$). The respective histograms are shown next.</p>
+
+<p><img src="/images/hist2.pdf" alt="img" /></p>
+
+<p><img src="/images/hist3.pdf" alt="img" /></p>
+
+<p>It seems that the typical configuration of three conics has only few circles tangent to them.</p>
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul</span>
+    
+  
+  <time datetime="2018-07-03T21:56:55&#43;01:00">
+    3 Jul, 2018
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript"> renderMathInElement(document.body, {delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "``", right: "``", display: false},
+      
+      
+      
+    ]});</script>
+</body>
+
+</html>

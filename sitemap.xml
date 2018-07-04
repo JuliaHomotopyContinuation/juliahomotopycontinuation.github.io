@@ -11,12 +11,44 @@
   </url>
   
   <url>
+    <loc>/guides/latest/projective/</loc>
+  </url>
+  
+  <url>
     <loc>/blog/welcome/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
   </url>
   
   <url>
     <loc>/guides/latest/custom-homotopy/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/macaulay2/</loc>
+    <lastmod>2018-07-03T18:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/circles_conics/</loc>
+    <lastmod>2018-07-03T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/guides/latest/parameter_homotopies/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/icms/</loc>
+    <lastmod>2018-07-03T19:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/guides/latest/overdetermined_tracking/</loc>
+  </url>
+  
+  <url>
+    <loc>/blog/nag_summer_school/</loc>
+    <lastmod>2018-07-03T20:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -62,6 +94,12 @@
   <url>
     <loc>/</loc>
     <lastmod>2017-03-02T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/news/</loc>
+    <lastmod>2018-07-03T18:56:55+01:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

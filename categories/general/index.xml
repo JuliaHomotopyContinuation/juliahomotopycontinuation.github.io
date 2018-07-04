@@ -21,5 +21,44 @@
 We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
     </item>
     
+    <item>
+      <title>Macaulay2 interface for HomotopyContinuation.jl</title>
+      <link>/blog/macaulay2/</link>
+      <pubDate>Tue, 03 Jul 2018 18:56:55 +0100</pubDate>
+      
+      <guid>/blog/macaulay2/</guid>
+      <description>Tim Duff pushed a very first version of a Macaulay2 interface to his Github repo. It is available in the &amp;ldquo;Julia&amp;rdquo; branch. The current version lets you export polynomials into .jl files or call HomotopyContinuation.jl directly from Macaulay2.
+For instance, the following M2 code generates the file mypolynomial.jl (we assume that the functions from the Julia branch have been loaded into the current session).
+R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.</description>
+    </item>
+    
+    <item>
+      <title>The number of circles that are tangent to 3 given conics</title>
+      <link>/blog/circles_conics/</link>
+      <pubDate>Tue, 03 Jul 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/blog/circles_conics/</guid>
+      <description>In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
+Consider the problem of computing all circles that are tangent to 3 given conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
+    </item>
+    
+    <item>
+      <title>Sascha @ International Congress on Mathematical Software</title>
+      <link>/blog/icms/</link>
+      <pubDate>Tue, 03 Jul 2018 19:56:55 +0100</pubDate>
+      
+      <guid>/blog/icms/</guid>
+      <description>Sascha will present the features of HomotopyContinuation.jl at the International Congress on Mathematical Software at Notre Dame this year.</description>
+    </item>
+    
+    <item>
+      <title>Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig</title>
+      <link>/blog/nag_summer_school/</link>
+      <pubDate>Tue, 03 Jul 2018 20:56:55 +0100</pubDate>
+      
+      <guid>/blog/nag_summer_school/</guid>
+      <description>To use the true power of homotopy continuation algorithms the user should be familiar with both algebraic geometry and numerical mathematics. If you want to learn more about the relations of those two, you should come to the Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig.</description>
+    </item>
+    
   </channel>
 </rss>

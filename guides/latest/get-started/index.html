@@ -157,7 +157,9 @@ headingSelector: 'h3'
 
 
 
-    <p><strong>This guide assumes that you have Julia 0.6 installed and running.</strong> If this is not the case follow the instructions
+    <p><strong>This guide assumes that you have Julia 0.6 installed and running.</strong></p>
+
+<p>If this is not the case follow the instructions
 at <a href="https://julialang.org/downloads/">julialang.org</a>.
 <h3 class="section-head" id="h-installation"><a href="#h-installation">Installation</a></h3></p>
 
@@ -234,8 +236,8 @@ Random seed used: 622483
 
 <pre><code class="language-julia-repl">julia&gt; results(solution, result)
 4-element Array{Array{Complex{Float64},1},1}:
- Complex{Float64}[4.44089e-15+1.68179im, 1.41421-8.88178e-16im] 
- Complex{Float64}[1.86717e-16-1.68179im, 1.41421-6.50354e-17im] 
+ Complex{Float64}[4.44089e-15+1.68179im, 1.41421-8.88178e-16im]
+ Complex{Float64}[1.86717e-16-1.68179im, 1.41421-6.50354e-17im]
  Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
  Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
 </code></pre>
@@ -245,7 +247,7 @@ Random seed used: 622483
 <pre><code class="language-julia-repl">julia&gt; results(solution, result, onlyreal=true)
 2-element Array{Array{Complex{Float64},1},1}:
  Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im] 
+ Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
 </code></pre>
 
 <p>to obtain only real solutions.</p>

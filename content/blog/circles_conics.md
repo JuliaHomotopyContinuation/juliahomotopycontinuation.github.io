@@ -17,7 +17,7 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 * $(x,y)\in C_i, 1\leq i\leq 3$, and
 
-* $x-a_1 + y-a_2$ spans the normal space of $C_i$ at $(x,y)$ for $1\leq i\leq 3$.
+* $\overline{x}-\overline{a_1} + \overline{y}-\overline{a_2}$ spans the normal space of $C_i$ at $(x,y)$ for $1\leq i\leq 3$.
 
 We wish to explore the solution space. In particular, we wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
 

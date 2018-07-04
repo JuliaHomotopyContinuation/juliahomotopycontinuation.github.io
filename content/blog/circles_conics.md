@@ -21,7 +21,7 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 We wish to explore the solution space. In particular, we wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
 
-We use Macaulay2 to eliminate the existence quantifier in the above equations. The following M2 code creates a file [`circles_conics.jl`](/content/blog/circles_conics.jl).
+We use Macaulay2 to eliminate the existence quantifier in the above equations. The following M2 code creates a file [`circles_conics.jl`](https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b).
 
 ```julia
   R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
@@ -39,28 +39,28 @@ We use Macaulay2 to eliminate the existence quantifier in the above equations. T
 In a Julia session we include this polynomial by writing
 
 ```julia
-  using HomotopyContinuation
-  include("circles_conics.jl")
+using HomotopyContinuation
+include("circles_conics.jl")
 ```
 
 Now, the session contains a variable `f` which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. Let us generate 3 random assignments of the $b_i$.
 ```julia
-  circle_vars = [a_1, a_2, r]
-  conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
-  F = [f[1](circle_vars => circle_vars, conic_vars => rand(6)) for _ in 1:3]
+circle_vars = [a_1, a_2, r]
+conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
+F = [f[1](circle_vars => circle_vars, conic_vars => rand(6)) for _ in 1:3]
 ```
 Computing the circles that are tangent to the three conics means computing the zeros of $F$. HomotopyContinuation.jl's `solve` command does this
 
-```julia
-  S = solve(F)
-  -----------------------------------------------
-  Paths tracked: 512
-  # non-singular finite solutions:  364
-  # singular finite solutions:  2
-  # solutions at infinity:  146
-  # failed paths:  0
-  Random seed used: 24622
-  -----------------------------------------------
+```julia-repl
+julia> S = solve(F)
+-----------------------------------------------
+Paths tracked: 512
+# non-singular finite solutions:  364
+# singular finite solutions:  2
+# solutions at infinity:  146
+# failed paths:  0
+Random seed used: 24622
+-----------------------------------------------
 ```
 
 Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The solution count with $(366+2)/2=184$ is correct.
@@ -68,27 +68,27 @@ Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solu
 We make a random experiment by sampling 200 instances of the above system and counting the real solutions.
 
 ```julia
-  number_of_real_solutions = zeros(200)
-  rands = [rand(6) for _ in 1:200]
+number_of_real_solutions = zeros(200)
+rands = [rand(6) for _ in 1:200]
 
-  for (i, X) in enumerate(rands)
-      F = [f[1](circle_vars => circle_vars, conic_vars => X) for _ in 1:3]
-      S = solve(F)
-      all_solutions = results(S, onlynonsingular = false)
-      number_of_real_solutions[i] = length(real(all_solutions))/2
-  end
+for (i, X) in enumerate(rands)
+    F = [f[1](circle_vars => circle_vars, conic_vars => X) for _ in 1:3]
+    S = solve(F)
+    all_solutions = results(S, onlynonsingular = false)
+    number_of_real_solutions[i] = length(real(all_solutions))/2
+end
 ```
 
 Let us plot a histogram of what we got.
 
 ```julia
-  using Plots #The Plots package must be installed for this
-  histogram(number_of_real_solutions, label="b_i uniform in [0,1]", xlim = [0,184])
+using Plots #The Plots package must be installed for this
+histogram(number_of_real_solutions, label="b_i uniform in [0,1]", xlim = [0,184])
 ```
 
 ![img](/images/hist1.pdf)
 
-The 'rand( )' command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using 'randn( )' (standard normal numbers) and 'rand(-20:20)' (integers uniformly between $-20$ and $20$). The respective histograms are shown next.
+The `rand()` command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using `randn()` (standard normal numbers) and `rand(-20:20)` (integers uniformly between $-20$ and $20$). The respective histograms are shown next.
 
 ![img](/images/hist2.pdf)
 

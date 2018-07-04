@@ -63,7 +63,7 @@ Random seed used: 24622
 -----------------------------------------------
 ```
 
-Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The solution count with $(366+2)/2=184$ is correct.
+Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.
 
 We make a random experiment by sampling 200 instances of the above system and counting the real solutions.
 

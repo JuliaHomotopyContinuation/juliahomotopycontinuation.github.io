@@ -94,4 +94,4 @@ The `rand()` command samples uniformly in the interval $[0,1]$. Two alternative 
 
 ![img](/images/hist3.pdf)
 
-The experiments indicate that the typical configuration of three conics has only few circles tangent to them.
+It seems that the typical configuration of three conics has only few circles tangent to them.

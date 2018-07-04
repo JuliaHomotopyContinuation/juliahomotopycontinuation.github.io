@@ -83,7 +83,7 @@ Let us plot a histogram of what we got.
 
 ```julia
 using Plots #The Plots package must be installed for this
-histogram(number_of_real_solutions, label="b_i uniform in [0,1]")
+histogram(number_of_real_solutions, label="b_i uniform in [0,1]", bins = 184)
 ```
 
 ![img](/images/hist1.pdf)

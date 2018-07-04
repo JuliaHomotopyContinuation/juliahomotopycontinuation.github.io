@@ -1,6 +1,6 @@
 +++
 title = "Custom Homotopies"
-description = "We go through how to construct a custom homotopy."
+description = "How to construct your own custom homotopy."
 weight = 10
 draft = false
 toc = true

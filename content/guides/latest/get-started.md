@@ -7,7 +7,9 @@ toc = true
 bref = "For this guide, we're going to walk through a simple example."
 +++
 
-**This guide assumes that you have Julia 0.6 installed and running.** If this is not the case follow the instructions
+**This guide assumes that you have Julia 0.6 installed and running.**
+
+If this is not the case follow the instructions
 at [julialang.org](https://julialang.org/downloads/).
 <h3 class="section-head" id="h-installation"><a href="#h-installation">Installation</a></h3>
 
@@ -38,7 +40,7 @@ Random seed used: 622483
 ```
 Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. With *solutions at infinity* we mean solutions of the [homogenization](https://en.wikipedia.org/wiki/Homogeneous_polynomial#Homogenization) of the system which are no solutions of the affine system. None of the solutions are singular and two of them are real. To access the first solution in the array we write
 
-Assume we are only interested in the *real* solutions. We can obtain these by 
+Assume we are only interested in the *real* solutions. We can obtain these by
 ```julia-repl
 julia> real(result)
 2-element Array{HomotopyContinuation.Solving.PathResult{Complex{Float64},Float64,Complex{Float64}},1}:
@@ -80,8 +82,8 @@ To extract the solutions you can do
 ```julia-repl
 julia> results(solution, result)
 4-element Array{Array{Complex{Float64},1},1}:
- Complex{Float64}[4.44089e-15+1.68179im, 1.41421-8.88178e-16im] 
- Complex{Float64}[1.86717e-16-1.68179im, 1.41421-6.50354e-17im] 
+ Complex{Float64}[4.44089e-15+1.68179im, 1.41421-8.88178e-16im]
+ Complex{Float64}[1.86717e-16-1.68179im, 1.41421-6.50354e-17im]
  Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
  Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
 ```
@@ -90,6 +92,6 @@ or
 julia> results(solution, result, onlyreal=true)
 2-element Array{Array{Complex{Float64},1},1}:
  Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im] 
+ Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
 ```
 to obtain only real solutions.

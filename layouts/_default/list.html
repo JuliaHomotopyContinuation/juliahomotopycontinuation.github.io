@@ -9,7 +9,7 @@
 </div>
 <ul id="posts">
 
- {{ range .Paginator.Pages.ByWeight }} {{ partial "page-summary" . }} {{ end }}
+ {{ range .Paginator.Pages.ByDate.Reverse }} {{ partial "page-summary" . }} {{ end }}
   <section>{{ partial "pagination" .}}</section>
 </ul>
 

@@ -1,5 +1,5 @@
 +++
-date = "2018-07-03T21:56:55+01:00"
+date = "2018-07-03T18:56:55+01:00"
 title = "Macaulay2 interface for HomotopyContinuation.jl"
 tags = ["news"]
 categories = ["general"]

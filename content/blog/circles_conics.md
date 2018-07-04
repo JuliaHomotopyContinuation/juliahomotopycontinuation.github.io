@@ -86,12 +86,12 @@ using Plots #The Plots package must be installed for this
 histogram(number_of_real_solutions, label="b_i uniform in [0,1]", bins = 184)
 ```
 
-![img](/images/hist1.pdf)
+![img](/images/hist1.png)
 
 The `rand()` command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using `randn()` (standard normal numbers) and `rand(-20:20)` (integers uniformly between $-20$ and $20$). The respective histograms are shown next.
 
-![img](/images/hist2.pdf)
+![img](/images/hist2.png)
 
-![img](/images/hist3.pdf)
+![img](/images/hist3.png)
 
 It seems that the typical configuration of three conics has only few circles tangent to them.

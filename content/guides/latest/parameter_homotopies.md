@@ -95,4 +95,4 @@ plot!(E₂[1,:], E₂[2,:], label="Ellipse 2")
 ```
 This gives the following picture.
 
-![img](/images/ellipse.pdf)
+![img](/images/ellipse.png)

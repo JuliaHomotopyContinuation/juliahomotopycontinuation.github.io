@@ -1,7 +1,7 @@
 +++
 date = "2018-07-03T21:56:55+01:00"
 title = "Sascha @ International Congress on Mathematical Software"
-tags = ["example"]
+tags = ["news"]
 categories = ["general"]
 draft = false
 description = "We present HomotopyContinuation.jl at ICMS 2018"

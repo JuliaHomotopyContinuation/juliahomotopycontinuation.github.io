@@ -1,7 +1,7 @@
 +++
 date = "2018-07-03T21:56:55+01:00"
 title = "Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig"
-tags = ["example"]
+tags = ["news"]
 categories = ["general"]
 draft = false
 description = "Want to learn more about the relation between numerics and algebraic geometry?"

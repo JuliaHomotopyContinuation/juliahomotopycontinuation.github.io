@@ -1,7 +1,7 @@
 +++
 date = "2018-07-03T21:56:55+01:00"
 title = "Macaulay2 interface for HomotopyContinuation.jl"
-tags = ["example"]
+tags = ["news"]
 categories = ["general"]
 draft = false
 description = "An interface to call HomotopyContinuation.jl from Macaulay2 is in development "
@@ -13,12 +13,12 @@ author = "Paul"
 
 For instance, the following M2 code generates the file `mypolynomial.jl` (we assume that the functions from the Julia branch have been loaded into the current session).
 ```
-  R = QQ[x, y]
-  f = {x^2 + y^2, x-y}
-  writeSys(PolySystem f, "mypolynomial.jl")
+R = QQ[x, y]
+f = {x^2 + y^2, x-y}
+writeSys(PolySystem f, "mypolynomial.jl")
 ```
 The Julia command
 ```julia
-  include("mypolynomial.jl")
+include("mypolynomial.jl")
 ```
 initializes a variable `f` that is a vector whose entries are the polynomials $x^2+y^2$ and $x-y$.

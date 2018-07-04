@@ -1,5 +1,5 @@
 +++
-date = "2017-03-02T21:56:55+01:00"
+date = "2018-07-03T21:56:55+01:00"
 title = "The number of circles that are tangent to 3 given conics"
 tags = ["example"]
 categories = ["general"]

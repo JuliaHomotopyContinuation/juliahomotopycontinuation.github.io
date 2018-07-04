@@ -11,7 +11,17 @@ author = "Paul"
 
 In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
 
-Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section). This computational problem reduces to solving a system of polynomial equations. We initialize the polynomials through Macaulay2. The following M2 code creates a file [`circles_conics.jl`](/content/blog/circles_conics.jl).
+Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. [Emiris and Tzoumas](http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf) write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with
+
+* $(x-a_1)^2 + (y-a_2)^2 = r$,
+
+* $(x,y)\in C_i, 1\leq i\leq 3$, and
+
+* $x-a_1 + y-a_2$ spans the normal space of $C_i$ at $(x,y)$ for $1\leq i\leq 3$.
+
+We wish to explore the solution space. In particular, we wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
+
+We use Macaulay2 to eliminate the existence quantifier in the above equations. The following M2 code creates a file [`circles_conics.jl`](/content/blog/circles_conics.jl).
 
 ```julia
   R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
@@ -55,7 +65,7 @@ Computing the circles that are tangent to the three conics means computing the z
 
 Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The solution count with $(366+2)/2=184$ is correct.
 
-The next step is exploring the solution space. In particular, we wish to know how many real solutions are possible. We make a random experiment by sampling 200 instances of the above system and counting the real solutions.
+We make a random experiment by sampling 200 instances of the above system and counting the real solutions.
 
 ```julia
   number_of_real_solutions = zeros(200)

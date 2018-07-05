@@ -217,10 +217,10 @@ Random seed used: 24622
 
 <p>Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.</p>
 
-<p>We make a random experiment by sampling 200 instances of the above system and counting the real solutions.</p>
+<p>We make a random experiment by sampling 1000 instances of the above system and counting the real solutions.</p>
 
-<pre><code class="language-julia">number_of_real_solutions = zeros(200)
-rands = [rand(6,3) for _ in 1:200]
+<pre><code class="language-julia">number_of_real_solutions = zeros(1000)
+rands = [rand(6,3) for _ in 1:1000]
 
 for (i, X) in enumerate(rands)
     F = [f[1](circle_vars =&gt; circle_vars, conic_vars =&gt; X[:,j]) for j in 1:3]

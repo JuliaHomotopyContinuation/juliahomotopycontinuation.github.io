@@ -55,9 +55,9 @@ Computing the circles that are tangent to the three conics means computing the z
 julia> S = solve(F)
 -----------------------------------------------
 Paths tracked: 512
-# non-singular finite solutions:  364
+# non-singular finite solutions:  366
 # singular finite solutions:  2
-# solutions at infinity:  146
+# solutions at infinity:  144
 # failed paths:  0
 Random seed used: 24622
 -----------------------------------------------

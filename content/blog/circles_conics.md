@@ -11,7 +11,7 @@ author = "Paul"
 
 In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
 
-Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 42 circles that are tangent to
+Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 21 circles that are tangent to
  $$C_1 = \\{y=-x^2+2x+5\\}, C_2 = \\{y = 2x^2+5x-8\\}, C_3 = \\{y = 3x^2-3x-12\\}.$$
 
 ![img](/images/circles.png)

@@ -19,7 +19,7 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 [Emiris and Tzoumas](http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf) write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with
 
-* $(x-a_1)^2 + (y-a_2)^2 = r$,
+* $(x-a_1)^2 + (y-a_2)^2 = r^2$,
 
 * $(x,y)\in C_i, 1\leq i\leq 3$, and
 

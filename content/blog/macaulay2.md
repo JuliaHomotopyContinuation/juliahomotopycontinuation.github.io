@@ -11,7 +11,7 @@ author = "Paul"
 
 [Tim Duff](http://people.math.gatech.edu/~tduff3/) pushed a very first version of a [Macaulay2](http://www2.macaulay2.com/Macaulay2/) interface to his [Github repo](https://github.com/timduff35/M2). It is available in the "Julia" branch. The current version lets you export polynomials into .jl files or call HomotopyContinuation.jl directly from Macaulay2.
 
-For instance, the following M2 code generates the file `mypolynomial.jl` (we assume that the functions from the Julia branch have been loaded into the current session).
+For instance, the following M2 code generates the file `mypolynomial.jl` (I assume that the functions from the Julia branch have been loaded into the current session).
 ```
 R = QQ[x, y]
 f = {x^2 + y^2, x-y}

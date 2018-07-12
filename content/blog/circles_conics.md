@@ -9,7 +9,7 @@ weight = 20
 author = "Paul"
 +++
 
-In the previous blog entry we mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post we want to show how useful this interface can be.
+In the previous blog entry I mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post I want to show how useful this interface can be.
 
 Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 21 circles that are tangent to
  $$C_1 = \\{y=-x^2+2x+5\\}, C_2 = \\{y = 2x^2+5x-8\\}, C_3 = \\{y = 3x^2-3x-12\\}.$$
@@ -25,9 +25,9 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 * $(\overline{x}-\overline{a_1}, \overline{y}-\overline{a_2})$ spans the normal space of $C_i$ at $(x,y)$ for $1\leq i\leq 3$.
 
-We wish to explore the solution space. In particular, we wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
+I wish to explore the solution space. In particular, I wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
 
-We use Macaulay2 to eliminate the existence quantifier in the above equations. The following M2 code creates a file [`circles_conics.jl`](https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b).
+To eliminate the existence quantifier in the above equations I use Macaulay2. The following M2 code creates a file [`circles_conics.jl`](https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b).
 
 ```julia
   R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
@@ -42,14 +42,14 @@ We use Macaulay2 to eliminate the existence quantifier in the above equations. T
   writeSys(PolySystem {J_0}, "circles_conics.jl")
 ```
 
-In a Julia session we include this polynomial by writing
+In a Julia session I include this polynomial by writing
 
 ```julia
 using HomotopyContinuation
 include("circles_conics.jl")
 ```
 
-Now, the session contains a variable `f` which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. Let us generate 3 random assignments of the $b_i$.
+Now, the session contains a variable `f` which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. The following code generates 3 random assignments of the $b_i$.
 ```julia
 circle_vars = [a_1, a_2, r]
 conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
@@ -71,7 +71,7 @@ Random seed used: 24622
 
 Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.
 
-We make a random experiment by sampling 1000 instances of the above system and counting the real solutions.
+I make a random experiment by sampling 1000 instances of the above system and counting the real solutions.
 
 ```julia
 number_of_real_solutions = zeros(1000)
@@ -85,7 +85,7 @@ for (i, X) in enumerate(rands)
 end
 ```
 
-Let us plot a histogram of what we got.
+Here is a histogram of the results.
 
 ```julia
 using Plots #The Plots package must be installed for this

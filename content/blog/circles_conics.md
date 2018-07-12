@@ -4,7 +4,7 @@ title = "The number of circles that are tangent to 3 given conics"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "We use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl"
+description = "I use Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl"
 weight = 20
 author = "Paul"
 +++

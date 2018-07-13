@@ -60,13 +60,13 @@ If $V=\\{f = 0\\}$ has a point of highest curvature, that point will be saved to
 
 It is not suprising that the maximal curvature is attained at the vertex.
 
-Already in this small example the totaldegree of `F` is 61440.  For sparse system with large totaldegree like `F` it makes sense to exploit Julia's JIT compiler for evaluating polynomials. The [StaticPolynomials](https://github.com/JuliaAlgebra/StaticPolynomials.jl) package provides this option and it used in HomotopyContinuation.jl by calling `solve(F, system = SPSystem)`.
+Already in this small example the totaldegree of `F` is 61440.  For sparse systems with large totaldegree like `F` it makes sense to exploit Julia's JIT compiler for evaluating polynomials. The [StaticPolynomials](https://github.com/JuliaAlgebra/StaticPolynomials.jl) package provides this option and it used in HomotopyContinuation.jl by calling `solve(F, system = SPSystem)`.
 
 The next example is the following hypersurface in $\mathbb{R}^3$:
 
 $$V=\\{-x_1^2 - x_1x_2 + x_2^2 - 3x_1 - 3x_2  - 25 x_3 - 1 = 0\\}$$
 
-Here, the totaldegree of `F` is 5898340. For parametric surfaces like this, one can precondition the system by some straight-forward elimination, thus cutting the totaldegree down to 2304. I get the following picture.
+Here, the totaldegree of `F` is 5898340. For such parametric surfaces one can precondition the system by some straight-forward elimination, thus cutting the totaldegree down to 2304. I get the following picture.
 
 <img src="/images/curvature2.gif" width="500px"/>
 
@@ -132,4 +132,4 @@ $$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv =
 
 * $v^T v  = 1$.
 
-One can replace $v^T v  = 1$ by a degree 1 normalization like $a_0 + a_1v_1 + \cdots + a_nv_n = 0$ to decrease the totaldegree of these equations. Those are exactly the equation solved with the code above. It would be interesting to understand the degree of these equations for generic $f$.
+One can replace $v^T v  = 1$ by a degree 1 normalization like $aa_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.

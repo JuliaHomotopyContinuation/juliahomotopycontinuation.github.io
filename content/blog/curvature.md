@@ -56,7 +56,7 @@ finite_sols = results(solution, S, onlyfinite = true)
 sols = filter(s -> norm(imag.(s[1:(n+1)])) .< 1e-8, finite_sols)
 # finds the largest σ
 m = indmax([abs(s[1]) for s in sols])
-σ_max, p = sols[m][1], sols[m][2:(n+1)]
+σ_max, p = abs(sols[m][1]), sols[m][2:(n+1)]
 ```
 
 If $V=\\{f = 0\\}$ has a point of highest curvature, that point will be saved to the variable `p` and the curvature at this point is `σ_max`. The picture is as follows.

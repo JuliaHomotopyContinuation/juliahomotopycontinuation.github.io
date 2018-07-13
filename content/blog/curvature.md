@@ -39,11 +39,11 @@ g₁ = (w ⋅ (H * v)) - λ * g * f
 F = [
     g .* differentiate(g₁, x) - g₁ .* differentiate(g, x);
     H * v - (σ * g) .* w - (μ[1] * g) .* ∇;
-    H' * w - (σ * g) .* v - (μ[2] * g).* ∇;
+    H' * w - (σ * g) .* v - (μ[2] * g) .* ∇;
     f;
-    ∇' * v;
-    ∇' * w;
-    rand(n)' * v - 1;
+    ∇ ⋅ v;
+    ∇ ⋅  w;
+    rand(n) ⋅ v - 1;
 ]
 
 S = solve(F)

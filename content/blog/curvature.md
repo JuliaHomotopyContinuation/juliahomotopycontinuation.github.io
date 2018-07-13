@@ -31,12 +31,13 @@ f = x[1]^2 + 4x[1] + x[2] - 1 # define f
 ∇ = differentiate(f, x) # the gradient
 H = hcat([differentiate(∇[i], x) for i in 1:n]...) # the Hessian
 
+
+g = ∇ ⋅ ∇
 g₁ = (w ⋅ (H * v)) - λ * (∇ ⋅ ∇) * f
-g₂ = (∇ ⋅ ∇)
 
 # F is the system that is solved
 F = [
-    g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
+    g .* differentiate(g₁, x) - g₁ .* differentiate(g, x);
     H * v - (σ * (∇' * ∇)) .* w - (μ[1] * (∇' * ∇)) .* ∇;
     H' * w - (σ * (∇' * ∇)) .* v - (μ[2] * (∇' * ∇)).* ∇;
     f;

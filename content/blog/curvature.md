@@ -38,8 +38,8 @@ g₁ = (w ⋅ (H * v)) - λ * (∇ ⋅ ∇) * f
 # F is the system that is solved
 F = [
     g .* differentiate(g₁, x) - g₁ .* differentiate(g, x);
-    H * v - (σ * (∇' * ∇)) .* w - (μ[1] * (∇' * ∇)) .* ∇;
-    H' * w - (σ * (∇' * ∇)) .* v - (μ[2] * (∇' * ∇)).* ∇;
+    H * v - (σ * g) .* w - (μ[1] * g) .* ∇;
+    H' * w - (σ * g) .* v - (μ[2] * g).* ∇;
     f;
     ∇' * v;
     ∇' * w;

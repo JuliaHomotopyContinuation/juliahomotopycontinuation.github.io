@@ -1,6 +1,6 @@
 +++
-date = "2018-07-11T12:56:55+01:00"
-title = "The point of highest curvature on a surface"
+date = "2018-07-12T11:56:55+01:00"
+title = "The point of maximal curvature on a surface"
 tags = ["example"]
 categories = ["general"]
 draft = false

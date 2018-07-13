@@ -82,10 +82,10 @@ For higher dimensional surfaces or surfaces of degree more than 2, the totaldegr
 <h3 class="section-head">Relation to topological data analysis</h3>
 
 Computing the maximal curvature $\sigma$ is relevant for
-[topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (TDA) as it is part of computing the *reach* $\tau_V$ of a manifold $V$. I don't want to recall the technical definition of the reach, but rather quote [Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) who write *"If a set has its reach greater than $\tau_V > 0$, then one can roll freely a ball of radius $\tau_V > 0$ around it".* The connection to TDA comes from a paper by [Niogy, Smale and Weinberger](http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf) who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.
+[topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (TDA) as it is part of computing the *reach* $\tau_V$ of a manifold $V$. I don't want to recall the technical definition of the reach, but rather quote [Aamari et al.](https://arxiv.org/pdf/1705.04565.pdf) who write *"If a set has its reach greater than $\tau_V > 0$, then one can roll freely a ball of radius $\tau_V > 0$ around it".* The connection to TDA comes from a paper by [Niyogi, Smale and Weinberger](http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf) who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.
 
-[Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) show that $\tau_V$ is the minimum $ \tau_V = \min\, \\{\sigma^{-1}, \rho^{-1}\\},$
-where $\sigma$ is the maximal curvature as above, and $\rho$ is minimal distance of $V$ to its *bottleneck*.
+[Aamari et al.](https://arxiv.org/pdf/1705.04565.pdf) show that $\tau_V$ is the minimum $ \tau_V = \min\, \\{\sigma^{-1}, \rho^{-1}\\},$
+where $\sigma$ is the maximal curvature as above, and $\rho$ is $\frac{1}{2}$ the width of the narrowest *bottleneck* of $V$.
 [David Eklund](https://arxiv.org/pdf/1804.01015.pdf) has shown how to compute $\rho$ using homotopy continuation. Computing the maximal curvature $\sigma$ is the final step towards computing the reach.
 
 

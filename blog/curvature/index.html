@@ -234,7 +234,7 @@ m = indmax([abs(s[1]) for s in sols])
 <p>Computing the maximal curvature $\sigma$ is relevant for
 <a href="https://en.wikipedia.org/wiki/Topological_data_analysis">topological data analysis</a> (TDA) as it is part of computing the <em>reach</em> $\tau_V$ of a manifold $V$. I don&rsquo;t want to recall the technical definition of the reach, but rather quote <a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et al.</a> who write <em>&ldquo;If a set has its reach greater than $\tau_V &gt; 0$, then one can roll freely a ball of radius $\tau_V &gt; 0$ around it&rdquo;.</em> The connection to TDA comes from a paper by <a href="http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf">Niyogi, Smale and Weinberger</a> who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.</p>
 
-<p><a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et al.</a> show that $\tau_V$ is the minimum $ \tau_V = \min\, \{\sigma^{-1}, \rho^{-1}\},$
+<p><a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et al.</a> show that $\tau_V$ is the minimum $ \tau_V = \min\, \{\sigma^{-1}, \rho\},$
 where $\sigma$ is the maximal curvature as above, and $\rho$ is $\frac{1}{2}$ the width of the narrowest <em>bottleneck</em> of $V$.
 <a href="https://arxiv.org/pdf/1804.01015.pdf">David Eklund</a> has shown how to compute $\rho$ using homotopy continuation. Computing the maximal curvature $\sigma$ is the final step towards computing the reach.</p>
 

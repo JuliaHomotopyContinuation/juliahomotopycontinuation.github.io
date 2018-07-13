@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.42.1" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> The point of maximal curvature on a surface </title>
+
+  
+  <meta name="description" content="How to compute curvature with homotopy continuation"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul">
+
+
+  <meta property="og:title" content="The point of maximal curvature on a surface" />
+<meta property="og:description" content="How to compute curvature with homotopy continuation" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/curvature/" />
+
+
+
+<meta property="article:published_time" content="2018-07-12T11:56:55&#43;01:00"/>
+
+<meta property="article:modified_time" content="2018-07-12T11:56:55&#43;01:00"/>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/blog/curvature/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+ <link href="/css/custom.css" rel="stylesheet" type="text/css">
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+  
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/init-highlight.js"></script>
+    
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/" >API Docs</a></li>
+    
+    <li><a href="/blog/" >Blog</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/guides/" >Guides</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    
+<meta itemprop="name" content="The point of maximal curvature on a surface">
+<meta itemprop="description" content="How to compute curvature with homotopy continuation">
+
+
+<meta itemprop="datePublished" content="2018-07-12T11:56:55&#43;01:00" />
+<meta itemprop="dateModified" content="2018-07-12T11:56:55&#43;01:00" />
+<meta itemprop="wordCount" content="1350">
+
+
+
+<meta itemprop="keywords" content="example," />
+
+<div id="hero">
+    <h1 itemprop="headline">  The point of maximal curvature on a surface</h1>
+    
+<blockquote itemprop="description">How to compute curvature with homotopy continuation</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>7 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2018-07-12T11:56:55&#43;01:00">12 Jul, 2018</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>In a recent discussion with <a href="https://math.berkeley.edu/~maddie/">Maddie Weinstein</a> and <a href="http://personal-homepages.mis.mpg.de/kozhasov/">Khazhgali Kozhasov</a> we considered the problem of computing the maximal curvature of an algebraic manifold  $V\subset \mathbb{R}^n$ (a smooth <a href="https://en.wikipedia.org/wiki/Manifold">manifold</a> that is also a real <a href="https://en.wikipedia.org/wiki/Algebraic_variety">algebraic variety</a> ).</p>
+
+<p>Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p)$, where $\sigma(p)$ is the maximal curvature of a <a href="https://en.wikipedia.org/wiki/Geodesic">geodesic</a> through $p$:</p>
+
+<p>$$\sigma(p): = \mathrm{max} \,\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma:(-1,1) \to V \text{ geodesic with } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\}$$</p>
+
+<p>(curves with unit norm derivatives are called <a href="https://en.wikipedia.org/wiki/Differential_geometry_of_curves">parametrized by arc-length</a>).</p>
+
+<p>In this blog post I want to explain how to compute $\sigma$ for <a href="https://en.wikipedia.org/wiki/Hypersurface">hypersurfaces</a> in $\mathbb{R}^n$ using HomotopyContinuation.jl. The approach I present can be generalized to varieties of higher codimension, but this will be elaborated at another point.</p>
+
+<p>The math behind the problem is advanced and requires some knowledge on <a href="https://en.wikipedia.org/wiki/Differential_geometry">differential geometry</a>. This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \{x_1^2 + 4x_1 + x_2 - 1 = 0\}$.</p>
+
+<pre><code class="language-julia">n = 2
+using HomotopyContinuation
+@polyvar σ x[1:n] v[1:n] w[1:n] λ μ[1:2] # initialize variables
+f = x[1]^2 + 4x[1] + x[2] - 1 # define f
+
+∇ = differentiate(f, x) # the gradient
+H = hcat([differentiate(∇[i], x) for i in 1:n]...) # the Hessian
+
+g₁ = (w ⋅ (H * v)) - λ * (∇ ⋅ ∇) * f
+g₂ = (∇ ⋅ ∇)
+
+# F is the system that is solved
+F = [
+    g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
+    H * v - (σ * (∇' * ∇)) .* w - (ρ[1] * (∇' * ∇)) .* ∇;
+    H' * w - (σ * (∇' * ∇)) .* v - (ρ[2] * (∇' * ∇)).* ∇;
+    f;
+    ∇' * v;
+    ∇' * w;
+    rand(n)' * v - 1;
+]
+
+S = solve(F)
+
+# Filter the solutions for which x and σ are real
+
+# extracts the finite solutions
+finite_sols = results(solution, S, onlyfinite = true)
+# extracts real x and σ from the finite solutions
+sols = filter(s -&gt; norm(imag.(s[1:(n+1)])) .&lt; 1e-8, finite_sols)
+# finds the largest σ
+m = indmax([abs(s[1]) for s in sols])
+σ_max, p = sols[1][end], sols[m][2:(n+1)]
+</code></pre>
+
+<p>If $V=\{f = 0\}$ has a point of highest curvature, that point will be saved to the variable <code>p</code> and the curvature at this point is <code>σ_max</code>. The picture is as follows.</p>
+
+<p><img src="/images/curvature1.png" width="500px"/></p>
+
+<p>It is not suprising that the maximal curvature is attained at the vertex.</p>
+
+<p>Already in this small example the totaldegree of <code>F</code> is 61440.  For sparse systems with large totaldegree like <code>F</code> it makes sense to exploit Julia&rsquo;s JIT compiler for evaluating polynomials. The <a href="https://github.com/JuliaAlgebra/StaticPolynomials.jl">StaticPolynomials</a> package provides this option and it used in HomotopyContinuation.jl by calling <code>solve(F, system = SPSystem)</code>.</p>
+
+<p>The next example is the following hypersurface in $\mathbb{R}^3$:</p>
+
+<p>$$V=\{-x_1^2 - x_1x_2 + x_2^2 - 3x_1 - 3x_2  - 25 x_3 - 1 = 0\}$$</p>
+
+<p>Here, the totaldegree of <code>F</code> is 5898340. For such parametric surfaces one can precondition the system by some straight-forward elimination, thus cutting the totaldegree down to 2304. I get the following picture.</p>
+
+<p><img src="/images/curvature2.gif" width="500px"/></p>
+
+<p>I created this gif with the <code>@gif</code> macro from the <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package.</p>
+
+<p>For higher dimensional surfaces or surfaces of degree more than 2, the totaldegree of <code>F</code> becomes prohibitively large for computations. Another approach than totaldegree homotopy is required.</p>
+
+<h3 class="section-head">Relation to topological data analysis</h3>
+
+<p>Computing the maximal curvature $\sigma$ is relevant for
+<a href="https://en.wikipedia.org/wiki/Topological_data_analysis">topological data analysis</a> (TDA) as it is part of computing the <em>reach</em> $\tau_V$ of a manifold $V$. I don&rsquo;t want to recall the technical definition of the reach, but rather quote <a href="https://arxiv.org/pdf/1705.04565.pdf">Amari et al.</a> who write <em>&ldquo;If a set has its reach greater than $\tau_V &gt; 0$, then one can roll freely a ball of radius $\tau_V &gt; 0$ around it&rdquo;.</em> The connection to TDA comes from a paper by <a href="http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf">Niogy, Smale and Weinberger</a> who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.</p>
+
+<p><a href="https://arxiv.org/pdf/1705.04565.pdf">Amari et al.</a> show that $\tau_V$ is the minimum $ \tau_V = \min\, \{\sigma^{-1}, \rho^{-1}\},$
+where $\sigma$ is the maximal curvature as above, and $\rho$ is minimal distance of $V$ to its <em>bottleneck</em>.
+<a href="https://arxiv.org/pdf/1804.01015.pdf">David Eklund</a> has shown how to compute $\rho$ using homotopy continuation. Computing the maximal curvature $\sigma$ is the final step towards computing the reach.</p>
+
+<h3 class="section-head">The Algebraic Geometry of Curvature</h3>
+
+<p>I will now explain the math behind the problem, and why the code above does what it is supposed to do. The variety $V$ is assumed to be a smooth hypersurface in $\mathbb{R}^n$. That is, there is a polynomial $f(x_1,\ldots,x_n)$ with $V = \{p\in\mathbb{R}^n\mid f(p)=0\}.$</p>
+
+<p>It can be shown that the maximal curvature at $p$ is the <a href="http://mathworld.wolfram.com/SpectralNorm.html">spectral norm</a> of the derivative of the <a href="https://en.wikipedia.org/wiki/Gauss_map">Gauss map</a> $G: V \to \mathbb{P}^{n-1}\mathbb{R},\, p\mapsto (\mathrm{T}_p V)^\perp$.
+The Gauss map sends a point $p$ to the normal space of $V$ at $p$. Since $V$ is of codimension $1$, the normal space is a line and lines are parametrized by the $(n-1)$-dimensional <a href="https://en.wikipedia.org/wiki/Projective_space">projective space</a> $\mathbb{P}^{n-1}\mathbb{R}$. Summarizing:</p>
+
+<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \,  \Vert v\Vert = \Vert w \Vert_L =1}  \,\langle w, DG(p)v\rangle_L.$$</p>
+
+<p>where $L=G(p)$ and $\langle \,,\,\rangle_L$ is the metric on $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R}$.
+What is this metric? First, $V$ being embedded in $\mathbb{R}^n$ inherits the usual euclidean inner product $\langle\;,\,\rangle$. The inner product on the tangent space to $L$ is as follows: if $L$ is a line through $q\in \mathbb{R}^n$, then  $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \cong q^\perp$ and the inner product on $q^\perp$ is $\langle \;,\,\rangle_L  = \frac{\langle\;,\,\rangle}{\langle q,q \rangle}$ (see, e.g., section 14 in Bürgisser, Cucker: <em>Condition: the geometry of numerical algorithms</em>, Springer 2013). It follows that,</p>
+
+<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq}$$
+where $q$ is a point on $G(p)=(\mathrm{T}_p V)^\perp$.</p>
+
+<p>A point on $(\mathrm{T}_p V)^\perp$ that can be computed easily from the input data is the <a href="https://en.wikipedia.org/wiki/Gradient">gradient</a></p>
+
+<p>$$\nabla_p = \left(\frac{\partial f}{\partial x_1}(p),\ldots, \frac{\partial f}{\partial x_n}(p)\right)^T,$$</p>
+
+<p>so that</p>
+
+<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,DG(p)\, v}{\nabla_p^T\,\nabla_p}.$$</p>
+
+<p>In remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p).$ Consequently, by the chain rule of differentiation:</p>
+
+<p>$$DG(p) = D\pi(\nabla_p) \, H$$
+where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} &amp; \ldots &amp; \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.</p>
+
+<p>One can show that $D\pi(\nabla_p)$ is the orthogonal projection onto $\nabla_p^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p) =  I_n - \frac{\nabla_p \nabla_p^T}{\nabla_p^T \nabla_p}$. From this it is easy to see that $w^T\,D\pi(\nabla_p) = w^T$ for all $w\in \nabla_p^\perp$. Therefore, the following is an equation for $\sigma(p)$:</p>
+
+<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}.$$</p>
+
+<p>I finally arrive at the following formula for $\sigma$.</p>
+
+<p>$$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}$$</p>
+
+<p>(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the critical equations of this are</p>
+
+<ul>
+<li><p>$(w^T H v - \lambda g) \cdot \frac{\partial g}{\partial x_i} - \frac{\partial (w^T H v - \lambda g)}{\partial x_i} \cdot g$, for $1\leq i\leq n$,</p></li>
+
+<li><p>$H v - \sigma \cdot g \cdot  w - \mu_1 \cdot  g  \cdot \nabla_p$,</p></li>
+
+<li><p>$H^T w - \sigma \cdot  g  \cdot v - \mu_2  \cdot g  \cdot \nabla_p$,</p></li>
+
+<li><p>$f$,</p></li>
+
+<li><p>$\nabla_p^T v$,</p></li>
+
+<li><p>$\nabla_p^T w$,</p></li>
+
+<li><p>$v^T v  = 1$.</p></li>
+</ul>
+
+<p>One can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.</p>
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul</span>
+    
+  
+  <time datetime="2018-07-12T11:56:55&#43;01:00">
+    12 Jul, 2018
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript"> renderMathInElement(document.body, {delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "``", right: "``", display: false},
+      
+      
+      
+    ]});</script>
+</body>
+
+</html>

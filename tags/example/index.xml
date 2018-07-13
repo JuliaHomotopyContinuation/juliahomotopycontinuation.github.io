@@ -6,10 +6,21 @@
     <description>Recent content in Example on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Mar 2017 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 12 Jul 2018 11:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/example/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The point of maximal curvature on a surface</title>
+      <link>/blog/curvature/</link>
+      <pubDate>Thu, 12 Jul 2018 11:56:55 +0100</pubDate>
+      
+      <guid>/blog/curvature/</guid>
+      <description>In a recent discussion with Maddie Weinstein and Khazhgali Kozhasov we considered the problem of computing the maximal curvature of an algebraic manifold $V\subset \mathbb{R}^n$ (a smooth manifold that is also a real algebraic variety ).
+Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p)$, where $\sigma(p)$ is the maximal curvature of a geodesic through $p$:
+$$\sigma(p): = \mathrm{max} \,\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma:(-1,1) \to V \text{ geodesic with } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\}$$</description>
+    </item>
     
     <item>
       <title>Welcome!</title>

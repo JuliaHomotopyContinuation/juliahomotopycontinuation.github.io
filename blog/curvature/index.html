@@ -135,7 +135,7 @@
 
 <meta itemprop="datePublished" content="2018-07-12T11:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-07-12T11:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1350">
+<meta itemprop="wordCount" content="1340">
 
 
 
@@ -181,14 +181,15 @@ f = x[1]^2 + 4x[1] + x[2] - 1 # define f
 ∇ = differentiate(f, x) # the gradient
 H = hcat([differentiate(∇[i], x) for i in 1:n]...) # the Hessian
 
-g₁ = (w ⋅ (H * v)) - λ * (∇ ⋅ ∇) * f
-g₂ = (∇ ⋅ ∇)
+
+g = ∇ ⋅ ∇
+g₁ = (w ⋅ (H * v)) - λ * g * f
 
 # F is the system that is solved
 F = [
-    g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
-    H * v - (σ * (∇' * ∇)) .* w - (μ[1] * (∇' * ∇)) .* ∇;
-    H' * w - (σ * (∇' * ∇)) .* v - (μ[2] * (∇' * ∇)).* ∇;
+    g .* differentiate(g₁, x) - g₁ .* differentiate(g, x);
+    H * v - (σ * g) .* w - (μ[1] * g) .* ∇;
+    H' * w - (σ * g) .* v - (μ[2] * g).* ∇;
     f;
     ∇' * v;
     ∇' * w;

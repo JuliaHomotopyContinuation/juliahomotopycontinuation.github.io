@@ -37,8 +37,8 @@ g₂ = (∇ ⋅ ∇)
 # F is the system that is solved
 F = [
     g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
-    H * v - (σ * (∇' * ∇)) .* w - (ρ[1] * (∇' * ∇)) .* ∇;
-    H' * w - (σ * (∇' * ∇)) .* v - (ρ[2] * (∇' * ∇)).* ∇;
+    H * v - (σ * (∇' * ∇)) .* w - (μ[1] * (∇' * ∇)) .* ∇;
+    H' * w - (σ * (∇' * ∇)) .* v - (μ[2] * (∇' * ∇)).* ∇;
     f;
     ∇' * v;
     ∇' * w;
@@ -55,7 +55,7 @@ finite_sols = results(solution, S, onlyfinite = true)
 sols = filter(s -> norm(imag.(s[1:(n+1)])) .< 1e-8, finite_sols)
 # finds the largest σ
 m = indmax([abs(s[1]) for s in sols])
-σ_max, p = sols[1][end], sols[m][2:(n+1)]
+σ_max, p = sols[m][1], sols[m][2:(n+1)]
 ```
 
 If $V=\\{f = 0\\}$ has a point of highest curvature, that point will be saved to the variable `p` and the curvature at this point is `σ_max`. The picture is as follows.
@@ -115,7 +115,7 @@ In remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{
 
 $$DG(p) = D\pi(\nabla_p) \, H$$
 where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.
- 
+
 One can show that $D\pi(\nabla_p)$ is the orthogonal projection onto $\nabla_p^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p) =  I_n - \frac{\nabla_p \nabla_p^T}{\nabla_p^T \nabla_p}$. From this it is easy to see that $w^T\,D\pi(\nabla_p) = w^T$ for all $w\in \nabla_p^\perp$. Therefore, the following is an equation for $\sigma(p)$:
 
 $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}.$$

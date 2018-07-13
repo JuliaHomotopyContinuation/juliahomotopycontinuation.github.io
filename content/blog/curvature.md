@@ -59,7 +59,7 @@ m = indmax([abs(s[1]) for s in sols])
 σ_max, p = abs(sols[m][1]), sols[m][2:(n+1)]
 ```
 
-If $V=\\{f = 0\\}$ has a point of highest curvature, that point will be saved to the variable `p` and the maximal curvature at this point is `σ_max`. The picture is as follows.
+If $V=\\{f = 0\\}$ has a point of maximal curvature, that point will be saved to the variable `p` and the maximal curvature at this point is `σ_max`. The picture is as follows.
 
 <img src="/images/curvature1.png" width="500px"/>
 

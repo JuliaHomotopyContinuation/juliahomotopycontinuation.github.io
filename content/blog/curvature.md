@@ -125,7 +125,7 @@ I finally arrive at the following formula for $\sigma$.
 
 $$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}$$
 
-(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the critical equations of this are
+(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the critical equations of this maximization problem are
 
 * $(w^T H v - \lambda g) \cdot \frac{\partial g}{\partial x_i} - \frac{\partial (w^T H v - \lambda g)}{\partial x_i} \cdot g$, for $1\leq i\leq n$,
 
@@ -139,6 +139,8 @@ $$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv =
 
 * $\nabla_p^T w$,
 
-* $v^T v  = 1$.
+* $v^T v  = 1$,
+
+where $\mu_1,\mu_2$ and $\lambda$ are Lagrange multipliers.
 
 One can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.

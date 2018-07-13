@@ -100,7 +100,7 @@ $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \mathrm{T}_L \mathbb{P}^{n-1}\ma
 where $L=G(p)$ and $\langle \,,\,\rangle_L$ is the metric on $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R}$.
 What is this metric? First, $V$ being embedded in $\mathbb{R}^n$ inherits the usual euclidean inner product $\langle\;,\,\rangle$. The inner product on the tangent space to $L$ is as follows: if $L$ is a line through $q\in \mathbb{R}^n$, then  $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \cong q^\perp$ and the inner product on $q^\perp$ is $\langle \;,\,\rangle_L  = \frac{\langle\;,\,\rangle}{\langle q,q \rangle}$ (see, e.g., section 14 in Bürgisser, Cucker: *Condition: the geometry of numerical algorithms*, Springer 2013). It follows that,
 
-$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq},$$
+$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq}$$
 where $q$ is a point on $G(p)=(\mathrm{T}_p V)^\perp$.
 
 A point on $(\mathrm{T}_p V)^\perp$ that can be computed easily from the input data is the [gradient](https://en.wikipedia.org/wiki/Gradient)
@@ -111,9 +111,9 @@ so that
 
 $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,DG(p)\, v}{\nabla_p^T\,\nabla_p}.$$
 
-In remains to compute $DG(p)$. For this, let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $p\in  \mathbb{R}^n$ to the line through $p$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p).$ Consequently, by the chain rule of differentiation:
+In remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p).$ Consequently, by the chain rule of differentiation:
 
-$$DG(p) = D\pi(\nabla_p) \, H,$$
+$$DG(p) = D\pi(\nabla_p) \, H$$
 where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.
  
 One can show that $D\pi(\nabla_p)$ is the orthogonal projection onto $\nabla_p^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p) =  I_n - \frac{\nabla_p \nabla_p^T}{\nabla_p^T \nabla_p}$. From this it is easy to see that $w^T\,D\pi(\nabla_p) = w^T$ for all $w\in \nabla_p^\perp$. Therefore, the following is an equation for $\sigma(p)$:

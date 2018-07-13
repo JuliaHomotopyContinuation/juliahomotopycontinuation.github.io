@@ -81,9 +81,9 @@ For higher dimensional surfaces or surfaces of degree more than 2, the totaldegr
 <h3 class="section-head">Relation to topological data analysis</h3>
 
 Computing the maximal curvature $\sigma$ is relevant for
-[topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (TDA) as it is part of computing the *reach* $\tau_V$ of a manifold $V$. I don't want to recall the technical definition of the reach, but rather quote [Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) who write *"If a set has its reach greater than $\tau_V > 0$, then one can roll freely a ball of radius $\tau_V > 0$ around it".* The connection to TDA comes from a paper by [Niyogi, Smale and Weinberger](http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf) who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.
+[topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (TDA) as it is part of computing the *reach* $\tau_V$ of a manifold $V$. I don't want to recall the technical definition of the reach, but rather quote [Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) who write *"If a set has its reach greater than $\tau_V > 0$, then one can roll freely a ball of radius $\tau_V > 0$ around it".* The connection to TDA comes from a paper by [Niogy, Smale and Weinberger](http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf) who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.
 
-[Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) showed that $ \tau_V = \min\, \\{\sigma^{-1}, \rho^{-1}\\},$
+[Amari et al.](https://arxiv.org/pdf/1705.04565.pdf) show that $\tau_V$ is the minimum $ \tau_V = \min\, \\{\sigma^{-1}, \rho^{-1}\\},$
 where $\sigma$ is the maximal curvature as above, and $\rho$ is minimal distance of $V$ to its *bottleneck*.
 [David Eklund](https://arxiv.org/pdf/1804.01015.pdf) has shown how to compute $\rho$ using homotopy continuation. Computing the maximal curvature $\sigma$ is the final step towards computing the reach.
 
@@ -98,9 +98,10 @@ The Gauss map sends a point $p$ to the normal space of $V$ at $p$. Since $V$ is 
 $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \,  \Vert v\Vert = \Vert w \Vert_L =1}  \,\langle w, DG(p)v\rangle_L.$$
 
 where $L=G(p)$ and $\langle \,,\,\rangle_L$ is the metric on $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R}$.
-What is this metric? First, $V$ being embedded in $\mathbb{R}^n$ inherits the usual euclidean inner product $\langle \,,\,\rangle$. The inner product on the tangent space to $L$ is as follows: if $L$ is a line through $q\in \mathbb{R}^n$, then  $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \cong q^\perp$ and the inner product on $q^\perp$ is $\langle \,,\,\rangle_L  = \frac{\langle\,,\,\rangle}{\langle q,q \rangle}$ (see, e.g., section 14 in Bürgisser, Cucker: *Condition: the geometry of numerical algorithms*, Springer 2013). It follows that,
+What is this metric? First, $V$ being embedded in $\mathbb{R}^n$ inherits the usual euclidean inner product $\langle\;,\,\rangle$. The inner product on the tangent space to $L$ is as follows: if $L$ is a line through $q\in \mathbb{R}^n$, then  $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \cong q^\perp$ and the inner product on $q^\perp$ is $\langle \;,\,\rangle_L  = \frac{\langle\;,\,\rangle}{\langle q,q \rangle}$ (see, e.g., section 14 in Bürgisser, Cucker: *Condition: the geometry of numerical algorithms*, Springer 2013). It follows that,
 
-$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq},\;\text{ where } q \text{ is a point on } G(p)=(\mathrm{T}_p V)^\perp.$$
+$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq},$$
+where $q$ is a point on $G(p)=(\mathrm{T}_p V)^\perp$.
 
 A point on $(\mathrm{T}_p V)^\perp$ that can be computed easily from the input data is the [gradient](https://en.wikipedia.org/wiki/Gradient)
 
@@ -112,8 +113,9 @@ $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w
 
 In remains to compute $DG(p)$. For this, let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $p\in  \mathbb{R}^n$ to the line through $p$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p).$ Consequently, by the chain rule of differentiation:
 
-$$DG(p) = D\pi(\nabla_p) \, H, \; \text{ where } H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac{\partial \nabla}{\partial x_n}\end{bmatrix} \text{ is the Hessian of } f.$$
-
+$$DG(p) = D\pi(\nabla_p) \, H,$$
+where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.
+ 
 One can show that $D\pi(\nabla_p)$ is the orthogonal projection onto $\nabla_p^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p) =  I_n - \frac{\nabla_p \nabla_p^T}{\nabla_p^T \nabla_p}$. From this it is easy to see that $w^T\,D\pi(\nabla_p) = w^T$ for all $w\in \nabla_p^\perp$. Therefore, the following is an equation for $\sigma(p)$:
 
 $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}.$$
@@ -138,4 +140,4 @@ $$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv =
 
 * $v^T v  = 1$.
 
-One can replace $v^T v  = 1$ by a degree 1 normalization like $aa_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.
+One can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.

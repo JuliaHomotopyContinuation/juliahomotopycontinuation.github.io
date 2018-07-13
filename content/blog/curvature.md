@@ -70,6 +70,8 @@ Here, the totaldegree of `F` is 5898340. For such parametric surfaces one can pr
 
 <img src="/images/curvature2.gif" width="500px"/>
 
+I created this gif with the `@gif` macro from the [Plots.jl](http://docs.juliaplots.org/latest/) package.
+
 For higher dimensional surfaces or surfaces of degree more than 2, the totaldegree of `F` becomes prohibitively large for computations. Another approach than totaldegree homotopy is required.
 
 <h3 class="section-head">Relation to topological data analysis</h3>

@@ -132,4 +132,4 @@ $$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv =
 
 * $v^T v  = 1$.
 
-One can replace $v^T v  = 1$ by a degree 1 normalization like $a_0 + a_1v_1 + \cdots + a_nv_n = 0$ to decrease the totaldegree of these equations. Those are exactly the equation solved with the code above.
+One can replace $v^T v  = 1$ by a degree 1 normalization like $a_0 + a_1v_1 + \cdots + a_nv_n = 0$ to decrease the totaldegree of these equations. Those are exactly the equation solved with the code above. It would be interesting to understand the degree of these equations for generic $f$.

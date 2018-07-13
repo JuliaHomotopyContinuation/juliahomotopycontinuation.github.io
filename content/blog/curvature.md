@@ -16,11 +16,11 @@ Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p
 
 $$\sigma(p): = \mathrm{max} \,\\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma:(-1,1) \to V \text{ geodesic with } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\\}$$
 
-(curves with with unit norm derivatives are called [parametrized by arc-length](https://en.wikipedia.org/wiki/Differential_geometry_of_curves)).
+(curves with unit norm derivatives are called [parametrized by arc-length](https://en.wikipedia.org/wiki/Differential_geometry_of_curves)).
 
 In this blog post I want to explain how to compute $\sigma$ for [hypersurfaces](https://en.wikipedia.org/wiki/Hypersurface) in $\mathbb{R}^n$ using HomotopyContinuation.jl. The approach I present can be generalized to varieties of higher codimension, but this will be elaborated at another point.
 
-The math behind the problem is advanced and requires some knowledge on [differetial geometry](https://en.wikipedia.org/wiki/Differential_geometry). This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \\{x_1^2 + 4x_1 + x_2 - 1 = 0\\}$.
+The math behind the problem is advanced and requires some knowledge on [differential geometry](https://en.wikipedia.org/wiki/Differential_geometry). This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \\{x_1^2 + 4x_1 + x_2 - 1 = 0\\}$.
 
 ```julia
 n = 2
@@ -36,21 +36,25 @@ g₂ = (∇ ⋅ ∇)
 
 # F is the system that is solved
 F = [
-g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
-H * v - (σ * (∇' * ∇)) .* w - (ρ[1] * (∇' * ∇)) .* ∇;
-H' * w - (σ * (∇' * ∇)) .* v - (ρ[2] * (∇' * ∇)).* ∇;
-f;
-∇' * v;
-∇' * w;
-rand(n)' * v - 1;
+    g₂ .* differentiate(g₁, x) - g₁ .* differentiate(g₂, x);
+    H * v - (σ * (∇' * ∇)) .* w - (ρ[1] * (∇' * ∇)) .* ∇;
+    H' * w - (σ * (∇' * ∇)) .* v - (ρ[2] * (∇' * ∇)).* ∇;
+    f;
+    ∇' * v;
+    ∇' * w;
+    rand(n)' * v - 1;
 ]
 
 S = solve(F)
 
 # Filter the solutions for which x and σ are real
-finite_sols = results(solution, S, onlyfinite = true) # extracts the finite solutions
-sols = filter(s -> norm(imag.(s[1:(n+1)])) .< 1e-8, finite_sols) # extracts real x and σ from the finite solutions
-m = indmax([abs(s[1]) for s in sols]) # finds the largest σ
+
+# extracts the finite solutions
+finite_sols = results(solution, S, onlyfinite = true)
+# extracts real x and σ from the finite solutions
+sols = filter(s -> norm(imag.(s[1:(n+1)])) .< 1e-8, finite_sols)
+# finds the largest σ
+m = indmax([abs(s[1]) for s in sols])
 σ_max, p = sols[1][end], sols[m][2:(n+1)]
 ```
 

@@ -33,7 +33,7 @@ H = hcat([differentiate(∇[i], x) for i in 1:n]...) # the Hessian
 
 
 g = ∇ ⋅ ∇
-g₁ = (w ⋅ (H * v)) - λ * (∇ ⋅ ∇) * f
+g₁ = (w ⋅ (H * v)) - λ * g * f
 
 # F is the system that is solved
 F = [

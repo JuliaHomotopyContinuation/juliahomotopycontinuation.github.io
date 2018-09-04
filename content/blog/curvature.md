@@ -1,5 +1,5 @@
 +++
-date = "2018-07-12T11:56:55+01:00"
+date = "2018-09-04T11:56:55+01:00"
 title = "The point of maximal curvature on a surface"
 tags = ["example"]
 categories = ["general"]
@@ -9,6 +9,7 @@ weight = 10
 author = "Paul"
 +++
 
+(Update Sept. 4 2018: there have been some typos in the first version of this post. They have been fixed.)
 
 In a recent discussion with [Maddie Weinstein](https://math.berkeley.edu/~maddie/) and [Khazhgali Kozhasov](http://personal-homepages.mis.mpg.de/kozhasov/) we considered the problem of computing the maximal curvature of an algebraic manifold  $V\subset \mathbb{R}^n$ (a smooth [manifold](https://en.wikipedia.org/wiki/Manifold) that is also a real [algebraic variety](https://en.wikipedia.org/wiki/Algebraic_variety) ).
 
@@ -25,25 +26,28 @@ The math behind the problem is advanced and requires some knowledge on [differen
 ```julia
 n = 2
 using HomotopyContinuation
-@polyvar σ x[1:n] v[1:n] w[1:n] λ μ[1:2] # initialize variables
+@polyvar σ x[1:n] v[1:n] w[1:n] μ ω[1:2] # initialize variables
 f = x[1]^2 + 4x[1] + x[2] - 1 # define f
 
 ∇ = differentiate(f, x) # the gradient
 H = hcat([differentiate(∇[i], x) for i in 1:n]...) # the Hessian
 
-
 g = ∇ ⋅ ∇
-g₁ = (w ⋅ (H * v)) - λ * g * f
+h = w ⋅ (H * v)
+dg = differentiate(g, x)
+dh = differentiate(h, x)
+
+r =  μ .* ∇ + ω[1] .* H * v + ω[2] .* H' * w
 
 # F is the system that is solved
 F = [
-    g .* differentiate(g₁, x) - g₁ .* differentiate(g, x);
-    H * v - (σ * g) .* w - (μ[1] * g) .* ∇;
-    H' * w - (σ * g) .* v - (μ[2] * g) .* ∇;
+    g .* dh - h .* dg - g .* (σ/2) .* dg - g^2 .* r;
+    H' * w - (σ * g) .* v - (ω[1] * g) .* ∇;
+    H * v - σ .* w - (ω[2] * g) .* ∇;
     f;
     ∇ ⋅ v;
-    ∇ ⋅  w;
-    rand(n) ⋅ v - 1;
+    ∇ ⋅ w;
+    randn(1,n) * v - 1;
 ]
 
 S = solve(F)
@@ -65,13 +69,13 @@ If $V=\\{f = 0\\}$ has a point of maximal curvature, that point will be saved to
 
 It is not suprising that the maximal curvature is attained at the vertex.
 
-Already in this small example the totaldegree of `F` is 61440.  For sparse systems with large totaldegree like `F` it makes sense to exploit Julia's JIT compiler for evaluating polynomials. The [StaticPolynomials](https://github.com/JuliaAlgebra/StaticPolynomials.jl) package provides this option and it used in HomotopyContinuation.jl by calling `solve(F, system = SPSystem)`.
+Already in this small example the totaldegree of `F` is 46080.  For sparse systems with large totaldegree like `F` it makes sense to exploit Julia's JIT compiler for evaluating polynomials. The [StaticPolynomials](https://github.com/JuliaAlgebra/StaticPolynomials.jl) package provides this option and it used in HomotopyContinuation.jl by calling `solve(F, system = SPSystem)`.
 
 The next example is the following hypersurface in $\mathbb{R}^3$:
 
 $$V=\\{-x_1^2 - x_1x_2 + x_2^2 - 3x_1 - 3x_2  - 25 x_3 - 1 = 0\\}$$
 
-Here, the totaldegree of `F` is 5898340. For such parametric surfaces one can precondition the system by some straight-forward elimination, thus cutting the totaldegree down to 2304. I get the following picture.
+Here, the totaldegree of `F` is 4423680. For such parametric surfaces I can precondition the system by some straight-forward elimination, thus cutting the totaldegree down to 2211840. I get the following picture.
 
 <img src="/images/curvature2.gif" width="500px"/>
 
@@ -110,7 +114,7 @@ $$\nabla_p = \left(\frac{\partial f}{\partial x_1}(p),\ldots, \frac{\partial f}{
 
 so that
 
-$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,DG(p)\, v}{\nabla_p^T\,\nabla_p}.$$
+$$\sigma(p) = \max_{v,w\in \nabla_p^\perp,\,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,DG(p)\, v}{\nabla_p^T\,\nabla_p}.$$
 
 In remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p).$ Consequently, by the chain rule of differentiation:
 
@@ -119,28 +123,32 @@ where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac
 
 One can show that $D\pi(\nabla_p)$ is the orthogonal projection onto $\nabla_p^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p) =  I_n - \frac{\nabla_p \nabla_p^T}{\nabla_p^T \nabla_p}$. From this it is easy to see that $w^T\,D\pi(\nabla_p) = w^T$ for all $w\in \nabla_p^\perp$. Therefore, the following is an equation for $\sigma(p)$:
 
-$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}.$$
+$$\sigma(p) = \max_{v, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}.$$
 
 I finally arrive at the following formula for $\sigma$.
 
-$$\sigma = \max_{p \in V,\,v\in \mathrm{T}_p V,\, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}$$
+$$\sigma = \max_{p \in V,\,v, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p^T\,\nabla_p}  \,\frac{w^T \,H\, v}{\nabla_p^T\,\nabla_p}$$
 
-(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the critical equations of this maximization problem are
+(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the Lagrange function for this maximization problem is
 
-* $(w^T H v - \lambda g) \cdot \frac{\partial g}{\partial x_i} - \frac{\partial (w^T H v - \lambda g)}{\partial x_i} \cdot g$, for $1\leq i\leq n$,
+$$L=\frac{w^T H v}{g} - \frac{\sigma}{2}(v^Tv-1) - \frac{\lambda}{2}(w^Tw - g) - \mu \cdot f \omega_1\cdot\nabla_p^Tv - \omega_2\cdot\nabla_p^Tw ,$$
 
-* $H v - \sigma \cdot g \cdot  w - \mu_1 \cdot  g  \cdot \nabla_p$,
+where $\sigma,\lambda,\mu,\omega_1,\omega_2$ are Lagrange multipliers.
 
-* $H^T w - \sigma \cdot  g  \cdot v - \mu_2  \cdot g  \cdot \nabla_p$,
+The corresponding critical equations are:
 
-* $f$,
+* $ (\frac{\partial w^T H v}{\partial x_i})^{1\leq i \leq n} \cdot g -w^T H v \cdot(\frac{\partial g}{\partial x_i})^{1\leq i\leq n} - \frac{\sigma\cdot g}{2} \cdot (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}-g^2 \cdot r=0$, where $r=\mu\cdot \nabla_p+\omega_1 \cdot Hv + \omega_2 \cdot H^Tw$.
 
-* $\nabla_p^T v$,
+* $H^T w - \sigma \cdot  g  \cdot v - \omega_1  \cdot g  \cdot \nabla_p=0$,
 
-* $\nabla_p^T w$,
+* $H v - \sigma \cdot  w - \omega_2 \cdot  g  \cdot \nabla_p=0$,
 
-* $v^T v  = 1$,
+* $f=0$,
 
-where $\mu_1,\mu_2$ and $\lambda$ are Lagrange multipliers.
+* $\nabla_p^T v=0$,
 
-One can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of these equations. With this replacement we get exactly the equation solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.
+* $\nabla_p^T w=0$,
+
+* $v^T v  = 1$.
+
+(one can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of the system). These are the equations solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.

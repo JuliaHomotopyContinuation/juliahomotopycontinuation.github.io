@@ -46,7 +46,7 @@ R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.
     <item>
       <title>The number of circles that are tangent to 3 given conics</title>
       <link>/blog/circles_conics/</link>
-      <pubDate>Tue, 03 Jul 2018 21:56:55 +0100</pubDate>
+      <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
       
       <guid>/blog/circles_conics/</guid>
       <description>In the previous blog entry I mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post I want to show how useful this interface can be.

@@ -24,7 +24,7 @@ HighlightJS = true
 [[menu.main]]
     name = "API Docs"
     weight = -100
-    url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/latest/"
+    url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/"
 [[menu.main]]
     name = "FAQ"
     weight = -100

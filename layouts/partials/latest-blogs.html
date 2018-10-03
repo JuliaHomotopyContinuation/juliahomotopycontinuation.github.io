@@ -2,19 +2,19 @@
     <div>
         Latest blog posts:
     </div>
-    <ul>
+    <div style="margin-left: 8px">
         {{ range (first 2 (last 3 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
-        <li><a href="{{ .Permalink }}">{{ .Title }}</a> by {{ .Params.author }}</li>
+        <div><a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a></div>
         {{ end }}
-    </ul>
+    </div>
 </div>
 <div class="show-sm latest-blog-small">
     <div>
         Latest blog posts:
     </div>
-    <ul>
+    <div style="margin-left: 8px">
         {{ range (first 2 (last 3 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
-        <li><a href="{{ .Permalink }}">{{ .Title }}</a> by {{ .Params.author }}</li>
+        <div><a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a></div>
         {{ end }}
-    </ul>
+    </div>
 </div>

@@ -41,7 +41,7 @@ r =  μ .* ∇ + ω[1] .* H * v + ω[2] .* H' * w
 
 # F is the system that is solved
 F = [
-    g .* dh - h .* dg - g .* (σ/2) .* dg - g^2 .* r;
+    g .* dh - h .* dg + g .* (σ/2) .* dg - g^2 .* r;
     H' * w - (σ * g) .* v - (ω[1] * g) .* ∇;
     H * v - σ .* w - (ω[2] * g) .* ∇;
     f;
@@ -131,17 +131,17 @@ $$\sigma = \max_{p \in V,\,v, w\in \nabla_p^\perp \,  v^Tv = 1,\, w^Tw = \nabla_
 
 (actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $g = \nabla_p^T\nabla_p$, the Lagrange function for this maximization problem is
 
-$$L=\frac{w^T H v}{g} - \frac{\sigma}{2}(v^Tv-1) - \frac{\lambda}{2}(w^Tw - g) - \mu \cdot f \omega_1\cdot\nabla_p^Tv - \omega_2\cdot\nabla_p^Tw ,$$
+$$L=\frac{w^T H v}{g} - \frac{\sigma}{2}(v^Tv-1) - \frac{\lambda}{2}(w^Tw - g) - \mu \cdot f - \omega_1\cdot\nabla_p^Tv - \omega_2\cdot\nabla_p^Tw ,$$
 
 where $\sigma,\lambda,\mu,\omega_1,\omega_2$ are Lagrange multipliers.
 
 The corresponding critical equations are:
 
-* $ (\frac{\partial w^T H v}{\partial x_i})^{1\leq i \leq n} \cdot g -w^T H v \cdot(\frac{\partial g}{\partial x_i})^{1\leq i\leq n} - \frac{\sigma\cdot g}{2} \cdot (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}-g^2 \cdot r=0$, where $r=\mu\cdot \nabla_p+\omega_1 \cdot Hv + \omega_2 \cdot H^Tw$.
+* $ (\frac{\partial w^T H v}{\partial x_i})^{1\leq i \leq n} \cdot g -w^T H v \cdot(\frac{\partial g}{\partial x_i})^{1\leq i\leq n} + \frac{\lambda\cdot g^2}{2} \cdot (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}-g^2 \cdot r=0$, where $r=\mu\cdot \nabla_p+\omega_1 \cdot Hv + \omega_2 \cdot H^Tw$.
 
 * $H^T w - \sigma \cdot  g  \cdot v - \omega_1  \cdot g  \cdot \nabla_p=0$,
 
-* $H v - \sigma \cdot  w - \omega_2 \cdot  g  \cdot \nabla_p=0$,
+* $H v - \lambda \cdot g\cdot w - \omega_2 \cdot  g  \cdot \nabla_p=0$,
 
 * $f=0$,
 
@@ -151,4 +151,6 @@ The corresponding critical equations are:
 
 * $v^T v  = 1$.
 
-(one can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of the system). These are the equations solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.
+* $w^T w  = g$.
+
+One can replace $v^T v  = 1$ by a degree 1 normalization like $a_1v_1 + \cdots + a_nv_n = 1$ to decrease the totaldegree of the system. Moreover, one can eliminate the variable $\lambda$ by using $\lambda \cdot g = \sigma$. These are the equations solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.

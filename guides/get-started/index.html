@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.42.1" />
+  <meta name="generator" content="Hugo 0.50" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,22 +24,7 @@
   <meta property="og:title" content="Get started" />
 <meta property="og:description" content="Up and running in under five minutes" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/guides/latest/get-started/" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<meta property="og:url" content="/guides/get-started/" />
 
   
 
@@ -52,7 +37,7 @@
   
   
 
-  <link rel="canonical" href="/guides/latest/get-started/">  
+  <link rel="canonical" href="/guides/get-started/">  
 
   
 
@@ -157,70 +142,72 @@ headingSelector: 'h3'
 
 
 
-    <p><strong>This guide assumes that you have Julia 0.6 installed and running.</strong></p>
+    <p><strong>This guide assumes that you have Julia 1.0 installed and running.</strong></p>
 
-<p>If this is not the case follow the instructions
-at <a href="https://julialang.org/downloads/">julialang.org</a>.
-<h3 class="section-head" id="h-installation"><a href="#h-installation">Installation</a></h3></p>
+<p>If this is not the case follow the instructions at <a href="https://julialang.org/downloads/">julialang.org</a>. <h3 class="section-head" id="h-installation"><a href="#h-installation">Installation</a></h3></p>
 
 <p>HomotopyContinuation.jl is available through the Julia package manager by</p>
 
-<pre><code class="language-julia-repl">julia&gt; Pkg.add(&quot;HomotopyContinuation&quot;)
+<pre><code class="language-julia-repl">pkg&gt; add HomotopyContinuation
 </code></pre>
 
-<p><h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3>
-HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system
-$$f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$$</p>
+<p>you can enter the Julia package manager by pressing <code>[</code> in the REPL.</p>
+
+<p><h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3> HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$</p>
 
 <p>This can be accomplished as follows</p>
 
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia">using HomotopyContinuation
+@polyvar x y; # declare the variables x and y
+result = solve([x^2+2y, y^2-2])
+</code></pre>
 
-julia&gt; @polyvar x y; # declare the variables x and y
-
-julia&gt; result = solve([x^2+2y, y^2-2])
------------------------------------------------
-Paths tracked: 4
-# non-singular finite solutions:  4
-# singular finite solutions:  0
-# solutions at infinity:  0
-# failed paths:  0
-Random seed used: 622483
------------------------------------------------
+<pre><code>AffineResult with 4 tracked paths
+==================================
+• 4 non-singular finite solutions (2 real)
+• 0 singular finite solutions (0 real)
+• 0 solutions at infinity
+• 0 failed paths
+• random seed: 751138
 </code></pre>
 
 <p>Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. With <em>solutions at infinity</em> we mean solutions of the <a href="https://en.wikipedia.org/wiki/Homogeneous_polynomial#Homogenization">homogenization</a> of the system which are no solutions of the affine system. None of the solutions are singular and two of them are real. To access the first solution in the array we write</p>
 
-<p>Assume we are only interested in the <em>real</em> solutions. We can obtain these by</p>
+<pre><code class="language-julia"># Assume we are only interested in the *real* solutions. We can obtain these by
+real(result)
+</code></pre>
 
-<pre><code class="language-julia-repl">julia&gt; real(result)
-2-element Array{HomotopyContinuation.Solving.PathResult{Complex{Float64},Float64,Complex{Float64}},1}:
- * returncode: success
- * solution: Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- * residual: 4.454e-16
+<pre><code>2-element Array{HomotopyContinuation.Solving.PathResult{Complex{Float64},Float64,Complex{Float64}},1}:
+ • returncode: success
+ • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
+ • residual: 1.130e-16
+ • pathnumber: 3
 
- * returncode: success
- * solution: Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
- * residual: 8.882e-16
+ • returncode: success
+ • solution: Complex{Float64}[-1.68179-2.77556e-17im, -1.41421+0.0im]
+ • residual: 1.119e-16
+ • pathnumber: 4
 </code></pre>
 
 <p>where we can see that there are 2 real solutions, $(2^{\frac34},-\sqrt{2})$ and $(-2^{\frac34}, -\sqrt{2})$. We also can look into more detail into the first result by</p>
 
-<pre><code class="language-julia-repl">julia&gt; real(result)[1]
- ---------------------------------------------
- * returncode: success
- * solution: Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- * residual: 4.454e-16
- * condition_number: 1.933e+00
- * windingnumber: 1
- ----
- * path number: 3
- * start_solution: Complex{Float64}[1.0+0.0im, -1.0+1.22465e-16im]
- ----
- * t: 0.0
- * iterations: 4
- * npredictions: 1
- ---------------------------------------------
+<pre><code class="language-julia">real(result)[1]
+</code></pre>
+
+<pre><code>PathResult
+==========
+ • returncode: success
+ • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
+ • residual: 1.130e-16
+ • condition_number: 1.640e+00
+ • windingnumber: 1
+
+ • pathnumber: 3
+ • start_solution: Complex{Float64}[1.0+0.0im, -1.0+1.22465e-16im]
+
+ • t: 0.0
+ • iterations: 6
+ • npredictions: 3
 </code></pre>
 
 <p>The returncode tells us that the pathtracking was successfull. What do the other entries of that table tell us? Let us consider the most relevant:</p>
@@ -228,29 +215,32 @@ Random seed used: 622483
 <ul>
 <li><code>solution</code>: the zero that is computed (here it is $(2^{\frac34},-\sqrt{2})$).</li>
 <li><code>singular</code>: boolean that shows whether the zero is singular.</li>
-<li><code>residual</code>: the computed value of <code>|f([1.68179+1.27738e-17im, -1.41421-1.18454e-17im])|</code>.</li>
+<li><code>residual</code>: the computed value of $|f([1.68179+1.27738e-17im, -1.41421-1.18454e-17im])|$.</li>
 <li><code>windingnumber</code>: This is a lower bound on the multiplicity of the solution. A windingnumber greater than 1 indicates that the solution is singular.</li>
 </ul>
 
 <p>To extract the solutions you can do</p>
 
-<pre><code class="language-julia-repl">julia&gt; results(solution, result)
-4-element Array{Array{Complex{Float64},1},1}:
- Complex{Float64}[4.44089e-15+1.68179im, 1.41421-8.88178e-16im]
- Complex{Float64}[1.86717e-16-1.68179im, 1.41421-6.50354e-17im]
- Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
+<pre><code class="language-julia">solutions(result)
 </code></pre>
 
-<p>or</p>
-
-<pre><code class="language-julia-repl">julia&gt; results(solution, result, onlyreal=true)
-2-element Array{Array{Complex{Float64},1},1}:
- Complex{Float64}[1.68179+1.27738e-17im, -1.41421-1.18454e-17im]
- Complex{Float64}[-1.68179+1.104e-18im, -1.41421+2.03235e-18im]
+<pre><code>4-element Array{Array{Complex{Float64},1},1}:
+ [1.11022e-16+1.68179im, 1.41421+0.0im]
+ [-1.11022e-16-1.68179im, 1.41421+1.11022e-16im]
+ [1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
+ [-1.68179-2.77556e-17im, -1.41421+0.0im]
 </code></pre>
 
-<p>to obtain only real solutions.</p>
+<p>or if you only want real solutions</p>
+
+<pre><code class="language-julia">realsolutions(result)
+</code></pre>
+
+<pre><code>2-element Array{Array{Float64,1},1}:
+ [1.68179, -1.41421]
+ [-1.68179, -1.41421]
+</code></pre>
+
 
 
     

@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.42.1" />
+  <meta name="generator" content="Hugo 0.50" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,22 +24,7 @@
   <meta property="og:title" content="Overdetermined systems" />
 <meta property="og:description" content="How to track solutions of systems with more equations than variables." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/guides/latest/overdetermined_tracking/" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<meta property="og:url" content="/guides/overdetermined-tracking/" />
 
   
 
@@ -52,7 +37,7 @@
   
   
 
-  <link rel="canonical" href="/guides/latest/overdetermined_tracking/">  
+  <link rel="canonical" href="/guides/overdetermined-tracking/">  
 
   
 
@@ -157,29 +142,29 @@ headingSelector: 'h3'
 
 
 
-    <h3 class="section-head" id="overdetermined_systems"><a href="#overdetermined_systems">Overdetermined systems</a></h3>
+    <h3 class="section-head" id="overdetermined*systems"><a href="#overdetermined*systems">Overdetermined systems</a></h3>
 
 <p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl features <a href="https://www.ams.org/journals/mcom/2000-69-231/S0025-5718-99-01115-1/S0025-5718-99-01115-1.pdf">Newtons method for overdetermined systems</a> for tracking solutions. We show in an example how it can be used.</p>
 
-<h3 class="section-head" id="Rational_normal_curve"><a href="#Rational_normal_curve">Example: the rational normal curve</a></h3>
+<h3 class="section-head" id="Rational*normal*curve"><a href="#Rational*normal*curve">Example: the rational normal curve</a></h3>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">rational normal curve</a> is a 1-dimensional algebraic variety within the 3-dimensional complex space:
-$$C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.$$
-Since $C$ is cut out by 3 equations one might expect it to be 0-dimensional, but it is not. In fact, the rational normal curve is a first example of a <a href="https://en.wikipedia.org/wiki/Complete_intersection">non-complete intersection</a>.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">rational normal curve</a> is a 1-dimensional algebraic variety within the 3-dimensional complex space: $C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.$ Since $C$ is cut out by 3 equations one might expect it to be 0-dimensional, but it is not. In fact, the rational normal curve is a first example of a <a href="https://en.wikipedia.org/wiki/Complete_intersection">non-complete intersection</a>.</p>
 
-<p><h3 class="section-head" id="tracking_overdetermined"><a href="#tracking_overdetermined">Intersecting the rational normal curve with a linear space</a></h3>
-Let $L$ be a random linear space of dimension 2. Then, almost surely, the intersection $C\cap L$ is finite. The goal of this example is to compute one of the points in $C\cap L$. First, let us generate the equations of $C$ and $L$.</p>
+<p><h3 class="section-head" id="tracking*overdetermined"><a href="#tracking*overdetermined">Intersecting the rational normal curve with a linear space</a></h3> Let $L$ be a random linear space of dimension 2. Then, almost surely, the intersection $C\cap L$ is finite. The goal of this example is to compute one of the points in $C\cap L$. First, let us generate the equations of $C$ and $L$.</p>
 
-<pre><code class="language-julia">using HomotopyContinuation
+<pre><code class="language-julia">using HomotopyContinuation, LinearAlgebra
 @polyvar x y z
 f = [x*z-y^2, y-z^2, x-y*z]
-ℓ = rand(Complex128, 4) ⋅ [x, y, z, 1]
+ℓ = randn(ComplexF64, 4) ⋅ [x, y, z, 1];
 </code></pre>
 
 <p>One is tempted to compute $C\cap L$ by executing <code>solve([f;ℓ])</code> and simply compute <em>all</em> solutions. But this command will return an error message.</p>
 
 <pre><code class="language-julia">solve([f;ℓ])
-ERROR: AssertionError: The input system is overdetermined. Therefore it is necessary to provide an explicit start system. See
+</code></pre>
+
+<pre><code>ERROR: The input system is overdetermined. Therefore it is necessary to provide an explicit startsystem.
+See
     https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
 for details.
 </code></pre>
@@ -188,20 +173,22 @@ for details.
 
 <p>For instance, the point $p=(1, 1, 1)$ lies both on $C$ and $\{(x,y,z)\in \mathbb{C}^3 \mid x-y+z -1= 0\}$. We can track this solution towards $[f, \ell]$ by executing the following:</p>
 
-<pre><code class="language-julia-repl">julia&gt; ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
-julia&gt; p = [1, 1, 1, 1];
-julia&gt; S = solve([f; ℓ₁], [f; ℓ], [p])
------------------------------------------------
-Paths tracked: 1
-# non-singular finite solutions:  1
-# singular finite solutions:  0
-# solutions at infinity:  0
-# failed paths:  0
-Random seed used: 141277
------------------------------------------------
+<pre><code class="language-julia">ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
+p = [1, 1, 1, 1];
+solve([f; ℓ₁], [f; ℓ], [p])
+</code></pre>
+
+<pre><code>AffineResult with 1 tracked paths
+==================================
+• 1 non-singular finite solution (0 real)
+• 0 singular finite solutions (0 real)
+• 0 solutions at infinity
+• 0 failed paths
+• random seed: 448284
 </code></pre>
 
 <p>The syntax <code>[p]</code> is because solve takes as input an <em>array</em> of solutions.</p>
+
 
 
     

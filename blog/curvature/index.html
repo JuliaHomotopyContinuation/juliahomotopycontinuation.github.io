@@ -120,7 +120,7 @@
 
 <meta itemprop="datePublished" content="2018-09-04T11:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-09-04T11:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1438">
+<meta itemprop="wordCount" content="1439">
 
 
 
@@ -161,7 +161,7 @@
 <p>The math behind the problem is advanced and requires some knowledge on <a href="https://en.wikipedia.org/wiki/Differential_geometry">differential geometry</a>. This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \{x_1^2 + 4x_1 + x_2 - 1 = 0\}$.</p>
 
 <pre><code class="language-julia">n = 2
-using HomotopyContinuation
+using HomotopyContinuation, DynamicPolynomials
 @polyvar σ x[1:n] v[1:n] w[1:n] μ ω[1:2] # initialize variables
 f = x[1]^2 + 4x[1] + x[2] - 1 # define f
 

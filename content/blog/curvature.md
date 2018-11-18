@@ -25,7 +25,7 @@ The math behind the problem is advanced and requires some knowledge on [differen
 
 ```julia
 n = 2
-using HomotopyContinuation
+using HomotopyContinuation, DynamicPolynomials
 @polyvar σ x[1:n] v[1:n] w[1:n] μ ω[1:2] # initialize variables
 f = x[1]^2 + 4x[1] + x[2] - 1 # define f
 

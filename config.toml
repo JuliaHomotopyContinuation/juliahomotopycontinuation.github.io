@@ -5,13 +5,19 @@ theme = "kube"
 description = "HomotopyContinuation.jl is a Julia package for solving systems of polynomial equations by numerical homotopy continuation."
 Paginate = 8
 HighlightJS = true
-# pygmentsStyle = "default"
-# pygmentsCodeFences = true
+
 [Params]
   RSSLink = "/index.xml"
   github = "JuliaHomotopyContinuation" # add your github profile name
-  twitter = "" # add your twitter profile
-  email = "myemail@myaddress.xxx"
+
+  # [Params.section]
+  # id = "manual"
+  # version = "develop"
+  # versionAlias = "7.10"
+  # versions = [
+  #   "latest",
+  #   "develop"
+  # ]
 
 [[menu.main]]
     name = "Blog"

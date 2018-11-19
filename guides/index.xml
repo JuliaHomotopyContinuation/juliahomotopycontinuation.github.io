@@ -19,7 +19,7 @@
       <description>This guide assumes that you have Julia 1.0 installed and running.
 If this is not the case follow the instructions at julialang.org. Installation
 HomotopyContinuation.jl is available through the Julia package manager by
-pkg&amp;gt; add HomotopyContinuation  you can enter the Julia package manager by pressing [ in the REPL.
+pkg&amp;gt; add HomotopyContinuation  you can enter the Julia package manager by pressing ] in the REPL.
 Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$</description>
     </item>
     

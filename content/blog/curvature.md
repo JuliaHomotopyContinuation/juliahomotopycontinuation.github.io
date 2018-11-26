@@ -9,7 +9,6 @@ weight = 10
 author = "Paul"
 +++
 
-(Update Sept. 4 2018: there have been some typos in the first version of this post. They have been fixed.)
 
 In a recent discussion with [Maddie Weinstein](https://math.berkeley.edu/~maddie/) and [Khazhgali Kozhasov](http://personal-homepages.mis.mpg.de/kozhasov/) we considered the problem of computing the maximal curvature of an algebraic manifold  $V\subset \mathbb{R}^n$ (a smooth [manifold](https://en.wikipedia.org/wiki/Manifold) that is also a real [algebraic variety](https://en.wikipedia.org/wiki/Algebraic_variety) ).
 

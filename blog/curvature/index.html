@@ -120,7 +120,7 @@
 
 <meta itemprop="datePublished" content="2018-09-04T11:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-09-04T11:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1222">
+<meta itemprop="wordCount" content="1181">
 
 
 
@@ -154,7 +154,7 @@
 
 <p>(curves with unit norm derivatives are called <a href="https://en.wikipedia.org/wiki/Differential_geometry_of_curves">parametrized by arc-length</a>).</p>
 
-<p>In this blog post I want to explain how to compute $\sigma$ for <a href="https://en.wikipedia.org/wiki/Hypersurface">hypersurfaces</a> in $\mathbb{R}^n$ using HomotopyContinuation.jl. The approach I present can be generalized to varieties of higher codimension, but this will be elaborated at another point.</p>
+<p>In this blog post I want to explain how to compute $\sigma$ for <a href="https://en.wikipedia.org/wiki/Hypersurface">hypersurfaces</a> in $\mathbb{R}^n$ using HomotopyContinuation.jl.</p>
 
 <p>The math behind the problem requires some knowledge on <a href="https://en.wikipedia.org/wiki/Differential_geometry">differential geometry</a>. This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \{x_1^2 + 4x_1 + x_2 - 1 = 0\}$.</p>
 
@@ -182,13 +182,10 @@ F = [
 
 S = solve(F)
 
-# Filter the solutions for which x and σ are real
-
-# extracts the finite solutions
+# extract the real solutions
 real_sols =  realsolutions(S)
 
-# extracts real x and σ from the finite solutions
-# finds the largest σ
+# find the maximal σ
 σ = map(p -&gt; abs(h([x;v] =&gt; p[1:2n]) / g([x;v] =&gt; p[1:2n])^(3/2)), real_sols)
 σ_max, i = findmax(σ)
 p = real_sols[i][1:n]

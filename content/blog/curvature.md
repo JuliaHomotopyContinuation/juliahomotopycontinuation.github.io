@@ -47,13 +47,10 @@ F = [
 
 S = solve(F)
 
-# Filter the solutions for which x and σ are real
-
-# extracts the finite solutions
+# extract the real solutions
 real_sols =  realsolutions(S)
 
-# extracts real x and σ from the finite solutions
-# finds the largest σ
+# find the maximal σ
 σ = map(p -> abs(h([x;v] => p[1:2n]) / g([x;v] => p[1:2n])^(3/2)), real_sols)
 σ_max, i = findmax(σ)
 p = real_sols[i][1:n]

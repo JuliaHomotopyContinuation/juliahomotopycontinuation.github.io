@@ -4,12 +4,10 @@ title = "The number of circles that are tangent to 3 given conics"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "Using Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl"
+description = "Using HomotopyContinuation.jl for a problem in enumerative geometry"
 weight = 20
 author = "Paul"
 +++
-
-In the previous blog entry I mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post I want to show how useful this interface can be.
 
 Consider the problem of computing all circles that are tangent to 3 given [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
  $$C_1 = \\{y=-x^2+2x+5\\}, C_2 = \\{y = 2x^2+5x-8\\}, C_3 = \\{y = 8x^2-3x-2\\}.$$
@@ -19,7 +17,7 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 [Emiris and Tzoumas](http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf) write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with
 
-* $(x-a_1)^2 + (y-a_2)^2 = r^2$,
+* $(x-a_1)^2 + (y-a_2)^2 = r$,
 
 * $(x,y)\in C_i, 1\leq i\leq 3$, and
 
@@ -27,61 +25,55 @@ Consider the problem of computing all circles that are tangent to 3 given [conic
 
 I wish to explore the solution space. In particular, I wish to know how many real solutions are possible, because only real solutions give circles in the real plane.
 
-To eliminate the existence quantifier in the above equations I use Macaulay2. The following M2 code creates a file [`circles_conics.jl`](https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b).
+Here is code to generate the above system for random coefficients of the conics.
 
 ```julia
-  R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
+using HomotopyContinuation, DynamicPolynomials
+@polyvar x y a[1:2] r v[1:2, 1:3]
 
-  f = (x-a_1)^2 + (y-a_2)^2 - r^2
-  g = b_1*x^2 + b_2 *x*y + b_3*y^2 + b_4*x + b_5*y + b_6
+C = [ [x; y; 1] ⋅ (randn(3,3) * [x;y;1]) for _ in 1:3]
+tangential_conditions = [det([[x;y]-a differentiate(C[i], [x;y])])  for i in 1:3]
 
-  Jac = diff(matrix {{x, y}}, matrix {{f}, {g}})
-  K = ideal(f, g, det Jac)
-  J = eliminate({x,y}, K)
+F = map(i->
+  [
+  (v[1,i]-a[1])^2 + (v[2,i]-a[2])^2 - r;
+  C[i]([x;y] => v[:,i]);
+  tangential_conditions[i]([x;y] => v[:,i], a=>a)
+  ], 1:3)
 
-  writeSys(PolySystem {J_0}, "circles_conics.jl")
-```
+S = solve(vcat(F...))
+````
 
-In a Julia session I include this polynomial by writing
-
-```julia
-using HomotopyContinuation
-include("circles_conics.jl")
-```
-
-Now, the session contains a variable `f` which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. The following code generates 3 random assignments of the $b_i$.
-```julia
-circle_vars = [a_1, a_2, r]
-conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
-F = [f[1](circle_vars => circle_vars, conic_vars => rand(6)) for _ in 1:3]
-```
-Computing the circles that are tangent to the three conics means computing the zeros of $F$. HomotopyContinuation.jl's `solve` command does this
-
+I get the following answer.
 ```julia-repl
-julia> S = solve(F)
------------------------------------------------
-Paths tracked: 512
-# non-singular finite solutions:  366
-# singular finite solutions:  2
-# solutions at infinity:  144
-# failed paths:  0
-Random seed used: 24622
------------------------------------------------
-```
+AffineResult with 512 tracked paths
+==================================
+• 184 non-singular finite solutions (0 real)
+• 0 singular finite solutions (0 real)
+• 328 solutions at infinity
+• 0 failed paths
+• random seed: 32280
+````
 
-Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.
-
-I make a random experiment by sampling 1000 instances of the above system and counting the real solutions.
+I make a random experiment by sampling 500 instances of the above system and counting the real solutions.
 
 ```julia
-number_of_real_solutions = zeros(1000)
-rands = [rand(6,3) for _ in 1:1000]
+number_of_real_solutions = Vector{Int}()
+rands = [randn(3,3) for _ in 1:500]
 
-for (i, X) in enumerate(rands)
-    F = [f[1](circle_vars => circle_vars, conic_vars => X[:,j]) for j in 1:3]
-    S = solve(F)
-    all_solutions = results(S, onlynonsingular = false)
-    number_of_real_solutions[i] = length(real(all_solutions))/2
+for M in rands
+  C = [ [x; y; 1] ⋅ (M * [x;y;1]) for _ in 1:3]
+  tangential_conditions = [det([[x;y]-a differentiate(C[i], [x;y])])  for i in 1:3]
+
+  F = map(i->
+    [
+    (v[1,i]-a[1])^2 + (v[2,i]-a[2])^2 - r;
+    C[i]([x;y] => v[:,i]);
+    tangential_conditions[i]([x;y] => v[:,i], a=>a)
+    ], 1:3)
+
+  S = solve(vcat(F...))
+  push!(number_of_real_solutions, nreal(S))
 end
 ```
 
@@ -89,15 +81,7 @@ Here is a histogram of the results.
 
 ```julia
 using Plots #The Plots package must be installed for this
-histogram(number_of_real_solutions, label="b_i uniform in [0,1]", bins = 184)
+histogram(number_of_real_solutions, label="b_i ~ N(0,1)", bins = 184)
 ```
 
-![img](/images/hist1.png)
-
-The `rand()` command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using `randn()` (standard normal numbers) and `rand(-20:20)` (integers uniformly between $-20$ and $20$). The respective histograms are shown next.
-
-![img](/images/hist2.png)
-
-![img](/images/hist3.png)
-
-It seems that the typical configuration of three conics has only few circles tangent to them.
+![img](/images/hist.png)

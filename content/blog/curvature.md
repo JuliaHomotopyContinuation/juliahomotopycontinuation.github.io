@@ -65,7 +65,7 @@ It is not suprising that the maximal curvature is attained at the vertex.
 
 The next example is the following hypersurface in $\mathbb{R}^3$:
 
-$$V=\\{-x_1^2 - x_1x_2 + x_2^2 - 3x_1 - 3x_2  - 25 x_3 - 1 = 0\\}$$
+$$V=\\{x_1^2 + x_1x_2 + x_2^2  + x_1 - 3x_2  -  2x_3 + 2 = 0\\}.$$
 
 I get the following picture, created with the `@gif` macro from the [Plots.jl](http://docs.juliaplots.org/latest/) package.
 
@@ -113,7 +113,7 @@ One can show that $D\pi(\nabla_p f)$ is the orthogonal projection onto $\nabla_p
 
 $$\sigma(p) = \max_{v, w\in \nabla_p f^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p f^T\,\nabla_p f}  \,\frac{w^T \,H\, v}{\nabla_p f^T\,\nabla_p f}.$$
 
-Diving $w$ by $g:=\sqrt{\nabla_p f^T\,\nabla_p f}$ and using that $H$ is symmetric we have
+Diving $w$ by $\sqrt{g}$ for $g:=\nabla_p f^T\,\nabla_p f$ and using that $H$ is symmetric we have
 
 $$\sigma(p) = \max_{v \in \nabla_p f^\perp \,  v^Tv = 1}  \,\frac{v^T \,H\, v}{g^\frac{3}{2}}.$$
 

@@ -62,7 +62,11 @@ I make a random experiment by sampling 500 instances of the above system and cou
 number_of_real_solutions = Vector{Int}()
 rands = [randn(9) for _ in 1:500]
 for M in rands
-  F = [[f([x;y] => v[:,i], a=>a, r=>r, vec(B) => M) for f in [circle;conic;T]] for i in 1:3]
+  F = [
+        [
+        f([x;y] => v[:,i], a=>a, r=>r, vec(B) => M) for f in [circle;conic;T]
+        ]
+      for i in 1:3]
 
   S = solve(vcat(F...))
   push!(number_of_real_solutions, nreal(S))

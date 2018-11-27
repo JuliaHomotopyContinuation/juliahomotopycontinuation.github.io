@@ -81,7 +81,7 @@ Here is a histogram of the results.
 
 ```julia
 using Plots #The Plots package must be installed for this
-histogram(number_of_real_solutions, label="b_i ~ N(0,1)", bins = 184)
+histogram(number_of_real_solutions, label="b_i ~ N(0,1)", bins = 92)
 ```
 
 ![img](/images/hist.png)

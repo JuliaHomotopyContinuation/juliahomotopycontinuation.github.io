@@ -42,7 +42,7 @@ F = map(i->
   ], 1:3)
 
 S = solve(vcat(F...))
-````
+```
 
 I get the following answer.
 ```julia-repl
@@ -53,7 +53,7 @@ AffineResult with 512 tracked paths
 • 328 solutions at infinity
 • 0 failed paths
 • random seed: 32280
-````
+```
 
 I make a random experiment by sampling 500 instances of the above system and counting the real solutions.
 

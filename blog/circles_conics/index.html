@@ -9,7 +9,7 @@
   <title> The number of circles that are tangent to 3 given conics </title>
 
   
-  <meta name="description" content="Using Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl"> 
+  <meta name="description" content="Using HomotopyContinuation.jl for a problem in enumerative geometry"> 
   
   
   
@@ -22,7 +22,7 @@
 
 
   <meta property="og:title" content="The number of circles that are tangent to 3 given conics" />
-<meta property="og:description" content="Using Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl" />
+<meta property="og:description" content="Using HomotopyContinuation.jl for a problem in enumerative geometry" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/circles_conics/" /><meta property="article:published_time" content="2018-07-05T21:56:55&#43;01:00"/>
 <meta property="article:modified_time" content="2018-07-05T21:56:55&#43;01:00"/>
@@ -115,12 +115,12 @@
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     
 <meta itemprop="name" content="The number of circles that are tangent to 3 given conics">
-<meta itemprop="description" content="Using Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl">
+<meta itemprop="description" content="Using HomotopyContinuation.jl for a problem in enumerative geometry">
 
 
 <meta itemprop="datePublished" content="2018-07-05T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-07-05T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="545">
+<meta itemprop="wordCount" content="342">
 
 
 
@@ -129,12 +129,12 @@
 <div id="hero">
     <h1 itemprop="headline">  The number of circles that are tangent to 3 given conics</h1>
     
-<blockquote itemprop="description">Using Macaulay2 to generate a polynomial system solved by HomotopyContinuation.jl</blockquote>
+<blockquote itemprop="description">Using HomotopyContinuation.jl for a problem in enumerative geometry</blockquote>
 
 <time class="post-time"><span class="icon">
   <i class="fa fa-clock-o" aria-hidden="true"></i>
 </span>
-<span>3 minute read</span>
+<span>2 minute read</span>
 <span class="icon">
  <i class="fa fa-pencil" aria-hidden="true"></i>
 </span>
@@ -146,9 +146,7 @@
 <div id="post-box">
 <div id="post" itemprop="articleBody">
     
-    <p>In the previous blog entry I mentioned the Macaulay2 interface for HomotopyContinuation.jl that is currently under development. In this blog post I want to show how useful this interface can be.</p>
-
-<p>Consider the problem of computing all circles that are tangent to 3 given <a href="https://en.wikipedia.org/wiki/Conic_section">conics</a> $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
+    <p>Consider the problem of computing all circles that are tangent to 3 given <a href="https://en.wikipedia.org/wiki/Conic_section">conics</a> $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
  $$C_1 = \{y=-x^2+2x+5\}, C_2 = \{y = 2x^2+5x-8\}, C_3 = \{y = 8x^2-3x-2\}.$$</p>
 
 <p><img src="/images/circles.png" alt="img" /></p>
@@ -156,7 +154,7 @@
 <p><a href="http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf">Emiris and Tzoumas</a> write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</p>
 
 <ul>
-<li><p>$(x-a_1)^2 + (y-a_2)^2 = r^2$,</p></li>
+<li><p>$(x-a_1)^2 + (y-a_2)^2 = r$,</p></li>
 
 <li><p>$(x,y)\in C_i, 1\leq i\leq 3$, and</p></li>
 
@@ -165,76 +163,64 @@
 
 <p>I wish to explore the solution space. In particular, I wish to know how many real solutions are possible, because only real solutions give circles in the real plane.</p>
 
-<p>To eliminate the existence quantifier in the above equations I use Macaulay2. The following M2 code creates a file <a href="https://gist.github.com/saschatimme/ef2caedf03da9ebfbe908eb0a44aac4b"><code>circles_conics.jl</code></a>.</p>
+<p>Here is code to generate the above system for random coefficients of the conics.</p>
 
-<pre><code class="language-julia">  R = QQ[x, y, a_1, a_2,  r,  b_1..b_6]
+<pre><code class="language-julia">using HomotopyContinuation, DynamicPolynomials
+@polyvar x y a[1:2] r v[1:2, 1:3]
 
-  f = (x-a_1)^2 + (y-a_2)^2 - r^2
-  g = b_1*x^2 + b_2 *x*y + b_3*y^2 + b_4*x + b_5*y + b_6
+C = [ [x; y; 1] ⋅ (randn(3,3) * [x;y;1]) for _ in 1:3]
+tangential_conditions = [det([[x;y]-a differentiate(C[i], [x;y])])  for i in 1:3]
 
-  Jac = diff(matrix {{x, y}}, matrix {{f}, {g}})
-  K = ideal(f, g, det Jac)
-  J = eliminate({x,y}, K)
+F = map(i-&gt;
+  [
+  (v[1,i]-a[1])^2 + (v[2,i]-a[2])^2 - r;
+  C[i]([x;y] =&gt; v[:,i]);
+  tangential_conditions[i]([x;y] =&gt; v[:,i], a=&gt;a)
+  ], 1:3)
 
-  writeSys(PolySystem {J_0}, &quot;circles_conics.jl&quot;)
-</code></pre>
+S = solve(vcat(F...))
+````
 
-<p>In a Julia session I include this polynomial by writing</p>
+I get the following answer.
+```julia-repl
+AffineResult with 512 tracked paths
+==================================
+• 184 non-singular finite solutions (0 real)
+• 0 singular finite solutions (0 real)
+• 328 solutions at infinity
+• 0 failed paths
+• random seed: 32280
+````
 
-<pre><code class="language-julia">using HomotopyContinuation
-include(&quot;circles_conics.jl&quot;)
-</code></pre>
+I make a random experiment by sampling 500 instances of the above system and counting the real solutions.
 
-<p>Now, the session contains a variable <code>f</code> which is an array of length 1. The only entry is a polynomial in the variables $a_1,a_2,r, b_1,b_2,b_3,b_4,b_5,b_6$. It vanishes if and only if the circle $(x-a_1)^2 + (y-a_2)^2 = r^2$ and the conic $b_1x^2 + b_2 xy + b_3y^2 + b_4x + b_5y + b_6 = 0$ are tangent. The following code generates 3 random assignments of the $b_i$.</p>
+```julia
+number_of_real_solutions = Vector{Int}()
+rands = [randn(3,3) for _ in 1:500]
 
-<pre><code class="language-julia">circle_vars = [a_1, a_2, r]
-conic_vars = [b_1, b_2, b_3, b_4, b_5, b_6]
-F = [f[1](circle_vars =&gt; circle_vars, conic_vars =&gt; rand(6)) for _ in 1:3]
-</code></pre>
+for M in rands
+  C = [ [x; y; 1] ⋅ (M * [x;y;1]) for _ in 1:3]
+  tangential_conditions = [det([[x;y]-a differentiate(C[i], [x;y])])  for i in 1:3]
 
-<p>Computing the circles that are tangent to the three conics means computing the zeros of $F$. HomotopyContinuation.jl&rsquo;s <code>solve</code> command does this</p>
+  F = map(i-&gt;
+    [
+    (v[1,i]-a[1])^2 + (v[2,i]-a[2])^2 - r;
+    C[i]([x;y] =&gt; v[:,i]);
+    tangential_conditions[i]([x;y] =&gt; v[:,i], a=&gt;a)
+    ], 1:3)
 
-<pre><code class="language-julia-repl">julia&gt; S = solve(F)
------------------------------------------------
-Paths tracked: 512
-# non-singular finite solutions:  366
-# singular finite solutions:  2
-# solutions at infinity:  144
-# failed paths:  0
-Random seed used: 24622
------------------------------------------------
-</code></pre>
-
-<p>Each circle actually gives 2 solutions, one with $r$ and one with $-r$. One solution was labeled singular. The number of complex solutions is $(366+2)/2=184$.</p>
-
-<p>I make a random experiment by sampling 1000 instances of the above system and counting the real solutions.</p>
-
-<pre><code class="language-julia">number_of_real_solutions = zeros(1000)
-rands = [rand(6,3) for _ in 1:1000]
-
-for (i, X) in enumerate(rands)
-    F = [f[1](circle_vars =&gt; circle_vars, conic_vars =&gt; X[:,j]) for j in 1:3]
-    S = solve(F)
-    all_solutions = results(S, onlynonsingular = false)
-    number_of_real_solutions[i] = length(real(all_solutions))/2
+  S = solve(vcat(F...))
+  push!(number_of_real_solutions, nreal(S))
 end
 </code></pre>
 
 <p>Here is a histogram of the results.</p>
 
 <pre><code class="language-julia">using Plots #The Plots package must be installed for this
-histogram(number_of_real_solutions, label=&quot;b_i uniform in [0,1]&quot;, bins = 184)
+histogram(number_of_real_solutions, label=&quot;b_i ~ N(0,1)&quot;, bins = 92)
 </code></pre>
 
-<p><img src="/images/hist1.png" alt="img" /></p>
-
-<p>The <code>rand()</code> command samples uniformly in the interval $[0,1]$. Two alternative sampling methods are using <code>randn()</code> (standard normal numbers) and <code>rand(-20:20)</code> (integers uniformly between $-20$ and $20$). The respective histograms are shown next.</p>
-
-<p><img src="/images/hist2.png" alt="img" /></p>
-
-<p><img src="/images/hist3.png" alt="img" /></p>
-
-<p>It seems that the typical configuration of three conics has only few circles tangent to them.</p>
+<p><img src="/images/hist.png" alt="img" /></p>
 
 
 </div>

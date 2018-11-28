@@ -120,7 +120,7 @@
 
 <meta itemprop="datePublished" content="2018-11-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-11-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="812">
+<meta itemprop="wordCount" content="819">
 
 
 
@@ -207,7 +207,7 @@ G = [f([h; x; y; z; c] =&gt; [h; x; y; z; c₁]) for f in F]
 S = solve(G, system = SPSystem)
 </code></pre>
 
-<p>On my laptop the computation takes 82 seconds. Here is what I get.</p>
+<p>On my laptop the computation takes 115 seconds. Here is what I get.</p>
 
 <pre><code class="language-julia-repl">AffineResult with 110592 tracked paths
 ==================================
@@ -233,7 +233,7 @@ c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
 R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀, system = SPSystem)
 </code></pre>
 
-<p>Of course, tracking solutions from <code>c₁</code> to <code>c₀</code> is much faster than using the totaldegree approach for <code>G</code>. Here is the summary of <code>R</code>:</p>
+<p>On my laptop this computation takes 0.438 seconds &mdash; tracking solutions from <code>c₁</code> to <code>c₀</code> is much faster than using the totaldegree approach for <code>G</code>. Here is the summary of <code>R</code>:</p>
 
 <pre><code class="language-julia-repl">AffineResult with 720 tracked paths
 ==================================

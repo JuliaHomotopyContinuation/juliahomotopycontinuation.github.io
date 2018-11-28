@@ -93,7 +93,7 @@ Let us extract the 720 solutions.
 sols = solutions(S, onlynonsingular = true)
 ```
 
-One may use `sols` in a parameter homotopy for computing the tritangents of any other sextic. Here is the code for tracking `sols` from `c₁` to the coefficients of $C=x_1^3+x_2^3+x_3^3-1$.
+One may use `sols` in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking `sols` from `c₁` to $C=x_1^3+x_2^3+x_3^3-1$.
 ```julia
 #define the coefficients for C
 c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]

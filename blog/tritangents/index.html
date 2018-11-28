@@ -166,7 +166,7 @@
 
 <p>$$ F = \begin{bmatrix} P(x,h) \\ P(y,h)\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\ Q(x) \\ C(x) \\ \det([h \; \nabla_xQ\; \nabla_xC]) \end{bmatrix}.$$</p>
 
-<p>Here, $\nabla_x$ denotes the <a href="https://en.wikipedia.org/wiki/Del">gradient operator</a>. Let us create the system $F$ in <code>Julia</code>. For simplication I will consider the case when $Q=x_3 - x_1x_2$.</p>
+<p>Here, $\nabla_x$ denotes the <a href="https://en.wikipedia.org/wiki/Del">gradient operator</a>. Let us create the system $F$ in <code>Julia</code>. For simplicity, I will consider the case when $Q=x_3 - x_1x_2$.</p>
 
 <pre><code class="language-julia">using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
 

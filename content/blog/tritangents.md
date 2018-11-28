@@ -18,7 +18,9 @@ author = "Paul"
 
 A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface](https://en.wikipedia.org/wiki/Cubic_surface) $\mathcal{C}\subset \mathbb{C}^3$ with a [quadric](https://en.wikipedia.org/wiki/Quadric) $\mathcal{Q}\subset \mathbb{C}^3$. This means that there exists polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \\{x\in\mathbb{C}^3 : C(x) = 0\\}$ and $\mathcal{Q} = \\{x\in\mathbb{C}^3 : Q(x) = 0\\}$.
 
-An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). The sextic with $Q=x_3 - x_1x_2$ and $C=x_1^3+x_2^3+x_3^3 - 1$ being the [Fermat cubic](https://en.wikipedia.org/wiki/Fermat_cubic), together with one of its tritangents is shown below. The tangent plane is depicted as a triangle. The red points are the points at which the plane touches the sextic.
+An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). This means that there are 120 affine planes, that touch the sextic at three points.
+
+For instance, the sextic with $Q=x_3 - x_1x_2$ and $C=x_1^3+x_2^3+x_3^3 - 1$ being the [Fermat cubic](https://en.wikipedia.org/wiki/Fermat_cubic), together with one of its tritangents is shown below. The tangent plane is depicted as a triangle. The red points are the points at which the plane touches the sextic.
 
 <p style="text-align:center;"><img src="/images/tritangents.gif" width="500px"/></p>
 
@@ -76,7 +78,7 @@ G = [f([h; x; y; z; c] => [h; x; y; z; c₁]) for f in F]
 S = solve(G, system = SPSystem)
 ```
 
-Here is what I get.
+On my laptop the computation takes 82 seconds. Here is what I get.
 ```julia-repl
 AffineResult with 110592 tracked paths
 ==================================

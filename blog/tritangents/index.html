@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Tritangents </title>
+
+  
+  <meta name="description" content="Using HomotopyContinuation.jl for computing tritangents of sextic curves"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul">
+
+
+  <meta property="og:title" content="Tritangents" />
+<meta property="og:description" content="Using HomotopyContinuation.jl for computing tritangents of sextic curves" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/tritangents/" /><meta property="article:published_time" content="2018-11-26T21:56:55&#43;01:00"/>
+<meta property="article:modified_time" content="2018-11-26T21:56:55&#43;01:00"/>
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/blog/tritangents/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+ <link href="/css/custom.css" rel="stylesheet" type="text/css">
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+  
+
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    
+    
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/init-highlight.js"></script>
+    
+    
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/blog/" >Blog</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/guides/" >Guides</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    
+<meta itemprop="name" content="Tritangents">
+<meta itemprop="description" content="Using HomotopyContinuation.jl for computing tritangents of sextic curves">
+
+
+<meta itemprop="datePublished" content="2018-11-26T21:56:55&#43;01:00" />
+<meta itemprop="dateModified" content="2018-11-26T21:56:55&#43;01:00" />
+<meta itemprop="wordCount" content="794">
+
+
+
+<meta itemprop="keywords" content="example," />
+
+<div id="hero">
+    <h1 itemprop="headline">  Tritangents</h1>
+    
+<blockquote itemprop="description">Using HomotopyContinuation.jl for computing tritangents of sextic curves</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>4 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2018-11-26T21:56:55&#43;01:00">26 Nov, 2018</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>A complex sextic curve in $\mathbb{C}^3$ is the intersection of a <a href="https://en.wikipedia.org/wiki/Cubic_surface">cubic surface</a> $\mathcal{C}\subset \mathbb{C}^3$ with a <a href="https://en.wikipedia.org/wiki/Quadric">quadric</a> $\mathcal{Q}\subset \mathbb{C}^3$. This means that there exists polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that</p>
+
+<p>$$\mathcal{C} = \{x\in\mathbb{C}^3 : C(x) = 0\} \text{ and } \mathcal{Q} = \{x\in\mathbb{C}^3 : Q(x) = 0\}.$$</p>
+
+<p>An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). The sextic with $Q=x_3 - x_1x_2$ and $C=x_1^3+x_2^3+x_3^3 - 1$ being the <a href="https://en.wikipedia.org/wiki/Fermat_cubic">Fermat cubic</a>, together with one of its tritangents is shown below. The tangent plane is depicted as a triangle. The red points are the points at which the plane touches the sextic.</p>
+
+<p style="text-align:center;"><img src="/images/tritangents.gif" width="500px"/></p>
+
+<p>In the last months, tritangents have been a popular research topic in the <a href="https://www.mis.mpg.de/nlalg/research.html">Nonlinear Algebra Group</a> at <a href="https://www.mis.mpg.de">MPI Leipzig</a>. In particular, <a href="https://turkuozlum.wixsite.com/tocj">Türkü Özlüm Celik</a>, <a href="https://personal-homepages.mis.mpg.de/avinash/">Avinash Kulkarni</a>, <a href="https://www.yueren.de">Yue Ren</a>, <a href="http://mahsasayyary.wixsite.com/mahsa">Mahsa Sayyary Namin</a>, <a href="https://emresertoz.com">Emre Sertöz</a> and <a href="https://math.berkeley.edu/~bernd/">Bernd Sturmfels</a> have worked on this and wrote several articles, which you can find <a href="https://arxiv.org/abs/1712.06274">here</a>, <a href="https://arxiv.org/abs/1805.11702">here</a> and <a href="https://arxiv.org/abs/1804.02707">here</a>.</p>
+
+<p>Computing tritangents numerically is the topic of this blog post. I want to follow the strategy proposed by <a href="https://arxiv.org/abs/1804.02707">Hauenstein et. al.</a>, who discuss how to compute tritangents using <a href="http://bertini.nd.edu">Bertini</a>. I will repeat their computations using HomotopyContinuation.jl.</p>
+
+<p>Let $\mathcal{V} = \mathcal{C}\cap \mathcal{Q}$ be a sextic in $\mathbb{C}^3$ and let $H\subset \mathbb{C}^3$ be an affine plane. Being a tritangent means that there exists three points $x,y,z\in \mathcal{V}$ with</p>
+
+<p>$$x \in H, \mathrm{T}_x \mathcal{V} \subset H, \text{ and } y \in H, \mathrm{T}_y \mathcal{V} \subset H, \text{ and } z \in H, \mathrm{T}_z \mathcal{V} \subset H.$$</p>
+
+<p>The points $x,y,z$ are the contact points of the plane $H$ with $\mathcal{V}$.</p>
+
+<p>Let $h\in \mathbb{C}^3$ be a vector with $H=\{x\in \mathbb{C}^3: h^Tx=1\}$. Then, $H$ is a tritangent with contact points $x,y,z$, if and only if $(x,y,z,h)$ is a zero of the following polynomial system:</p>
+
+<p>$$ F = \begin{bmatrix} P(x,h) \\ P(y,h)\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\ Q(x) \\ C(x) \\ \det([h \; \nabla_xQ\; \nabla_xC]) \end{bmatrix}.$$</p>
+
+<p>Here, $\nabla_x$ denotes the <a href="https://en.wikipedia.org/wiki/Del">gradient operator</a>. Let us create the system $F$ in <code>Julia</code>. For simplication I will consider the case when $Q=x_3 - x_1x_2$.</p>
+
+<pre><code class="language-julia">using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
+
+@polyvar h[1:3] # variables for the plane
+@polyvar x[1:3] y[1:3] z[1:3] #variables for the contact points
+@polyvar c[1:20] #variables for the cubic
+
+#the quadric
+Q = x[3] - x[1] * x[2]
+#the cubic
+C = c ⋅ unique(kron([x;1], [x;1], [x;1]))
+
+#generate the system P for the contact points x
+P_x = [
+  h ⋅ x - 1;
+  Q;
+  C;
+  det([h differentiate(Q, x) differentiate(C, x)]);
+]
+
+#generate a copy of P for the other contact points y,z
+P_y = [p([h; x; c] =&gt; [h; y; c]) for p in P_x]
+P_z = [p([h; x; c] =&gt; [h; z; c]) for p in P_x]
+
+#define F
+F = [P_x; P_y; P_z]
+</code></pre>
+
+<p>Let us first solve <code>F</code> by totaldegree homotopy when the coefficients of <code>C</code> are random complex numbers. <code>F</code> has a totaldegree of 110592, but it is relatively sparse. For such systems it makes sense to use the package <a href="https://github.com/JuliaAlgebra/StaticPolynomials.jl">StaticPolynomials</a> to accelerate computations. This is done by adding the option <code>system = SPSystem</code> to <code>solve</code>.</p>
+
+<pre><code class="language-julia">c₁ = randn(ComplexF64, 20) #create random complex coefficients for C
+G = [f([h; x; y; z; c] =&gt; [h; x; y; z; c₁]) for f in F] #plug in c₁ for c
+S = solve(G, system = SPSystem) #solve the system for c₁
+</code></pre>
+
+<p>Here is what I get.</p>
+
+<pre><code class="language-julia-repl">AffineResult with 110592 tracked paths
+==================================
+• 720 non-singular finite solutions (0 real)
+• 6745 singular finite solutions (0 real)
+• 102300 solutions at infinity
+• 827 failed paths
+• random seed: 361351
+</code></pre>
+
+<p>The count of 720 is correct: for each of the 120 tritangents I get 6 solutions corresponding to all permutations of the contact points $x,y,z$ &mdash; and $6 \cdot 120 = 720$.</p>
+
+<p>Let us extract the 720 solutions.</p>
+
+<pre><code class="language-julia">sols = solutions(S, onlynonsingular = true)
+</code></pre>
+
+<p>One may use <code>sols</code> in a parameter homotopy for computing the tritangents of any other sextic. Here is the code for tracking <code>sols</code> from <code>c₁</code> to the coefficients of $C=x_1^3+x_2^3+x_3^3-1$.</p>
+
+<pre><code class="language-julia">#define the coefficients for C
+c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
+#track the solutions from c₁ to c₀
+R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀, system = SPSystem)
+</code></pre>
+
+<p>Of course, tracking solutions from <code>c₁</code> to <code>c₀</code> is much faster than using the totaldegree approach for <code>G</code>. Here is the summary of <code>R</code>:</p>
+
+<pre><code class="language-julia-repl">AffineResult with 720 tracked paths
+==================================
+• 648 non-singular finite solutions (24 real)
+• 36 singular finite solutions (0 real)
+• 36 solutions at infinity
+• 0 failed paths
+• random seed: 553651
+</code></pre>
+
+<p>From the $4= \frac{24}{6}$ real solutions one was used in the gif above.</p>
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul</span>
+    
+  
+  <time datetime="2018-11-26T21:56:55&#43;01:00">
+    26 Nov, 2018
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript"> renderMathInElement(document.body, {delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "``", right: "``", display: false},
+      
+      
+      
+    ]});</script>
+</body>
+
+</html>

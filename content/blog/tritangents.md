@@ -54,7 +54,7 @@ P_x = [
   h ⋅ x - 1;
   Q;
   C;
-  det([h differentiate(Q, x) differentiate(C, x)]);
+  det([h differentiate(Q, x) differentiate(C, x)])
 ]
 
 #generate a copy of P for the other contact points y,z

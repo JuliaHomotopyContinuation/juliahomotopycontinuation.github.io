@@ -169,7 +169,6 @@
 <p>Here, $\nabla_x$ denotes the <a href="https://en.wikipedia.org/wiki/Del">gradient operator</a>. Let us create the system $F$ in <code>Julia</code>. For simplicity, I will consider the case when $Q=x_3 - x_1x_2$.</p>
 
 <pre><code class="language-julia">using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
-
 @polyvar h[1:3] # variables for the plane
 @polyvar x[1:3] y[1:3] z[1:3] #variables for the contact points
 @polyvar c[1:20] #variables for the cubic

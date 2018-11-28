@@ -20,7 +20,7 @@ A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface
 
 An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). This means that there are 120 affine planes, that touch the sextic at three points.
 
-For instance, the sextic with $Q=x_3 - x_1x_2$ and $C=x_1^3+x_2^3+x_3^3 - 1$ being the [Fermat cubic](https://en.wikipedia.org/wiki/Fermat_cubic), together with one of its tritangents is shown below. The tangent plane is depicted as a triangle. The red points are the points at which the plane touches the sextic.
+For instance, the sextic with $Q=x_3 - x_1x_2$ and $C=x_1^3+x_2^3+x_3^3 - 1$ together with one of its tritangents is shown below ($C$ is called the [Fermat cubic](https://en.wikipedia.org/wiki/Fermat_cubic)). The tangent plane is depicted as a triangle. The red points are the points at which the plane touches the sextic.
 
 <p style="text-align:center;"><img src="/images/tritangents.gif" width="500px"/></p>
 

@@ -196,9 +196,13 @@ F = [P_x; P_y; P_z]
 
 <p>Let us first solve <code>F</code> by totaldegree homotopy when the coefficients of <code>C</code> are random complex numbers. <code>F</code> has a totaldegree of 110592, but it is relatively sparse. For such systems it makes sense to use the package <a href="https://github.com/JuliaAlgebra/StaticPolynomials.jl">StaticPolynomials</a> to accelerate computations. This is done by adding the option <code>system = SPSystem</code> to <code>solve</code>.</p>
 
-<pre><code class="language-julia">c₁ = randn(ComplexF64, 20) #create random complex coefficients for C
-G = [f([h; x; y; z; c] =&gt; [h; x; y; z; c₁]) for f in F] #plug in c₁ for c
-S = solve(G, system = SPSystem) #solve the system for c₁
+<pre><code class="language-julia">#create random complex coefficients for C
+c₁ = randn(ComplexF64, 20)
+#plug in c₁ for c
+G = [f([h; x; y; z; c] =&gt; [h; x; y; z; c₁]) for f in F]
+
+#solve the system for c₁
+S = solve(G, system = SPSystem)
 </code></pre>
 
 <p>Here is what I get.</p>

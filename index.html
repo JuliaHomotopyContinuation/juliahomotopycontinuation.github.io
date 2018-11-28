@@ -118,7 +118,31 @@
  </header>
   <main>
 
-<div id="main">    
+<div class="hide-sm latest-blog">
+    <div>
+        Latest blog posts:
+    </div>
+    <div style="margin-left: 8px">
+        
+        <div><a style="text-decoration: none" href="/blog/tritangents/">Tritangents</a></div>
+        
+        <div><a style="text-decoration: none" href="/blog/curvature/">The point of maximal curvature on a surface</a></div>
+        
+    </div>
+</div>
+<div class="show-sm latest-blog-small">
+    <div>
+        Latest blog posts:
+    </div>
+    <div style="margin-left: 8px">
+        
+        <div><a style="text-decoration: none" href="/blog/tritangents/">Tritangents</a></div>
+        
+        <div><a style="text-decoration: none" href="/blog/curvature/">The point of maximal curvature on a surface</a></div>
+        
+    </div>
+</div>
+<div id="main">
   <div id="hero">
     <img src="images/logo_transparent_bg.png" style="max-height:160px"></img>
     <p>HomotopyContinuation.jl is a Julia package for solving systems of polynomial equations by numerical homotopy continuation.</p>
@@ -126,6 +150,7 @@
   <div id="action-buttons">
     <a class="button primary big" href="/guides/get-started/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">Get started</a> <a class="button outline big" href="https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" onclick="_gaq.push(['_trackEvent', 'kube', 'github']);">View on Github</a>
   </div>
+
   <div id="kube-features">
     <div class="row gutters">
       <div class="col col-4 item">
@@ -134,7 +159,7 @@
           <i class="fas fa-tachometer-alt fa-3x"></i>
         </figure>
         <h3>Fast</h3>
-        <p>We took care that your computations run as fast as possible.</p> 
+        <p>We took care that your computations run as fast as possible.</p>
       </div>
       <div class="col col-4 item">
         <figure>
@@ -156,7 +181,8 @@
     <div class="row gutters">
       <div class="col col-4 item">
         <h4>Integrated in your workflow</h4>
-        <p>HomotopyContinuation.jl integrates with the rest of the Julia ecosystem such that you get your work done as easy as possible.</p>
+        <p>HomotopyContinuation.jl integrates with the rest of the Julia ecosystem such that you get your work done as
+          easy as possible.</p>
       </div>
       <div class="col col-4 item">
         <h4>Cross-platform</h4>
@@ -165,10 +191,10 @@
       <div class="col col-4 item">
         <h4>License</h4>
         <p>HomotopyContinuation.jl licensed under <a href="https://opensource.org/licenses/MIT">MIT</a>.<br>
-        HomotopyContinuation.jl is absolutely free for personal or commercial use.</p>
+          HomotopyContinuation.jl is absolutely free for personal or commercial use.</p>
+      </div>
     </div>
   </div>
-</div>
 </div>
 </main>
   <footer>   <footer id="footer">
@@ -178,6 +204,9 @@
         <li>
           <a href="/about/">About</a>
         </li>
+        <li>
+            <a href="/blog/">Blog</a>
+          </li>
         <li>
           <a href="/guides/">Guides</a>
         </li>

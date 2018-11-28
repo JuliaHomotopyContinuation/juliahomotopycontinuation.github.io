@@ -78,7 +78,7 @@ G = [f([h; x; y; z; c] => [h; x; y; z; c₁]) for f in F]
 S = solve(G, system = SPSystem)
 ```
 
-On my laptop the computation takes 82 seconds. Here is what I get.
+On my laptop the computation takes 115 seconds. Here is what I get.
 ```julia-repl
 AffineResult with 110592 tracked paths
 ==================================
@@ -103,7 +103,7 @@ c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
 #track the solutions from c₁ to c₀
 R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀, system = SPSystem)
 ```
-Of course, tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
+On my laptop this computation takes 0.438 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
 ```julia-repl
 AffineResult with 720 tracked paths
 ==================================

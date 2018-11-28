@@ -1,0 +1,20 @@
+<div class="hide-sm latest-blog">
+    <div>
+        Latest blog posts:
+    </div>
+    <div style="margin-left: 8px">
+        {{ range (first 2 (last 3 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
+        <div><a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a></div>
+        {{ end }}
+    </div>
+</div>
+<div class="show-sm latest-blog-small">
+    <div>
+        Latest blog posts:
+    </div>
+    <div style="margin-left: 8px">
+        {{ range (first 2 (last 3 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
+        <div><a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a></div>
+        {{ end }}
+    </div>
+</div>

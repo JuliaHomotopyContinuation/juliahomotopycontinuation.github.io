@@ -40,7 +40,6 @@ Here, $\nabla_x$ denotes the [gradient operator](https://en.wikipedia.org/wiki/D
 
 ```julia
 using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
-
 @polyvar h[1:3] # variables for the plane
 @polyvar x[1:3] y[1:3] z[1:3] #variables for the contact points
 @polyvar c[1:20] #variables for the cubic

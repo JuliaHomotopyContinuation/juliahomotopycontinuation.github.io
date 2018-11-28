@@ -16,7 +16,7 @@ author = "Paul"
 
 
 
-A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface](https://en.wikipedia.org/wiki/Cubic_surface) $\mathcal{C}\subset \mathbb{C}^3$ with a [quadric](https://en.wikipedia.org/wiki/Quadric) $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exists polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \\{x\in\mathbb{C}^3 : C(x) = 0\\}$ and $\mathcal{Q} = \\{x\in\mathbb{C}^3 : Q(x) = 0\\}$.
+A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface](https://en.wikipedia.org/wiki/Cubic_surface) $\mathcal{C}\subset \mathbb{C}^3$ with a [quadric](https://en.wikipedia.org/wiki/Quadric) $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \\{x\in\mathbb{C}^3 : C(x) = 0\\}$ and $\mathcal{Q} = \\{x\in\mathbb{C}^3 : Q(x) = 0\\}$.
 
 An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). This means that there are 120  affine complex planes, that touch the sextic at three points.
 

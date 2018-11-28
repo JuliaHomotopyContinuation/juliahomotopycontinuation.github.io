@@ -120,7 +120,7 @@
 
 <meta itemprop="datePublished" content="2018-11-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-11-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="794">
+<meta itemprop="wordCount" content="789">
 
 
 
@@ -222,7 +222,7 @@ S = solve(G, system = SPSystem) #solve the system for c₁
 <pre><code class="language-julia">sols = solutions(S, onlynonsingular = true)
 </code></pre>
 
-<p>One may use <code>sols</code> in a parameter homotopy for computing the tritangents of any other sextic. Here is the code for tracking <code>sols</code> from <code>c₁</code> to the coefficients of $C=x_1^3+x_2^3+x_3^3-1$.</p>
+<p>One may use <code>sols</code> in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking <code>sols</code> from <code>c₁</code> to $C=x_1^3+x_2^3+x_3^3-1$.</p>
 
 <pre><code class="language-julia">#define the coefficients for C
 c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]

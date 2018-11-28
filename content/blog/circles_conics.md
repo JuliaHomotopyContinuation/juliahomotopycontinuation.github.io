@@ -12,7 +12,7 @@ author = "Paul"
 Consider the problem of computing all circles that are tangent to 3 [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
  $$C_1 = \\{y=-x^2+2x+5\\}, C_2 = \\{y = 2x^2+5x-8\\}, C_3 = \\{y = 8x^2-3x-2\\}.$$
 
-![img](/images/circles.png)
+<p style="text-align:center;"><img src="/images/circles.png" width="700px"/></p>
 
 
 [Emiris and Tzoumas](http://www.win.tue.nl/EWCG2005/Proceedings/38.pdf) write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with
@@ -79,5 +79,4 @@ Here is a histogram of the results.
 using Plots #The Plots package must be installed for this
 histogram(number_of_real_solutions, bins = 46)
 ```
-
-![img](/images/hist.png)
+<p style="text-align:center;"><img src="/images/hist.png" width="500px"/></p>

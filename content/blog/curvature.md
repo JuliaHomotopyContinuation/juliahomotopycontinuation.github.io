@@ -59,7 +59,7 @@ p = real_sols[i][1:n]
 
 If $V=\\{f = 0\\}$ has a point of maximal curvature, that point will be saved to the variable `p` and the maximal curvature at this point is `σ_max`. The picture is as follows.
 
-<img src="/images/curvature1.png" width="500px"/>
+<p style="text-align:center;"><img src="/images/curvature1.png" width="500px"/></p>
 
 It is not suprising that the maximal curvature is attained at the vertex.
 
@@ -69,7 +69,7 @@ $$V=\\{x_1^2 + x_1x_2 + x_2^2  + x_1 - 3x_2  -  2x_3 + 2 = 0\\}.$$
 
 I get the following picture, created with the `@gif` macro from the [Plots.jl](http://docs.juliaplots.org/latest/) package.
 
-<img src="/images/curvature2.gif" width="500px"/>
+<p style="text-align:center;"><img src="/images/curvature2.gif" width="500px"/></p>
 
 <h3 class="section-head">Relation to topological data analysis</h3>
 

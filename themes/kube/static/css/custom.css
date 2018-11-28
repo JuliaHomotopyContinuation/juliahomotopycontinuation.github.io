@@ -1,5 +1,5 @@
 code {
-    color: #B00040;
+    color: #b00040;
     background: none;
 }
 
@@ -13,5 +13,20 @@ a code {
 }
 pre,
 pre code {
-  background: #F0F0F0;
+    background: #f0f0f0;
+}
+
+.latest-blog {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    margin: 8px 36px;
+    margin-bottom: -24px;
+}
+
+.latest-blog-small {
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 8px 16px;
+    margin-bottom: -12px;
+    padding-bottom: 0;
 }

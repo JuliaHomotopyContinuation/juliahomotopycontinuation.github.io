@@ -22,7 +22,7 @@ $$a_i = \begin{bmatrix} a_i^{(1)} \\\ a_i^{(2)} \end{bmatrix}\in \mathbb{C}^2, \
 r = 4
 ```
 
-Now, I initialize the variables for the factors $a_i,b_i,c_i,d_i, 1\leq i\leq 4$. The variables for the $a_i$ are being accumulated in one matrix $a$. Similar for the other factors:
+Now, I initialize the variables for the factors $a_i,b_i,c_i,d_i, 1\leq i\leq 4$. The variables for the factors $a_i$, $1\leq i\leq 4$, are being accumulated in one matrix $a$. Similar for the other factors:
 ```julia
 using HomotopyContinuation
 N = 2 * 2 * 2 * 3

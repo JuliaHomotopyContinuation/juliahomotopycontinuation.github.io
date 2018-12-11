@@ -1,6 +1,6 @@
 +++
 title = "Monodromy"
-description = "How to solve polynomial system by using the monodromy technique."
+description = "How to solve polynomial system by using the monodromy method."
 weight = 40
 draft = false
 toc = true

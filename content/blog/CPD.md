@@ -17,7 +17,7 @@ where
 
 $$a_i = \begin{bmatrix} a_i^{(1)} \\\ a_i^{(2)} \end{bmatrix}\in \mathbb{C}^2, \; b_i  = \begin{bmatrix} 1 \\\ b_i^{(1)} \end{bmatrix} \in \mathbb{C}^2,\; c_i  = \begin{bmatrix} 1 \\\ c_i^{(1)} \end{bmatrix}\in \mathbb{C}^2, \;d_i = \begin{bmatrix} 1 \\\ d_i^{(1)} \\\   d_i^{(2)}\end{bmatrix} \in \mathbb{C}^3$$
 
-(the $1$s compensate the multilinear property of the [Kronecker product](https://en.wikipedia.org/wiki/Kronecker_product) $\otimes$ to get a unique representation of the rank one tensors $a_i\otimes b_i\otimes c_i \otimes d_i$ via the factors $a_i,b_i,c_i,d_i$).  Let us decompose a random $T$ in Julia. First, we define the rank.
+(the $1$s compensate for the multilinear property of the [Kronecker product](https://en.wikipedia.org/wiki/Kronecker_product) $\otimes$ to get a unique representation of the rank one tensors $a_i\otimes b_i\otimes c_i \otimes d_i$ via the factors $a_i,b_i,c_i,d_i$).  Let us decompose a random $T$ in Julia. First, we define the rank.
 ```julia
 r = 4
 ```

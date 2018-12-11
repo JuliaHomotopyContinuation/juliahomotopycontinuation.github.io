@@ -4,18 +4,84 @@
 <h3 class="section-head" id="h-introduction"><a href="#h-introduction">Introduction</a></h3>
 
 
-To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy $H(x,t) := (1-t)F+tG\;.$ But this is in general *not* the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.
+To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy
 
 
-In the following we will illustrate how to setup a custom homotopy on the following example. For polynomial systems $F$ and $G$ we want to define the homotopy $H(x,t) = (1 - t) F( U(t) x ) +  tG( U(t) x )$ where $U(t)$ is a random path in the space of [unitary matrices](https://en.wikipedia.org/wiki/Unitary_matrix) with $U(0) = U(1) = I$ and $I$ is the identity matrix. Such a random path can be constructed by :$U(t) = U \begin{bmatrix}\cos(2\pi t) & -\sin(2\pi t) & 0 &\cdots & 0 \\
-\sin(2\pi t) & \cos(2\pi t) & 0 &\cdots & 0 \\ 0 & 0 & 1 &\cdots & 0\\0 & 0 & 0 &\ddots & 0\\0 & 0 & 0 &\cdots & 1 \end{bmatrix} U^T. :$ with a random unitary matrix $U$.
+$$
+H(x,t) := (1-t)F+tG\;.
+$$
+
+
+But this is in general *not* the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.
+
+
+In the following we will illustrate how to setup a custom homotopy on the following example. For polynomial systems $F$ and $G$ we want to define the homotopy
+
+
+$$
+H(x,t) = (1 - t) F( U(t) x ) +  tG( U(t) x )
+$$
+
+
+where $U(t)$ is a random path in the space of [unitary matrices](https://en.wikipedia.org/wiki/Unitary_matrix) with $U(0) = U(1) = I$ and $I$ is the identity matrix. Such a random path can be constructed by
+
+
+$$
+U(t) =
+U
+\begin{bmatrix}\cos(2\pi t) & -\sin(2\pi t) & 0 &\cdots & 0 \\\\
+\sin(2\pi t) & \cos(2\pi t) & 0 &\cdots & 0 \\\\ 0 & 0 & 1 &\cdots & 0\\\\0 & 0 & 0 &\ddots & 0\\\\0 & 0 & 0 &\cdots & 1
+\end{bmatrix} U^T.
+$$
+
+
+with a random unitary matrix $U$.
 
 
 <h3 class="section-head" id="h-math"><a href="#h-math">Figuring out the math</a></h3>
 
 
-To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$ $H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.$ We denote the partial derivative of $H$ w.r.t. $x$ as the *Jacobian* of $H$. For simplification (in the math as well as in the implementation) we introduce the helper homotopy $\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.$ Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives $\frac{\partial H}{\partial x}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U(t)$ and $\frac{\partial H}{\partial t}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U'(t) x + \frac{\partial \tilde{H}}{\partial t}(U(t)x,t) $$ where $$U'(t)= U \begin{bmatrix}-2\pi\sin(2\pi t) & -2\pi\cos(2\pi t) & 0 &\cdots & 0 \\\\
-2\pi\cos(2\pi t) & -2\pi\sin(2\pi t) & 0 &\cdots & 0 \\\\ 0 & 0 & 0 &\cdots & 0\\\\0 & 0 & 0 &\ddots & 0\\\\0 & 0 & 0 &\cdots & 0 \end{bmatrix} U^T.$
+To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$
+
+
+$$
+H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.
+$$
+
+
+We denote the partial derivative of $H$ w.r.t. $x$ as the *Jacobian* of $H$. For simplification (in the math as well as in the implementation) we introduce the helper homotopy
+
+
+$$
+\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.
+$$
+
+
+Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives
+
+
+$$
+\frac{\partial H}{\partial x}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U(t)
+$$
+
+
+and
+
+
+$$
+\frac{\partial H}{\partial t}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U'(t) x + \frac{\partial \tilde{H}}{\partial t}(U(t)x,t)
+$$
+
+
+where
+
+
+$$
+U'(t)= U
+\begin{bmatrix}-2\pi\sin(2\pi t) & -2\pi\cos(2\pi t) & 0 &\cdots & 0 \\\\
+2\pi\cos(2\pi t) & -2\pi\sin(2\pi t) & 0 &\cdots & 0 \\\\ 0 & 0 & 0 &\cdots & 0\\\\0 & 0 & 0 &\ddots & 0\\\\0 & 0 & 0 &\cdots & 0
+\end{bmatrix} U^T.
+$$
 
 
 <h3 class="section-head" id="h-data-structure"><a href="#h-data-structure">Constructing the homotopy data structures </a></h3>
@@ -77,13 +143,8 @@ More temporary storage necessary to avoid allocations
     dt::Vector{T2} # holds a derivative w.r.t. t
     U::Matrix{ComplexF64} # holds something like U
 end
-```
 
-
-A cache is always constructed by this method.
-
-
-```julia
+# A cache is always constructed by this method.
 function Homotopies.cache(H::RandomUnitaryPath, x, t)
     U_t = copy(H.U)
     y = U_t * x
@@ -245,7 +306,7 @@ AffineResult with 8 tracked paths
 • 1 singular finite solution (1 real)
 • 1 solution at infinity
 • 0 failed paths
-• random seed: 20989
+• random seed: 542793
 ```
 
 

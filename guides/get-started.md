@@ -18,7 +18,12 @@ pkg> add HomotopyContinuation
 you can enter the Julia package manager by pressing `]` in the REPL.
 
 
-<h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3> HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $f=\begin{bmatrix}x^2+2y \\\\ y^2-2 \end{bmatrix}$
+<h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3> HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system
+
+
+$$
+f=\begin{bmatrix}x^2+2y \\\\ y^2-2 \end{bmatrix}
+$$
 
 
 This can be accomplished as follows
@@ -37,7 +42,7 @@ AffineResult with 4 tracked paths
 • 0 singular finite solutions (0 real)
 • 0 solutions at infinity
 • 0 failed paths
-• random seed: 751138
+• random seed: 820998
 ```
 
 
@@ -52,13 +57,13 @@ real(result)
 ```
 2-element Array{HomotopyContinuation.Solving.PathResult{Complex{Float64},Float64,Complex{Float64}},1}:
  • returncode: success
- • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- • residual: 1.130e-16
+ • solution: Complex{Float64}[1.68179+0.0im, -1.41421+0.0im]
+ • residual: 1.241e-16
  • pathnumber: 3
 
  • returncode: success
- • solution: Complex{Float64}[-1.68179-2.77556e-17im, -1.41421+0.0im]
- • residual: 1.119e-16
+ • solution: Complex{Float64}[-1.68179-1.11022e-16im, -1.41421-1.11022e-16im]
+ • residual: 1.110e-16
  • pathnumber: 4
 ```
 
@@ -74,8 +79,8 @@ real(result)[1]
 PathResult
 ==========
  • returncode: success
- • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- • residual: 1.130e-16
+ • solution: Complex{Float64}[1.68179+0.0im, -1.41421+0.0im]
+ • residual: 1.241e-16
  • condition_number: 1.640e+00
  • windingnumber: 1
 
@@ -84,7 +89,7 @@ PathResult
 
  • t: 0.0
  • iterations: 6
- • npredictions: 3
+ • npredictions: 2
 ```
 
 
@@ -106,10 +111,10 @@ solutions(result)
 
 ```
 4-element Array{Array{Complex{Float64},1},1}:
- [1.11022e-16+1.68179im, 1.41421+0.0im]
- [-1.11022e-16-1.68179im, 1.41421+1.11022e-16im]
- [1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- [-1.68179-2.77556e-17im, -1.41421+0.0im]
+ [1.11022e-16-1.68179im, 1.41421+2.22045e-16im]
+ [0.0+1.68179im, 1.41421+1.11022e-16im]
+ [1.68179+0.0im, -1.41421+0.0im]
+ [-1.68179-1.11022e-16im, -1.41421-1.11022e-16im]
 ```
 
 

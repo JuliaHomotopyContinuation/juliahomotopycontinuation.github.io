@@ -10,7 +10,12 @@ In the guides so far we were computing solutions in $\mathbb{R}^n$ or $\mathbb{C
 <h3 class="section-head" id="h-degree"><a href="#h-degree">Example: computing the degree of a projective variety</a></h3>
 
 
-Consider the projective variety in the 2-dimensional complex projective space $\mathbb{CP}^2$. $V = \\{ x^2 + y^2 - z^2 = 0 \\}$
+Consider the projective variety in the 2-dimensional complex projective space $\mathbb{CP}^2$.
+
+
+$$
+V = \\{ x^2 + y^2 - z^2 = 0 \\}
+$$
 
 
 The degree of $V$ is the number of intersection points of $V$ with a generic line. Let us see what it is. First we initialize the defining equation of $V$.
@@ -44,7 +49,7 @@ ProjectiveResult with 2 tracked paths
 • 2 non-singular solutions (2 real)
 • 0 singular finite solutions (0 real)
 • 0 failed paths
-• random seed: 534036
+• random seed: 97800
 ```
 
 

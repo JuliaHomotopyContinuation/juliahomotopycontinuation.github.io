@@ -6,10 +6,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Overdetermined systems </title>
+  <title> Monodromy </title>
 
   
-  <meta name="description" content="How to track solutions of systems with more equations than variables."> 
+  <meta name="description" content="How to solve polynomial system by using the monodromy method."> 
   
   
   
@@ -21,10 +21,10 @@
   <meta name="author" content="">
 
 
-  <meta property="og:title" content="Overdetermined systems" />
-<meta property="og:description" content="How to track solutions of systems with more equations than variables." />
+  <meta property="og:title" content="Monodromy" />
+<meta property="og:description" content="How to solve polynomial system by using the monodromy method." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/guides/overdetermined-tracking/" />
+<meta property="og:url" content="/guides/monodromy/" />
 
   
 
@@ -37,7 +37,7 @@
   
   
 
-  <link rel="canonical" href="/guides/overdetermined-tracking/">  
+  <link rel="canonical" href="/guides/monodromy/">  
 
   
 
@@ -125,9 +125,9 @@
   <main>
   <div id="main">
     <div id="hero">
-      <h1> Overdetermined systems </h1>
+      <h1> Monodromy </h1>
       <p class="hero-lead">
-           We're tracking a solution of an overdetermined system.
+           We're solving a system by monodromy.
       </p>
 
     </div> 
@@ -154,58 +154,73 @@ headingSelector: 'h3'
 
 
 
-    <h3 class="section-head" id="overdetermined*systems"><a href="#overdetermined*systems">Overdetermined systems</a></h3>
+    <h3 class="section-head" id="monodromy"><a href="#monodromy">The monodromy method</a></h3>
 
-<p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl features <a href="https://www.ams.org/journals/mcom/2000-69-231/S0025-5718-99-01115-1/S0025-5718-99-01115-1.pdf">Newtons method for overdetermined systems</a> for tracking solutions. We show in an example how it can be used.</p>
+<p>An alternative to using the <a href="/guides/examples.md">solve function</a> is solving a polynomial system $F=(f_1,\ldots,f_n)$ by monodromy. This approach is more efficient, but requires the user to provide at least one solution of $F=0$. Here is the basic idea:</p>
 
-<h3 class="section-head" id="Rational*normal*curve"><a href="#Rational*normal*curve">Example: the rational normal curve</a></h3>
+<p>Suppose $x$ is a solution $F(x)=0$ and that $F=F_{u_0}$ is a point in a family of polynomial systems $\mathcal{F}=\{F_u : u\in \mathbb{C}^k\}$ which is defined with $k\geq 1$ parameters. The monodromy method consists in moving around $u$ in a loop starting and ending at $u_0$ while tracking $x$ along that loop. After one iteration usually one has found a new solution $y\in \mathbb{C}^n$. This process then is repeated until some stopping criterion is fulfilled.</p>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">rational normal curve</a> is a 1-dimensional algebraic variety within the 3-dimensional complex space:</p>
+<p>The general syntax for this is:</p>
+
+<pre><code class="language-julia">monodromy_solve(F_u, [x], u₀, parameters = u)
+</code></pre>
+
+<h3 class="section-head" id="monodromyexample"><a href="#monodromyexample">Example: computing the closest point on a variety</a></h3>
+
+<p>Consider the problem of computing the point on the variety</p>
 
 <p>$$
-C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.
+V = \{x=(x_1,x_2)^T\in \mathbb{R}^2 : f(x) = 0\}, \text{ for } f(x) = x_1^2 + x_2^2 - (x_1^2 + x_2^2 + x_2)^2,
 $$</p>
 
-<p>Since $C$ is cut out by 3 equations one might expect it to be 0-dimensional, but it is not. In fact, the rational normal curve is a first example of a <a href="https://en.wikipedia.org/wiki/Complete_intersection">non-complete intersection</a>.</p>
+<p>which minimizes the distance to the point $u₀ = (-3,-2)$. The situation looks like this:</p>
 
-<p><h3 class="section-head" id="tracking*overdetermined"><a href="#tracking*overdetermined">Intersecting the rational normal curve with a linear space</a></h3> Let $L$ be a random linear space of dimension 2. Then, almost surely, the intersection $C\cap L$ is finite. The goal of this example is to compute one of the points in $C\cap L$. First, let us generate the equations of $C$ and $L$.</p>
+<p style="text-align:center;"><img src="/images/cardioid0.png" maxwidth="400px"/></p>
 
-<pre><code class="language-julia">using HomotopyContinuation, LinearAlgebra
-@polyvar x y z
-f = [x*z-y^2, y-z^2, x-y*z]
-ℓ = randn(ComplexF64, 4) ⋅ [x, y, z, 1];
+<p>The minimizer $x^\star$ is a solution to the system</p>
+
+<p>$$
+F_u = \begin{bmatrix}\det(\begin{bmatrix}x-u &amp; \nabla_x(f)\end{bmatrix})\\ f(x)\end{bmatrix} =0,
+$$</p>
+
+<p>where $\nabla_x(f)$ is the gradient of $f$ at $x$. Let&rsquo;s set up this system in Julia.</p>
+
+<pre><code class="language-julia">using DynamicPolynomials, LinearAlgebra
+
+u₀ = [-2; -1]
+
+@polyvar x[1:2]
+f = x[1]^2 + x[2]^2 - (x[1]^2 + x[2]^2 + x[1])^2
+∇ = differentiate(f, x)
+
+F = [det([x-u₀ ∇]); f]
 </code></pre>
 
-<p>One is tempted to compute $C\cap L$ by executing <code>solve([f;ℓ])</code> and simply compute <em>all</em> solutions. But this command will return an error message.</p>
+<p>Now, $x^\star$ is a zero of <code>F</code>, which has totaldegree equal to 12. However, the actual number of solutions is only 3 as was shown in <a href="https://arxiv.org/pdf/1309.0049.pdf">this article</a>. For avoiding computing all 12 paths, we use monodromy instead of totaldegree traicking.</p>
 
-<pre><code class="language-julia">solve([f;ℓ])
+<p>An initial solution to <code>F</code> is $x_0=(0,1)^T$. Let&rsquo;s use this initial solution for monodromy:</p>
+
+<pre><code class="language-julia">using HomotopyContinuation
+
+x₀ = [0; 1]
+@polyvar u[1:2]
+F_u = [det([x-u ∇]); f]
+
+monodromy_solve(F_u, [x₀], u₀, parameters = u)
 </code></pre>
 
-<pre><code>ERROR: The input system is overdetermined. Therefore it is necessary to provide an explicit startsystem.
-See
-    https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
-for details.
-</code></pre>
-
-<p>The problem here is that for overdetermined system we can&rsquo;t construct generic starting systems. The reason is simple: a generic overdetermined system has no solutions at all. Nevertheless, if we have a starting system and some of its solutions at hand, we can track them towards $[f, \ell]$.</p>
-
-<p>For instance, the point $p=(1, 1, 1)$ lies both on $C$ and $\{(x,y,z)\in \mathbb{C}^3 \mid x-y+z -1= 0\}$. We can track this solution towards $[f, \ell]$ by executing the following:</p>
-
-<pre><code class="language-julia">ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
-p = [1, 1, 1, 1];
-solve([f; ℓ₁], [f; ℓ], [p])
-</code></pre>
-
-<pre><code>AffineResult with 1 tracked paths
+<pre><code>MonodromyResult
 ==================================
-• 1 non-singular finite solution (0 real)
-• 0 singular finite solutions (0 real)
-• 0 solutions at infinity
-• 0 failed paths
-• random seed: 589721
+• 3 solutions (3 real)
+• return code → heuristic_stop
+• 111 tracked paths
 </code></pre>
 
-<p>The syntax <code>[p]</code> is because solve takes as input an <em>array</em> of solutions.</p>
+<p>We get the three solutions. The following picture shows them:</p>
+
+<p style="text-align:center;"><img src="/images/cardioid.png" maxwidth="400px"/></p>
+
+<p>The minimizer is $x^\star \approx (-1.68, -0.86)^T$.</p>
 
 
 

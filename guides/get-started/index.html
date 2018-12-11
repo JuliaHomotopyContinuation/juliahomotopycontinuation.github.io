@@ -50,23 +50,32 @@
   <link href="/css/master.css" rel="stylesheet" type="text/css">
   <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
 
- <link href="/css/custom.css" rel="stylesheet" type="text/css">
 
   <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
 
   <script type="text/javascript" src="/js/tocbot.min.js"></script>
 
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
   
 
     
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
     
     
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
     <script src="/js/init-highlight.js"></script>
+    
     
     
 
@@ -74,6 +83,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -153,7 +165,11 @@ headingSelector: 'h3'
 
 <p>you can enter the Julia package manager by pressing <code>]</code> in the REPL.</p>
 
-<p><h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3> HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system $f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}$</p>
+<p><h3 class="section-head" id="h-basic-usage"><a href="#h-basic-usage">Basic usage</a></h3> HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system</p>
+
+<p>$$
+f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}
+$$</p>
 
 <p>This can be accomplished as follows</p>
 
@@ -168,7 +184,7 @@ result = solve([x^2+2y, y^2-2])
 • 0 singular finite solutions (0 real)
 • 0 solutions at infinity
 • 0 failed paths
-• random seed: 751138
+• random seed: 820998
 </code></pre>
 
 <p>Let us see what is the information that we get. Four paths were attempted to be solved, four of which were completed successfully. Since we tried to solve an affine system, the algorithm checks whether there are solutions at infinity: in this case there are none. With <em>solutions at infinity</em> we mean solutions of the <a href="https://en.wikipedia.org/wiki/Homogeneous_polynomial#Homogenization">homogenization</a> of the system which are no solutions of the affine system. None of the solutions are singular and two of them are real. To access the first solution in the array we write</p>
@@ -179,13 +195,13 @@ real(result)
 
 <pre><code>2-element Array{HomotopyContinuation.Solving.PathResult{Complex{Float64},Float64,Complex{Float64}},1}:
  • returncode: success
- • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- • residual: 1.130e-16
+ • solution: Complex{Float64}[1.68179+0.0im, -1.41421+0.0im]
+ • residual: 1.241e-16
  • pathnumber: 3
 
  • returncode: success
- • solution: Complex{Float64}[-1.68179-2.77556e-17im, -1.41421+0.0im]
- • residual: 1.119e-16
+ • solution: Complex{Float64}[-1.68179-1.11022e-16im, -1.41421-1.11022e-16im]
+ • residual: 1.110e-16
  • pathnumber: 4
 </code></pre>
 
@@ -197,8 +213,8 @@ real(result)
 <pre><code>PathResult
 ==========
  • returncode: success
- • solution: Complex{Float64}[1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- • residual: 1.130e-16
+ • solution: Complex{Float64}[1.68179+0.0im, -1.41421+0.0im]
+ • residual: 1.241e-16
  • condition_number: 1.640e+00
  • windingnumber: 1
 
@@ -207,7 +223,7 @@ real(result)
 
  • t: 0.0
  • iterations: 6
- • npredictions: 3
+ • npredictions: 2
 </code></pre>
 
 <p>The returncode tells us that the pathtracking was successfull. What do the other entries of that table tell us? Let us consider the most relevant:</p>
@@ -225,10 +241,10 @@ real(result)
 </code></pre>
 
 <pre><code>4-element Array{Array{Complex{Float64},1},1}:
- [1.11022e-16+1.68179im, 1.41421+0.0im]
- [-1.11022e-16-1.68179im, 1.41421+1.11022e-16im]
- [1.68179+5.55112e-17im, -1.41421-1.38778e-17im]
- [-1.68179-2.77556e-17im, -1.41421+0.0im]
+ [1.11022e-16-1.68179im, 1.41421+2.22045e-16im]
+ [0.0+1.68179im, 1.41421+1.11022e-16im]
+ [1.68179+0.0im, -1.41421+0.0im]
+ [-1.68179-1.11022e-16im, -1.41421-1.11022e-16im]
 </code></pre>
 
 <p>or if you only want real solutions</p>

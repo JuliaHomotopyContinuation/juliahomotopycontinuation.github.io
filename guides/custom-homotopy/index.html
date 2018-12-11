@@ -50,23 +50,32 @@
   <link href="/css/master.css" rel="stylesheet" type="text/css">
   <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
 
- <link href="/css/custom.css" rel="stylesheet" type="text/css">
 
   <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
 
   <script type="text/javascript" src="/js/tocbot.min.js"></script>
 
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
   
 
     
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
     
     
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
     <script src="/js/init-highlight.js"></script>
+    
     
     
 
@@ -74,6 +83,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -144,15 +156,66 @@ headingSelector: 'h3'
 
     <h3 class="section-head" id="h-introduction"><a href="#h-introduction">Introduction</a></h3>
 
-<p>To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy $H(x,t) := (1-t)F+tG\;.$ But this is in general <em>not</em> the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.</p>
+<p>To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy</p>
 
-<p>In the following we will illustrate how to setup a custom homotopy on the following example. For polynomial systems $F$ and $G$ we want to define the homotopy $H(x,t) = (1 - t) F( U(t) x ) +  tG( U(t) x )$ where $U(t)$ is a random path in the space of <a href="https://en.wikipedia.org/wiki/Unitary_matrix">unitary matrices</a> with $U(0) = U(1) = I$ and $I$ is the identity matrix. Such a random path can be constructed by :$U(t) = U \begin{bmatrix}\cos(2\pi t) &amp; -\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 <br />
-\sin(2\pi t) &amp; \cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \ 0 &amp; 0 &amp; 1 &amp;\cdots &amp; 0\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 1 \end{bmatrix} U^T. :$ with a random unitary matrix $U$.</p>
+<p>$$
+H(x,t) := (1-t)F+tG\;.
+$$</p>
+
+<p>But this is in general <em>not</em> the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.</p>
+
+<p>In the following we will illustrate how to setup a custom homotopy on the following example. For polynomial systems $F$ and $G$ we want to define the homotopy</p>
+
+<p>$$
+H(x,t) = (1 - t) F( U(t) x ) +  tG( U(t) x )
+$$</p>
+
+<p>where $U(t)$ is a random path in the space of <a href="https://en.wikipedia.org/wiki/Unitary_matrix">unitary matrices</a> with $U(0) = U(1) = I$ and $I$ is the identity matrix. Such a random path can be constructed by</p>
+
+<p>$$
+U(t) =
+U
+\begin{bmatrix}\cos(2\pi t) &amp; -\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \<br />
+\sin(2\pi t) &amp; \cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp;\cdots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 1
+\end{bmatrix} U^T.
+$$</p>
+
+<p>with a random unitary matrix $U$.</p>
 
 <h3 class="section-head" id="h-math"><a href="#h-math">Figuring out the math</a></h3>
 
-<p>To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$ $H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.$ We denote the partial derivative of $H$ w.r.t. $x$ as the <em>Jacobian</em> of $H$. For simplification (in the math as well as in the implementation) we introduce the helper homotopy $\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.$ Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives $\frac{\partial H}{\partial x}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U(t)$ and $\frac{\partial H}{\partial t}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U&rsquo;(t) x + \frac{\partial \tilde{H}}{\partial t}(U(t)x,t) $$ where $$U&rsquo;(t)= U \begin{bmatrix}-2\pi\sin(2\pi t) &amp; -2\pi\cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \<br />
-2\pi\cos(2\pi t) &amp; -2\pi\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0 \end{bmatrix} U^T.$</p>
+<p>To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$</p>
+
+<p>$$
+H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.
+$$</p>
+
+<p>We denote the partial derivative of $H$ w.r.t. $x$ as the <em>Jacobian</em> of $H$. For simplification (in the math as well as in the implementation) we introduce the helper homotopy</p>
+
+<p>$$
+\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.
+$$</p>
+
+<p>Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives</p>
+
+<p>$$
+\frac{\partial H}{\partial x}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U(t)
+$$</p>
+
+<p>and</p>
+
+<p>$$
+\frac{\partial H}{\partial t}(x,t) = \frac{\partial \tilde{H}}{\partial y}(U(t)x,t) U&rsquo;(t) x + \frac{\partial \tilde{H}}{\partial t}(U(t)x,t)
+$$</p>
+
+<p>where</p>
+
+<p>$$
+U&rsquo;(t)= U
+\begin{bmatrix}-2\pi\sin(2\pi t) &amp; -2\pi\cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \<br />
+2\pi\cos(2\pi t) &amp; -2\pi\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0
+\end{bmatrix} U^T.
+$$</p>
 
 <h3 class="section-head" id="h-data-structure"><a href="#h-data-structure">Constructing the homotopy data structures </a></h3>
 
@@ -197,11 +260,9 @@ end
     dt::Vector{T2} # holds a derivative w.r.t. t
     U::Matrix{ComplexF64} # holds something like U
 end
-</code></pre>
 
-<p>A cache is always constructed by this method.</p>
-
-<pre><code class="language-julia">function Homotopies.cache(H::RandomUnitaryPath, x, t)
+# A cache is always constructed by this method.
+function Homotopies.cache(H::RandomUnitaryPath, x, t)
     U_t = copy(H.U)
     y = U_t * x
     straightline = Homotopies.cache(H.straightline, y, t)
@@ -328,7 +389,7 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
 • 1 singular finite solution (1 real)
 • 1 solution at infinity
 • 0 failed paths
-• random seed: 20989
+• random seed: 542793
 </code></pre>
 
 <p>Alternatively we could also construct the homotopy directly and give it to <code>solve</code> together with start solutions. Note that in this case we have to ensure that our homotopy is already homogenous.</p>

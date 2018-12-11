@@ -50,23 +50,32 @@
   <link href="/css/master.css" rel="stylesheet" type="text/css">
   <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
 
- <link href="/css/custom.css" rel="stylesheet" type="text/css">
 
   <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
 
   <script type="text/javascript" src="/js/tocbot.min.js"></script>
 
+    
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
   
 
     
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
     
     
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/julia-repl.min.js"></script>
+    <script src="/js/highlight.pack.js"></script>
     <script src="/js/init-highlight.js"></script>
+    
     
     
 
@@ -74,6 +83,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -148,7 +160,11 @@ headingSelector: 'h3'
 
 <h3 class="section-head" id="h-degree"><a href="#h-degree">Example: computing the degree of a projective variety</a></h3>
 
-<p>Consider the projective variety in the 2-dimensional complex projective space $\mathbb{CP}^2$. $V = \{ x^2 + y^2 - z^2 = 0 \}$</p>
+<p>Consider the projective variety in the 2-dimensional complex projective space $\mathbb{CP}^2$.</p>
+
+<p>$$
+V = \{ x^2 + y^2 - z^2 = 0 \}
+$$</p>
 
 <p>The degree of $V$ is the number of intersection points of $V$ with a generic line. Let us see what it is. First we initialize the defining equation of $V$.</p>
 
@@ -172,7 +188,7 @@ V = x^2 + y^2 - z^2;
 • 2 non-singular solutions (2 real)
 • 0 singular finite solutions (0 real)
 • 0 failed paths
-• random seed: 534036
+• random seed: 97800
 </code></pre>
 
 <p>We find two distinct solutions and conclude that the degree of $V$ is 2. In particular, the output does not show solutions at infinity, simply because this concept is not defined in projective space.</p>

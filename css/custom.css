@@ -7,14 +7,35 @@ a code {
     text-decoration: underline;
 }
 
+code .language-julia, code .hljs {
+    background: red;
+}
+
 .about-image {
     border-radius: 12px;
     max-width: 50%;
 }
-pre,
+
+pre {
+    padding: 0
+}
+pre code {
+    border-radius: 8px;
+}
+
+
+.hljs {
+    background: #282c34;
+}
+
+.language-julia.hljs {
+    background: #282c34;
+}
+
+/* pre,
 pre code {
     background: #f0f0f0;
-}
+} */
 
 .latest-blog {
     padding-bottom: 8px;

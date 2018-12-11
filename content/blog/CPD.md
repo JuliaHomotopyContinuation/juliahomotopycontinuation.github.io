@@ -69,4 +69,4 @@ MonodromyResult
 • 924 tracked paths
 ```
 
-There are 24 solutions. However, since 1 solution gives $4!=24$ solutions, corresponding to reordering of the summands, I actually found one solution. This confirms the computations from the paper: a random complex $2\times 2\times 2\times 3$-tensor has a unique CPD.
+There are 24 solutions. However, since 1 solution gives $4!=24$ solutions, corresponding to all orderings of the summands, I actually found one solution. This confirms the computations from the paper: a random complex $2\times 2\times 2\times 3$-tensor has a unique CPD.

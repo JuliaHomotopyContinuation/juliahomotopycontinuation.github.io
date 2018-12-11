@@ -175,10 +175,6 @@ solve(F)
 ```
 
 ```
-Tracking 1024 paths to endgame zone... 83%|███████████  |  ETA: 0:00:00[K
-  tracked:  852[A
-[K[ATracking 1024 paths to endgame zone...100%|█████████████| Time: 0:00:01[K
-  tracked:  1024
 AffineResult with 1024 tracked paths
 ==================================
 • 16 non-singular finite solutions (0 real)

@@ -76,10 +76,7 @@ monodromy_solve(F_u, [x₀], u₀, parameters = u)
 ```
 
 ```
-Solutions found: 1 	 Time: 0:00:02[K
-  # paths tracked :    1
-  # loops generated :  1
-  # real solutions :   1MonodromyResult
+MonodromyResult
 ==================================
 • 3 solutions (3 real)
 • return code → heuristic_stop

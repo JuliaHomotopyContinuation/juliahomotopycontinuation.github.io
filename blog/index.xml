@@ -6,10 +6,20 @@
     <description>Recent content in Blogs on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 26 Nov 2018 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 10 Dec 2018 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Tensor decomposition and homotopy continuation</title>
+      <link>/blog/cpd/</link>
+      <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/blog/cpd/</guid>
+      <description>In this blog I want to repeat the computations from the article &amp;ldquo;Homotopy Techniques for Tensor Decomposition and Perfect Identifiability&amp;rdquo; by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of canonical polyadic decompositions (CPD) of a random $2\times 2\times 2\times 3$-tensor by using the monodromy method. It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor has rank equal to 4:
+$$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
+    </item>
     
     <item>
       <title>Tritangents</title>

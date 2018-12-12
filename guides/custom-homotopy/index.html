@@ -51,11 +51,11 @@
   <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
 
 
-  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script> 
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
 
   <script type="text/javascript" src="/js/tocbot.min.js"></script>
 
-    
+
     
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
   <script>
@@ -70,19 +70,13 @@
 
     
     <link rel="stylesheet" href="/css/atom-one-dark.css">
-    
-    
-
     <script src="/js/highlight.pack.js"></script>
     <script src="/js/init-highlight.js"></script>
-    
-    
-    
 
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css" integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js" integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js" integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous"></script>    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
 
     
     <link href="/css/custom.css" rel="stylesheet" type="text/css">
@@ -175,8 +169,7 @@ $$</p>
 <p>$$
 U(t) =
 U
-\begin{bmatrix}\cos(2\pi t) &amp; -\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \<br />
-\sin(2\pi t) &amp; \cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp;\cdots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 1
+\begin{bmatrix}\cos(2\pi t) &amp; -\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ \sin(2\pi t) &amp; \cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp;\cdots &amp; 0\\ 0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 1
 \end{bmatrix} U^T.
 $$</p>
 
@@ -212,8 +205,7 @@ $$</p>
 
 <p>$$
 U&rsquo;(t)= U
-\begin{bmatrix}-2\pi\sin(2\pi t) &amp; -2\pi\cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \<br />
-2\pi\cos(2\pi t) &amp; -2\pi\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0
+\begin{bmatrix}-2\pi\sin(2\pi t) &amp; -2\pi\cos(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 2\pi\cos(2\pi t) &amp; -2\pi\sin(2\pi t) &amp; 0 &amp;\cdots &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0\\ 0 &amp; 0 &amp; 0 &amp;\ddots &amp; 0\\ 0 &amp; 0 &amp; 0 &amp;\cdots &amp; 0
 \end{bmatrix} U^T.
 $$</p>
 
@@ -229,21 +221,12 @@ struct RandomUnitaryPath{Start,Target} &lt;: Homotopies.AbstractHomotopy
 end
 function RandomUnitaryPath(start::Systems.AbstractSystem, target::Systems.AbstractSystem)
     m, n = size(start)
-</code></pre>
-
-<p>construct a random unitary matrix</p>
-
-<pre><code class="language-julia">    U = Matrix(qr(randn(n,n) + im * randn(n,n)).Q)
+    # construct a random unitary matrix
+    U = Matrix(qr(randn(n,n) + im * randn(n,n)).Q)
     RandomUnitaryPath(Homotopies.StraightLineHomotopy(start, target), U)
 end
-</code></pre>
-
-<pre><code>Main.ex-custom-homotopy.RandomUnitaryPath
-</code></pre>
-
-<p>We have to define the size</p>
-
-<pre><code class="language-julia">Base.size(H::RandomUnitaryPath) = size(H.straightline)
+# We have to define the size
+Base.size(H::RandomUnitaryPath) = size(H.straightline)
 </code></pre>
 
 <p>To get good performance it is important to be careful about memory allocations. It is much much better to initialize a chunk of memory <em>once</em> and to reuse this memory. To support this optimization we have the concept of a <em>cache</em>. This is a <code>struct</code> with supertype <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#HomotopyContinuation.HomotopiesBase.AbstractHomotopyCache"><code>Homotopies.AbstractHomotopyCache</code></a> where we allocate all memory necessary to evaluate and differentiate our homotopy. This is an optimization and not necessary to have at the beginning, but for the best it is necessary to implement it. To illustrate how to do this, we will implement here a cache. Don&rsquo;t look with too much detail on the exact type definition for now, we just allocate a bunch of stuff which will make much more sense later. As a constructor for the cache we have to define the <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/latest/homotopies.html#HomotopyContinuation.HomotopiesBase.cache"><code>Homotopies.cache</code></a> method.</p>
@@ -252,11 +235,8 @@ end
     straightline::C
     U_t::Matrix{ComplexF64}
     y::Vector{T1}
-</code></pre>
-
-<p>More temporary storage necessary to avoid allocations</p>
-
-<pre><code class="language-julia">    jac::Matrix{T2} # holds a jacobian
+    # More temporary storage necessary to avoid allocations
+    jac::Matrix{T2} # holds a jacobian
     dt::Vector{T2} # holds a derivative w.r.t. t
     U::Matrix{ComplexF64} # holds something like U
 end
@@ -280,40 +260,31 @@ end
 
 <pre><code class="language-julia"># U(t)x
 function Ut_mul_x!(cache, U, x, t)
-</code></pre>
-
-<p>We start with U * (the 2x2 sin-cos block + I)</p>
-
-<pre><code class="language-julia">    cache.U .= U
+    # We start with U * (the 2x2 sin-cos block + I)
+    cache.U .= U
     s, c = sin(2π*t), cos(2π*t)
     for i=1:size(U, 1)
         cache.U[i, 1] = U[i,2] * s + U[i,1] * c
         cache.U[i, 2] = U[i,2] * c - U[i,1] * s
     end
-</code></pre>
-
-<p>U(t) = cache.U * U&rsquo; y = cache.y = U(t) * x</p>
-
-<pre><code class="language-julia">    mul!(cache.y, mul!(cache.U_t, cache.U, U'), x)
+    # U(t) = cache.U * U'
+    # y = cache.y = U(t) * x
+    mul!(cache.y, mul!(cache.U_t, cache.U, U'), x)
 end
 
 # U'(t)x
 function U_dot_t_mul_x!(cache, U, x, t)
-</code></pre>
-
-<p>We start with U * (the derivative of the 2x2 sin-cos block + 0)</p>
-
-<pre><code class="language-julia">    cache.U .= zero(eltype(U))
+    # We start with U * (the derivative of the 2x2 sin-cos block + 0)
+    cache.U .= zero(eltype(U))
     s, c = 2π*sin(2π*t), 2π*cos(2π*t)
     for i=1:size(U, 1)
         cache.U[i, 1] =  U[i,2] * c - U[i,1] * s
         cache.U[i, 2] = -U[i,2] * s - U[i,1] * c
     end
-</code></pre>
 
-<p>U&rsquo;(t) = cache.U * U&rsquo; y&rsquo; = cache.y = U&rsquo;(t) * x</p>
-
-<pre><code class="language-julia">    mul!(cache.y, mul!(cache.U_t, cache.U, U'), x)
+    # U'(t) = cache.U * U'
+    # y' = cache.y = U'(t) * x
+    mul!(cache.y, mul!(cache.U_t, cache.U, U'), x)
 end
 </code></pre>
 
@@ -332,11 +303,8 @@ end
 
 function Homotopies.dt!(out, H::RandomUnitaryPath, x, t, cache)
     y = Ut_mul_x!(cache, H.U, x, t)
-</code></pre>
-
-<p>chain rule</p>
-
-<pre><code class="language-julia">    Homotopies.jacobian_and_dt!(cache.jac, out, H.straightline, y, t, cache.straightline)
+    # chain rule
+    Homotopies.jacobian_and_dt!(cache.jac, out, H.straightline, y, t, cache.straightline)
     y_dot = U_dot_t_mul_x!(cache, H.U, x, t) # y_dot = U'(t)x
     mul!(cache.dt, cache.jac, y_dot) # dt = J_H(y, t) * y_dot
     out .+= cache.dt
@@ -389,7 +357,7 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
 • 1 singular finite solution (1 real)
 • 1 solution at infinity
 • 0 failed paths
-• random seed: 542793
+• random seed: 847463
 </code></pre>
 
 <p>Alternatively we could also construct the homotopy directly and give it to <code>solve</code> together with start solutions. Note that in this case we have to ensure that our homotopy is already homogenous.</p>
@@ -409,14 +377,17 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
   </script>
   <script src="/js/master.js" type="text/javascript">
   </script>
-  <script type="text/javascript"> renderMathInElement(document.body, {delimiters: [
-      {left: "$$", right: "$$", display: true},
-      {left: "$", right: "$", display: false},
-      {left: "``", right: "``", display: false},
-      
-      
-      
-    ]});</script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
 </body>
 
 </html>

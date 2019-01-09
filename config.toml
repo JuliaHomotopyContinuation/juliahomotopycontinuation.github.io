@@ -20,18 +20,22 @@ HighlightJS = true
   # ]
 
 [[menu.main]]
-    name = "Blog"
-    weight = -100
-    url = "/blog/"
-[[menu.main]]
     name = "Guides"
-    weight = -100
+    weight = 1
     url = "/guides/"
 [[menu.main]]
+    name = "Blog"
+    weight = 2
+    url = "/blog/"
+[[menu.main]]
     name = "API Docs"
-    weight = -100
+    weight = 3
     url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/"
 [[menu.main]]
+    name = "About"
+    weight = 4
+    url = "/about/"
+[[menu.main]]
     name = "FAQ"
-    weight = -100
+    weight = 5
     url = "/faq/"

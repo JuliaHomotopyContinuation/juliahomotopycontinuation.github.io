@@ -71,6 +71,11 @@
   </url>
   
   <url>
+    <loc>/3264/</loc>
+    <lastmod>2019-01-21T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/about/</loc>
   </url>
   
@@ -115,14 +120,6 @@
     <loc>/tags/news/</loc>
     <lastmod>2018-07-03T18:56:55+01:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/password-recovery/</loc>
-  </url>
-  
-  <url>
-    <loc>/account/</loc>
   </url>
   
   <url>

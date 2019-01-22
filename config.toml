@@ -10,15 +10,6 @@ HighlightJS = true
   RSSLink = "/index.xml"
   github = "JuliaHomotopyContinuation" # add your github profile name
 
-  # [Params.section]
-  # id = "manual"
-  # version = "develop"
-  # versionAlias = "7.10"
-  # versions = [
-  #   "latest",
-  #   "develop"
-  # ]
-
 [[menu.main]]
     name = "Guides"
     weight = 1

@@ -91,6 +91,7 @@ class AllRealsConics extends React.Component {
       var conic = conics[0].rendered;
       window.remove_conic(conic);
       conics.shift();
+      return;
     }
 
     var i = indices[this.state.conic_index];
@@ -108,7 +109,7 @@ class AllRealsConics extends React.Component {
   }
 
   renderAllRealConics() {
-    this.renderAllConicsIntervall = setInterval(this.renderRealConic, 1000);
+    this.renderAllConicsIntervall = setInterval(this.renderRealConic, 500);
   }
 
   startStopRendering() {
@@ -146,10 +147,13 @@ class AllRealsConics extends React.Component {
           id: "allReals",
           style: { width: "100%" }
         }),
-        e("div", {style: {display: "flex", justifyContent: "center" }}, this.renderButton())
+        e(
+          "div",
+          { style: { display: "flex", justifyContent: "center" } },
+          this.renderButton()
+        )
       )
     );
-    
   }
 }
 

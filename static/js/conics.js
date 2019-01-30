@@ -57,8 +57,25 @@ window.setup_conics = function(args, is_setup_cb) {
         var t = (k * maximum) / N;
         var Acosh_t = A * Math.cosh(t);
         var Bsinh_t = B * Math.sinh(t);
-        segments1.push(new paper.Point(Acosh_t + C1, Bsinh_t + C2));
-        segments2.push(new paper.Point(-Acosh_t + C1, Bsinh_t + C2));
+        var x1 = Acosh_t + C1;
+        var x2 = -Acosh_t + C1;
+        var y = Bsinh_t + C2;
+        if (
+          3 * XMIN <= x1 &&
+          x1 <= 3 * XMAX &&
+          3 * YMIN <= y &&
+          y <= 3 * YMAX
+        ) {
+          segments1.push(new paper.Point(x1, y));
+        }
+        if (
+          3 * XMIN <= x2 &&
+          x2 <= 3 * XMAX &&
+          3 * YMIN <= y &&
+          y <= 3 * YMAX
+        ) {
+          segments2.push(new paper.Point(x2, y));
+        }
       }
       var path1 = new paper.Path(segments1);
       var path2 = new paper.Path(segments2);

@@ -1,15 +1,11 @@
 {{ define "head"}}
 <script type="text/javascript" src="/js/paper-full.min.js"></script>
 <script type="text/javascript" src="/js/conics.js"></script>
-<script
-  src="https://unpkg.com/react@16/umd/react.development.js"
-  crossorigin
-></script>
-<script
-  src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
-  crossorigin
-></script>
-<script type="text/javascript" src="/js/all_real_conics_data.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- <script type="text/javascript" src="/js/all_real_conics_data.js"></script> -->
+<link href="{{ "/css/do-it-yourself.css" | relURL }}" rel="stylesheet"
+ype="text/css">
 {{ end }}
 
 {{ define "title"}} {{ .Title}} {{ end }}
@@ -32,6 +28,6 @@
   </div>
 </div>
 
-<script type="text/javascript" src="/js/all_real_conics.js"></script>
+<script type="text/javascript" src="/js/do-it-yourself.js"></script>
 
 {{ end }} {{ define "footer" }} {{ partial "footer" . }} {{ end }}

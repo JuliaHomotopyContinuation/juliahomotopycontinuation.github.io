@@ -51,7 +51,7 @@ window.setup_conics = function(args, is_setup_cb) {
         Math.acosh((XMAX + Math.abs(C1)) / A),
         Math.asinh((YMAX + Math.abs(C2)) / B)
       );
-      var N = 25;
+      var N = 50;
 
       for (var k = -N; k <= N; k++) {
         var t = (k * maximum) / N;
@@ -79,8 +79,6 @@ window.setup_conics = function(args, is_setup_cb) {
       }
       var path1 = new paper.Path(segments1);
       var path2 = new paper.Path(segments2);
-      path1.simplify(1e-5);
-      path2.simplify(1e-5);
       var group = new paper.Group({
         children: [path1, path2]
       });

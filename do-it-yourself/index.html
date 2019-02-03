@@ -6,10 +6,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> About </title>
+  <title> Do It Yourself </title>
 
   
-  <meta name="description" content="The people behind HomotopyContinuation.jl"> 
+  <meta name="description" content="Compute conics."> 
   
   
   
@@ -18,13 +18,14 @@
 
   
 
-  <meta name="author" content="">
+  <meta name="author" content="Bernd Sturmfels, Paul Breiding and Sascha Timme">
 
 
-  <meta property="og:title" content="About" />
-<meta property="og:description" content="The people behind HomotopyContinuation.jl" />
+  <meta property="og:title" content="Do It Yourself" />
+<meta property="og:description" content="Compute conics." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/about/" />
+<meta property="og:url" content="/do-it-yourself/" /><meta property="article:published_time" content="2019-01-21T21:56:55&#43;01:00"/>
+<meta property="article:modified_time" content="2019-01-21T21:56:55&#43;01:00"/>
 
   
 
@@ -37,7 +38,7 @@
   
   
 
-  <link rel="canonical" href="/about/">  
+  <link rel="canonical" href="/do-it-yourself/">  
 
   
 
@@ -81,6 +82,14 @@
     
     <link href="/css/custom.css" rel="stylesheet" type="text/css">
     
+<script type="text/javascript" src="/js/paper-full.min.js"></script>
+<script type="text/javascript" src="/js/conics.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+<link href="/css/do-it-yourself.css" rel="stylesheet"
+ype="text/css">
+
 </head>
 
 
@@ -118,42 +127,67 @@
       </ul>
     </nav>
   </div>
- </header>
+</header>
   <main>
 
 <div id="hero" class="wrap">
-  <h1>About</h1>
-    <p>The people behind HomotopyContinuation.jl</p>
-</div>
-<ul id="posts">
-
- <div class="row">
-    <div class="col col-6">
-        <img src = "/images/pic_paul.jpg" alt="" class="about-image">
-    </div>
-    <div class="col col-6">
-        <h2><a href="http://personal-homepages.mis.mpg.de/breiding/">Paul Breiding</a></h2>
-        <p>I am a Postdoc in the group <a href="https://www.mis.mpg.de/nlalg/research.html">Nonlinear Algebra</a> at the Max-Planck-Institute for Mathematics in the Sciences in Leipzig.</p>
-    </div>
-</div>
-<div style="margin-top:40px">
-
-<div class="row">
-    <div class="col col-6">
-        <img src = "/images/pic_sascha.jpg" alt="" class="about-image">
-    </div>
-    <div class="col col-6">
-        <h2><a href="http://sascha.timme.xyz">Sascha Timme</a></h2>
-        <p>I am a PhD student at Technische Universität Berlin working on solving system of polynomial
-        equations by numerical methods.</p>
-    </div>
+  <h2>Do It Yourself</h2>
+  <p>Compute conics.</p>
 </div>
 
+<div id="post-box">
+  <div id="post" itemprop="articleBody"><p>A <a href="https://en.wikipedia.org/wiki/Conic"><em>conic</em></a> in the plane $\mathbb{R}^2$ is the zero set of a
+quadratic polynomial in two variables:</p>
+
+<p>$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$</p>
+
+<p>Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines.
+The last case is called a degenerate conic.</p>
+
+<p>A classic problem in <a href="https://en.wikipedia.org/wiki/Enumerative_geometry">enumerative geometry</a>
+is <a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner&rsquo;s conic problem</a> which asks:
+<p style="width: 100%; text-align: center;">
+<em>How many conics are tangent to five given conics?</em>
+</p></p>
+
+<p>Steiner himself claimed in 1848 that there are at most 7776.
+He phrased his problem as that of solving five equations
+of degree six on the five-dimensional space $\mathbb{P}^5$.
+Using Bézout&rsquo;s Theorem he argued that the equations coming from this question
+have $6^5 = 7776$ solutions over the <a href="https://en.wikipedia.org/wiki/Complex_numbers">complex numbers</a>.
+However, this number over counts because
+there is a <em>Veronese surface</em> of extraneous solutions, namely
+the conics that are squares of linear forms, i.e., degenerate conics.
+The correct count of non-degenerate conics is <strong>3264</strong>.</p>
+
+<p><a href="https://www.juliahomotopycontinuation.org/3264/">Recently</a> we found an arrangement of five conics such that all 3264 tangential conics are real.
+Here is your chance to play:</p>
+
+<div id="do-it-yourself-container"></div>
+</div>
+
+  <div class="">
+    <p>
+  Published
   
-</ul>
+    
+      by <span itemprop="author">Bernd Sturmfels, Paul Breiding and Sascha Timme</span>
+    
+  
+  <time datetime="2019-01-21T21:56:55&#43;01:00">
+    21 Jan, 2019
+  </time>
+  
+</p>
+
+    
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/do-it-yourself.js"></script>
+
 </main>
-  <footer> 
-    <footer id="footer">
+  <footer>   <footer id="footer">
     <nav>
       <ul>
         <li><span>HomotopyContinuation.jl</span></li>
@@ -169,8 +203,7 @@
       </ul>
     </nav>
     
-  </footer> 
-</footer>
+  </footer> </footer>
 
 
   <script src="/js/kube.js" type="text/javascript">

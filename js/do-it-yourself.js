@@ -1,6 +1,6 @@
 "use strict";
 
-const COMPUTE_URL = "http://localhost:3264/conics";
+const COMPUTE_URL = location.protocol + "//localhost:3264/conics";
 
 const e = React.createElement;
 const conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];

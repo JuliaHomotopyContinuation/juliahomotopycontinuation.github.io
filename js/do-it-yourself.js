@@ -206,12 +206,7 @@ class ConicInput extends React.Component {
       e(
         "div",
         {
-          style: {
-            display: "flex",
-            minWidth: 462,
-            alignItems: "center",
-            flex: 1
-          }
+          className: "ConicInput-container"
         },
         e("input", {
           className: "ConicInput-input",
@@ -381,7 +376,6 @@ class CustomInput extends React.Component {
         "div",
         {
           style: {
-            minWidth: 462,
             justifyContent: "center",
             display: "flex",
             flex: 1
@@ -551,12 +545,7 @@ class CustomInput extends React.Component {
         e(
           "div",
           {
-            style: {
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "stretch",
-              width: "100%"
-            }
+            className: "RenderedInputConics-container"
           },
           [0, 1, 2, 3, 4].map(
             function(i) {

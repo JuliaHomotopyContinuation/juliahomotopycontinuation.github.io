@@ -188,8 +188,7 @@ A classic problem in enumerative geometry is Steiner&amp;rsquo;s conic problem w
       
       <guid>/do-it-yourself/</guid>
       <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
-$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
-Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
+$$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
 A classic problem in enumerative geometry is Steiner&amp;rsquo;s conic problem which asks: How many conics are tangent to five given conics?</description>
     </item>
     

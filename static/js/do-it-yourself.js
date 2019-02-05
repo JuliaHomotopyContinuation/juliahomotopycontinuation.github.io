@@ -7,6 +7,10 @@ const tangentialConicColor = "#FB5B5B";
 const givenConicColor = "#25A9CC";
 // const conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
 
+function even(x) {
+  return x % 2 == 0 ? x : x + 1;
+}
+
 function random_conic_state() {
   var values = {
     a: random_number(),
@@ -598,16 +602,16 @@ class CustomInput extends React.Component {
           ? e(
               "div",
               { style: { display: "inline-block", marginLeft: 4 } },
-              "Of the 3264 conics are probably",
-              e("strong", null, " ", this.state.computed.nreal, " "),
-              "real."
+              "Of the 3264 conics are",
+              e("strong", null, " ", even(this.state.computed.nreal), " "),
+              "probably real."
             )
           : e(
               "div",
               { style: { display: "inline-block", marginLeft: 4 } },
-              "Of the 3264 conics are probably",
+              "Of the 3264 conics are",
               e("strong", null, " ? "),
-              "real."
+              "probably real."
             ),
         e("canvas", {
           resize: "true",

@@ -16,7 +16,92 @@ window.setup_conics = function(args, is_setup_cb) {
   var centerY = paper.view.center.y;
   var scale = width / (XMAX - XMIN);
 
+  var MSF = 5; // We compute values in at most MSF * XMAX
+
   function rotated_conic(a, c, d, e, f) {
+    // Parabola resolved to y = ...
+    if (Math.abs(a) < 1e-14) {
+      var u1 = e / (2 * c);
+      var u2 = -d / c;
+      var u3 = -f / c;
+
+      var segments1 = [];
+      var segments2 = [];
+      var N = 100;
+      var x_0 = (-u3 - u1 * u1) / u2;
+      for (var k = 0; k <= N; k++) {
+        var x = x_0 + (k * 10) / N;
+        var v = Math.sqrt(Math.max(u1 * u1 + u2 * x + u3, 0));
+        var y1 = v - u1;
+        var y2 = -v - u1;
+
+        if (
+          MSF * XMIN <= x &&
+          x <= MSF * XMAX &&
+          MSF * YMIN <= y1 &&
+          y1 <= MSF * YMAX
+        ) {
+          segments1.push(new paper.Point(x, y1));
+        }
+        if (
+          MSF * XMIN <= x &&
+          x <= MSF * XMAX &&
+          MSF * YMIN <= y1 &&
+          y1 <= MSF * YMAX
+        ) {
+          segments2.push(new paper.Point(x, y2));
+        }
+      }
+      var path1 = new paper.Path(segments1);
+      var path2 = new paper.Path(segments2);
+      var group = new paper.Group({
+        children: [path1, path2]
+      });
+
+      return group;
+    }
+    // Parabola resolved to x = ...
+    if (Math.abs(c) < 1e-14) {
+      var u1 = e / (2 * a);
+      var u2 = -d / a;
+      var u3 = -f / a;
+
+      var segments1 = [];
+      var segments2 = [];
+      var N = 100;
+      var y_0 = (-u3 - u1 * u1) / u2;
+      for (var k = 0; k <= N; k++) {
+        var y = y_0 + (k * 10) / N;
+        var v = Math.sqrt(Math.max(u1 * u1 + u2 * y + u3, 0));
+        var x1 = v - u1;
+        var x2 = -v - u1;
+
+        if (
+          MSF * XMIN <= x1 &&
+          x1 <= MSF * XMAX &&
+          MSF * YMIN <= y &&
+          y <= MSF * YMAX
+        ) {
+          segments1.push(new paper.Point(x1, y));
+        }
+        if (
+          MSF * XMIN <= x2 &&
+          x2 <= MSF * XMAX &&
+          MSF * YMIN <= y &&
+          y <= MSF * YMAX
+        ) {
+          segments2.push(new paper.Point(x2, y));
+        }
+      }
+      var path1 = new paper.Path(segments1);
+      var path2 = new paper.Path(segments2);
+      var group = new paper.Group({
+        children: [path1, path2]
+      });
+
+      return group;
+    }
+
     // apply scaling to account for 'f'
     var r = ((0.25 * d * d) / a + (0.25 * e * e) / c - f) / (a * c);
     a *= r;
@@ -24,6 +109,7 @@ window.setup_conics = function(args, is_setup_cb) {
     d *= r;
     e *= r;
 
+    // Parabola
     // Ellipse
     if (-a * c < 0) {
       var A = Math.sqrt(Math.abs(c));
@@ -61,18 +147,18 @@ window.setup_conics = function(args, is_setup_cb) {
         var x2 = -Acosh_t + C1;
         var y = Bsinh_t + C2;
         if (
-          3 * XMIN <= x1 &&
-          x1 <= 3 * XMAX &&
-          3 * YMIN <= y &&
-          y <= 3 * YMAX
+          MSF * XMIN <= x1 &&
+          x1 <= MSF * XMAX &&
+          MSF * YMIN <= y &&
+          y <= MSF * YMAX
         ) {
           segments1.push(new paper.Point(x1, y));
         }
         if (
-          3 * XMIN <= x2 &&
-          x2 <= 3 * XMAX &&
-          3 * YMIN <= y &&
-          y <= 3 * YMAX
+          MSF * XMIN <= x2 &&
+          x2 <= MSF * XMAX &&
+          MSF * YMIN <= y &&
+          y <= MSF * YMAX
         ) {
           segments2.push(new paper.Point(x2, y));
         }

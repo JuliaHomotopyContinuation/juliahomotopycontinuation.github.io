@@ -342,7 +342,11 @@ class CustomInput extends React.Component {
   }
 
   addConic(values, i) {
-    var rendered = window.draw_conic(values, { strokeColor: conicColors[4] });
+    var rendered = window.draw_conic(values, {
+      strokeColor: conicColors[4],
+      opacity: 0.7,
+      strokeWidth: 2
+    });
     var conics = this.state.conics;
     conics[i] = { rendered: rendered, coeffs: values };
     this.setState({ conics: conics });
@@ -484,6 +488,7 @@ class CustomInput extends React.Component {
 
     var rendered = window.draw_conic(coeffs, {
       strokeColor: conicColors[5],
+      strokeWidth: 2,
       opacity: 1.0,
       animate: true
     });

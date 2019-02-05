@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> 3264 conics tangent to five conics </title>
+
+  
+  <meta name="description" content="And all of them can be real."> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul Breiding, Bernd Sturmfels and Sascha Timme">
+
+
+  <meta property="og:title" content="3264 conics tangent to five conics" />
+<meta property="og:description" content="And all of them can be real." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/3264-2/" /><meta property="article:published_time" content="2019-01-21T21:56:55&#43;01:00"/>
+<meta property="article:modified_time" content="2019-01-21T21:56:55&#43;01:00"/>
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/3264-2/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+  
+
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+<script type="text/javascript" src="/js/paper-full.min.js"></script>
+<script type="text/javascript" src="/js/conics.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script type="text/javascript" src="/js/all_real_conics_data.js"></script>
+
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/blog/" >Blog</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+</header>
+  <main>
+
+<div id="hero" class="wrap">
+  <h2>3264 conics tangent to five conics</h2>
+  <p>And all of them can be real.</p>
+</div>
+
+<div id="post-box">
+  <div id="post" itemprop="articleBody"><p>A <a href="https://en.wikipedia.org/wiki/Conic"><em>conic</em></a> in the plane $\mathbb{R}^2$ is the zero set of a
+quadratic polynomial in two variables:</p>
+
+<p>$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$</p>
+
+<p>Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines.
+The last case is called a degenerate conic.</p>
+
+<p>A classic problem in <a href="https://en.wikipedia.org/wiki/Enumerative_geometry">enumerative geometry</a>
+is <a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner&rsquo;s conic problem</a> which asks:
+<p style="width: 100%; text-align: center;">
+<em>How many conics are tangent to five given conics?</em>
+</p>
+<img src="/images/given_conics_example.png" style="width:50%;display: block;margin-left: auto;margin-right: auto;"></p>
+
+<p>Steiner himself claimed in 1848 that there are at most 7776.
+He phrased his problem as that of solving five equations
+of degree six on the five-dimensional space $\mathbb{P}^5$.
+Using Bézout&rsquo;s Theorem he argued that the equations coming from this question
+have $6^5 = 7776$ solutions over the <a href="https://en.wikipedia.org/wiki/Complex_numbers">complex numbers</a>.
+However, this number over counts because
+there is a <em>Veronese surface</em> of extraneous solutions, namely
+the conics that are squares of linear forms, i.e., degenerate conics.</p>
+
+<p>The correct count of non-degenerate conics is <strong>3264</strong>.
+This was shown in 1859 by <a href="https://en.wikipedia.org/wiki/Ernest_de_Jonquières">Jonquières</a> and
+independently in 1864 by <a href="https://en.wikipedia.org/wiki/Michel_Chasles">Chasles</a>.
+Schubert, whose 1879 book led to Hilbert&rsquo;s 15th problem, developed this further, and thus to the 20th century development of intersection theory.
+The number 3264 appears prominently in the book
+<a href="https://scholar.harvard.edu/files/joeharris/files/000-final-3264.pdf"><em>3264 and all that</em></a>
+by <a href="https://en.wikipedia.org/wiki/David_Eisenbud">Eisenbud</a> and
+<a href="https://en.wikipedia.org/wiki/Joe_Harris_(mathematician)">Harris</a>.
+It is worth mentioning that it was not until the work of <a href="https://en.wikipedia.org/wiki/Michel_Chasles">Fulton</a> and <a href="https://en.wikipedia.org/wiki/Robert_MacPherson">MacPherson</a> in 1978 who gave intersection theory a rigorous foundation.</p>
+
+<p>A delightful introduction to Steiner&rsquo;s problem was given by
+<a href="https://www.maa.org/sites/default/files/images/upload_library/22/Ford/Bashelor.pdf">Bashelor, Ksir and Traves</a>.
+<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.36.1425&amp;rep=rep1&amp;type=pdf">Ronga, Tognoli and Vust</a> and <a href="https://arxiv.org/abs/alg-geom/9609007">Sottile</a> showed how to
+choose five real conics such that all
+3264 complex solutions are real.
+Although their proofs starts with an explicit construction it is <em>not</em> fully constructive.
+They have to rely on the <a href="https://en.wikipedia.org/wiki/Implicit_function_theorem">implicit function theorem</a> to guarantee the existence of all real solutions.</p>
+
+<p>But using methods from <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry">numerical algebraic geometry</a>
+we can use the proposed construction to find a concrete instance such that there are 3264 real conics tangent to the five given conics.
+In particular we use <em>homotopy continuation</em> to compute approximations of the 3264 conics.
+Then we can use <a href="https://link.springer.com/chapter/10.1007/978-1-4612-4984-9_13">Smale&rsquo;s $\alpha$-theory</a>, via the software <a href="http://www.math.tamu.edu/~sottile/research/stories/alphaCertified/">alphaCertified</a>, to give a <em>mathematical proof</em> that we found indeed 3264 real conics.</p>
+
+<p>The five given conics are</p>
+
+<p>$$
+\small{
+\begin{array}{rcrcrcrcrcl}
+\frac{10124547}{662488724}x^2 &amp;+&amp;\frac{8554609}{755781377}xy&amp;+&amp; \frac{5860508}{2798943247}y^2 &amp;-&amp;\frac{251402893}{1016797750}x &amp;-&amp; \frac{ 25443962}{277938473} y &amp;+&amp; 1\\[1em]
+\frac{520811}{178801844}x^2 &amp;+&amp;\frac{2183697}{542440933}xy &amp;+&amp;\frac{9030222}{652429049}y^2 &amp;-&amp; \frac{ 12680955}{370629407} x &amp;-&amp; \frac{24872323}{105706890} y&amp;+&amp; 1 \\[1em]
+\frac{6537193}{241535591}x^2 &amp;-&amp; \frac{7424602}{363844915}xy&amp;+&amp; \frac{6264373}{1630169777} y^2&amp;+&amp; \frac{13097677}{39806827} x &amp;-&amp; \frac{29825861}{240478169} y&amp;+&amp; 1 \\[1em]
+\frac{13173269}{2284890206}x^2 &amp;+&amp; \frac{4510030}{483147459}xy&amp;+&amp; \frac{2224435}{588965799} y^2&amp;+&amp;  \frac{33318719}{219393000} x &amp;+&amp; \frac{92891037}{755709662} y&amp;+&amp; 1 \\[1em]
+\frac{8275097}{452566634}x^2 &amp;-&amp; \frac{19174153}{408565940}xy&amp;+&amp; \frac{5184916}{172253855} y^2&amp;-&amp; \frac{23713234}{87670601}x &amp;+&amp; \frac{28246737}{81404569} y &amp;+&amp; 1
+\end{array}
+}
+$$</p>
+
+<p>They are the five blue hyperbolas depicted below. The red conics are a subset of the 3264 real conics tangent to the five blue conics.</p>
+
+<div id="all_real_conics_container"></div>
+
+<p>Here is a a closeup showing what happens</p>
+
+<p><img src="/images/conic-zoom.png" alt="conics" /></p>
+</div>
+
+  <div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul Breiding, Bernd Sturmfels and Sascha Timme</span>
+    
+  
+  <time datetime="2019-01-21T21:56:55&#43;01:00">
+    21 Jan, 2019
+  </time>
+  
+</p>
+
+    
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/all_real_conics.js"></script>
+
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+            <a href="/blog/">Blog</a>
+          </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

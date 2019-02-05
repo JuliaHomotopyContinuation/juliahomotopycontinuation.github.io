@@ -2,7 +2,10 @@
 
 const e = React.createElement;
 
-var conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
+const tangentialConicColor = "#FB5B5B";
+const givenConicColor = "#25A9CC";
+
+// var conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
 
 /**
  * Shuffles array in place.
@@ -78,7 +81,8 @@ class AllRealsConics extends React.Component {
   renderGivenConics() {
     this.given_conics = data.given_conics.map(function(coeffs) {
       var rendered = window.draw_conic(coeffs, {
-        strokeColor: "#42A5F5",
+        strokeColor: givenConicColor,
+        strokeWidth: 2,
         opacity: 1.0
       });
       return { rendered: rendered, coeffs: coeffs };
@@ -97,7 +101,8 @@ class AllRealsConics extends React.Component {
     var i = indices[this.state.conic_index];
     var coeffs = data.solutions[i].conic;
     var rendered = window.draw_conic(coeffs, {
-      strokeColor: conicColors[5],
+      strokeColor: tangentialConicColor,
+      strokeWidth: 2,
       opacity: 1.0,
       animate: true
     });

@@ -3,7 +3,9 @@
 const COMPUTE_URL = location.protocol + "//localhost:3264/conics";
 
 const e = React.createElement;
-const conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
+const tangentialConicColor = "#FB5B5B";
+const givenConicColor = "#25A9CC";
+// const conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
 
 function random_conic_state() {
   var values = {
@@ -343,7 +345,7 @@ class CustomInput extends React.Component {
 
   addConic(values, i) {
     var rendered = window.draw_conic(values, {
-      strokeColor: conicColors[4],
+      strokeColor: givenConicColor,
       opacity: 0.7,
       strokeWidth: 2
     });
@@ -487,7 +489,7 @@ class CustomInput extends React.Component {
     };
 
     var rendered = window.draw_conic(coeffs, {
-      strokeColor: conicColors[5],
+      strokeColor: tangentialConicColor,
       strokeWidth: 2,
       opacity: 1.0,
       animate: true

@@ -353,9 +353,11 @@ class CustomInput extends React.Component {
       opacity: 0.7,
       strokeWidth: 2
     });
-    var conics = this.state.conics;
-    conics[i] = { rendered: rendered, coeffs: values };
-    this.setState({ conics: conics });
+    if (rendered !== null) {
+      var conics = this.state.conics;
+      conics[i] = { rendered: rendered, coeffs: values };
+      this.setState({ conics: conics });
+    }
 
     return;
   }

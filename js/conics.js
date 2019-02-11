@@ -109,7 +109,6 @@ window.setup_conics = function(args, is_setup_cb) {
     d *= r;
     e *= r;
 
-    // Parabola
     // Ellipse
     if (-a * c < 0) {
       var A = Math.sqrt(Math.abs(c));
@@ -173,7 +172,22 @@ window.setup_conics = function(args, is_setup_cb) {
     }
   }
 
+  function circle(A, D, E, F) {
+    var center = [];
+    var r_sqr = F / A;
+    if (r_sqr > 0) {
+      r = Math.sqrt(r_sqr);
+      return paper.Shape.Circle(new paper.Point(-D / 2, -E / 2), r);
+    }
+    return null;
+  }
+
   function conic(A, B, C, D, E, F) {
+    // Check for circle
+    if (Math.abs(A - C) < 1e-14 && Math.abs(B) < 1e-14) {
+      return circle(A, D, E, F);
+    }
+
     // We apply a change of coordinates such that in the end B = 0.
     // By this we remove any rotation component.
     var iscircle =
@@ -192,6 +206,15 @@ window.setup_conics = function(args, is_setup_cb) {
     var d = E * sin + D * cos;
     var e = -D * sin + E * cos;
     var f = F;
+
+    if (f < 0) {
+      a = -a;
+      b = -b;
+      c = -c;
+      d = -d;
+      e = -e;
+      f = -f;
+    }
 
     return rotated_conic(a, c, d, e, f).rotate(
       (theta * 360) / (2 * Math.PI),
@@ -217,6 +240,9 @@ window.setup_conics = function(args, is_setup_cb) {
       options = {};
     }
     var c = conic(coeffs.a, coeffs.b, coeffs.c, coeffs.d, coeffs.e, coeffs.f);
+    if (c === null) {
+      return null;
+    }
     c.strokeColor = options.strokeColor || "#CB4335";
     c.strokeWidth = options.strokeWidth || 1;
     c.strokeScaling = false;

@@ -148,6 +148,12 @@ is <a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner&rsq
 <em>How many conics are tangent to five given conics?</em>
 </p></p>
 
+<p>Here is an example of Steiner&rsquo;s problem:
+<figure>
+<img src="/images/given_conics_example.png" style="width:50%;display: block;margin-left: auto;margin-right: auto;">
+  <figcaption>The five given conics are represented in blue. The red ellipse is tangential to all five blue conics. The tangential points are shown in black.</figcaption>
+</figure></p>
+
 <p>Steiner himself claimed in 1848 that there are at most 7776.
 He phrased his problem as that of solving five equations
 of degree six on the five-dimensional space $\mathbb{P}^5$.
@@ -180,9 +186,8 @@ we can use the proposed construction to find a concrete instance such that there
 In particular we use <em>homotopy continuation</em> to compute approximations of the 3264 conics.
 Then we can use <a href="https://link.springer.com/chapter/10.1007/978-1-4612-4984-9_13">Smale&rsquo;s $\alpha$-theory</a>, via the software <a href="http://www.math.tamu.edu/~sottile/research/stories/alphaCertified/">alphaCertified</a>, to give a <em>mathematical proof</em> that we found indeed 3264 real conics.</p>
 
-<p>The five given conics are</p>
-
-<p>$$
+<p>Five hyperbolas for which there exists 3264 tangential conics are given by
+$$
 \small{
 \begin{array}{rcrcrcrcrcl}
 \frac{10124547}{662488724}x^2 &amp;+&amp;\frac{8554609}{755781377}xy&amp;+&amp; \frac{5860508}{2798943247}y^2 &amp;-&amp;\frac{251402893}{1016797750}x &amp;-&amp; \frac{ 25443962}{277938473} y &amp;+&amp; 1\\[1em]
@@ -194,7 +199,14 @@ Then we can use <a href="https://link.springer.com/chapter/10.1007/978-1-4612-49
 }
 $$</p>
 
-<p>They are the five blue hyperbolas depicted below. The red conics are a subset of the 3264 real conics tangent to the five blue conics.</p>
+<p>An illustration of the arrangement is shown below. These hyperbolas look nearly like double lines
+since the construction started with double lines and then slightly perturbed them.
+<figure>
+<img src="/images/conic-zoom.png" style="display: block;margin-left: auto;margin-right: auto;">
+  <figcaption>The five blue hyperbolas are an arrangement of conics which yield 3264 real tangential conics. The red ellipse is tangential to all five blue conics. The close ups show how the hyperbolas can be cleverly used to create the many real solutions.</figcaption>
+</figure></p>
+
+<p>Finally, here are all 3264 solutions depicted.</p>
 
 <div id="all_real_conics_container"></div>
 </div>

@@ -33,13 +33,14 @@
     font-size: 12px;
   }
   .ConicInput-container {
-    font-size: 12px; 
+    font-size: 12px;
   }
   .RenderedInputConics-container {
     font-size: 12px;
   }
 
-  #post-box, #main {
+  #post-box,
+  #main {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -105,8 +106,16 @@ canvas[resize] {
   margin-top: 14px;
 }
 
-.CustomInput-button:disabled {
+.CustomInput-button-disabled {
+  margin-top: 14px;
   opacity: 0.4;
+}
+.CustomInput-button-disabled:hover {
+  opacity: 0.4;
+  outline: 0;
+  text-decoration: none;
+  color: #fff;
+  background-color: #1c86f2;
 }
 
 @keyframes blink {

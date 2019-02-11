@@ -25,6 +25,12 @@ is [Steiner's conic problem](https://en.wikipedia.org/wiki/Steiner%27s_conic_pro
 *How many conics are tangent to five given conics?*
 </p>
 
+Here is an example of Steiner's problem:
+<figure>
+<img src="/images/given_conics_example.png" style="width:50%;display: block;margin-left: auto;margin-right: auto;">
+  <figcaption>The five given conics are represented in blue. The red ellipse is tangential to all five blue conics. The tangential points are shown in black.</figcaption>
+</figure>
+
 Steiner himself claimed in 1848 that there are at most 7776.
 He phrased his problem as that of solving five equations
 of degree six on the five-dimensional space $\mathbb{P}^5$.

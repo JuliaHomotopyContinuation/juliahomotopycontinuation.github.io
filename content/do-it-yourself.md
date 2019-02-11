@@ -4,7 +4,7 @@ description = "3264 conics in a few seconds."
 type = "special"
 layout = "do-it-yourself"
 date = "2019-01-21T21:56:55+01:00"
-author = "Bernd Sturmfels, Paul Breiding and Sascha Timme"
+author = "Paul Breiding, Bernd Sturmfels and Sascha Timme"
 +++
 
 

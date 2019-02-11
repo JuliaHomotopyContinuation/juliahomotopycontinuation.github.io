@@ -102,15 +102,14 @@ window.setup_conics = function(args, is_setup_cb) {
       return group;
     }
 
-    // apply scaling to account for 'f'
-    var r = ((0.25 * d * d) / a + (0.25 * e * e) / c - f) / (a * c);
-    a *= r;
-    c *= r;
-    d *= r;
-    e *= r;
-
     // Ellipse
     if (-a * c < 0) {
+      // apply scaling to account for 'f'
+      var r = ((0.25 * d * d) / a + (0.25 * e * e) / c - f) / (a * c);
+      a *= r;
+      c *= r;
+      d *= r;
+      e *= r;
       var A = Math.sqrt(Math.abs(c));
       var B = Math.sqrt(Math.abs(a));
       var C1 = -d / (2 * a);
@@ -125,43 +124,93 @@ window.setup_conics = function(args, is_setup_cb) {
     }
     // Hyperbola
     else if (-a * c > 0) {
-      var A = Math.sqrt(Math.abs(c));
-      var B = Math.sqrt(Math.abs(a));
-      var C1 = -d / (2 * a);
-      var C2 = e / (2 * -c);
+      // Make a > 0
+      if (a < 0) {
+        a = -a;
+        c = -c;
+        d = -d;
+        e = -e;
+        f = -f;
+      }
+
+      var A = Math.sqrt(-c);
+      var B = Math.sqrt(a);
+
+      var C1 = -d / (2 * B * B);
+      var C2 = e / (2 * A * A);
+
+      var r = (-f + B * B * C1 * C1 - A * A * C2 * C2) / (A * A * B * B);
+
+      A = Math.sqrt(-Math.abs(r) * c);
+      B = Math.sqrt(Math.abs(r) * a);
 
       var segments1 = [];
       var segments2 = [];
-      maximum = Math.max(
-        Math.acosh((XMAX + Math.abs(C1)) / A),
-        Math.asinh((YMAX + Math.abs(C2)) / B)
-      );
       var N = 50;
 
-      for (var k = -N; k <= N; k++) {
-        var t = (k * maximum) / N;
-        var Acosh_t = A * Math.cosh(t);
-        var Bsinh_t = B * Math.sinh(t);
-        var x1 = Acosh_t + C1;
-        var x2 = -Acosh_t + C1;
-        var y = Bsinh_t + C2;
-        if (
-          MSF * XMIN <= x1 &&
-          x1 <= MSF * XMAX &&
-          MSF * YMIN <= y &&
-          y <= MSF * YMAX
-        ) {
-          segments1.push(new paper.Point(x1, y));
+      if (r > 0) {
+        maximum = Math.max(
+          Math.acosh((XMAX + Math.abs(C1)) / A),
+          Math.asinh((YMAX + Math.abs(C2)) / B)
+        );
+
+        for (var k = -N; k <= N; k++) {
+          var t = (k * maximum) / N;
+          var Acosh_t = A * Math.cosh(t);
+          var Bsinh_t = B * Math.sinh(t);
+          var x1 = Acosh_t + C1;
+          var x2 = -Acosh_t + C1;
+          var y = Bsinh_t + C2;
+          if (
+            MSF * XMIN <= x1 &&
+            x1 <= MSF * XMAX &&
+            MSF * YMIN <= y &&
+            y <= MSF * YMAX
+          ) {
+            segments1.push(new paper.Point(x1, y));
+          }
+          if (
+            MSF * XMIN <= x2 &&
+            x2 <= MSF * XMAX &&
+            MSF * YMIN <= y &&
+            y <= MSF * YMAX
+          ) {
+            segments2.push(new paper.Point(x2, y));
+          }
         }
-        if (
-          MSF * XMIN <= x2 &&
-          x2 <= MSF * XMAX &&
-          MSF * YMIN <= y &&
-          y <= MSF * YMAX
-        ) {
-          segments2.push(new paper.Point(x2, y));
+      } else {
+        // Conjugate hyperbola
+        maximum = Math.max(
+          Math.asinh((XMAX + Math.abs(C1)) / A),
+          Math.acosh((YMAX + Math.abs(C2)) / B)
+        );
+
+        for (var k = -N; k <= N; k++) {
+          var t = (k * maximum) / N;
+          var Asinh_t = A * Math.sinh(t);
+          var Bcosh_t = B * Math.cosh(t);
+          var x = Asinh_t + C1;
+          var y1 = Bcosh_t + C2;
+          var y2 = -Bcosh_t + C2;
+          if (
+            MSF * XMIN <= x &&
+            x <= MSF * XMAX &&
+            MSF * YMIN <= y1 &&
+            y1 <= MSF * YMAX
+          ) {
+            segments1.push(new paper.Point(x, y1));
+          }
+          if (
+            MSF * XMIN <= x &&
+            x <= MSF * XMAX &&
+            MSF * YMIN <= y1 &&
+            y1 <= MSF * YMAX
+          ) {
+            segments2.push(new paper.Point(x, y2));
+          }
         }
       }
+
       var path1 = new paper.Path(segments1);
       var path2 = new paper.Path(segments2);
       var group = new paper.Group({

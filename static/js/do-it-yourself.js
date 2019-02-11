@@ -1,11 +1,9 @@
 "use strict";
 
 const COMPUTE_URL = location.protocol + "//localhost:3264/conics";
-
 const e = React.createElement;
 const tangentialConicColor = "#FB5B5B";
 const givenConicColor = "#25A9CC";
-// const conicColors = ["#9b59b6", "#c0392b", "#f1c40f", "#2ecc71", "#3498db"];
 
 function even(x) {
   return x % 2 == 0 ? x : x + 1;
@@ -412,45 +410,7 @@ class CustomInput extends React.Component {
   }
 
   fetchTangentConics() {
-    var c = this.state.given_conics;
-    var conics = [
-      [
-        c[0].a / c[0].f,
-        c[0].b / c[0].f,
-        c[0].c / c[0].f,
-        c[0].d / c[0].f,
-        c[0].e / c[0].f
-      ],
-      [
-        c[1].a / c[1].f,
-        c[1].b / c[1].f,
-        c[1].c / c[1].f,
-        c[1].d / c[1].f,
-        c[1].e / c[1].f
-      ],
-      [
-        c[2].a / c[2].f,
-        c[2].b / c[2].f,
-        c[2].c / c[2].f,
-        c[2].d / c[2].f,
-        c[2].e / c[2].f
-      ],
-      [
-        c[3].a / c[3].f,
-        c[3].b / c[3].f,
-        c[3].c / c[3].f,
-        c[3].d / c[3].f,
-        c[3].e / c[3].f
-      ],
-      [
-        c[4].a / c[4].f,
-        c[4].b / c[4].f,
-        c[4].c / c[4].f,
-        c[4].d / c[4].f,
-        c[4].e / c[4].f
-      ]
-    ];
-
+    var conics = this.state.given_conics;
     postData(COMPUTE_URL, { conics: conics })
       .then(
         function(data) {

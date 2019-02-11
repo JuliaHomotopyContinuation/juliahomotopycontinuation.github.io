@@ -1,6 +1,6 @@
 +++
 title = "Do It Yourself"
-description = "Compute conics."
+description = "3264 conics in a few seconds."
 type = "special"
 layout = "do-it-yourself"
 date = "2019-01-21T21:56:55+01:00"
@@ -19,29 +19,11 @@ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabo
 The last case is called a degenerate conic.
 
 
-A classic problem in [enumerative geometry](https://en.wikipedia.org/wiki/Enumerative_geometry)
-is [Steiner's conic problem](https://en.wikipedia.org/wiki/Steiner%27s_conic_problem) which asks:
+[Steiner's conic problem](https://en.wikipedia.org/wiki/Steiner%27s_conic_problem) asks the question of how many conics are tangent to five given conics. This webpage gives an answer to a slightly different question:
 <p style="width: 100%; text-align: center;">
-*How many conics are tangent to five given conics?*
+*Which conics are tangent to your five given conics?*
 </p>
 
-Here is an example of Steiner's problem:
-<figure>
-<img src="/images/given_conics_example.png" style="width:50%;display: block;margin-left: auto;margin-right: auto;">
-  <figcaption>The five given conics are represented in blue. The red ellipse is tangential to all five blue conics. The tangential points are shown in black.</figcaption>
-</figure>
-
-Steiner himself claimed in 1848 that there are at most 7776.
-He phrased his problem as that of solving five equations
-of degree six on the five-dimensional space $\mathbb{P}^5$.
-Using Bézout's Theorem he argued that the equations coming from this question
-have $6^5 = 7776$ solutions over the [complex numbers](https://en.wikipedia.org/wiki/Complex_numbers).
-However, this number over counts because
-there is a *Veronese surface* of extraneous solutions, namely 
-the conics that are squares of linear forms, i.e., degenerate conics.
-The correct count of non-degenerate conics is **3264**.
-
-[Recently](https://www.juliahomotopycontinuation.org/3264/) we found an arrangement of five conics such that all 3264 tangential conics are real.
-Here is your chance to play:
+Plug in the coefficients of your five personal conics, and get the answers in a few seconds (your conics must be sufficient generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).
 
 <div id="do-it-yourself-container"></div>

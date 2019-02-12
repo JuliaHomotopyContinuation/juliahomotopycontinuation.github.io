@@ -257,6 +257,34 @@ class ConicInput extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.initialCoeffs) {
+      if (
+        !(
+          prevProps.initialCoeffs.a == this.props.initialCoeffs.a &&
+          prevProps.initialCoeffs.b == this.props.initialCoeffs.b &&
+          prevProps.initialCoeffs.c == this.props.initialCoeffs.c &&
+          prevProps.initialCoeffs.d == this.props.initialCoeffs.d &&
+          prevProps.initialCoeffs.e == this.props.initialCoeffs.e &&
+          prevProps.initialCoeffs.f == this.props.initialCoeffs.f
+        )
+      ) {
+        var values = this.props.initialCoeffs;
+        this.setState({
+          fields: {
+            a: String(values.a),
+            b: String(values.b),
+            c: String(values.c),
+            d: String(values.d),
+            e: String(values.e),
+            f: String(values.f)
+          },
+          values: values
+        });
+      }
+    }
+  }
+
   updateCoeff(coeff, event) {
     var values = Object.assign({}, this.state.values, {
       [coeff]: parseFloat(event.target.value)
@@ -392,7 +420,8 @@ class CustomInput extends React.Component {
       computed: null,
       tangential_conics: [],
       tangential_conic_index: 0,
-      isRendering: false
+      isRendering: false,
+      inputKey: 0
     };
 
     this.canvas = null;
@@ -638,10 +667,32 @@ class CustomInput extends React.Component {
             marginLeft: 2,
             marginBottom: 4,
             textAlign: "left",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            display: "flex"
           }
         },
-        "Your five given conics:"
+        "Your five given conics:",
+        e(
+          "button",
+          {
+            className: "button outline",
+            style: {
+              marginLeft: "auto"
+            },
+            onClick: function() {
+              var given_conics = [1, 2, 3, 4, 5].map(random_conic_state);
+              var conics = [null, null, null, null, null];
+              this.state.conics.forEach(function(el) {
+                if (el !== null) {
+                  el.rendered.remove();
+                }
+              });
+              this.setState({ given_conics: given_conics, conics: conics });
+              this.removeOldData();
+            }.bind(this)
+          },
+          "New random conics."
+        )
       ),
       e(
         "div",

@@ -309,6 +309,49 @@ window.setup_conics = function(args, is_setup_cb) {
     return c;
   }
 
+  function draw_conic_with_tangential_points(
+    coeffs,
+    tangential_points,
+    options
+  ) {
+    if (options === undefined) {
+      options = {};
+    }
+    var c = conic(coeffs.a, coeffs.b, coeffs.c, coeffs.d, coeffs.e, coeffs.f);
+    if (c === null) {
+      return null;
+    }
+    c.strokeColor = options.strokeColor || "#CB4335";
+    c.strokeWidth = options.strokeWidth || 1;
+    c.strokeScaling = false;
+    c.opacity = options.opacity || 1.0;
+    var animate = options.animate || false;
+
+    var children = [c];
+
+    for (var i = 0; i < 10; i++) {
+      var p = new paper.Point(tangential_points[i], tangential_points[i + 1]);
+      var point = new paper.Shape.Circle(p, 2 / scale);
+      point.strokeColor = "transparent";
+      point.fillColor = "black";
+
+      children.push(point);
+      i += 1;
+    }
+
+    var group = new paper.Group({
+      children: children
+    })
+      .transform(new paper.Matrix(1, 0, 0, -1, centerX, centerY))
+      .scale(scale, paper.view.center);
+
+    if (animate) {
+      c.opacity = 0.0;
+      c.tweenTo({ opacity: 1.0 }, 600);
+    }
+    return group;
+  }
+
   function remove_conic(conic) {
     // conic.remove();
 
@@ -323,6 +366,7 @@ window.setup_conics = function(args, is_setup_cb) {
 
   window.remove_conic = remove_conic;
   window.draw_conic = draw_conic;
+  window.draw_conic_with_tangential_points = draw_conic_with_tangential_points;
   window.project = paper.project;
 
   if (drawAxis) {

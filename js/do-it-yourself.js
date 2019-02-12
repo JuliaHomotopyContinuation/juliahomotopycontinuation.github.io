@@ -4,6 +4,7 @@ const COMPUTE_URL = location.protocol + "//localhost:3264/conics";
 const e = React.createElement;
 const tangentialConicColor = "#FB5B5B";
 const givenConicColor = "#25A9CC";
+const XMAX = 20;
 
 function even(x) {
   return x % 2 == 0 ? x : x + 1;
@@ -74,18 +75,24 @@ function round(x) {
 }
 
 function coeffsToStringRounded(coeffs) {
+  var a = round(coeffs.a);
+  var b = round(coeffs.b);
+  var c = round(coeffs.c);
+  var d = round(coeffs.d);
+  var e = round(coeffs.e);
+  var f = round(coeffs.f);
   return (
     round(coeffs.a) +
     " x^2 " +
-    (coeffs.b < 0 ? round(coeffs.b) : " + " + round(coeffs.b)) +
+    (b < 0 ? b : " + " + b) +
     " xy " +
-    (coeffs.c < 0 ? round(coeffs.c) : " + " + round(coeffs.c)) +
+    (c < 0 ? c : " + " + c) +
     " y^2 " +
-    (coeffs.d < 0 ? round(coeffs.d) : " + " + round(coeffs.d)) +
+    (d < 0 ? d : " + " + d) +
     " x " +
-    (coeffs.e < 0 ? round(coeffs.e) : " + " + round(coeffs.e)) +
+    (e < 0 ? e : " + " + e) +
     " y " +
-    (coeffs.f < 0 ? round(coeffs.f) : " + " + round(coeffs.f))
+    (f < 0 ? f : " + " + f)
   );
 }
 
@@ -278,17 +285,8 @@ class ConicInput extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.initialCoeffs) {
-      if (
-        !(
-          prevProps.initialCoeffs.a == this.props.initialCoeffs.a &&
-          prevProps.initialCoeffs.b == this.props.initialCoeffs.b &&
-          prevProps.initialCoeffs.c == this.props.initialCoeffs.c &&
-          prevProps.initialCoeffs.d == this.props.initialCoeffs.d &&
-          prevProps.initialCoeffs.e == this.props.initialCoeffs.e &&
-          prevProps.initialCoeffs.f == this.props.initialCoeffs.f
-        )
-      ) {
+    if (prevProps.initialCoeffs && this.props.initialCoeffs) {
+      if (prevProps.random_id !== this.props.random_id) {
         var values = this.props.initialCoeffs;
         this.setState({
           fields: {
@@ -432,9 +430,12 @@ class CustomInput extends React.Component {
   constructor(props) {
     super(props);
 
+    var random_conics = [1, 2, 3, 4, 5].map(random_conic_state);
+    var random_id = Math.random();
     this.state = {
       conics: [null, null, null, null, null],
-      given_conics: [1, 2, 3, 4, 5].map(random_conic_state),
+      random_id: random_id,
+      given_conics: random_conics,
       canvasSetUp: false,
       isComputing: false,
       computed: null,
@@ -474,7 +475,7 @@ class CustomInput extends React.Component {
     window.setup_conics(
       {
         canvasName: "CustomInput",
-        xMax: 20,
+        xMax: XMAX,
         drawAxis: true
       },
       function() {
@@ -711,7 +712,12 @@ class CustomInput extends React.Component {
                   el.rendered.remove();
                 }
               });
-              this.setState({ given_conics: given_conics, conics: conics });
+              var random_id = Math.random();
+              this.setState({
+                given_conics: given_conics,
+                conics: conics,
+                random_id: random_id
+              });
               this.removeOldData();
             }.bind(this)
           },
@@ -743,6 +749,7 @@ class CustomInput extends React.Component {
                   onAdd: function(v) {
                     this.addConic(v, i);
                   }.bind(this),
+                  random_id: this.state.random_id,
                   initialCoeffs: this.state.given_conics[i]
                 });
               } else {

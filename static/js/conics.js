@@ -222,11 +222,16 @@ window.setup_conics = function(args, is_setup_cb) {
   }
 
   function circle(A, D, E, F) {
-    var center = [];
-    var r_sqr = F / A;
+    var d = D / A;
+    var e = E / A;
+    var f = F / A;
+
+    var c1 = -d / 2;
+    var c2 = -e / 2;
+    var r_sqr = -f + c1 * c1 + c2 * c2;
     if (r_sqr > 0) {
-      r = Math.sqrt(r_sqr);
-      return paper.Shape.Circle(new paper.Point(-D / 2, -E / 2), r);
+      var r = Math.sqrt(r_sqr);
+      return paper.Shape.Circle(new paper.Point(c1, c2), r);
     }
     return null;
   }

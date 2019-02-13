@@ -3,7 +3,7 @@ title = "Do It Yourself"
 description = "3264 conics in a few seconds."
 type = "special"
 layout = "do-it-yourself"
-date = "2019-01-21T21:56:55+01:00"
+date = "2019-02-13T21:56:55+01:00"
 author = "Paul Breiding, Bernd Sturmfels and Sascha Timme"
 +++
 

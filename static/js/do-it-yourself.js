@@ -1,6 +1,6 @@
 "use strict";
 
-const COMPUTE_URL = location.protocol + "//c107-250.cloud.gwdg.de/conics";
+const COMPUTE_URL = "https://c107-250.cloud.gwdg.de/conics";
 const e = React.createElement;
 const tangentialConicColor = "#FB5B5B";
 const givenConicColor = "#25A9CC";

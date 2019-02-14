@@ -1,6 +1,6 @@
 "use strict";
 
-const COMPUTE_URL = location.protocol + "//c107-250.cloud.gwdg.de/conics";
+const COMPUTE_URL = location.protocol + "//localhost:3264/conics";
 const e = React.createElement;
 const tangentialConicColor = "#FB5B5B";
 const givenConicColor = "#25A9CC";
@@ -903,11 +903,13 @@ class CustomInput extends React.Component {
                   "Download all conics"
                 )
               ),
+              e("hr", { style: { marginTop: 16, marginBottom: 6 } }),
               !this.state.computed.looks_most_like_a_circle
                 ? null
                 : e(
                     "div",
-                    { style: { marginTop: 12 } },
+                    // { style: { marginTop: 12 } },
+                    null,
                     e(
                       "strong",
                       null,

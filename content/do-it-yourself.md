@@ -3,7 +3,7 @@ title = "Do It Yourself"
 description = "3264 conics in a few seconds."
 type = "special"
 layout = "do-it-yourself"
-date = "2019-01-21T21:56:55+01:00"
+date = "2019-02-12T21:56:55+01:00"
 author = "Paul Breiding, Bernd Sturmfels and Sascha Timme"
 +++
 
@@ -24,7 +24,7 @@ The last case is called a degenerate conic.
 *Which conics are tangent to your five given conics?*
 </p>
 
-Plug in the coefficients of your five personal conics, and get the answers in a few seconds (your conics must be sufficient generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).
+Plug in the coefficients of your five personal conics, and get the answers in a few seconds (your conics must be sufficiently generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).
 
 <div id="do-it-yourself-container"></div>
 

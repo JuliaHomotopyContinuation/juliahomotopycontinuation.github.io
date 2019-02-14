@@ -64,6 +64,17 @@ R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.
     </item>
     
     <item>
+      <title>3264 conics tangent to five conics</title>
+      <link>/blog/3264/</link>
+      <pubDate>Tue, 12 Feb 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/blog/3264/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is a degenerate conic. Double lines are allowed.</description>
+    </item>
+    
+    <item>
       <title>The number of circles that are tangent to 3 given conics</title>
       <link>/blog/circles_conics/</link>
       <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
@@ -71,6 +82,17 @@ R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.
       <guid>/blog/circles_conics/</guid>
       <description>Consider the problem of computing all circles that are tangent to 3 conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to $$C_1 = \{y=-x^2+2x+5\}, C_2 = \{y = 2x^2+5x-8\}, C_3 = \{y = 8x^2-3x-2\}.$$
 Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
+    </item>
+    
+    <item>
+      <title>Do It Yourself</title>
+      <link>/blog/do-it-yourself/</link>
+      <pubDate>Tue, 12 Feb 2019 20:56:55 +0100</pubDate>
+      
+      <guid>/blog/do-it-yourself/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
+Steiner&amp;rsquo;s conic problem asks the question of how many conics are tangent to five given conics.</description>
     </item>
     
     <item>

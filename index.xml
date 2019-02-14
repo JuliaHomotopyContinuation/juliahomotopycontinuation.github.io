@@ -89,6 +89,17 @@ R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.
     </item>
     
     <item>
+      <title>3264 conics tangent to five conics</title>
+      <link>/blog/3264/</link>
+      <pubDate>Tue, 12 Feb 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/blog/3264/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is a degenerate conic. Double lines are allowed.</description>
+    </item>
+    
+    <item>
       <title>The number of circles that are tangent to 3 given conics</title>
       <link>/blog/circles_conics/</link>
       <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
@@ -107,6 +118,17 @@ Emiris and Tzoumas write that there are 184 complex circles that are tangent to 
       <description>Parameter Homotopies Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems
 $$ P = \{f(x_1,\ldots,x_n,a) = (f_1(x_1,\ldots,x_n,a), \ldots, f_n(x_1\ldots,x_n,a)) \mid a \in \mathbb{R}^m\}. $$
 Often, there is a number $N$, such that a generic member $f\in P$ has exactly $N$ solutions $x\in\mathbb{R}^n$ with $f(x)=0$. This $N$ might be very considerably smaller than the number of solutions of an arbitrary polynomial system not in $P$.</description>
+    </item>
+    
+    <item>
+      <title>Do It Yourself</title>
+      <link>/blog/do-it-yourself/</link>
+      <pubDate>Tue, 12 Feb 2019 20:56:55 +0100</pubDate>
+      
+      <guid>/blog/do-it-yourself/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
+Steiner&amp;rsquo;s conic problem asks the question of how many conics are tangent to five given conics.</description>
     </item>
     
     <item>

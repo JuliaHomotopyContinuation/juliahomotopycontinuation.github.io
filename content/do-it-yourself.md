@@ -27,3 +27,8 @@ The last case is called a degenerate conic.
 Plug in the coefficients of your five personal conics, and get the answers in a few seconds (your conics must be sufficient generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).
 
 <div id="do-it-yourself-container"></div>
+
+<br>
+<div id="action-buttons">
+  <a class="button primary big" href="https://www.juliahomotopycontinuation.org/3264/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">If you want to read about 3264 real conics, click here.</a>
+</div>

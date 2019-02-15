@@ -30,7 +30,7 @@ Plug in the coefficients of your five personal conics, and get the answers in a 
 
 <br>
 
-If you are curious how this works, you should read the article [3264 conics in a Second](https://arxiv.org/abs/1902.05518).
+More information on how this works is in the article [3264 conics in a Second](https://arxiv.org/abs/1902.05518).
 
 <br>
 <div id="action-buttons">

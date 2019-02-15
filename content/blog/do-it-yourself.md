@@ -30,6 +30,11 @@ Plug in the coefficients of your five personal conics, and get the answers in a 
 <div id="do-it-yourself-container"></div>
 
 <br>
+
+More information on how this works is in the article [3264 conics in a Second](https://arxiv.org/abs/1902.05518).
+
+<br>
+
 <div id="action-buttons">
   <a class="button primary big" href="https://www.juliahomotopycontinuation.org/3264/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">If you want to read about 3264 real conics, click here.</a>
 </div>

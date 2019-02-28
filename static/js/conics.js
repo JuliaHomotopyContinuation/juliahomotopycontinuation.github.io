@@ -237,6 +237,23 @@ window.setup_conics = function(args, is_setup_cb) {
   }
 
   function conic(A, B, C, D, E, F) {
+    // Check whether the conic has no real solutions
+    // by checking that the associated matrix is neither
+    // positive definite nor negative definite
+    // using Sylvester's criterion
+    m1 = 2 * A;
+    m2 = 4 * A * C - B * B;
+    m3 =
+      8 * A * C * F -
+      2 * A * E * E -
+      2 * B * B * F +
+      2 * B * D * E -
+      2 * C * D * D;
+
+    if ((m1 > 0 && m2 > 0 && m3 > 0) || (m1 < 0 && m2 < 0 && m3 < 0)) {
+      return null;
+    }
+
     // Check for circle
     if (Math.abs(A - C) < 1e-14 && Math.abs(B) < 1e-14) {
       return circle(A, D, E, F);

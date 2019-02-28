@@ -515,10 +515,13 @@ class CustomInput extends React.Component {
       opacity: 0.7,
       strokeWidth: 2
     });
+
     if (rendered !== null) {
       var conics = this.state.conics;
       conics[i] = { rendered: rendered, coeffs: values };
       this.setState({ conics: conics });
+    } else {
+      alert("The given conic has no real solutions!");
     }
 
     return;
@@ -585,7 +588,7 @@ class CustomInput extends React.Component {
       .catch(
         function(error) {
           console.error(error);
-          alert("Somethign went wrong :(");
+          alert("Something went wrong :(");
         }.bind(this)
       )
       .then(

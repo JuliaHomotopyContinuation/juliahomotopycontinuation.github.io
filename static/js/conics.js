@@ -245,7 +245,10 @@ window.setup_conics = function(args, is_setup_cb) {
     // We apply a change of coordinates such that in the end B = 0.
     // By this we remove any rotation component.
     var iscircle =
-      Math.abs(C - A) < 1e-15 && Math.abs(D) < 1e-15 && Math.abs(E) < 1e-15;
+      Math.abs(C - A) < 1e-15 &&
+      Math.abs(B) < 1e-15 &&
+      Math.abs(D) < 1e-15 &&
+      Math.abs(E) < 1e-15;
     var theta = iscircle
       ? 0
       : Math.abs(C - A) < 1e-15

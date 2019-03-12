@@ -587,6 +587,7 @@ class CustomInput extends React.Component {
         className: "InputConics-minus",
         onClick: function() {
           this.removeConic(i);
+          this.removeOldData();
         }.bind(this)
       })
     );

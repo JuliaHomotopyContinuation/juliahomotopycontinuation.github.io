@@ -383,11 +383,13 @@ window.setup_conics = function(args, is_setup_cb) {
 
   function remove_conic(conic) {
     // conic.remove();
+    if (conic) {
+      conic.tweenTo({ opacity: 0.0 }, 600);
+      setTimeout(function() {
+        conic.remove();
+      }, 600);
+    }
 
-    conic.tweenTo({ opacity: 0.0 }, 600);
-    setTimeout(function() {
-      conic.remove();
-    }, 600);
     // conic.tweenTo({ opacity: 0.0 }, 500).then(function() {
     //   conic.remove();
     // });

@@ -10,17 +10,40 @@ function even(x) {
   return x % 2 == 0 ? x : x + 1;
 }
 
-function random_conic_state() {
-  var values = {
-    a: random_number(),
-    b: random_number(),
-    c: random_number(),
-    d: random_number(),
-    e: random_number(),
-    f: random_number()
-  };
+function conicHasNoSolutions(A, B, C, D, E, F) {
+  // Check whether the conic has no real solutions
+  // by checking that the associated matrix is neither
+  // positive definite nor negative definite
+  // using Sylvester's criterion
+  var m1 = 2 * A;
+  var m2 = 4 * A * C - B * B;
+  var m3 =
+    8 * A * C * F -
+    2 * A * E * E -
+    2 * B * B * F +
+    2 * B * D * E -
+    2 * C * D * D;
 
-  return values;
+  return (m1 > 0 && m2 > 0 && m3 > 0) || (m1 < 0 && m2 < 0 && m3 < 0);
+}
+
+function random_conic_state() {
+  var a = random_number();
+  var b = random_number();
+  var c = random_number();
+  var d = random_number();
+  var e = random_number();
+  var f = random_number();
+
+  while (window.conicHasNoSolutions(a, b, c, d, e, f)) {
+    a = random_number();
+    b = random_number();
+    c = random_number();
+    d = random_number();
+    e = random_number();
+    f = random_number();
+  }
+  return { a: a, b: b, c: c, d: d, e: e, f: f };
 }
 
 function random_number() {

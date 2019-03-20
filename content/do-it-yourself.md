@@ -24,13 +24,6 @@ The last case is called a degenerate conic.
 *Which conics are tangent to your five conics?*
 </p>
 
-<figure>
-<img src="/images/given_conics_example.png" style="width:40%;display: block;margin-left: auto;margin-right: auto;">
-<figcaption>
-The picture shows in blue the 5 given conics below. The red ellipse is tangent to the 5 blue conics.
-</figcaption>
-</figure>
-
 Plug in the coefficients of your five personal conics, and get the answers in a second (your conics must be sufficiently generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).
 
 <div id="do-it-yourself-container"></div>

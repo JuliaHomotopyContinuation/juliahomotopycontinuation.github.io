@@ -1,33 +1,10 @@
-{{ define "head"}}
-<script type="text/javascript" src="/js/paper-full.min.js"></script>
-<script type="text/javascript" src="/js/conics.js"></script>
-<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/unfetch/polyfill"></script>
-<link href="{{ "/css/do-it-yourself.css" | relURL }}" rel="stylesheet" type="text/css">
-{{ end }}
-
 {{ define "title"}} {{ .Title}} {{ end }}
 
 {{ define "header"}} {{ partial "header" .}}{{ end }}
 
 {{ define "main" }}
 
-<div id="hero" class="wrap">
-  <h2>{{.Title }}</h2>
-  <p>{{.Params.description}}</p>
-</div>
+<iframe src="//juliahomotopycontinuation.mis.mpg.de" style="position: absolute;height: 100%;width: 100%;" />
 
-<div id="post-box">
-  <div id="post" itemprop="articleBody">{{.Content | safeHTML}}</div>
-
-  <div class="">
-    {{ partial "post/byauthor" . }}
-    <!-- {{ partial "post/related-content" . }} -->
-  </div>
-</div>
-
-
-<script type="text/javascript" src="{{ "/js/do-it-yourself.js" | relURL }}"></script>
-
-{{ end }} {{ define "footer" }} {{ partial "footer" . }} {{ end }}
+{{ end }}
+{{ define "footer" }} {{ partial "footer" . }} {{ end }}

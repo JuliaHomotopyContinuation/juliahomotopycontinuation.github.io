@@ -11,7 +11,8 @@ However, in general Newton's method only converges when a good initial point is 
 a *single* solution. But if you are interested in *all* possible solutions you are usually out of luck.
 
 ## How should I cite HomotopyContinuation.jl when I use it?
-First of all, HomotopyContinuation.jl is absolutely free for personal or commercial use. It is licensed under [MIT](https://opensource.org/licenses/MIT). If you use it in your work we would be grateful, if you could cite our short abstract available at https://arxiv.org/abs/1711.10911.
+First of all, HomotopyContinuation.jl is absolutely free for personal or commercial use. It is licensed under the [MIT](https://opensource.org/licenses/MIT) license. If you use it in your work we would be grateful, if you could cite our [extended abstract](https://link.springer.com/chapter/10.1007/978-3-319-96418-8_54).
+A preprint of it is freely available at [arXiv:1711.10911](https://arxiv.org/abs/1711.10911).
 
 ## Are there other homotopy continuation solvers available?
 

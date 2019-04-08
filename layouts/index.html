@@ -2,7 +2,7 @@
 {{ define "header"}} {{ partial "header" .}} {{end}}
 {{ define "main"}}
 
-{{ partial "latest-blogs" .}}
+
 <div id="main">
   <div id="hero">
     <img src="images/logo_transparent_bg.png" style="max-height:160px"></img>
@@ -11,6 +11,8 @@
   <div id="action-buttons">
     <a class="button primary big" href="{{"/guides/get-started/" | relURL}}" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">Get started</a> <a class="button outline big" href="https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" onclick="_gaq.push(['_trackEvent', 'kube', 'github']);">View on Github</a>
   </div>
+</div>
+{{ partial "latest-blogs" .}}
 
   <div id="kube-features">
     <div class="row gutters">

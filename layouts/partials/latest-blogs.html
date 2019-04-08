@@ -1,11 +1,9 @@
 <div class="hide-sm latest-blog">
   <div>
     Latest blog posts:
-  </div>
-  <div style="margin-left: 8px">
-    {{ range (first 2 (last 2 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
-    <div>
-      <a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a>
+    <br>
+    {{ range (first 1 (last 1 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
+      <a class="button secondary outline" href="{{ .Permalink }}" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">{{ .Title }}</a>
     </div>
     {{ end }}
   </div>
@@ -13,11 +11,9 @@
 <div class="show-sm latest-blog-small">
   <div>
     Latest blog posts:
-  </div>
-  <div style="margin-left: 8px">
-    {{ range (first 2 (last 2 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
-    <div>
-      <a style="text-decoration: none" href="{{ .Permalink }}">{{ .Title }}</a>
+    <br>
+    {{ range (first 1 (last 1 (where .Site.Pages "Section" "blog").ByDate)).Reverse }}
+      <a class="button secondary outline" href="{{ .Permalink }}" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">{{ .Title }}</a>
     </div>
     {{ end }}
   </div>

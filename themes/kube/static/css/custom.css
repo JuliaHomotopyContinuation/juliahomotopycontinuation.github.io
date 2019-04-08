@@ -42,10 +42,13 @@ pre code {
 } */
 
 .latest-blog {
-    padding-bottom: 8px;
+    padding-bottom: 11px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    margin: 8px 36px;
-    margin-bottom: -24px;
+    margin: 8px 0;
+    margin-bottom: -48px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 3px;
+    padding-left: 32px;
 }
 
 .latest-blog-small {
@@ -53,6 +56,7 @@ pre code {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     padding: 8px 16px;
-    margin-bottom: -12px;
-    padding-bottom: 8px;
+    margin-bottom: -60px;
+    padding-bottom: 14px;
+    margin-top: -38px;
 }

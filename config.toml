@@ -30,3 +30,7 @@ HighlightJS = true
     name = "FAQ"
     weight = 5
     url = "/faq/"
+[[menu.main]]
+    name = "Do It Yourself"
+    weight = 6
+    url = "/blog/do-it-yourself"

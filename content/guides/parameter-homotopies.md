@@ -18,28 +18,57 @@ Consider the situation in which one has to solve a specific instance of a *param
 
 
 $$
-P = \\{f(x_1,\ldots,x_n,a) = (f_1(x_1,\ldots,x_n,a), \ldots, f_n(x_1\ldots,x_n,a)) \mid a \in \mathbb{R}^m\\}.
+P = \\{F = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\\}.
 $$
 
 
-Often, there is a number $N$, such that a generic member $f\in P$ has exactly $N$ solutions $x\in\mathbb{R}^n$ with $f(x)=0$. This $N$ might be very considerably smaller than the number of solutions of an arbitrary polynomial system not in $P$. To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
+To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
 
 
-The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. For this reason, we implemented *parametrized homotopies* into HomotopyContinuation.jl. The next example explains its usage.
+The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. Using *parameter homotopies* avoids this.
+
+The syntax in HomotopyContinuation.jl is as follows.
+
+```julia
+solve(F, startsolutions, parameters, startparameters=s, targetparameters=t)
+```
+
+where `s` and `t` are vectors of parameter values for ``F``.
+`parameters` is a vector of variables that specify the parameters of `F`.
+Necessarily, `length(parameters)`,  `length(p₁)`and `length(p₀)` must all be equal.
+
+Here is an example: let
+
+$$F(x,y,a,b) = \\begin{bmatrix} x^2-a \\\ xy-a+b \\end{bmatrix}.$$
+
+For tracking the solution $(x,y) = (1,1)$ from $(a,b) = (1,0)$ to $(a,b) = (2,5)$ we do the following.
+
+```julia-repl
+julia> @polyvar x y a b
+julia> F = [x^2 - a, x * y - a + b]
+julia> startsolution = [[1, 1]]
+julia> solve(F, startsolution, parameters=[a, b], startparameters=[1, 0], targetparameters=[2, 5])
+Result with 1 solutions
+==================================
+• 1 non-singular finite solution (1 real)
+• 0 singular finite solutions (0 real)
+• 1 paths tracked
+• random seed: 772337
+```
 
 
-<h3 class="section-head" id="ellipses"><a href="#ellipses">Example: When are two ellipses tangent?</a></h3> The following example is inspired by topological data analysis: suppose that you have a point sample from a manifold $M\subset \mathbb{R}^n$. An approach to estimate topological features of $M$ from the sample is by [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology). The idea is as follows. Around each point one puts a ball of radius $r$. Then one computes the [Čech complex](https://en.wikipedia.org/wiki/Čech_complex) of the union of those balls. [It was argued](https://arxiv.org/pdf/1802.09436.pdf) that it could be beneficial to replace balls by *ellipses*. The obstacle in this approach is to compute when two growing ellipses first meet. This problem can be solved by using homotopy continuation.
+<h3 class="section-head" id="ellipses"><a href="#ellipses">Example: When are two ellipses tangent?</a></h3>
 
+Here is an example how to use parameter homotopies.
 
-In dimension 2 the computational problem is as follows. Let the two ellipses be centered at $p_1,p_2$, respectively, and be given by two symmetric matrices $Q_1, Q_2$:
-
-
+Let two ellipses be centered at points $p_1,p_2$:
 $$
-E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\},\; i=1,2.
+E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\},\; i=1,2,
 $$
+where $Q_1, Q_2$ are symmetric matrices.
 
 
-We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. For a generic choice of $Q_1$ and $Q_2$ we have that $\vert E_1(r^\star)\cap E_2(r^\star) \vert =1$ and $E_1(r^\star)$, $E_2(r^\star)$ are tangent. In Julia we translate this into a polynomial system:
+We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. In Julia we translate this into a polynomial system:
 
 
 ```julia
@@ -102,26 +131,7 @@ AffineResult with 1 tracked paths
 ```
 
 
-The computation reveals that $r^\star \approx 10.89$. We can plot the two ellipses:
-
-
-```julia
-r = solution(S[1])[3]
-r = real(r)
-E₁ = [r .* (inv([1 2; 2 5]) * [cos(2π*t); sin(2π*t)]) + [7; 5] for t in 0:0.01:1]
-E₂ = [r .* (inv([0 3; 3 1]) * [cos(2π*t); sin(2π*t)]) + [1; 2] for t in 0:0.01:1]
-
-# convert E₁, E₂ into matrices
-E₁, E₂ = hcat(E₁...), hcat(E₂...)
-
-# Plot. The Plots package must be installed for this
-using Plots
-plot(E₁[1,:], E₁[2,:], label="Ellipse 1")
-plot!(E₂[1,:], E₂[2,:], label="Ellipse 2")
-```
-
-
-This gives the following picture.
+The computation reveals that $r^\star \approx 10.89$. Here is a picture.
 
 
 ![img](/images/ellipse.png)

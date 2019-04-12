@@ -26,7 +26,7 @@ F = [
 ```
 
 
-Since we need to solve the same instance many times it makes sense to first compute a 
+Since we need to solve the same system many times it makes sense to first compute a 
 solution set for generic parameters and to use then a parameter homotopy.
 
 ```julia

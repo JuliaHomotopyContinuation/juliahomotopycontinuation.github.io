@@ -9,7 +9,7 @@ group = "advanced"
 +++
 
 
-We provide two special functions for analysing data: `UniquePoints` and `multiplicities`. They do the following: suppose that `A` is an array of real or complex vectors. Then, `UniquePoints(A)` filters multiple elements of `A`, such that each entry appears once.  On the other hand, `multiplicities(A)` returns the indices of multiple elements in `A`.
+We provide two special functions for analysing data: [UniquePoints](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/sorting/#Computing-unique-points-in-an-array-of-vectors-1) and [Multiplicities](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/sorting/#Computing-points-in-an-array-of-vectors-which-appear-multiple-times-1). They do the following: suppose that `A` is an array of real or complex vectors. Then, `UniquePoints(A)` filters multiple elements of `A`, such that each entry appears once.  On the other hand, `multiplicities(A)` returns the indices of multiple elements in `A`.
 
 <h3 class="section-head" id="uniquepoints"><a>UniquePoints</a></h3>
 

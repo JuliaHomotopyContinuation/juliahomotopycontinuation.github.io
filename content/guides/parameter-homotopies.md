@@ -1,11 +1,11 @@
 +++
-title = "Parameter Homotopies"
-description = "How to track parametrized systems of equations."
-weight = 20
+title = "Systems with parameters"
+description = "How to track parametrized systems of equations"
+weight = 1
 draft = false
 toc = true
-bref = "We show how to track solutions of a family of polynomial systems given by a parameterisation"
-workflow = "advanced"
+bref = "How to track parametrized systems of equations"
+group = "advanced"
 +++
 
 

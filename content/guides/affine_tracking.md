@@ -1,10 +1,10 @@
 +++
-title = "Solutions at infinity and failed paths"
-description = "Let solve return the outcomes of all paths"
-weight = 2
+title = "Tracking in affine space"
+description = "Let the tracker make its computation in affine space"
+weight = 120
 draft = false
 toc = false
-bref = "Let solve return the outcomes of all paths"
+bref = "Let the tracker make its computation in affine space"
 group = "advanced"
 +++
 

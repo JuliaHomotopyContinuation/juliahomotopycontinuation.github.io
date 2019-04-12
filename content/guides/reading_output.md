@@ -30,7 +30,7 @@ Result with 4 solutions
 • random seed: 902575
 ```
 
-Let us look at this output in more detail: 4 non-singular solutions have been found, and 2 of them are real solutions. 
+Let us look at this output in more detail: 4 non-singular solutions have been found, and 2 of them are real solutions.
 
 The line "4 paths tracked" means that the algorithm tracked 4 paths with homotopy continuation. In the guide on [How does it work?](how_does_it_work) we explain in detail the meaning of this. If you are only interested in the solutions, however, you can skip this part.
 
@@ -57,4 +57,4 @@ The meaning of those entries is as follows:
 * `accuracy` is an approximation of $\\Vert x-x^* \\Vert$ where $x$ is the computed solution and $x^* $ is the true solution.
 * `residual` is the value of the euclidean norm of $f(x)$, where $x$ is the computed solution.
 * `condition_jacobian` is the condition number of the Jacobian of $f$ at the solution. A small value of this indicates that the numerical values are trustworthy.
-* `path_number` a path number greater than one indicates a singularity.  
+* `path_number` the number of the path in the enumeration of all paths.

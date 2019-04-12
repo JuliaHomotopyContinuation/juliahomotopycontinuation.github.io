@@ -18,13 +18,13 @@
           >
         </li>
         <li class="toc-list-item">
-          <a data-scroll="" href="#workflow" class="toc-link node-name--H3 "
-            >Workflow</a
+          <a data-scroll="" href="#theory" class="toc-link node-name--H3 "
+            >How does it work?</a
           >
         </li>
         <li class="toc-list-item">
           <a data-scroll="" href="#advanced" class="toc-link node-name--H3 "
-            >Advanced use cases</a
+            >Advanced user guides</a
           >
         </li>
       </ul>
@@ -46,12 +46,12 @@
       {{ end }}
     </div>
   </div>
-  <h2 class="section-head" id="workflow">
-    <a href="#workflow">Workflow</a>
+  <h2 class="section-head" id="theory">
+    <a href="#theory">How does it work?</a>
   </h2>
   <div id="components">
     <div class="row gutters">
-      {{ range where .Pages.ByWeight "Params.group" "workflow" }}
+      {{ range where .Pages.ByWeight "Params.group" "theory" }}
       <div class="col col-4 item">
         <h4>
           <a href="{{ .Permalink }}">{{ .Title }}</a>
@@ -62,7 +62,7 @@
     </div>
   </div>
   <h2 class="section-head" id="advanced">
-    <a href="#advanced">Advanded use cases</a>
+    <a href="#advanced">Advanded user guides</a>
   </h2>
   <div id="components">
     <div class="row gutters">

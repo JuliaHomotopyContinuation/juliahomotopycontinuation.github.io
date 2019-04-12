@@ -24,14 +24,72 @@ The general syntax for this is:
 
 
 ```julia
-monodromy_solve(F_u, [x], u₀, parameters = u)
+monodromy_solve(F, [x], u₀, parameters = u)
+```
+
+Here is a simple example: take
+
+$$F_u(x,y) = \begin{bmatrix} x^4 + y - 2u_1\\\ x^4 + x^2 - 2u_2y^2 \end{bmatrix}.$$
+
+For $u=1$ we have the solution $(x,y) = (1,1)$. For finding all solutions of $F_2$ we use
+
+```julia-repl
+julia> using HomotopyContinuation
+julia> @polyvar x y u[1:2]
+julia> F = [x^4 + y - 2u[1], x^4 + x^2 - 2*u[2]*y^2]
+julia> monodromy_solve(F, [[1; 1]], [1, 1], parameters = u)
+MonodromyResult
+==================================
+• 8 solutions (4 real)
+• return code → heuristic_stop
+• 644 tracked paths
+```
+
+<h3 class="section-head" id="monodromy"><a href="#monodromy">Group Actions</a></h3>
+
+If the set of solutions of `F` is invariant under some group actions you can exploit this in your computation.
+
+```julia
+monodromy_solve(F, [x], u₀, parameters = u, group_actions = G)
+```
+
+computes only with equivalence classes modulo `G`.
+
+
+```julia
+monodromy_solve(F, [x], u₀, parameters = u, group_actions = G, equivalence_classes = false)
+```
+
+computes only with all solutions but exploits `G` to find solutions more quickly.
+
+In the above example, the group that interchanges `x` and `y` acts on the solution set of `F`. We can use the group that multiplies `x` by $\\pm 1$.
+
+```julia-repl
+julia> G = GroupActions( a -> ([-a[1], a[2]], ))
+julia>  monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
+MonodromyResult
+==================================
+• 4 solutions (2 real)
+• return code → heuristic_stop
+• 322 tracked paths
+```
+
+Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then
+
+```julia-repl
+julia> monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
+MonodromyResult
+==================================
+• 8 solutions (4 real)
+• return code → heuristic_stop
+• 644 tracked paths
 ```
 
 
-<h3 class="section-head" id="monodromyexample"><a href="#monodromyexample">Example: computing the closest point on a variety</a></h3>
+<h3 class="section-head" id="monodromyexample"><a href="#monodromyexample">Example: computing critical points</a></h3>
 
 
-Consider the problem of computing the point on the variety
+Consider the problem of computing the point on
 
 
 $$

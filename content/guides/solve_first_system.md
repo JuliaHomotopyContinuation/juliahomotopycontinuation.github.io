@@ -47,6 +47,6 @@ julia> realsolutions(result)
  [-1.68179, -1.41421]
 ```
 
-A detailed explanation of the output of `solve(f)` is described [in the next guide](reading_output).
+A detailed explanation of the output of `solve(f)` is described [in the next guide](reading_output). All options of `solve(f)` are listed in the [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1).
 
 `solve(f)` works nicely for single systems. If you have to solve many systems in a loop, you should read [this guide](many-systems).

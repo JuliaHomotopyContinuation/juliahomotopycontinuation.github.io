@@ -15,7 +15,7 @@ HighlightJS = true
     weight = 1
     url = "/guides/"
 [[menu.main]]
-    name = "Blog"
+    name = "Examples"
     weight = 2
     url = "/blog/"
 [[menu.main]]

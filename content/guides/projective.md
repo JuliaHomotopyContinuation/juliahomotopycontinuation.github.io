@@ -5,6 +5,7 @@ weight = 100
 draft = false
 toc = true
 bref = "We show how to solve system defined in projective space."
+group = "advanced"
 +++
 
 

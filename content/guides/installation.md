@@ -5,6 +5,7 @@ weight = -1000
 draft = false
 toc = true
 bref = "Up and running in under a minute"
+group = "get-started"
 +++
 
 

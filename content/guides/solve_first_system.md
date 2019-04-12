@@ -5,6 +5,7 @@ weight = -900
 draft = false
 toc = false
 bref = "For this guide, we're going to walk through an illustrative example"
+group = "get-started"
 +++
 
 

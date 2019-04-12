@@ -5,6 +5,7 @@ weight = -750
 draft = false
 toc = false
 bref = "We briefly explain the algorithmic paradigm behind HomotopyContinuation.jl"
+group = "get-started"
 +++
 
 

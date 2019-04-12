@@ -21,7 +21,7 @@ $$ f = \\begin{bmatrix} ab - 2\\\  ac- 1\end{bmatrix}, \\quad g =  \\begin{bmatr
 then you solve $f\circ g$ by
 
 ```julia-repl
-julia> @polyvar p q a b c x y
+julia> @polyvar a b c x y
 julia> f = [a * b - 2, a*c- 1]
 julia> g = [x + y, y + 3, x + 2]
 julia> solve(f ∘ g)

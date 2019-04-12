@@ -54,7 +54,7 @@ Result with 4 solutions
 
 <h3 class="section-head"><a>Systems with parameters</a></h3>
 
-You can also track a [parameter homotopy](parameter-homotopies) in a composite system. If
+You can also track a [parameter homotopy](/guides/parameter-homotopies) in a composite system. If
 
 $$ f = \\begin{bmatrix} ab - q\\\  ac - p\end{bmatrix}, \\quad g =  \\begin{bmatrix}x + y\\\ y + 3\\\ x + 2\end{bmatrix},$$
 

@@ -34,49 +34,23 @@ using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
 @polyvar B[1:3,1:3] #coefficients of the conics
 @polyvar v[1:2, 1:3] #variables of the 3 points at which the circle is tangent
 
-circle = ([x;y]-a) ⋅ ([x;y]-a) - r
-conic  = [x; y; 1] ⋅ (B * [x;y;1]);
-T = det([differentiate(circle, [x;y]) differentiate(conic, [x;y])])
+circle = ([x; y] - a) ⋅ ([x; y] - a) - r
+conic  = [x; y; 1] ⋅ (B * [x; y; 1]);
+T = det([differentiate(circle, [x; y]) differentiate(conic, [x; y])])
 
 #Plug in the variables of the 3 points
 #and random coefficients for B
-F = [[f([x;y] => v[:,i], a=>a, r=>r, vec(B) => randn(9)) for f in [circle;conic;T]] for i in 1:3]
+F = [f([x;y] => v[:,i], a=>a, r=>r, vec(B) => randn(9)) for f in [circle; conic; T] for i in 1:3]
 
-S = solve(vcat(F...))
+S = solve(F)
 ```
 
 I get the following answer.
 ```julia-repl
-AffineResult with 512 tracked paths
+Result with 182 solutions
 ==================================
-• 184 non-singular finite solutions (14 real)
+• 182 non-singular finite solutions (36 real)
 • 0 singular finite solutions (0 real)
-• 328 solutions at infinity
-• 0 failed paths
-• random seed: 743957
+• 512 paths tracked
+• random seed: 145809
 ```
-
-I make a random experiment by sampling 500 instances of the above system and counting the real solutions.
-
-```julia
-number_of_real_solutions = Vector{Int}()
-rands = [randn(9) for _ in 1:500]
-for M in rands
-  F = [
-        [
-        f([x;y] => v[:,i], a=>a, r=>r, vec(B) => M) for f in [circle;conic;T]
-        ]
-      for i in 1:3]
-
-  S = solve(vcat(F...))
-  push!(number_of_real_solutions, nreal(S))
-end
-```
-
-Here is a histogram of the results.
-
-```julia
-using Plots #The Plots package must be installed for this
-histogram(number_of_real_solutions, bins = 46)
-```
-<p style="text-align:center;"><img src="/images/hist.png" width="500px"/></p>

@@ -56,13 +56,12 @@ result = solve(∇L)
 ```
 
 ```
-AffineResult with 54 tracked paths
+Result with 26 solutions
 ==================================
-• 24 non-singular finite solutions (20 real)
-• 2 singular finite solutions (2 real)
-• 28 solutions at infinity
-• 0 failed paths
-• random seed: 623100
+• 26 non-singular finite solutions (22 real)
+• 0 singular finite solutions (0 real)
+• 54 paths tracked
+• random seed: 556761
 ```
 
 

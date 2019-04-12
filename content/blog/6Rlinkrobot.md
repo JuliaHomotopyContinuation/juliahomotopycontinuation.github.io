@@ -37,10 +37,10 @@ p = [1, 1, 0]
 α = randn(5)
 a = randn(9)
 # define the system of polynomials
-f = [z[i,:] ⋅ z[i,:] for i=2:5]
-g = [z[i,:] ⋅ z[i+1,:] for i=1:5]
+f = [z[i,:] ⋅ z[i,:] for i = 2:5]
+g = [z[i,:] ⋅ z[i+1,:] for i = 1:5]
 h = sum(a[i] .* (z[i,:] × z[i+1,:]) for i=1:3) +
-    sum(a[i+4] .* z[i,:] for i=2:5)
+    sum(a[i+4] .* z[i,:] for i = 2:5)
 F′ = [f .- 1; g .- cos.(α); h .- p]
 # assign values to z₁ and z₆
 F = [subs(f, z[1,:] => [1, 0, 0], z[6,:] => [1,0,0]) for f in F′]
@@ -49,13 +49,12 @@ solve(F)
 ```
 
 ```
-AffineResult with 1024 tracked paths
+Result with 16 solutions
 ==================================
 • 16 non-singular finite solutions (0 real)
 • 0 singular finite solutions (0 real)
-• 1008 solutions at infinity
-• 0 failed paths
-• random seed: 345137
+• 1024 paths tracked
+• random seed: 462257
 ```
 
 

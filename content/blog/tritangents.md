@@ -67,7 +67,7 @@ P_z = [p([h; x; c] => [h; z; c]) for p in P_x]
 F = [P_x; P_y; P_z]
 ```
 
-Let us first solve `F` by totaldegree homotopy when the coefficients of `C` are random complex numbers. `F` has a totaldegree of 110592, but it is relatively sparse. For such systems it makes sense to use the package [StaticPolynomials](https://github.com/JuliaAlgebra/StaticPolynomials.jl) to accelerate computations. This is done by adding the option `system = SPSystem` to `solve`.
+Let us first solve `F` by totaldegree homotopy when the coefficients of `C` are random complex numbers.
 ```julia
 #create random complex coefficients for C
 c₁ = randn(ComplexF64, 20)
@@ -75,10 +75,10 @@ c₁ = randn(ComplexF64, 20)
 G = [f([h; x; y; z; c] => [h; x; y; z; c₁]) for f in F]
 
 #solve the system for c₁
-S = solve(G, system = SPSystem)
+S = solve(G)
 ```
 
-On my laptop the computation takes 115 seconds. Here is what I get.
+On my laptop the computation takes 102 seconds. Here is what I get.
 ```julia-repl
 AffineResult with 110592 tracked paths
 ==================================
@@ -101,7 +101,7 @@ One may use `sols` in a parameter homotopy for computing the tritangents of othe
 #define the coefficients for C
 c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
 #track the solutions from c₁ to c₀
-R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀, system = SPSystem)
+R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀)
 ```
 On my laptop this computation takes 0.438 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
 ```julia-repl

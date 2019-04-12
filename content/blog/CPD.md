@@ -36,6 +36,7 @@ A = a; B = [ones(1,r); b]; C = [ones(1,r); c]; D = [ones(1,r); d];
 ```
 
 Then, I define the right-hand side $\sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i$:
+
 ```julia
 S = sum(kron(A[:,i], B[:,i], C[:,i], D[:,i]) for i in 1:r)
 ```
@@ -56,7 +57,7 @@ Finally, I use `initial_decomposition` for monodromy loops with starting paramet
 
 ```julia
 F = T - S
-Result = monodromy_solve(F, [initial_decomposition], T₀, parameters = T)
+result = monodromy_solve(F, [initial_decomposition], T₀, parameters = T)
 ```
 
 Here is the result:
@@ -66,7 +67,7 @@ MonodromyResult
 ==================================
 • 24 solutions (0 real)
 • return code → heuristic_stop
-• 924 tracked paths
+• 564 tracked paths
 ```
 
 There are 24 solutions. However, since 1 solution gives $4!=24$ solutions, corresponding to all orderings of the summands, I actually found one solution. This confirms the computations from the paper: a random complex $2\times 2\times 2\times 3$-tensor has a unique CPD.

@@ -1,25 +1,25 @@
 +++
 title = "What is Homotopy Continuation?"
-description = "We briefly explain the algorithmic paradigm behind HomotopyContinuation.jl"
+description = "We briefly explain the ideas behind HomotopyContinuation.jl"
 weight = -750
 draft = false
 toc = false
-bref = "We briefly explain the algorithmic paradigm behind HomotopyContinuation.jl"
+bref = "We briefly explain the ideas behind HomotopyContinuation.jl"
 group = "theory"
 +++
 
 
 
-The basic idea of homotopy continuation algorithms is as follows. Suppose that you have a system of polynomials with as many variables as polynomials
+The basic idea of [homotopy continuation](https://en.wikipedia.org/wiki/Numerical_algebraic_geometry#Homotopy_continuation) is as follows. Suppose that you have a system of polynomials with as many variables as polynomials
 
 
 $$
-F(x)=(f_1(x_1,\ldots,x_n),\ldots,f_m(x_1,\ldots,x_n)).
+F(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)).
 $$
 
 (for more polynomials than variables, see the guide on [overdetermined tracking](overdetermined-tracking)). We wish to find a zero in $\\mathbb{C}^n$ of $f$. Suppose
 
-$$G(x)=(g_1(x),\\ldots,g_n(x))$$
+$$G(x)=(g_1(x_1,\ldots,x_n),\\ldots,g_n(x_1,\ldots,x_n)$$
 
 is another system with a known zero: $G(\\zeta) = 0$. We connect $F$ and $G$ in the space of polynomial systems
 by a path $t\mapsto H(x,t)$ with $H(x,0) = F(x)$ and $H(x,1)=G(x)$ (the space of polynomial systems form a vector space, in which the notion of path is well-defined).

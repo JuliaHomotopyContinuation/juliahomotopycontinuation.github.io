@@ -58,7 +58,7 @@ You can also track a [parameter homotopy](parameter-homotopies) in a composite s
 
 $$ f = \\begin{bmatrix} ab - q\\\  ac - p\end{bmatrix}, \\quad g =  \\begin{bmatrix}x + y\\\ y + 3\\\ x + 2\end{bmatrix},$$
 
-and you want to track a solution from $(p,q) = (1, 2)$ to $(p,q) = (2, 3)$, this is how it works:
+and you want to track solutions from $(p,q) = (1, 2)$ to $(p,q) = (2, 3)$, this is how it works:
 
 ```julia-repl
 julia> res = solve(f ∘ g)

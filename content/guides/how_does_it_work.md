@@ -1,10 +1,10 @@
 +++
 title = "What is Homotopy Continuation?"
-description = "We briefly explain the algorithmic paradigm behind HomotopyContinuation.jl"
+description = "We briefly explain the ideas behind HomotopyContinuation.jl"
 weight = -750
 draft = false
 toc = false
-bref = "We briefly explain the algorithmic paradigm behind HomotopyContinuation.jl"
+bref = "We briefly explain the ideas behind HomotopyContinuation.jl"
 group = "theory"
 +++
 

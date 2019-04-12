@@ -14,15 +14,15 @@ group = "advanced"
 <h3 class="section-head" id="parameter*homotopies"><a href="#parameter*homotopies">Parameter Homotopies</a></h3>
 
 
-Consider the situation in which one has to solve a specific instance of a *parametrized family of polynomial systems*
+Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems
 
 
 $$
-P = \\{F = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\\}.
+P = \\{F(x,p) = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\\}.
 $$
 
 
-To not destroy the solution structure it is desirable to not leave $P$ during the homotopy. 
+To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
 This can be accomplished by using the homotopy
 $$H(x,t) := F(x, (1-t)p + tq)$$
 where $p$ and $q$ are parameters in $\mathbb{C}^m$.

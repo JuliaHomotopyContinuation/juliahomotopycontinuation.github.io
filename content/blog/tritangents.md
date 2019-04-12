@@ -68,6 +68,7 @@ F = [P_x; P_y; P_z]
 ```
 
 Let us first solve `F` by totaldegree homotopy when the coefficients of `C` are random complex numbers.
+
 ```julia
 #create random complex coefficients for C
 c₁ = randn(ComplexF64, 20)
@@ -80,37 +81,40 @@ S = solve(G)
 
 On my laptop the computation takes 102 seconds. Here is what I get.
 ```julia-repl
-AffineResult with 110592 tracked paths
+Result with 7533 solutions
 ==================================
-• 720 non-singular finite solutions (0 real)
-• 6745 singular finite solutions (0 real)
-• 102300 solutions at infinity
-• 827 failed paths
-• random seed: 361351
+• 720 non-singular solutions (0 real)
+• 6813 singular solutions (0 real)
+• 40 failed paths
+• 110592 paths tracked
+• random seed: 424526
 ```
 
 The count of 720 is correct: for each of the 120 tritangents I get 6 solutions corresponding to all permutations of the contact points $x,y,z$ --- and $6 \cdot 120 = 720$.
 
 Let us extract the 720 solutions.
+
 ```julia
 sols = solutions(S, onlynonsingular = true)
 ```
 
 One may use `sols` in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking `sols` from `c₁` to $C=x_1^3+x_2^3+x_3^3-1$.
+
 ```julia
 #define the coefficients for C
 c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
 #track the solutions from c₁ to c₀
 R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀)
 ```
-On my laptop this computation takes 0.438 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
+
+On my laptop this computation takes 0.281 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
+
 ```julia-repl
-AffineResult with 720 tracked paths
+Result with 684 solutions
 ==================================
-• 648 non-singular finite solutions (24 real)
-• 36 singular finite solutions (0 real)
-• 36 solutions at infinity
-• 0 failed paths
-• random seed: 553651
+• 684 non-singular solutions (24 real)
+• 0 singular solutions (0 real)
+• 720 paths tracked
+• random seed: 709230
 ```
 From the $4= \frac{24}{6}$ real solutions one was used in the gif above.

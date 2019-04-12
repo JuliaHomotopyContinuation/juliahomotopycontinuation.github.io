@@ -18,26 +18,28 @@ Consider the situation in which one has to solve a specific instance of a *param
 
 
 $$
-
+P = \\{F = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\\}.
 $$
 
 
+To not destroy the solution structure it is desirable to not leave $P$ during the homotopy. 
+This can be accomplished by using the homotopy
+$$H(x,t) := F(x, (1-t)p + tq)$$
+where $p$ and $q$ are parameters in $\mathbb{C}^m$.
+Note that you have to provide the start solutions for this kind of homotopy.
 
-
-
-The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. Using *parameter homotopies* avoids this.
-
-The syntax in HomotopyContinuation.jl is as follows.
+The syntax in HomotopyContinuation.jl to construct such a homotopy is as follows.
 
 ```julia
-solve(F, startsolutions, parameters, startparameters=s, targetparameters=t)
+solve(F, startsolutions; parameters=params, startparameters=q, targetparameters=p)
 ```
 
-where `s` and `t` are vectors of parameter values for ``F``.
-`parameters` is a vector of variables that specify the parameters of `F`.
-Necessarily, `length(parameters)`,  `length(p₁)`and `length(p₀)` must all be equal.
+where `p` and `q` are vectors of parameter values for ``F``.
+`params` is a vector of variables that specify the parameters of `F`.
+Necessarily, `length(params)`,  `length(p)`and `length(q)` must all be equal.
 
-Here is an example: let
+
+<h3 class="section-head" id="simple-example"><a href="#simple-example">A simple example</a></h3>
 
 $$F(x,y,a,b) = \\begin{bmatrix} x^2-a \\\ xy-a+b \\end{bmatrix}.$$
 
@@ -47,7 +49,7 @@ For tracking the solution $(x,y) = (1,1)$ from $(a,b) = (1,0)$ to $(a,b) = (2,5)
 julia> @polyvar x y a b
 julia> F = [x^2 - a, x * y - a + b]
 julia> startsolution = [[1, 1]]
-julia> solve(F, startsolution, parameters=[a, b], startparameters=[1, 0], targetparameters=[2, 5])
+julia> solve(F, startsolution; parameters=[a, b], startparameters=[1, 0], targetparameters=[2, 5])
 Result with 1 solutions
 ==================================
 • 1 non-singular finite solution (1 real)

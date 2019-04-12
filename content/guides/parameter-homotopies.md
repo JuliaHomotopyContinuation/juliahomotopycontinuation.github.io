@@ -89,45 +89,23 @@ F = [f₁; f₂; g];
 ```
 
 
-An initial solution is given by two circles, each of radius 1,  centered at $(1,0)$ and $(-1,0)$, respectively.
-
-
-```julia
-map(F) do f
-    f(vec(Q₁) => [1,0,0,1], vec(Q₂) => [1,0,0,1], x => [0,0], p₁ => [1,0], p₂ => [-1,0], λ => -1, r => 1)
-end
-```
-
-```
-4-element Array{Int64,1}:
- 0
- 0
- 0
- 0
-```
-
-
-Let us track this solution to the system given by $p_1 = [7,5], p_2 = [1,2], Q_1 = \begin{pmatrix} 1 & 2 \\\ 2 & 4 \end{pmatrix}, Q_2 = \begin{pmatrix} 0 & 3 \\\ 3 & 1 \end{pmatrix}$.
+An initial solution is given by two circles, each of radius 1,  centered at $(1,0)$ and $(-1,0)$, respectively. Let us track this solution to the system given by $p_1 = [7,5], p_2 = [1,2], Q_1 = \begin{pmatrix} 1 & 2 \\\ 2 & 4 \end{pmatrix}, Q_2 = \begin{pmatrix} 0 & 3 \\\ 3 & 1 \end{pmatrix}$.
 
 
 That is, the *parameters* are $p_1, p_2, Q_1, Q_2$ and the *variables* are $x,r,λ$. Now we track the starting solution towards the target system
 
 
-```julia
-params = [vec(Q₁); vec(Q₂); p₁; p₂]
-startparams = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, -1, 0]
-targetparams = [vec([1 2; 2 5]); vec([0 3; 3 1]); [7, 5]; [1, 2]]
-S = solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=startparams, targetparameters=targetparams)
-```
-
-```
-AffineResult with 1 tracked paths
+```julia-repl
+julia> params = [vec(Q₁); vec(Q₂); p₁; p₂]
+julia> q = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, -1, 0]
+julia> p = [vec([1 2; 2 5]); vec([0 3; 3 1]); [7, 5]; [1, 2]]
+julia> solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=q, targetparameters=p)
+Result with 1 solutions
 ==================================
 • 1 non-singular finite solution (1 real)
 • 0 singular finite solutions (0 real)
-• 0 solutions at infinity
-• 0 failed paths
-• random seed: 387965
+• 1 paths tracked
+• random seed: 296689
 ```
 
 

@@ -5,6 +5,7 @@ weight = 20
 draft = false
 toc = true
 bref = "We show how to track solutions of a family of polynomial systems given by a parameterisation"
+workflow = "advanced"
 +++
 
 

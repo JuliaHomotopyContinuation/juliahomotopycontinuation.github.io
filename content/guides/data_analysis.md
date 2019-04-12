@@ -5,4 +5,5 @@ weight = 100
 draft = false
 toc = true
 bref = "Sorting and investigating solutions"
+group = "workflow"
 +++

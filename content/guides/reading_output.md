@@ -5,6 +5,7 @@ weight = -800
 draft = false
 toc = true
 bref = "I solved a system of equations. What does the output tell me?"
+group = "get-started"
 +++
 
 <h3 class="section-head"><a>The Result of a computation</a></h3>

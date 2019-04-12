@@ -18,11 +18,11 @@ Consider the situation in which one has to solve a specific instance of a *param
 
 
 $$
-P = \\{F = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\\}.
+
 $$
 
 
-To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
+
 
 
 The basic `solve` of HomotopyContinuation.jl constructs a straight-line homotopy between the start system $g$ and the target system $f$; i.e. $H(x,t)  = tg + (1-t)f$. When $P$ is not convex, $H(x,t)$ might leave the family $P$. Using *parameter homotopies* avoids this.

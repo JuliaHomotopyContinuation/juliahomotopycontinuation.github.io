@@ -8,7 +8,7 @@ bref = "I solved a system of equations. What does the output tell me?"
 group = "get-started"
 +++
 
-<h3 class="section-head"><a>The Result of a computation</a></h3>
+<h3 class="section-head" id="result"><a>The Result of a computation</a></h3>
 
 The line of commands
 
@@ -34,9 +34,9 @@ Let us look at this output in more detail: 4 non-singular solutions have been fo
 
 The line "4 paths tracked" means that the algorithm tracked 4 paths with homotopy continuation. In the guide on [How does it work?](how_does_it_work) we explain in detail the meaning of this. If you are only interested in the solutions, however, you can skip this part.
 
-<h3 class="section-head"><a>The entries of Result: PathResult</a></h3>
+<h3 class="section-head" id="pathresult-entries"><a>The entries of Result: PathResult</a></h3>
 
-`result` is an array of the datastructure `PathResult`. For instance, the first entry of `result` is
+`result` is an array of the data structure [`PathResult`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1)). For instance, the first entry of `result` is
 
 ```julia-repl
 julia> result[1]

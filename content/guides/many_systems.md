@@ -2,7 +2,7 @@
 title = "Solving many systems in a loop"
 description = "What to do, if you have to solve system in a loop"
 weight = 4
-draft = true
+draft = false
 toc = false
 bref =  "What to do, if you have to solve system in a loop"
 group = "advanced"
@@ -10,9 +10,8 @@ group = "advanced"
 
 Polynomial systems arising in application very often have a coefficients which are determined by some parameters.
 
-We now want to show you how you can setup an efficient way to solve this polynomial system for many 
-
-
+We now want to show you how you can setup an efficient way to solve this polynomial system for many parameter values.
+Assume we have the following polynomial system:
 ```julia
 using HomotopyContinuation, DynamicPolynomials
 @polyvar x y z p[1:3]
@@ -26,8 +25,8 @@ F = [
 ```
 
 
-Since we need to solve the same system many times it makes sense to first compute a 
-solution set for generic parameters and to use then a parameter homotopy.
+Since we need to solve `F` many times for different values of `p` it makes sense to first compute all 
+solutions for generic parameters and then to use  a [parameter homotopy](/guides/parameter-homotopies/).
 
 ```julia
 # Generate generic parameters by sampling complex numbers from the normal distribution
@@ -47,8 +46,7 @@ Result with 2 solutions
 • random seed: 652079
 ```
 
-We see that our polynomial system $F$ only has at most **2** singular solutions.
-
+We see that our polynomial system $F$ has at most **2** isolated solutions (instead of the 8 possible ones).
 The idea is to use these two generic solutions to find the solutions for the specific parameters we are interested in.
 For this we are using a [parameter homotopy](/guides/parameter-homotopies/) from the generic parameters $p_0$ to the specific parameters.
 
@@ -79,9 +77,16 @@ data_solutions = map(data) do p
         result = track(tracker, s; target_parameters=p)
         # check that the tracking was successfull
         if issuccess(result)
+            # only store the solutions
             push!(S_p, solution(result))
         end
     end
 end
 ```
 
+In real applications you probably don't want to store all solution but instead you have a measure of what the *best* solution is.
+
+Also note that `track` will assemble for each tracked path a [`PathResult`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1) with [additional informations](/guides/reading_output/#pathresult-entries). If you want to avoid to minimize this overhead you can add the keyword argument `details = :minimal`, i.e.,
+```
+result = track(tracker, s; target_parameters=p, details=:minimal)
+```

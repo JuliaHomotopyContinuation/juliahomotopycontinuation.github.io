@@ -17,7 +17,7 @@ HighlightJS = true
 [[menu.main]]
     name = "Examples"
     weight = 2
-    url = "/blog/"
+    url = "/examples/"
 [[menu.main]]
     name = "API Docs"
     weight = 3
@@ -33,4 +33,4 @@ HighlightJS = true
 [[menu.main]]
     name = "Do It Yourself"
     weight = 6
-    url = "/blog/do-it-yourself"
+    url = "/do-it-yourself"

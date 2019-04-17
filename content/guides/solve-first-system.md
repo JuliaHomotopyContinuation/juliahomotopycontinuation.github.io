@@ -50,6 +50,8 @@ julia> realsolutions(result)
  [-1.68179, -1.41421]
 ```
 
+It is possible to interrupt the computations using `control+c`. All solutions that have been computed before the interruption will be returned.
+
 ### Understanding the output of your computation
 
 A detailed explanation of the output of `solve(f)` is described [in the next guide](/guides/reading-output/).

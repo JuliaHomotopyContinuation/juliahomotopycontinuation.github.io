@@ -54,7 +54,7 @@ julia> realsolutions(result)
 
 A detailed explanation of the output of `solve(f)` is described [in the next guide](/guides/reading-output/).
 
-### Solving many systems of equation
+### Solving many systems of equations
 
 `solve(f)` works nicely for single systems. If you have to solve many systems in a loop, you should read [this guide](/guides/many-systems/).
 

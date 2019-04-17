@@ -10,7 +10,12 @@ author = "Paul"
 +++
 
 Consider the problem of computing all circles that are tangent to 3 [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
- $$C_1 = \\{y=-x^2+2x+5\\}, C_2 = \\{y = 2x^2+5x-8\\}, C_3 = \\{y = 8x^2-3x-2\\}.$$
+
+ $$C_1 = \\{y=-x^2+2x+5\\},$$
+
+ $$C_2 = \\{y = 2x^2+5x-8\\},$$
+
+ $$C_3 = \\{y = 8x^2-3x-2\\}.$$
 
 <p style="text-align:center;"><img src="/images/circles.png" width="700px"/></p>
 
@@ -36,21 +41,52 @@ using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
 
 circle = ([x; y] - a) ⋅ ([x; y] - a) - r
 conic  = [x; y; 1] ⋅ (B * [x; y; 1]);
-T = det([differentiate(circle, [x; y]) differentiate(conic, [x; y])])
+tangential_condition = det([differentiate(circle, [x; y]) differentiate(conic, [x; y])])
+
+conditions = [circle; conic; tangential_condition]
+
+#define coefficients of the three conics
+C1 = randn(3,3)
+C2 = randn(3,3)
+C3 = randn(3,3)
 
 #Plug in the variables of the 3 points
-#and random coefficients for B
-F = [f([x;y] => v[:,i], a=>a, r=>r, vec(B) => randn(9)) for f in [circle; conic; T] for i in 1:3]
+#and coefficients of the 3 conics
+F = [
+    f([x; y; a; r; vec(B)] => [v[:,i]; a; r; vec(C)])
+    for f in conditions
+    for (i,C) in enumerate([C1, C2, C3])
+    ]
 
-S = solve(F)
+solve(F)
 ```
 
 I get the following answer.
 ```julia-repl
-Result with 182 solutions
+Result with 184 solutions
 ==================================
-• 182 non-singular solutions (36 real)
+• 184 non-singular solutions (22 real)
 • 0 singular solutions (0 real)
 • 512 paths tracked
-• random seed: 145809
+• random seed: 390710
+```
+
+And here is the code for $C_1$, $C_2$ and $C_3$ above.
+
+```julia-repl
+julia> C1 = [-1 0 1; 0 0 -0.5; 1 -0.5 5]
+julia> C2 = [2 0 2.5; 0 0 -0.5; 2.5 -0.5 -8]
+julia> C3 = [8 0 -1.5; 0 0 -0.5; -1.5 -0.5 -2]
+julia> F = [
+    f([x; y; a; r; vec(B)] => [v[:,i]; a; r; vec(C)])
+    for f in conditions
+    for (i,C) in enumerate([C1, C2, C3])
+    ]
+julia> solve(F)
+Result with 60 solutions
+==================================
+• 60 non-singular solutions (14 real)
+• 0 singular solutions (0 real)
+• 512 paths tracked
+• random seed: 483355
 ```

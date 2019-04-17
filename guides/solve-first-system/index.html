@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> How to solve a system of polynomial equations </title>
+
+  
+  <meta name="description" content="For this guide, we&#39;re going to walk through an illustrative example"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="How to solve a system of polynomial equations" />
+<meta property="og:description" content="For this guide, we&#39;re going to walk through an illustrative example" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/solve-first-system/" />
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/solve-first-system/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+  
+
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>How to solve a system of polynomial equations</h1>
+    <p class="hero-lead">For this guide, we're going to walk through an illustrative example</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+
+    
+
+<h3 id="requirements">Requirements</h3>
+
+<p>If you have not yet installed HomotopyContinuation.jl, please consider the <a href="/guides/installation/">installation guide</a>.</p>
+
+<h3 id="solve-your-first-system-of-equations">Solve your first system of equations</h3>
+
+<p>Consider the following simple system of two polynomials in two variables.</p>
+
+<p>$$
+f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}
+$$</p>
+
+<p>Solving the equation $f=0$ can be accomplished as follows</p>
+
+<pre><code class="language-julia">using HomotopyContinuation # load the package into the current Julia session
+@polyvar x y; # declare the variables x and y
+f = [x^2 + 2y, y^2 - 2]
+result = solve(f) # solve f
+</code></pre>
+
+<p>After the computation has finished, you should see the following output.</p>
+
+<pre><code class="language-julia">Result with 4 solutions
+==================================
+• 4 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
+• 4 paths tracked
+• random seed: 902575
+</code></pre>
+
+<p>We see that $f$ has two real zeros. They are</p>
+
+<pre><code class="language-julia-repl">julia&gt; realsolutions(result)
+2-element Array{Array{Float64,1},1}:
+ [1.68179, -1.41421]
+ [-1.68179, -1.41421]
+</code></pre>
+
+<p>It is possible to interrupt the computations using <code>control+c</code>. All solutions that have been computed before the interruption will be returned.</p>
+
+<h3 id="understanding-the-output-of-your-computation">Understanding the output of your computation</h3>
+
+<p>A detailed explanation of the output of <code>solve(f)</code> is described <a href="/guides/reading-output/">in the next guide</a>.</p>
+
+<h3 id="solving-many-systems-of-equations">Solving many systems of equations</h3>
+
+<p><code>solve(f)</code> works nicely for single systems. If you have to solve many systems in a loop, you should read <a href="/guides/many-systems/">this guide</a>.</p>
+
+<h3 id="what-else-should-i-know">What else should I know?</h3>
+
+<p>HomotopyContinuation.jl provides many more features. Check our detailed <a href="/guides/">Guides</a> for learning more about the full power of homotopy continuation.</p>
+
+<p>You should also consult our <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1">API Docs</a>, where all options of <code>solve(f)</code> are listed.</p>
+
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

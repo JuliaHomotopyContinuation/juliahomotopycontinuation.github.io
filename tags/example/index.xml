@@ -6,59 +6,99 @@
     <description>Recent content in Example on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Dec 2018 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 26 Mar 2019 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/example/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Minimizing a function over the sphere</title>
+      <link>/examples/optimization/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/optimization/</guid>
+      <description>We want to solve following optimization problem
+$$ \text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1 $$
+The strategy to find the global optimum is to use the method of Lagrange multipliers to find all critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.
+using HomotopyContinuation, DynamicPolynomials @polyvar x y z J = 3x^3*y+y^2*z^2-2x*y-x*4z^3 g = x^2+y^2+z^2-1 # Introduce auxillary variable for Lagrangian @polyvar λ # define Lagrangian L = J - λ * g  3x³y - 4xz³ + y²z² - x²λ - y²λ - z²λ - 2xy + λ  In order to compute all critical points we have to solve the square system of equations</description>
+    </item>
+    
+    <item>
+      <title>The 6R-serial link robot</title>
+      <link>/examples/6rlinkrobot/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/6rlinkrobot/</guid>
+      <description>The following example is from Section 7.3 in A. Sommese, C. Wampler: The Numerical Solution of Systems of Polynomial Arising in Engineering and Science
+Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground and the last link has a &amp;ldquo;hand&amp;rdquo;. The problem of determining the position of the hand when knowing the arrangement of the joints is called forward problem.</description>
+    </item>
+    
+    <item>
+      <title>The point on a variety that minimizes the distance to a given point</title>
+      <link>/examples/critical-points/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/critical-points/</guid>
+      <description>Consider the problem of computing the point on
+$$ V = \{x=(x_1,x_2)^T\in \mathbb{R}^2 : f(x) = 0\}, \text{ for } f(x) = x_1^2 + x_2^2 - (x_1^2 + x_2^2 + x_2)^2, $$
+which minimizes the distance to the point $u₀ = (-3,-2)$. The situation looks like this:
+The minimizer $x^\star$ is a solution to the system
+$$ F_u = \begin{bmatrix}\det(\begin{bmatrix}x-u &amp;amp; \nabla_x(f)\end{bmatrix})\\ f(x)\end{bmatrix} =0, $$
+where $\nabla_x(f)$ is the gradient of $f$ at $x$.</description>
+    </item>
+    
+    <item>
+      <title>When do two ellipses meet?</title>
+      <link>/examples/ellipses-tangent/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/ellipses-tangent/</guid>
+      <description>Let two ellipses be centered at points $p_1,p_2$: $$ E_i( r ) = \{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\},\; i=1,2, $$ where $Q_1, Q_2$ are symmetric matrices.
+We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. In Julia we translate this into a polynomial system:
+using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2] @polyvar x[1:2] r z₁ = x - p₁ z₂ = x - p₂ # initialize the equations for E₁ and E₂ f₁ = (Q₁ * z₁) ⋅ (Q₁ * z₁) - r^2 f₂ = (Q₂ * z₂) ⋅ (Q₂ * z₂) - r^2 # initialize the equation for E₁ and E₂ being tangent @polyvar λ g = (Q₁&#39; * Q₁) * z₁ - λ .</description>
+    </item>
+    
+    <item>
       <title>Tensor decomposition and homotopy continuation</title>
-      <link>/blog/cpd/</link>
+      <link>/examples/cpd/</link>
       <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
       
-      <guid>/blog/cpd/</guid>
+      <guid>/examples/cpd/</guid>
       <description>In this blog I want to repeat the computations from the article &amp;ldquo;Homotopy Techniques for Tensor Decomposition and Perfect Identifiability&amp;rdquo; by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of canonical polyadic decompositions (CPD) of a random $2\times 2\times 2\times 3$-tensor by using the monodromy method. It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor has rank equal to 4:
 $$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
     </item>
     
     <item>
       <title>Tritangents</title>
-      <link>/blog/tritangents/</link>
+      <link>/examples/tritangents/</link>
       <pubDate>Mon, 26 Nov 2018 21:56:55 +0100</pubDate>
       
-      <guid>/blog/tritangents/</guid>
+      <guid>/examples/tritangents/</guid>
       <description>A complex sextic curve in $\mathbb{C}^3$ is the intersection of a cubic surface $\mathcal{C}\subset \mathbb{C}^3$ with a quadric $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \{x\in\mathbb{C}^3 : C(x) = 0\}$ and $\mathcal{Q} = \{x\in\mathbb{C}^3 : Q(x) = 0\}$.
 An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them).</description>
     </item>
     
     <item>
-      <title>The point of maximal curvature on a surface</title>
-      <link>/blog/curvature/</link>
+      <title>Maximal curvature of a surface</title>
+      <link>/examples/curvature/</link>
       <pubDate>Tue, 04 Sep 2018 11:56:55 +0100</pubDate>
       
-      <guid>/blog/curvature/</guid>
-      <description>In a recent discussion with Maddie Weinstein and Khazhgali Kozhasov we considered the problem of computing the maximal curvature of an algebraic manifold $V\subset \mathbb{R}^n$ (a smooth manifold that is also a real algebraic variety ).
-Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p)$, where $\sigma(p)$ is the maximal curvature of a geodesic through $p$:
-$$\sigma(p): = \mathrm{max} \,\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma \in V \text{ geodesic w.\ } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\}$$</description>
-    </item>
-    
-    <item>
-      <title>Welcome!</title>
-      <link>/blog/welcome/</link>
-      <pubDate>Thu, 02 Mar 2017 21:56:55 +0100</pubDate>
-      
-      <guid>/blog/welcome/</guid>
-      <description>Welcome to our new homepage! Hi there!
-We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
+      <guid>/examples/curvature/</guid>
+      <description>Curvature of curves in the plane Consider the problem of computing the point on a (smooth) real variety $V\subset \mathbb{R}^n$, where the curvature is maximal. For curves in the plane $ \mathbb{R}^2$ we can use the following formula for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.
+$$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$
+where $v^T \,\nabla_p f(p) = 0$, $H$ is the Hessian of $f$ at $p$ and $g = \nabla_p f(p)^T\nabla_p f(p)$.</description>
     </item>
     
     <item>
       <title>The number of circles that are tangent to 3 given conics</title>
-      <link>/blog/circles_conics/</link>
+      <link>/examples/circles-conics/</link>
       <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
       
-      <guid>/blog/circles_conics/</guid>
-      <description>Consider the problem of computing all circles that are tangent to 3 conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to $$C_1 = \{y=-x^2+2x+5\}, C_2 = \{y = 2x^2+5x-8\}, C_3 = \{y = 8x^2-3x-2\}.$$
+      <guid>/examples/circles-conics/</guid>
+      <description>Consider the problem of computing all circles that are tangent to 3 conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
+$$C_1 = \{y=-x^2+2x+5\},$$
+$$C_2 = \{y = 2x^2+5x-8\},$$
+$$C_3 = \{y = 8x^2-3x-2\}.$$
 Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
     </item>
     

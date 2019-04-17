@@ -85,7 +85,8 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
@@ -102,7 +103,7 @@
        
     <li><a href="/guides/" >Guides</a></li>
     
-    <li><a href="/blog/" >Blog</a></li>
+    <li><a href="/examples/" >Examples</a></li>
     
     <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
     
@@ -110,7 +111,7 @@
     
     <li><a href="/faq/" >FAQ</a></li>
     
-    <li><a href="/blog/do-it-yourself" >Do It Yourself</a></li>
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
     
       </ul>
     </nav>
@@ -122,15 +123,12 @@
   </div>
  </header>
   <main>
-  <div id="main">
-    <div id="hero">
-      <h1> Monodromy </h1>
-      <p class="hero-lead">
-           We're solving a system by monodromy.
-      </p>
-
-    </div> 
-    <div id="kube-component" class="content">
+<div id="main">
+  <div id="hero">
+    <h1>Monodromy</h1>
+    <p class="hero-lead">We're solving a system by monodromy</p>
+  </div>
+  <div id="kube-component" class="content">
     
 <nav id="contents">
     <ol class="js-toc">
@@ -161,71 +159,65 @@ headingSelector: 'h3'
 
 <p>The general syntax for this is:</p>
 
-<pre><code class="language-julia">monodromy_solve(F_u, [x], u₀, parameters = u)
+<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u)
 </code></pre>
 
-<h3 class="section-head" id="monodromyexample"><a href="#monodromyexample">Example: computing the closest point on a variety</a></h3>
+<p>Here is a simple example: take</p>
 
-<p>Consider the problem of computing the point on the variety</p>
+<p>$$F_u(x,y) = \begin{bmatrix} x^4 + y - 2u_1\\ x^4 + x^2 - 2u_2y^2 \end{bmatrix}.$$</p>
 
-<p>$$
-V = \{x=(x_1,x_2)^T\in \mathbb{R}^2 : f(x) = 0\}, \text{ for } f(x) = x_1^2 + x_2^2 - (x_1^2 + x_2^2 + x_2)^2,
-$$</p>
+<p>For $u=1$ we have the solution $(x,y) = (1,1)$. For finding all solutions of $F_2$ we use</p>
 
-<p>which minimizes the distance to the point $u₀ = (-3,-2)$. The situation looks like this:</p>
-
-<p style="text-align:center;"><img src="/images/cardioid0.png" maxwidth="400px"/></p>
-
-<p>The minimizer $x^\star$ is a solution to the system</p>
-
-<p>$$
-F_u = \begin{bmatrix}\det(\begin{bmatrix}x-u &amp; \nabla_x(f)\end{bmatrix})\\ f(x)\end{bmatrix} =0,
-$$</p>
-
-<p>where $\nabla_x(f)$ is the gradient of $f$ at $x$. Let&rsquo;s set up this system in Julia.</p>
-
-<pre><code class="language-julia">using DynamicPolynomials, LinearAlgebra
-
-u₀ = [-2; -1]
-
-@polyvar x[1:2]
-f = x[1]^2 + x[2]^2 - (x[1]^2 + x[2]^2 + x[1])^2
-∇ = differentiate(f, x)
-
-F = [det([x-u₀ ∇]); f]
-</code></pre>
-
-<p>Now, $x^\star$ is a zero of <code>F</code>, which has totaldegree equal to 12. However, the actual number of solutions is only 3 as was shown in <a href="https://arxiv.org/pdf/1309.0049.pdf">this article</a>. For avoiding computing all 12 paths, we use monodromy instead of totaldegree traicking.</p>
-
-<p>An initial solution to <code>F</code> is $x_0=(0,1)^T$. Let&rsquo;s use this initial solution for monodromy:</p>
-
-<pre><code class="language-julia">using HomotopyContinuation
-
-x₀ = [0; 1]
-@polyvar u[1:2]
-F_u = [det([x-u ∇]); f]
-
-monodromy_solve(F_u, [x₀], u₀, parameters = u)
-</code></pre>
-
-<pre><code>MonodromyResult
+<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+julia&gt; @polyvar x y u[1:2]
+julia&gt; F = [x^4 + y - 2u[1], x^4 + x^2 - 2*u[2]*y^2]
+julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u)
+MonodromyResult
 ==================================
-• 3 solutions (3 real)
+• 8 solutions (4 real)
 • return code → heuristic_stop
-• 111 tracked paths
+• 644 tracked paths
 </code></pre>
 
-<p>We get the three solutions. The following picture shows them:</p>
+<h3 class="section-head" id="monodromy"><a href="#monodromy">Group Actions</a></h3>
 
-<p style="text-align:center;"><img src="/images/cardioid.png" maxwidth="400px"/></p>
+<p>If the set of solutions of <code>F</code> is invariant under some group actions you can exploit this in your computation.</p>
 
-<p>The minimizer is $x^\star \approx (-1.68, -0.86)^T$.</p>
+<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u, group_actions = G)
+</code></pre>
 
+<p>computes only with equivalence classes modulo <code>G</code>.</p>
 
+<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u, group_actions = G, equivalence_classes = false)
+</code></pre>
+
+<p>computes only with all solutions but exploits <code>G</code> to find solutions more quickly.</p>
+
+<p>In the above example, the group that interchanges <code>x</code> and <code>y</code> acts on the solution set of <code>F</code>. We can use the group that multiplies <code>x</code> by $\pm 1$.</p>
+
+<pre><code class="language-julia-repl">julia&gt; G = GroupActions( a -&gt; ([-a[1], a[2]], ))
+julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
+MonodromyResult
+==================================
+• 4 classes of solutions (modulo group action) (2 real)
+• return code → heuristic_stop
+• 322 tracked paths
+</code></pre>
+
+<p>Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then</p>
+
+<pre><code class="language-julia-repl">julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
+MonodromyResult
+==================================
+• 8 solutions (4 real)
+• return code → heuristic_stop
+• 644 tracked paths
+</code></pre>
 
     
-    </div>
-    </div>
+    
+  </div>
+</div>
 </main>
   <footer></footer>
 
@@ -241,7 +233,7 @@ monodromy_solve(F_u, [x₀], u₀, parameters = u)
            renderMathInElement(document.body, {delimiters: [
           {left: "$$", right: "$$", display: true},
           {left: "$", right: "$", display: false},
-          {left: "``", right: "``", display: false},
+          
           
           
           

@@ -6,138 +6,180 @@
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Dec 2018 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 15 Apr 2019 18:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Get started</title>
-      <link>/guides/get-started/</link>
+      <title>Installing HomotopyContinuation.jl</title>
+      <link>/guides/installation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/guides/get-started/</guid>
-      <description>This guide assumes that you have Julia 1.0 installed and running.
-If this is not the case follow the instructions at julialang.org. Installation
-HomotopyContinuation.jl is available through the Julia package manager by
-pkg&amp;gt; add HomotopyContinuation  you can enter the Julia package manager by pressing ] in the REPL.
-Basic usage HomotopyContinuation.jl aims at having easy-to-understand top-level commands. For instance, suppose we want to solve the following polynomial system
-$$ f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix} $$</description>
+      <guid>/guides/installation/</guid>
+      <description>Requirements In order to use HomotopyContinuation.jl you need to have at least Julia 1.0 installed. If this is not the case you can download it at julialang.org. Please see the platform specific instructions if you have trouble installing Julia.
+Installation HomotopyContinuation.jl is available through the Julia package manager. You can enter it by pressing ] in the REPL and then typing
+pkg&amp;gt; add HomotopyContinuation  Alternatively, you can also use</description>
     </item>
     
     <item>
-      <title>Solving square systems of polynomial equations</title>
-      <link>/guides/examples/</link>
+      <title>How to solve a system of polynomial equations</title>
+      <link>/guides/solve-first-system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/guides/examples/</guid>
-      <description>Solving square systems of polynomial equations The basic idea of homotopy continuation algorithms is explained quickly. Suppose that you have a square system of polynomials
-$$ f(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)). $$
-Here, &amp;ldquo;square&amp;rdquo; means that the system should have as many equations as variables. The goal is to find solutions $x\in \mathbb{R}^n$ with $f(x)=0$. For this we need another system of equations, say $g(x)=(g_1(x_1,\ldots,x_n),\ldots,g_n(x_1,\ldots,x_n))$, and a solution $x_0$ with $g(x_0)=0$. The basic algorithm consists in connecting the polynomials $f$ and $g$ by a path and tracking the solution $x_0$ from $g$ to $f$ using Newton&amp;rsquo;s method (Remark: the space of polynomial systems form a vector space, in which the notion of path is well-defined).</description>
+      <guid>/guides/solve-first-system/</guid>
+      <description>Requirements If you have not yet installed HomotopyContinuation.jl, please consider the installation guide.
+Solve your first system of equations Consider the following simple system of two polynomials in two variables.
+$$ f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix} $$
+Solving the equation $f=0$ can be accomplished as follows
+using HomotopyContinuation # load the package into the current Julia session @polyvar x y; # declare the variables x and y f = [x^2 + 2y, y^2 - 2] result = solve(f) # solve f  After the computation has finished, you should see the following output.</description>
     </item>
     
     <item>
-      <title>Tensor decomposition and homotopy continuation</title>
-      <link>/blog/cpd/</link>
-      <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
+      <title>Reading the output of your computation</title>
+      <link>/guides/reading-output/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blog/cpd/</guid>
-      <description>In this blog I want to repeat the computations from the article &amp;ldquo;Homotopy Techniques for Tensor Decomposition and Perfect Identifiability&amp;rdquo; by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of canonical polyadic decompositions (CPD) of a random $2\times 2\times 2\times 3$-tensor by using the monodromy method. It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor has rank equal to 4:
-$$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
+      <guid>/guides/reading-output/</guid>
+      <description>The Result of a computation The line of commands
+using HomotopyContinuation @polyvar x y; f = [x^2+2y, y^2-2]) result = solve(f)  gives the output.
+Result with 4 solutions ================================== • 4 non-singular solutions (2 real) • 0 singular solutions (0 real) • 4 paths tracked • random seed: 902575  Let us look at this output in more detail: 4 non-singular solutions have been found, and 2 of them are real solutions.</description>
     </item>
     
     <item>
-      <title>Tritangents</title>
-      <link>/blog/tritangents/</link>
-      <pubDate>Mon, 26 Nov 2018 21:56:55 +0100</pubDate>
+      <title>What is Homotopy Continuation?</title>
+      <link>/guides/how-does-it-work/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blog/tritangents/</guid>
-      <description>A complex sextic curve in $\mathbb{C}^3$ is the intersection of a cubic surface $\mathcal{C}\subset \mathbb{C}^3$ with a quadric $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \{x\in\mathbb{C}^3 : C(x) = 0\}$ and $\mathcal{Q} = \{x\in\mathbb{C}^3 : Q(x) = 0\}$.
-An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them).</description>
+      <guid>/guides/how-does-it-work/</guid>
+      <description>The basic idea of homotopy continuation is as follows. Suppose that you have a system of polynomials with as many variables as polynomials
+$$ F(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)). $$
+(for more polynomials than variables, see the guide on overdetermined tracking). We wish to find a zero in $\mathbb{C}^n$ of $f$. Suppose
+$$G(x)=(g_1(x_1,\ldots,x_n),\ldots,g_n(x_1,\ldots,x_n)$$
+is another system with a known zero: $G(\zeta) = 0$. We connect $F$ and $G$ in the space of polynomial systems by a path $t\mapsto H(x,t)$ with $H(x,0) = F(x)$ and $H(x,1)=G(x)$ (the space of polynomial systems form a vector space, in which the notion of path is well-defined).</description>
     </item>
     
     <item>
-      <title>The point of maximal curvature on a surface</title>
-      <link>/blog/curvature/</link>
-      <pubDate>Tue, 04 Sep 2018 11:56:55 +0100</pubDate>
+      <title>Using HomotopyContinuation.jl from Macaulay2</title>
+      <link>/guides/macaulay2/</link>
+      <pubDate>Mon, 15 Apr 2019 18:56:55 +0100</pubDate>
       
-      <guid>/blog/curvature/</guid>
-      <description>In a recent discussion with Maddie Weinstein and Khazhgali Kozhasov we considered the problem of computing the maximal curvature of an algebraic manifold $V\subset \mathbb{R}^n$ (a smooth manifold that is also a real algebraic variety ).
-Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p)$, where $\sigma(p)$ is the maximal curvature of a geodesic through $p$:
-$$\sigma(p): = \mathrm{max} \,\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma \in V \text{ geodesic w.\ } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\}$$</description>
+      <guid>/guides/macaulay2/</guid>
+      <description>Macaulay2 is a great software for symbolic computations and it has many features which are not yet available in Julia. In this guide we show a possible workflow where the symbolic computations are happening in Macaulay2 and the numerical work in Julia.
+Setting things up Our goal is to have a function writeSystem available which accepts as input an ideal I (or a list of polynomials) and a filename f and generates a file f containing the necessary Julia code to compute the solutions of I using HomotopyContinuation.</description>
     </item>
     
     <item>
-      <title>Welcome!</title>
-      <link>/blog/welcome/</link>
-      <pubDate>Thu, 02 Mar 2017 21:56:55 +0100</pubDate>
+      <title>Minimizing a function over the sphere</title>
+      <link>/examples/optimization/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
-      <guid>/blog/welcome/</guid>
-      <description>Welcome to our new homepage! Hi there!
-We are excited to launch the new homepage for HomotopyContinuation.jl. We plan to keep you here updated with the latest development news, interesting applications and general thoughts. If you use HomotopyContinuation.jl and want to share your experience get in touch with us!</description>
+      <guid>/examples/optimization/</guid>
+      <description>We want to solve following optimization problem
+$$ \text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1 $$
+The strategy to find the global optimum is to use the method of Lagrange multipliers to find all critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.
+using HomotopyContinuation, DynamicPolynomials @polyvar x y z J = 3x^3*y+y^2*z^2-2x*y-x*4z^3 g = x^2+y^2+z^2-1 # Introduce auxillary variable for Lagrangian @polyvar λ # define Lagrangian L = J - λ * g  3x³y - 4xz³ + y²z² - x²λ - y²λ - z²λ - 2xy + λ  In order to compute all critical points we have to solve the square system of equations</description>
     </item>
     
     <item>
-      <title>Macaulay2 interface for HomotopyContinuation.jl</title>
-      <link>/blog/macaulay2/</link>
-      <pubDate>Tue, 03 Jul 2018 18:56:55 +0100</pubDate>
+      <title>The 6R-serial link robot</title>
+      <link>/examples/6rlinkrobot/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
-      <guid>/blog/macaulay2/</guid>
-      <description>Tim Duff pushed a very first version of a Macaulay2 interface to his Github repo. It is available in the &amp;ldquo;Julia&amp;rdquo; branch. The current version lets you export polynomials into .jl files or call HomotopyContinuation.jl directly from Macaulay2.
-For instance, the following M2 code generates the file mypolynomial.jl (I assume that the functions from the Julia branch have been loaded into the current session).
-R = QQ[x, y] f = {x^2 + y^2, x-y} writeSys(PolySystem f, &amp;quot;mypolynomial.</description>
+      <guid>/examples/6rlinkrobot/</guid>
+      <description>The following example is from Section 7.3 in A. Sommese, C. Wampler: The Numerical Solution of Systems of Polynomial Arising in Engineering and Science
+Consider a robot that consists of 7 links connected by 6 joints. The first link is fixed on the ground and the last link has a &amp;ldquo;hand&amp;rdquo;. The problem of determining the position of the hand when knowing the arrangement of the joints is called forward problem.</description>
     </item>
     
     <item>
-      <title>3264 conics tangent to five conics</title>
-      <link>/blog/3264/</link>
-      <pubDate>Tue, 12 Feb 2019 21:56:55 +0100</pubDate>
+      <title>The point on a variety that minimizes the distance to a given point</title>
+      <link>/examples/critical-points/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
-      <guid>/blog/3264/</guid>
-      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
-$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
-Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is a degenerate conic. Double lines are allowed.</description>
+      <guid>/examples/critical-points/</guid>
+      <description>Consider the problem of computing the point on
+$$ V = \{x=(x_1,x_2)^T\in \mathbb{R}^2 : f(x) = 0\}, \text{ for } f(x) = x_1^2 + x_2^2 - (x_1^2 + x_2^2 + x_2)^2, $$
+which minimizes the distance to the point $u₀ = (-3,-2)$. The situation looks like this:
+The minimizer $x^\star$ is a solution to the system
+$$ F_u = \begin{bmatrix}\det(\begin{bmatrix}x-u &amp;amp; \nabla_x(f)\end{bmatrix})\\ f(x)\end{bmatrix} =0, $$
+where $\nabla_x(f)$ is the gradient of $f$ at $x$.</description>
     </item>
     
     <item>
-      <title>The number of circles that are tangent to 3 given conics</title>
-      <link>/blog/circles_conics/</link>
-      <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
+      <title>When do two ellipses meet?</title>
+      <link>/examples/ellipses-tangent/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
-      <guid>/blog/circles_conics/</guid>
-      <description>Consider the problem of computing all circles that are tangent to 3 conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to $$C_1 = \{y=-x^2+2x+5\}, C_2 = \{y = 2x^2+5x-8\}, C_3 = \{y = 8x^2-3x-2\}.$$
-Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
+      <guid>/examples/ellipses-tangent/</guid>
+      <description>Let two ellipses be centered at points $p_1,p_2$: $$ E_i( r ) = \{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\},\; i=1,2, $$ where $Q_1, Q_2$ are symmetric matrices.
+We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. In Julia we translate this into a polynomial system:
+using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2] @polyvar x[1:2] r z₁ = x - p₁ z₂ = x - p₂ # initialize the equations for E₁ and E₂ f₁ = (Q₁ * z₁) ⋅ (Q₁ * z₁) - r^2 f₂ = (Q₂ * z₂) ⋅ (Q₂ * z₂) - r^2 # initialize the equation for E₁ and E₂ being tangent @polyvar λ g = (Q₁&#39; * Q₁) * z₁ - λ .</description>
     </item>
     
     <item>
-      <title>Parameter Homotopies</title>
+      <title>Systems with parameters</title>
       <link>/guides/parameter-homotopies/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/parameter-homotopies/</guid>
       <description>Parameter Homotopies Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems
-$$ P = \{f(x_1,\ldots,x_n,a) = (f_1(x_1,\ldots,x_n,a), \ldots, f_n(x_1\ldots,x_n,a)) \mid a \in \mathbb{R}^m\}. $$
-Often, there is a number $N$, such that a generic member $f\in P$ has exactly $N$ solutions $x\in\mathbb{R}^n$ with $f(x)=0$. This $N$ might be very considerably smaller than the number of solutions of an arbitrary polynomial system not in $P$.</description>
+$$ P = \{F(x,p) = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\}. $$
+To not destroy the solution structure it is desirable to not leave $P$ during the homotopy. This can be accomplished by using the homotopy $$H(x,t) := F(x, (1-t)p + tq)$$ where $p$ and $q$ are parameters in $\mathbb{C}^m$.</description>
     </item>
     
     <item>
-      <title>Do It Yourself</title>
-      <link>/blog/do-it-yourself/</link>
-      <pubDate>Tue, 12 Feb 2019 20:56:55 +0100</pubDate>
+      <title>Data analysis of solutions</title>
+      <link>/guides/data-analysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blog/do-it-yourself/</guid>
-      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
-$$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
-Steiner&amp;rsquo;s conic problem asks the question of how many conics are tangent to five given conics.</description>
+      <guid>/guides/data-analysis/</guid>
+      <description>We provide two special functions for analysing data: UniquePoints and Multiplicities. They do the following: suppose that A is an array of real or complex vectors. Then, UniquePoints(A) filters multiple elements of A, such that each entry appears once. On the other hand, multiplicities(A) returns the indices of multiple elements in A.
+UniquePoints Here is the full syntax of UniquePoints
+UniquePoints(A, distance; tol=1e-5)  where
+ distance is a function to measure the distance between two vectors.</description>
     </item>
     
     <item>
-      <title>Sascha @ International Congress on Mathematical Software</title>
-      <link>/blog/icms/</link>
-      <pubDate>Tue, 03 Jul 2018 19:56:55 +0100</pubDate>
+      <title>Solutions at infinity</title>
+      <link>/guides/all-paths/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blog/icms/</guid>
-      <description>Sascha will present the features of HomotopyContinuation.jl at the International Congress on Mathematical Software at Notre Dame this year.</description>
+      <guid>/guides/all-paths/</guid>
+      <description>By default, solve(f) return only &amp;ldquo;true&amp;rdquo; solutions of f. But when tracking towards f paths might diverge to infinity (solutions at infinity describe solutions of the homogenization of f which are no solutions of f itself).
+To save the results of all paths, one has to use
+solve(f, save_all_paths = true)  Here is an example that has solutions at infinity.
+julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y julia&amp;gt; f = [x^2 - y^2 - 1, x - y] julia&amp;gt; solve(f, save_all_paths = true) Result with 0 solutions ================================== • 0 non-singular solutions (0 real) • 0 singular solutions (0 real) • 2 solutions at infinity • 2 paths tracked • random seed: 229664  </description>
+    </item>
+    
+    <item>
+      <title>Tensor decomposition and homotopy continuation</title>
+      <link>/examples/cpd/</link>
+      <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/cpd/</guid>
+      <description>In this blog I want to repeat the computations from the article &amp;ldquo;Homotopy Techniques for Tensor Decomposition and Perfect Identifiability&amp;rdquo; by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of canonical polyadic decompositions (CPD) of a random $2\times 2\times 2\times 3$-tensor by using the monodromy method. It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor has rank equal to 4:
+$$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
+    </item>
+    
+    <item>
+      <title>Solving many systems in a loop</title>
+      <link>/guides/many-systems/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/many-systems/</guid>
+      <description>Polynomial systems arising in application very often have a coefficients which are determined by some parameters.
+We now want to show you how you can setup an efficient way to solve this polynomial system for many parameter values. Assume we have the following polynomial system:
+using HomotopyContinuation, DynamicPolynomials @polyvar x y z p[1:3] F = [ x + 3 + 2y + 2y^2 - p[1], (x - 2 + 5y)*z + 4 - p[2] * z, (x + 2 + 4y)*z + 5 - p[3] * z ]  Since we need to solve F many times for different values of p it makes sense to first compute all solutions for generic parameters and then to use a parameter homotopy.</description>
+    </item>
+    
+    <item>
+      <title>Tritangents</title>
+      <link>/examples/tritangents/</link>
+      <pubDate>Mon, 26 Nov 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/tritangents/</guid>
+      <description>A complex sextic curve in $\mathbb{C}^3$ is the intersection of a cubic surface $\mathcal{C}\subset \mathbb{C}^3$ with a quadric $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \{x\in\mathbb{C}^3 : C(x) = 0\}$ and $\mathcal{Q} = \{x\in\mathbb{C}^3 : Q(x) = 0\}$.
+An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them).</description>
     </item>
     
     <item>
@@ -146,18 +188,67 @@ Steiner&amp;rsquo;s conic problem asks the question of how many conics are tange
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/overdetermined-tracking/</guid>
-      <description>Overdetermined systems A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots, f_n(x_1,\ldots,x_m))$ is called overdetermined, if it has more equations than variables; i.e., when $n&amp;gt;m$. HomotopyContinuation.jl features Newtons method for overdetermined systems for tracking solutions. We show in an example how it can be used.
-Example: the rational normal curve The rational normal curve is a 1-dimensional algebraic variety within the 3-dimensional complex space:
-$$ C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.</description>
+      <description>Overdetermined systems A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots, f_n(x_1,\ldots,x_m))$ is called overdetermined, if it has more equations than variables; i.e., when $n&amp;gt;m$. HomotopyContinuation.jl can solve overdetermined systems. Here is a simple example.
+$$f(x,y,z) = \begin{bmatrix} xz-y^2 = 0\\ y-z^2=0 \\ x-yz \\ x + y + z + 1\end{bmatrix}.$$
+This system has 4 equation in 3 variables. One might expect that it has no solution, but actually it has solutions, as is explained here.</description>
     </item>
     
     <item>
-      <title>Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig</title>
-      <link>/blog/nag_summer_school/</link>
-      <pubDate>Tue, 03 Jul 2018 20:56:55 +0100</pubDate>
+      <title>Composite systems</title>
+      <link>/guides/composite/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/blog/nag_summer_school/</guid>
-      <description>To use the true power of homotopy continuation algorithms the user should be familiar with both algebraic geometry and numerical mathematics. If you want to learn more about the relations of those two, you should come to the Summer School on Numerical Computing in Algebraic Geometry at MPI Leipzig.</description>
+      <guid>/guides/composite/</guid>
+      <description>If your system of polynomials is given as a composition of several systems, you can exploit this in HomotopyContinuation.jl.
+Composition of two systems If $f$ and $g$ are your systems, and you want to solve $f \circ g$, then you can do this by
+solve(f ∘ g)  For instance, if
+$$ f = \begin{bmatrix} ab - 2\\ ac- 1\end{bmatrix}, \quad g = \begin{bmatrix}x + y\\ y + 3\\ x + 2\end{bmatrix},$$</description>
+    </item>
+    
+    <item>
+      <title>Maximal curvature of a surface</title>
+      <link>/examples/curvature/</link>
+      <pubDate>Tue, 04 Sep 2018 11:56:55 +0100</pubDate>
+      
+      <guid>/examples/curvature/</guid>
+      <description>Curvature of curves in the plane Consider the problem of computing the point on a (smooth) real variety $V\subset \mathbb{R}^n$, where the curvature is maximal. For curves in the plane $ \mathbb{R}^2$ we can use the following formula for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.
+$$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$
+where $v^T \,\nabla_p f(p) = 0$, $H$ is the Hessian of $f$ at $p$ and $g = \nabla_p f(p)^T\nabla_p f(p)$.</description>
+    </item>
+    
+    <item>
+      <title>3264 conics tangent to five conics</title>
+      <link>/examples/3264/</link>
+      <pubDate>Tue, 12 Feb 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/3264/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is a degenerate conic. Double lines are allowed.</description>
+    </item>
+    
+    <item>
+      <title>The number of circles that are tangent to 3 given conics</title>
+      <link>/examples/circles-conics/</link>
+      <pubDate>Thu, 05 Jul 2018 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/circles-conics/</guid>
+      <description>Consider the problem of computing all circles that are tangent to 3 conics $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
+$$C_1 = \{y=-x^2+2x+5\},$$
+$$C_2 = \{y = 2x^2+5x-8\},$$
+$$C_3 = \{y = 8x^2-3x-2\}.$$
+Emiris and Tzoumas write that there are 184 complex circles that are tangent to 3 general conics. This means, that there are 184 complex solutions $(a_1,a_2,r)$ such that there exists some $(x,y)\in\mathbb{C}^2$ with</description>
+    </item>
+    
+    <item>
+      <title>Do It Yourself</title>
+      <link>/examples/do-it-yourself/</link>
+      <pubDate>Tue, 12 Feb 2019 20:56:55 +0100</pubDate>
+      
+      <guid>/examples/do-it-yourself/</guid>
+      <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
+$$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$ Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is called a degenerate conic.
+Steiner&amp;rsquo;s conic problem asks the question of how many conics are tangent to five given conics.</description>
     </item>
     
     <item>
@@ -171,12 +262,37 @@ Suppose $x$ is a solution $F(x)=0$ and that $F=F_{u_0}$ is a point in a family o
     </item>
     
     <item>
+      <title>Tracking in affine space</title>
+      <link>/guides/affine_tracking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/affine_tracking/</guid>
+      <description>By default, HomotopyContinuation.jl tracks paths in projective space. One can tell HomotopyContinuation.jl to track over affine space by using the flag affine_tracking = true:
+using HomotopyContinuation @polyvar x y f = [x^2 + y - 1, y - 4] solve(f, affine_tracking = true)  </description>
+    </item>
+    
+    <item>
       <title>Solutions in projective space</title>
       <link>/guides/projective/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/projective/</guid>
-      <description>Solving systems defined in projective space In the guides so far we were computing solutions in $\mathbb{R}^n$ or $\mathbb{C}^n$. In some applications, however, it is required to compute solutions in projective space $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems defined over projective space and adjusts the output. Next, we show an example.</description>
+      <description>Sometimes, it is required to compute solutions in projective space $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems of defined over projective space and adjusts the output.
+Here is a simple example involving two random quadrics in $\mathbb{CP}^2$
+using HomotopyContinuation, LinearAlgebra @polyvar x y z v = [x, y, z] F = [ v ⋅ (randn(ComplexF64, 3, 3) * v); v ⋅ (randn(ComplexF64, 3, 3) * v); ]  For solving $F=0$ one can just use the solve command</description>
+    </item>
+    
+    <item>
+      <title>Solutions in a product of projective spaces</title>
+      <link>/guides/multiprojective/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/multiprojective/</guid>
+      <description>When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.
+Here is a simple example for the following system defined over $\mathbb{CP}^1\times \mathbb{CP}^1$:
+$$f(u,y,u,v) = \begin{bmatrix} xy - 6uv\\ x^2 - u^2 \end{bmatrix}.$$
+The Julia code for the variable groups ${x,y}$ and ${u,v}$ is as follows.
+julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y u v julia&amp;gt; f = [x*y - 6u*v, x^2 - u^2] julia&amp;gt; S = solve(f, variable_groups=[(x,u), (y,v)]) Result with 2 solutions ================================== • 2 non-singular solutions (0 real) • 0 singular solutions (0 real) • 2 paths tracked • random seed: 127575  With out the declaration of groups we would have</description>
     </item>
     
     <item>

@@ -85,7 +85,8 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
@@ -102,7 +103,7 @@
        
     <li><a href="/guides/" >Guides</a></li>
     
-    <li><a href="/blog/" >Blog</a></li>
+    <li><a href="/examples/" >Examples</a></li>
     
     <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
     
@@ -110,7 +111,7 @@
     
     <li><a href="/faq/" >FAQ</a></li>
     
-    <li><a href="/blog/do-it-yourself" >Do It Yourself</a></li>
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
     
       </ul>
     </nav>
@@ -122,15 +123,12 @@
   </div>
  </header>
   <main>
-  <div id="main">
-    <div id="hero">
-      <h1> Custom Homotopies </h1>
-      <p class="hero-lead">
-           For this guide, we're going to walk through the process to construct a custom homotopy for your specific problem..
-      </p>
-
-    </div> 
-    <div id="kube-component" class="content">
+<div id="main">
+  <div id="hero">
+    <h1>Custom Homotopies</h1>
+    <p class="hero-lead">For this guide, we're going to walk through the process to construct a custom homotopy for your specific problem.</p>
+  </div>
+  <div id="kube-component" class="content">
     
 <nav id="contents">
     <ol class="js-toc">
@@ -358,8 +356,8 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
 
 <pre><code>AffineResult with 8 tracked paths
 ==================================
-• 6 non-singular finite solutions (2 real)
-• 1 singular finite solution (1 real)
+• 6 non-singular solutions (2 real)
+• 1 singular solution (1 real)
 • 1 solution at infinity
 • 0 failed paths
 • random seed: 847463
@@ -367,11 +365,10 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
 
 <p>Alternatively we could also construct the homotopy directly and give it to <code>solve</code> together with start solutions. Note that in this case we have to ensure that our homotopy is already homogenous.</p>
 
-
-
     
-    </div>
-    </div>
+    
+  </div>
+</div>
 </main>
   <footer></footer>
 
@@ -387,7 +384,7 @@ InterfaceTest.homotopy(RandomUnitaryPath(G, F))
            renderMathInElement(document.body, {delimiters: [
           {left: "$$", right: "$$", display: true},
           {left: "$", right: "$", display: false},
-          {left: "``", right: "``", display: false},
+          
           
           
           

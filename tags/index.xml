@@ -6,7 +6,7 @@
     <description>Recent content in Tags on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Dec 2018 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 26 Mar 2019 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,18 +14,9 @@
     <item>
       <title>Example</title>
       <link>/tags/example/</link>
-      <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
       <guid>/tags/example/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>News</title>
-      <link>/tags/news/</link>
-      <pubDate>Tue, 03 Jul 2018 18:56:55 +0100</pubDate>
-      
-      <guid>/tags/news/</guid>
       <description></description>
     </item>
     

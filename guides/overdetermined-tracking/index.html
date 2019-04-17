@@ -85,7 +85,8 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
@@ -102,7 +103,7 @@
        
     <li><a href="/guides/" >Guides</a></li>
     
-    <li><a href="/blog/" >Blog</a></li>
+    <li><a href="/examples/" >Examples</a></li>
     
     <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
     
@@ -110,7 +111,7 @@
     
     <li><a href="/faq/" >FAQ</a></li>
     
-    <li><a href="/blog/do-it-yourself" >Do It Yourself</a></li>
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
     
       </ul>
     </nav>
@@ -122,15 +123,12 @@
   </div>
  </header>
   <main>
-  <div id="main">
-    <div id="hero">
-      <h1> Overdetermined systems </h1>
-      <p class="hero-lead">
-           We're tracking a solution of an overdetermined system.
-      </p>
-
-    </div> 
-    <div id="kube-component" class="content">
+<div id="main">
+  <div id="hero">
+    <h1>Overdetermined systems</h1>
+    <p class="hero-lead">We're tracking a solution of an overdetermined system</p>
+  </div>
+  <div id="kube-component" class="content">
     
 <nav id="contents">
     <ol class="js-toc">
@@ -155,62 +153,29 @@ headingSelector: 'h3'
 
     <h3 class="section-head" id="overdetermined*systems"><a href="#overdetermined*systems">Overdetermined systems</a></h3>
 
-<p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl features <a href="https://www.ams.org/journals/mcom/2000-69-231/S0025-5718-99-01115-1/S0025-5718-99-01115-1.pdf">Newtons method for overdetermined systems</a> for tracking solutions. We show in an example how it can be used.</p>
+<p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl can solve overdetermined systems. Here is a simple example.</p>
 
-<h3 class="section-head" id="Rational*normal*curve"><a href="#Rational*normal*curve">Example: the rational normal curve</a></h3>
+<p>$$f(x,y,z) = \begin{bmatrix} xz-y^2 = 0\\ y-z^2=0 \\ x-yz \\ x + y + z + 1\end{bmatrix}.$$</p>
 
-<p>The <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">rational normal curve</a> is a 1-dimensional algebraic variety within the 3-dimensional complex space:</p>
+<p>This system has 4 equation in 3 variables. One might expect that it has no solution, but actually it has solutions, as is explained <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">here</a>.</p>
 
-<p>$$
-C = \{(x,y,z) \in \mathbb{C}^3 \mid xz-y^2 = 0,\, y-z^2=0, \, x-yz = 0\}.
-$$</p>
+<p>The Julia code is as follows</p>
 
-<p>Since $C$ is cut out by 3 equations one might expect it to be 0-dimensional, but it is not. In fact, the rational normal curve is a first example of a <a href="https://en.wikipedia.org/wiki/Complete_intersection">non-complete intersection</a>.</p>
-
-<p><h3 class="section-head" id="tracking*overdetermined"><a href="#tracking*overdetermined">Intersecting the rational normal curve with a linear space</a></h3> Let $L$ be a random linear space of dimension 2. Then, almost surely, the intersection $C\cap L$ is finite. The goal of this example is to compute one of the points in $C\cap L$. First, let us generate the equations of $C$ and $L$.</p>
-
-<pre><code class="language-julia">using HomotopyContinuation, LinearAlgebra
-@polyvar x y z
-f = [x*z-y^2, y-z^2, x-y*z]
-ℓ = randn(ComplexF64, 4) ⋅ [x, y, z, 1];
-</code></pre>
-
-<p>One is tempted to compute $C\cap L$ by executing <code>solve([f;ℓ])</code> and simply compute <em>all</em> solutions. But this command will return an error message.</p>
-
-<pre><code class="language-julia">solve([f;ℓ])
-</code></pre>
-
-<pre><code>ERROR: The input system is overdetermined. Therefore it is necessary to provide an explicit startsystem.
-See
-    https://www.JuliaHomotopyContinuation.org/guides/latest/overdetermined_tracking/
-for details.
-</code></pre>
-
-<p>The problem here is that for overdetermined system we can&rsquo;t construct generic starting systems. The reason is simple: a generic overdetermined system has no solutions at all. Nevertheless, if we have a starting system and some of its solutions at hand, we can track them towards $[f, \ell]$.</p>
-
-<p>For instance, the point $p=(1, 1, 1)$ lies both on $C$ and $\{(x,y,z)\in \mathbb{C}^3 \mid x-y+z -1= 0\}$. We can track this solution towards $[f, \ell]$ by executing the following:</p>
-
-<pre><code class="language-julia">ℓ₁ = [1, -1, 1, -1] ⋅ [x, y, z, 1];
-p = [1, 1, 1, 1];
-solve([f; ℓ₁], [f; ℓ], [p])
-</code></pre>
-
-<pre><code>AffineResult with 1 tracked paths
+<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+julia&gt; @polyvar x y z
+julia&gt; solve([x*z - y^2, y - z^2, x - y*z, x + y + z + 1])
+Result with 3 solutions
 ==================================
-• 1 non-singular finite solution (0 real)
-• 0 singular finite solutions (0 real)
-• 0 solutions at infinity
-• 0 failed paths
-• random seed: 589721
+• 3 non-singular solutions (1 real)
+• 0 singular solutions (0 real)
+• 8 paths tracked
+• random seed: 157717
 </code></pre>
-
-<p>The syntax <code>[p]</code> is because solve takes as input an <em>array</em> of solutions.</p>
-
-
 
     
-    </div>
-    </div>
+    
+  </div>
+</div>
 </main>
   <footer></footer>
 
@@ -226,7 +191,7 @@ solve([f; ℓ₁], [f; ℓ], [p])
            renderMathInElement(document.body, {delimiters: [
           {left: "$$", right: "$$", display: true},
           {left: "$", right: "$", display: false},
-          {left: "``", right: "``", display: false},
+          
           
           
           

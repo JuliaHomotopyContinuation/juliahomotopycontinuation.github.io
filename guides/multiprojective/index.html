@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Solutions in a product of projective spaces </title>
+
+  
+  <meta name="description" content="Solving systems over a product of projective spaces"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="Solutions in a product of projective spaces" />
+<meta property="og:description" content="Solving systems over a product of projective spaces" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/multiprojective/" />
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/multiprojective/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+  
+
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>Solutions in a product of projective spaces</h1>
+    <p class="hero-lead">Solving systems over a product of projective spaces</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+
+    <p>When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.</p>
+
+<p>Here is a simple example for the following system defined over $\mathbb{CP}^1\times  \mathbb{CP}^1$:</p>
+
+<p>$$f(u,y,u,v) = \begin{bmatrix} xy - 6uv\\ x^2 - u^2 \end{bmatrix}.$$</p>
+
+<p>The Julia code for the variable groups ${x,y}$ and ${u,v}$ is as follows.</p>
+
+<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+julia&gt; @polyvar x y u v
+julia&gt; f = [x*y - 6u*v, x^2 - u^2]
+julia&gt; S = solve(f, variable_groups=[(x,u), (y,v)])
+Result with 2 solutions
+==================================
+• 2 non-singular solutions (0 real)
+• 0 singular solutions (0 real)
+• 2 paths tracked
+• random seed: 127575
+</code></pre>
+
+<p>With out the declaration of groups we would have</p>
+
+<pre><code class="language-julia-repl">julia&gt; S = solve(f)
+Result with 2 solutions
+==================================
+• 2 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
+• 4 paths tracked
+• random seed: 202895
+</code></pre>
+
+<p>The number of solutions found is the same, but the number of paths tracked is different. This is because</p>
+
+<pre><code class="language-julia-repl">julia&gt; bezout_number(f, variable_groups=[[x], [y]])
+2
+julia&gt; bezout_number(f)
+4
+</code></pre>
+
+<p>It is also possible to declare variable groups for affine systems:</p>
+
+<pre><code class="language-julia-repl">julia&gt; @polyvar x y z
+julia&gt; g = [x*y - 6, x^2 - 5]
+julia&gt; R = solve(g, variable_groups=[(x,), (y,)])
+Result with 2 solutions
+==================================
+• 2 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
+• 2 paths tracked
+• random seed: 192959
+julia&gt; all(isaffine, R)
+true
+</code></pre>
+
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

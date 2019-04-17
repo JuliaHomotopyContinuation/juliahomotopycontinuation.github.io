@@ -3,46 +3,44 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/guides/get-started/</loc>
+    <loc>/guides/installation/</loc>
   </url>
   
   <url>
-    <loc>/guides/examples/</loc>
+    <loc>/guides/solve-first-system/</loc>
   </url>
   
   <url>
-    <loc>/blog/cpd/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
+    <loc>/guides/reading-output/</loc>
   </url>
   
   <url>
-    <loc>/blog/tritangents/</loc>
-    <lastmod>2018-11-26T21:56:55+01:00</lastmod>
+    <loc>/guides/how-does-it-work/</loc>
   </url>
   
   <url>
-    <loc>/blog/curvature/</loc>
-    <lastmod>2018-09-04T11:56:55+01:00</lastmod>
+    <loc>/guides/macaulay2/</loc>
+    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/welcome/</loc>
-    <lastmod>2017-03-02T21:56:55+01:00</lastmod>
+    <loc>/examples/optimization/</loc>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/macaulay2/</loc>
-    <lastmod>2018-07-03T18:56:55+01:00</lastmod>
+    <loc>/examples/6rlinkrobot/</loc>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/3264/</loc>
-    <lastmod>2019-02-12T21:56:55+01:00</lastmod>
+    <loc>/examples/critical-points/</loc>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/circles_conics/</loc>
-    <lastmod>2018-07-05T21:56:55+01:00</lastmod>
+    <loc>/examples/ellipses-tangent/</loc>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -50,13 +48,25 @@
   </url>
   
   <url>
-    <loc>/blog/do-it-yourself/</loc>
-    <lastmod>2019-02-12T20:56:55+01:00</lastmod>
+    <loc>/guides/data-analysis/</loc>
   </url>
   
   <url>
-    <loc>/blog/icms/</loc>
-    <lastmod>2018-07-03T19:56:55+01:00</lastmod>
+    <loc>/guides/all-paths/</loc>
+  </url>
+  
+  <url>
+    <loc>/examples/cpd/</loc>
+    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/guides/many-systems/</loc>
+  </url>
+  
+  <url>
+    <loc>/examples/tritangents/</loc>
+    <lastmod>2018-11-26T21:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -64,8 +74,27 @@
   </url>
   
   <url>
-    <loc>/blog/nag_summer_school/</loc>
-    <lastmod>2018-07-03T20:56:55+01:00</lastmod>
+    <loc>/guides/composite/</loc>
+  </url>
+  
+  <url>
+    <loc>/examples/curvature/</loc>
+    <lastmod>2018-09-04T11:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/examples/3264/</loc>
+    <lastmod>2019-02-12T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/examples/circles-conics/</loc>
+    <lastmod>2018-07-05T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/examples/do-it-yourself/</loc>
+    <lastmod>2019-02-12T20:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -73,7 +102,15 @@
   </url>
   
   <url>
+    <loc>/guides/affine_tracking/</loc>
+  </url>
+  
+  <url>
     <loc>/guides/projective/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/multiprojective/</loc>
   </url>
   
   <url>
@@ -95,19 +132,19 @@
   </url>
   
   <url>
-    <loc>/blog/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/example/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/examples/</loc>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -117,29 +154,24 @@
   
   <url>
     <loc>/categories/general/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/guides/</loc>
+    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/news/</loc>
-    <lastmod>2018-07-03T18:56:55+01:00</lastmod>
-    <priority>0</priority>
+    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-12-10T21:56:55+01:00</lastmod>
+    <lastmod>2019-03-26T21:56:55+01:00</lastmod>
     <priority>0</priority>
   </url>
   

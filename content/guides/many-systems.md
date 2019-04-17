@@ -25,7 +25,7 @@ F = [
 ```
 
 
-Since we need to solve `F` many times for different values of `p` it makes sense to first compute all 
+Since we need to solve `F` many times for different values of `p` it makes sense to first compute all
 solutions for generic parameters and then to use  a [parameter homotopy](/guides/parameter-homotopies/).
 
 ```julia
@@ -86,7 +86,7 @@ end
 
 In real applications you probably don't want to store all solution but instead you have a measure of what the *best* solution is.
 
-Also note that `track` will assemble for each tracked path a [`PathResult`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1) with [additional informations](/guides/reading_output/#pathresult-entries). If you want to avoid to minimize this overhead you can add the keyword argument `details = :minimal`, i.e.,
+Also note that `track` will assemble for each tracked path a [`PathResult`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1) with [additional informations](/guides/reading-output/#pathresult-entries). If you want to avoid to minimize this overhead you can add the keyword argument `details = :minimal`, i.e.,
 ```
 result = track(tracker, s; target_parameters=p, details=:minimal)
 ```

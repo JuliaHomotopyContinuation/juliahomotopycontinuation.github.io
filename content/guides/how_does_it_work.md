@@ -39,4 +39,4 @@ G(x_1,\ldots,x_n) = \begin{pmatrix} x_1^{d_1} - a_1 \\\ \\vdots \\\  x_n^{d_n} -
 $$
 
 
-where the $a_i$ are random numbers and $d_i$ is the degree of $f_i$. There are $d_1\\cdots d_n$ many solutions to this system, which are easy to write down. A [theorem by Bézout](https://en.wikipedia.org/wiki/Bézout%27s_theorem#Intersection_multiplicity) says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1\\cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a *total degree homotopy*.
+where the $a_i$ are random numbers and $d_i$ is the degree of $f_i$. There are $d_1\\cdots d_n$ many solutions to this system, which are easy to write down. A [theorem by Bézout](https://en.wikipedia.org/wiki/Bézout%27s_theorem) says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1 \\cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a *total degree homotopy*.

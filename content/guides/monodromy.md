@@ -66,10 +66,10 @@ In the above example, the group that interchanges `x` and `y` acts on the soluti
 
 ```julia-repl
 julia> G = GroupActions( a -> ([-a[1], a[2]], ))
-julia>  monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
+julia> monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
 MonodromyResult
 ==================================
-• 4 solutions (2 real)
+• 4 classes of solutions (modulo group action) (2 real)
 • return code → heuristic_stop
 • 322 tracked paths
 ```

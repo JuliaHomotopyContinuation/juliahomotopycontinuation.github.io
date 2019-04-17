@@ -81,13 +81,13 @@ S = solve(G)
 
 On my laptop the computation takes 102 seconds. Here is what I get.
 ```julia-repl
-Result with 7533 solutions
+Result with 7391 solutions
 ==================================
 • 720 non-singular solutions (0 real)
-• 6813 singular solutions (0 real)
-• 40 failed paths
+• 6671 singular solutions (0 real)
+• 91 failed paths
 • 110592 paths tracked
-• random seed: 424526
+• random seed: 498802
 ```
 
 The count of 720 is correct: for each of the 120 tritangents I get 6 solutions corresponding to all permutations of the contact points $x,y,z$ --- and $6 \cdot 120 = 720$.
@@ -115,6 +115,6 @@ Result with 684 solutions
 • 684 non-singular solutions (24 real)
 • 0 singular solutions (0 real)
 • 720 paths tracked
-• random seed: 709230
+• random seed: 757804
 ```
 From the $4= \frac{24}{6}$ real solutions one was used in the gif above.

@@ -27,6 +27,9 @@ pre code {
     border-radius: 8px;
 }
 
+#main {
+    padding: 0 12px;
+}
 
 .hljs {
     background: #282c34;
@@ -59,4 +62,17 @@ pre code {
     margin-bottom: -60px;
     padding-bottom: 14px;
     margin-top: -38px;
+}
+
+
+#top #top-nav-main li {
+    margin-right: 24px;
+}
+
+#top #top-nav-main {
+    padding-left: 40px;
+}
+
+#top #top-brand {
+    margin-right: 40px;
 }

@@ -150,10 +150,10 @@ Suppose $x$ is a solution $F(x)=0$ and that $F=F_{u_0}$ is a point in a family o
     
     <item>
       <title>Tracking in affine space</title>
-      <link>/guides/affine_tracking/</link>
+      <link>/guides/affine-tracking/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/guides/affine_tracking/</guid>
+      <guid>/guides/affine-tracking/</guid>
       <description>By default, HomotopyContinuation.jl tracks paths in projective space. One can tell HomotopyContinuation.jl to track over affine space by using the flag affine_tracking = true:
 using HomotopyContinuation @polyvar x y f = [x^2 + y - 1, y - 4] solve(f, affine_tracking = true)  </description>
     </item>

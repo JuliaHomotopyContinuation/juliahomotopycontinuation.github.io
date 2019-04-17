@@ -38,7 +38,9 @@ F = [f₁; f₂; g];
 ```
 
 
-An initial solution is given by two circles, each of radius 1,  centered at $(1,0)$ and $(-1,0)$, respectively. Let us track this solution to the system given by $p_1 = [7,5], p_2 = [1,2], Q_1 = \begin{pmatrix} 1 & 2 \\\ 2 & 4 \end{pmatrix}, Q_2 = \begin{pmatrix} 0 & 3 \\\ 3 & 1 \end{pmatrix}$.
+An initial solution is given by two circles, each of radius 1,  centered at $(1,0)$ and $(-1,0)$, respectively. Let us track this solution to the system given by
+
+$$p_1 = [3,0], p_2 = [1,2], Q_1 = \begin{pmatrix} 1 & 1\\\ 1 & 0 \end{pmatrix}, Q_2 = \begin{pmatrix} 0 & 2 \\\ 2 & 1 \end{pmatrix}.$$
 
 
 That is, the *parameters* are $p_1, p_2, Q_1, Q_2$ and the *variables* are $x,r,λ$. Now we track the starting solution towards the target system
@@ -47,18 +49,17 @@ That is, the *parameters* are $p_1, p_2, Q_1, Q_2$ and the *variables* are $x,r,
 ```julia-repl
 julia> params = [vec(Q₁); vec(Q₂); p₁; p₂]
 julia> q = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, -1, 0]
-julia> p = [vec([1 2; 2 5]); vec([0 3; 3 1]); [7, 5]; [1, 2]]
+julia> p = [vec([1 1; 1 0]); vec([0 2; 2 1]); [3, 0]; [1, 2]]
 julia> solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=q, targetparameters=p)
 Result with 1 solutions
 ==================================
-• 1 non-singular finite solution (1 real)
+• 1 non-singular solution (1 real)
 • 0 singular solutions (0 real)
 • 1 paths tracked
-• random seed: 296689
+• random seed: 805680
 ```
 
 
-The computation reveals that $r^\star \approx 10.89$. Here is a picture.
+The computation reveals that $r^\star \approx 1.317$. Here is a picture.
 
-
-![img](/images/ellipse.png)
+<p style="text-align:center;"><img src="/images/ellipses.pdf" width="600px"/></p>

@@ -73,7 +73,7 @@ solve([f; ℓ₁], [f; ℓ], [p])
 ```
 AffineResult with 1 tracked paths
 ==================================
-• 1 non-singular finite solution (0 real)
+• 1 non-singular solution (0 real)
 • 0 singular solutions (0 real)
 • 0 solutions at infinity
 • 0 failed paths

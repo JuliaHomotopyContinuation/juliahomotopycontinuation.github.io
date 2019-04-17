@@ -1,32 +1,84 @@
 +++
 date = "2018-09-04T11:56:55+01:00"
-title = "The point of maximal curvature on a surface"
+title = "Maximal curvature of a surface"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "How to compute curvature with homotopy continuation"
+description = "How to compute curvature"
 weight = 10
 author = "Paul"
 +++
 
+<h3 class="section-head">Curvature of curves in the plane</h3>
 
-In a recent discussion with [Maddie Weinstein](https://math.berkeley.edu/~maddie/) and [Khazhgali Kozhasov](http://personal-homepages.mis.mpg.de/kozhasov/) we considered the problem of computing the maximal curvature of an algebraic manifold  $V\subset \mathbb{R}^n$ (a smooth [manifold](https://en.wikipedia.org/wiki/Manifold) that is also a real [algebraic variety](https://en.wikipedia.org/wiki/Algebraic_variety) ).
+Consider the problem of computing the point on a (smooth) real variety $V\subset \mathbb{R}^n$, where the curvature is maximal. For curves in the plane $ \mathbb{R}^2$ we can use the [following formula](https://en.wikipedia.org/wiki/Implicit_curve#Slope_and_curvature) for curvature at a point $p\in V = \\{f(x_1,x_2)=0\\}$.
 
-Our definition of maximal curvature is $\sigma: = \mathrm{sup}_{p\in V} \sigma(p)$, where $\sigma(p)$ is the maximal curvature of a [geodesic](https://en.wikipedia.org/wiki/Geodesic) through $p$:
+$$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$
 
-$$\sigma(p): = \mathrm{max} \,\\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma \in V \text{ geodesic w.\ } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\\}$$
+where $v^T \,\nabla_p f(p) = 0$, $H$ is the Hessian of $f$ at $p$ and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T \, \nabla_p \sigma(p)=0$ and $f(p)=0$.
+
+Thus, for maximizing $\sigma$ over
+
+
+$$V =\\{x_1^4 - x_1^2x_2^2 + x_2^4 - 4x_1^2 - 2x_2^2 - x_1 - 4x_2 + 1 = 0\\}$$
+
+we use the following code.
+```julia
+using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
+# using JLD2
+
+@polyvar x[1:2]# initialize variables
+f = x[1]^4 - x[1]^2*x[2]^2 + x[2]^4 - 4x[1]^2 - 2x[2]^2 - x[1] - 4x[2] + 1
+
+∇ = differentiate(f, x) # the gradient
+H = differentiate(∇, x) # the Hessian
+
+g = ∇ ⋅ ∇
+v = [-∇[2]; ∇[1]]
+h = v' * H * v
+dg = differentiate(g, x)
+dh = differentiate(h, x)
+
+F = [(g .* dh - ((3/2) * h).* dg) ⋅ v; f]
+
+S = solve(F)
+```
+
+Then, `S` returns
+
+```julia-repl
+julia> S
+Result with 56 solutions
+==================================
+• 56 non-singular solutions (12 real)
+• 0 singular solutions (0 real)
+• 64 paths tracked
+• random seed: 314288
+```
+
+Here is a picture of all solutions.
+
+<p style="text-align:center;"><img src="/images/curvature.pdf" width="600px"/></p>
+
+
+
+<h3 class="section-head">Curvature of general hypersurfaces</h3>
+
+The definition of maximal curvature for points on general [hypersurfaces](https://en.wikipedia.org/wiki/Hypersurface) is the maximal curvature of a [geodesic](https://en.wikipedia.org/wiki/Geodesic) through $p$:
+
+$$\sigma(p) = \mathrm{max} \,\\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma \in V \text{ geodesic with\ } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\\}$$
 
 (curves with unit norm derivatives are called [parametrized by arc-length](https://en.wikipedia.org/wiki/Differential_geometry_of_curves)).
 
-In this blog post I want to explain how to compute $\sigma$ for [hypersurfaces](https://en.wikipedia.org/wiki/Hypersurface) in $\mathbb{R}^n$ using HomotopyContinuation.jl.
+Here, the equations are more complicated.
+The math for deriving them requires some knowledge on [differential geometry](https://en.wikipedia.org/wiki/Differential_geometry). The theoretical part is at the end of this example. The reader who just wants to see code can execute the following script. It is written for the input data
 
-The math behind the problem requires some knowledge on [differential geometry](https://en.wikipedia.org/wiki/Differential_geometry). This is why I decided to put the theoretical part at the end of this blog post. The reader who just wants to see code can execute the following script. It is written for the input data $n=2$ and $V = \\{x_1^2 + 4x_1 + x_2 - 1 = 0\\}$.
+$$V=\\{x_1^2 + x_1x_2 + x_2^2  + x_1 - 3x_2  -  2x_3 + 2 = 0\\}.$$
 
 ```julia
-n = 2
-using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
+n = 3
 @polyvar x[1:n] v[1:n] z[1:3]# initialize variables
-f = x[1]^2 + 4x[1] + x[2] - 1 # define f
+f = x[1]^2 + x[1]*x[2] + x[2]^2  + x[1] - 3x[2]  -  2x[3] + 2# define f
 
 ∇f = differentiate(f, x) # the gradient
 H = hcat([differentiate(∇f[i], x) for i in 1:n]...) # the Hessian
@@ -57,35 +109,16 @@ p = real_sols[i][1:n]
 
 ```
 
-If $V=\\{f = 0\\}$ has a point of maximal curvature, that point will be saved to the variable `p` and the maximal curvature at this point is `σ_max`. The picture is as follows.
-
-<p style="text-align:center;"><img src="/images/curvature1.png" width="500px"/></p>
-
-It is not suprising that the maximal curvature is attained at the vertex.
-
-The next example is the following hypersurface in $\mathbb{R}^3$:
-
-$$V=\\{x_1^2 + x_1x_2 + x_2^2  + x_1 - 3x_2  -  2x_3 + 2 = 0\\}.$$
-
-I get the following picture, created with the `@gif` macro from the [Plots.jl](http://docs.juliaplots.org/latest/) package.
+The following animation was created with the `@gif` macro from the [Plots.jl](http://docs.juliaplots.org/latest/) package.
 
 <p style="text-align:center;"><img src="/images/curvature2.gif" width="500px"/></p>
-
-<h3 class="section-head">Relation to topological data analysis</h3>
-
-Computing the maximal curvature $\sigma$ is relevant for
-[topological data analysis](https://en.wikipedia.org/wiki/Topological_data_analysis) (TDA) as it is part of computing the *reach* $\tau_V$ of a manifold $V$. I don't want to recall the technical definition of the reach, but rather quote [Aamari et al.](https://arxiv.org/pdf/1705.04565.pdf) who write *"If a set has its reach greater than $\tau_V > 0$, then one can roll freely a ball of radius $\tau_V > 0$ around it".* The connection to TDA comes from a paper by [Niyogi, Smale and Weinberger](http://people.cs.uchicago.edu/~niyogi/papersps/NiySmaWeiHom.pdf) who explain how to compute the homology of a manifold $V$ from a finite point sample $X\subset V$. In their computation they assume that the reach $\tau_V$ is known. This is why being able to compute the reach is important for TDA.
-
-[Aamari et al.](https://arxiv.org/pdf/1705.04565.pdf) show that $\tau_V$ is the minimum $ \tau_V = \min\, \\{\sigma^{-1}, \rho\\},$
-where $\sigma$ is the maximal curvature as above, and $\rho$ is $\frac{1}{2}$ the width of the narrowest *bottleneck* of $V$.
-[David Eklund](https://arxiv.org/pdf/1804.01015.pdf) has shown how to compute $\rho$ using homotopy continuation. Computing the maximal curvature $\sigma$ is the final step towards computing the reach.
 
 
 <h3 class="section-head">The Algebraic Geometry of Curvature</h3>
 
-I will now explain the math behind the problem, and why the code above does what it is supposed to do. The variety $V$ is assumed to be a smooth hypersurface in $\mathbb{R}^n$. That is, there is a polynomial $f(x_1,\ldots,x_n)$ with $V = \\{p\in\mathbb{R}^n\mid f(p)=0\\}.$
+Here is why the code above does what it is supposed to do.
 
-It can be shown that for hypersurfaces the maximal geodesic curvature at $p$ is the [spectral norm](http://mathworld.wolfram.com/SpectralNorm.html) of the derivative of the [Gauss map](https://en.wikipedia.org/wiki/Gauss_map) $G: V \to \mathbb{P}^{n-1}\mathbb{R},\, p\mapsto (\mathrm{T}_p V)^\perp$.
+It can be shown that for hypersurfaces $V = \\{f=0\\}.$ the maximal geodesic curvature at $p$ is the [spectral norm](http://mathworld.wolfram.com/SpectralNorm.html) of the derivative of the [Gauss map](https://en.wikipedia.org/wiki/Gauss_map) $G: V \to \mathbb{P}^{n-1}\mathbb{R},\, p\mapsto (\mathrm{T}_p V)^\perp$.
 The Gauss map sends a point $p$ to the normal space of $V$ at $p$. Since $V$ is of codimension $1$, the normal space is a line and lines are parametrized by the $(n-1)$-dimensional [projective space](https://en.wikipedia.org/wiki/Projective_space) $\mathbb{P}^{n-1}\mathbb{R}$. Summarizing:
 
 $$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \,  \Vert v\Vert = \Vert w \Vert_L =1}  \,\langle w, DG(p)v\rangle_L.$$
@@ -104,7 +137,7 @@ so that
 
 $$\sigma(p) = \max_{v,w\in \nabla_p f^\perp,\,  v^Tv = 1,\, w^Tw = \nabla_p f^T\,\nabla_p f}  \,\frac{w^T \,DG(p)\, v}{\nabla_p f^T\,\nabla_p f}.$$
 
-In remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p f).$ Consequently, by the chain rule of differentiation:
+It remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p f).$ Consequently, by the chain rule of differentiation:
 
 $$DG(p) = D\pi(\nabla_p f) \, H$$
 where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} & \ldots & \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.
@@ -117,11 +150,13 @@ Diving $w$ by $\sqrt{g}$ for $g:=\nabla_p f^T\,\nabla_p f$ and using that $H$ is
 
 $$\sigma(p) = \max_{v \in \nabla_p f^\perp \,  v^Tv = 1}  \,\frac{v^T \,H\, v}{g^\frac{3}{2}}.$$
 
-(for curves in the plane this is the formula from [Wikipedia](https://en.wikipedia.org/wiki/Implicit_curve#Slope_and_curvature)). I finally arrive at the following formula for $\sigma$.
+(for curves in the plane this is the formula from above). Finally, the following formula for $\sigma$
 
 $$\sigma = \max_{p\in V, v \in\nabla_p f^\perp \,  v^Tv = 1}  \,\frac{v^T \,H\, v}{g^\frac{3}{2}}$$
 
-(actually, the last $\max$ is a $\sup$, but I want to derive the critical equations of the $\max$). Writing $h =  v^T H v$, $\nabla h = (\frac{\partial h}{\partial x_i})^{1\leq i\leq n}$ and $\nabla g = (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}$
+(actually, the last $\max$ is a $\sup$).
+
+Writing $h =  v^T H v$, $\nabla h = (\frac{\partial h}{\partial x_i})^{1\leq i\leq n}$ and $\nabla g = (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}$
 the corresponding critical equations of this are:
 
 * $A \begin{bmatrix} 1\\\ z \end{bmatrix} = 0$ for $A= \begin{bmatrix}\nabla h \cdot g - \frac{3}{2} \cdot h \cdot \nabla g &  \nabla f & Hv&  0 \\\ Hv &  0 & \nabla f & v \end{bmatrix}$ and $z=(z_1,z_2,z_3)^T$.

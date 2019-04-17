@@ -31,8 +31,8 @@ julia> g = [x + y, y + 3, x + 2]
 julia> solve(f ∘ g)
 Result with 2 solutions
 ==================================
-• 2 non-singular finite solutions (2 real)
-• 0 singular finite solutions (0 real)
+• 2 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 446964
 ```
@@ -46,8 +46,8 @@ julia> h = [u^2 - 1, u + v - 2]
 julia> solve(f ∘ g ∘ h)
 Result with 4 solutions
 ==================================
-• 4 non-singular finite solutions (2 real)
-• 0 singular finite solutions (0 real)
+• 4 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
 • 12 paths tracked
 • random seed: 386832
 ```
@@ -67,8 +67,8 @@ julia> f2 = [a * b - q, a * c - p]
 julia> res2 = solve(f2 ∘ g, solutions(res), parameters=[p, q], p₁=[1, 2], p₀=[2, 3])
 Result with 2 solutions
 ==================================
-• 2 non-singular finite solutions (2 real)
-• 0 singular finite solutions (0 real)
+• 2 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
 • 2 paths tracked
 • random seed: 48821
 ```

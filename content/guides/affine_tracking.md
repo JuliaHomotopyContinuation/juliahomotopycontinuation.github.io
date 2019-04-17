@@ -8,4 +8,12 @@ bref = "Let the tracker make its computation in affine space"
 group = "advanced"
 +++
 
-The word "finite" means that the solutions are not at infinity. Solutions at infinity describe solutions of the [homogenization](https://en.wikipedia.org/wiki/Homogeneous_polynomial#Homogenization) of $f$ which are no solutions of $f$ itself.
+By default, HomotopyContinuation.jl tracks paths in [projective space](https://en.wikipedia.org/wiki/Projective_space). 
+One can tell HomotopyContinuation.jl to track over affine space by using the flag `affine_tracking = true`:
+
+```julia
+using HomotopyContinuation
+@polyvar x y
+f = [x^2 + y - 1, y - 4]
+solve(f, affine_tracking = true)
+```

@@ -58,8 +58,8 @@ result = solve(∇L)
 ```
 Result with 26 solutions
 ==================================
-• 26 non-singular finite solutions (22 real)
-• 0 singular finite solutions (0 real)
+• 26 non-singular solutions (22 real)
+• 0 singular solutions (0 real)
 • 54 paths tracked
 • random seed: 556761
 ```

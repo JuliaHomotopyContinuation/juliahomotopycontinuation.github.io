@@ -261,7 +261,7 @@ solve([x^2 - y, y^3*x-x], homotopy=RandomUnitaryPath)
 ```
 AffineResult with 8 tracked paths
 ==================================
-• 6 non-singular finite solutions (2 real)
+• 6 non-singular solutions (2 real)
 • 1 singular finite solution (1 real)
 • 1 solution at infinity
 • 0 failed paths

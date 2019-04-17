@@ -51,8 +51,8 @@ solve(F)
 ```
 Result with 16 solutions
 ==================================
-• 16 non-singular finite solutions (0 real)
-• 0 singular finite solutions (0 real)
+• 16 non-singular solutions (0 real)
+• 0 singular solutions (0 real)
 • 1024 paths tracked
 • random seed: 462257
 ```

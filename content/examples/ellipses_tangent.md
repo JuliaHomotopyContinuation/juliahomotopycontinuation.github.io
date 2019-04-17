@@ -52,7 +52,7 @@ julia> solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=q, targetpar
 Result with 1 solutions
 ==================================
 • 1 non-singular finite solution (1 real)
-• 0 singular finite solutions (0 real)
+• 0 singular solutions (0 real)
 • 1 paths tracked
 • random seed: 296689
 ```

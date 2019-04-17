@@ -49,8 +49,8 @@ I get the following answer.
 ```julia-repl
 Result with 182 solutions
 ==================================
-• 182 non-singular finite solutions (36 real)
-• 0 singular finite solutions (0 real)
+• 182 non-singular solutions (36 real)
+• 0 singular solutions (0 real)
 • 512 paths tracked
 • random seed: 145809
 ```

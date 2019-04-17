@@ -35,8 +35,8 @@ After the computation has finished, you should see the following output.
 ```julia
 Result with 4 solutions
 ==================================
-• 4 non-singular finite solutions (2 real)
-• 0 singular finite solutions (0 real)
+• 4 non-singular solutions (2 real)
+• 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 902575
 ```
@@ -50,6 +50,16 @@ julia> realsolutions(result)
  [-1.68179, -1.41421]
 ```
 
-A detailed explanation of the output of `solve(f)` is described [in the next guide](/guides/reading-output/). All options of `solve(f)` are listed in the [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1).
+### Understanding the output of your computation
+
+A detailed explanation of the output of `solve(f)` is described [in the next guide](/guides/reading-output/).
+
+### Solving many systems of equation
 
 `solve(f)` works nicely for single systems. If you have to solve many systems in a loop, you should read [this guide](/guides/many-systems/).
+
+### What else should I know?
+
+HomotopyContinuation.jl provides many more features. Check our detailed [Guides](/guides/) for learning more about the full power of homotopy continuation.
+
+You should also consult our [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1), where all options of `solve(f)` are listed.

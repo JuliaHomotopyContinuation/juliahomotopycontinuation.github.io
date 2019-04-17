@@ -8,7 +8,10 @@ bref = "For this guide, we're going to walk through an illustrative example"
 group = "get-started"
 +++
 
+### Requirements
+If you have not yet installed HomotopyContinuation.jl, please consider the [installation guide](/guides/installation/).
 
+### Solve your first system of equations
 Consider the following simple system of two polynomials in two variables.
 
 
@@ -47,6 +50,6 @@ julia> realsolutions(result)
  [-1.68179, -1.41421]
 ```
 
-A detailed explanation of the output of `solve(f)` is described [in the next guide](reading_output). All options of `solve(f)` are listed in the [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1).
+A detailed explanation of the output of `solve(f)` is described [in the next guide](/guides/reading-output/). All options of `solve(f)` are listed in the [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1).
 
-`solve(f)` works nicely for single systems. If you have to solve many systems in a loop, you should read [this guide](many-systems).
+`solve(f)` works nicely for single systems. If you have to solve many systems in a loop, you should read [this guide](/guides/many-systems/).

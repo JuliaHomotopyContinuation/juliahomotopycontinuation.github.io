@@ -1,7 +1,7 @@
 +++
 title = "Tracking in affine space"
 description = "Let the tracker make its computation in affine space"
-weight = 120
+weight = 99
 draft = false
 toc = false
 bref = "Let the tracker make its computation in affine space"

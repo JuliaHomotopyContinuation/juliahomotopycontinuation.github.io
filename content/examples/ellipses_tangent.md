@@ -1,6 +1,6 @@
 +++
 date = "2019-03-26T21:56:55+01:00"
-title = "When are two ellipses tangent?"
+title = "When do two ellipses meet?"
 tags = ["example"]
 categories = ["general"]
 draft = false

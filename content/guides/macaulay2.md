@@ -4,9 +4,9 @@ title = "Using HomotopyContinuation.jl from Macaulay2"
 bref = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 description = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 draft = false
-weight = 15
+weight = 1
 toc = true
-group = "get-started"
+group = "advanced"
 +++
 
 [Macaulay2](http://www2.macaulay2.com/Macaulay2/) is a great software for symbolic computations
@@ -36,7 +36,7 @@ should generate a file `example1.jl` containing
 #    https://www.JuliaHomotopyContinuation.org
 using HomotopyContinuation
 
-@polyvar x y 
+@polyvar x y
 f = [x^2+y^2+1, x-y-4];
 
 result = solve(f)

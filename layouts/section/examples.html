@@ -10,7 +10,7 @@
 
 <div id="components">
   <div class="row gutters">
-   {{ range .Paginator.Pages.ByDate.Reverse }}
+   {{ range .Pages.ByWeight }}
     <div class="col col-4 item">
       <h4>
         <a href="{{ .Permalink }}">{{ .Title }}</a>

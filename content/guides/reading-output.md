@@ -32,7 +32,7 @@ Result with 4 solutions
 
 Let us look at this output in more detail: 4 non-singular solutions have been found, and 2 of them are real solutions.
 
-The line "4 paths tracked" means that the algorithm tracked 4 paths with homotopy continuation. In the guide on [How does it work?](how_does_it_work) we explain in detail the meaning of this. If you are only interested in the solutions, however, you can skip this part.
+The line "4 paths tracked" means that the algorithm tracked 4 paths with homotopy continuation. In the guide on [How does it work?](how-does-it-work) we explain in detail the meaning of this. If you are only interested in the solutions, however, you can skip this part.
 
 <h3 class="section-head" id="pathresult-entries"><a>The entries of Result: PathResult</a></h3>
 

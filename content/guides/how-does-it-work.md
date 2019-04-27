@@ -17,7 +17,7 @@ $$
 F(x)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\\ \vdots\\\ f_n(x_1,\ldots,x_n) \end{bmatrix}.
 $$
 
-(for more polynomials than variables, see the guide on [overdetermined tracking](overdetermined-tracking)). We wish to find a zero in $\\mathbb{C}^n$ of $f$. Suppose
+(for more polynomials than variables, see the guide on [overdetermined tracking](overdetermined-tracking)). We wish to find a zero of $F$ in $\\mathbb{C}^n$. Suppose
 
 $$G(x)=\begin{bmatrix} g_1(x_1,\ldots,x_n) \\\ \vdots\\\ g_n(x_1,\ldots,x_n) \end{bmatrix}$$
 

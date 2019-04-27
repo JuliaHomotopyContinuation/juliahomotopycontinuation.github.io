@@ -134,12 +134,12 @@
     <p>The basic idea of <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry#Homotopy_continuation">homotopy continuation</a> is as follows. Suppose that you have a system of polynomials with as many variables as polynomials</p>
 
 <p>$$
-F(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)).
+F(x)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots\\ f_n(x_1,\ldots,x_n) \end{bmatrix}.
 $$</p>
 
 <p>(for more polynomials than variables, see the guide on <a href="overdetermined-tracking">overdetermined tracking</a>). We wish to find a zero in $\mathbb{C}^n$ of $f$. Suppose</p>
 
-<p>$$G(x)=(g_1(x_1,\ldots,x_n),\ldots,g_n(x_1,\ldots,x_n)$$</p>
+<p>$$G(x)=\begin{bmatrix} g_1(x_1,\ldots,x_n) \\ \vdots\\ g_n(x_1,\ldots,x_n) \end{bmatrix}$$</p>
 
 <p>is another system with a known zero: $G(\zeta) = 0$. We connect $F$ and $G$ in the space of polynomial systems
 by a path $t\mapsto H(x,t)$ with $H(x,0) = F(x)$ and $H(x,1)=G(x)$ (the space of polynomial systems form a vector space, in which the notion of path is well-defined).</p>
@@ -149,8 +149,6 @@ time steps $t_0 = 0 &lt; t_1 &lt; \cdots &lt; t_k = 1$. If the discretization is
 
 <p>Most implementations of homotopy continuation, including Bertini and HomotopyContinuation.jl, use heuristics for setting the step-sizes $t_{j+1}-t_j$ and number of Newton iterations.</p>
 
-<p>Although the outcome of the homotopy continuation algorithms are numerical approximation of the true zeros of $F$, there is a way of rigorously certifying if a true zero is closeby or not. We refer to the <a href="https://arxiv.org/abs/1011.1091">paper by Hauenstein and Sottile</a> and their algorithm <a href="https://github.com/JuliaHomotopyContinuation/AlphaCertified.jl">alpha-Certified</a>.</p>
-
 <p>For instance, the homotopy could be the <em>straight-line homotopy</em> $tG + (1-t)F$. The default choice of HomotopyContinuation.jl is a slightly modified straight-line homotopy. If your system has parameters, you can also make a <a href="parameter-homotopies">parameter homotopy</a>. You can even make up your own <a href="custom-homotopy">custom homotopy</a>. For square systems is that we can <em>automatically generate</em> a start system $G$. If you use the basic <code>solve</code> command the following starting system is constructed:</p>
 
 <p>$$
@@ -158,6 +156,8 @@ G(x_1,\ldots,x_n) = \begin{pmatrix} x_1^{d_1} - a_1 \\ \vdots \\  x_n^{d_n} - a_
 $$</p>
 
 <p>where the $a_i$ are random numbers and $d_i$ is the degree of $f_i$. There are $d_1\cdots d_n$ many solutions to this system, which are easy to write down. A <a href="https://en.wikipedia.org/wiki/Bézout%27s_theorem">theorem by Bézout</a> says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1 \cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a <em>total degree homotopy</em>.</p>
+
+<p>(For researchers aiming at mathematical proofs: although the outcome of the homotopy continuation algorithms are numerical approximation of the true zeros of $F$, there is a way of rigorously certifying if a true zero is closeby or not. We refer to the <a href="https://arxiv.org/abs/1011.1091">paper by Hauenstein and Sottile</a> and their algorithm <a href="https://github.com/JuliaHomotopyContinuation/AlphaCertified.jl">alpha-Certified</a>.)</p>
 
     
     

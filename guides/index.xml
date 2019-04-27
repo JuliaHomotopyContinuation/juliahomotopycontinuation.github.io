@@ -53,9 +53,9 @@ Result with 4 solutions ================================== • 4 non-singular so
       
       <guid>/guides/how-does-it-work/</guid>
       <description>The basic idea of homotopy continuation is as follows. Suppose that you have a system of polynomials with as many variables as polynomials
-$$ F(x)=(f_1(x_1,\ldots,x_n),\ldots,f_n(x_1,\ldots,x_n)). $$
+$$ F(x)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots\\ f_n(x_1,\ldots,x_n) \end{bmatrix}. $$
 (for more polynomials than variables, see the guide on overdetermined tracking). We wish to find a zero in $\mathbb{C}^n$ of $f$. Suppose
-$$G(x)=(g_1(x_1,\ldots,x_n),\ldots,g_n(x_1,\ldots,x_n)$$
+$$G(x)=\begin{bmatrix} g_1(x_1,\ldots,x_n) \\ \vdots\\ g_n(x_1,\ldots,x_n) \end{bmatrix}$$
 is another system with a known zero: $G(\zeta) = 0$. We connect $F$ and $G$ in the space of polynomial systems by a path $t\mapsto H(x,t)$ with $H(x,0) = F(x)$ and $H(x,1)=G(x)$ (the space of polynomial systems form a vector space, in which the notion of path is well-defined).</description>
     </item>
     

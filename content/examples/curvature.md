@@ -58,7 +58,7 @@ Result with 56 solutions
 
 Here is a picture of all solutions.
 
-<p style="text-align:center;"><img src="/images/curvature.pdf" width="600px"/></p>
+<p style="text-align:center;"><img src="/images/curvature.png" width="600px"/></p>
 
 
 

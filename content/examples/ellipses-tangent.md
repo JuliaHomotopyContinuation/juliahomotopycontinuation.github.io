@@ -62,4 +62,4 @@ Result with 1 solutions
 
 The computation reveals that $r^\star \approx 1.317$. Here is a picture.
 
-<p style="text-align:center;"><img src="/images/ellipses.pdf" width="600px"/></p>
+<p style="text-align:center;"><img src="/images/ellipses.png" width="600px"/></p>

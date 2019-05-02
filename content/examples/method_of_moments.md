@@ -12,7 +12,7 @@ author = "Paul"
 
 Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1,\sigma_2,\sigma_3$. The density of $X_i$ is
 
-$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma^2}}.$$
+$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
 
 A mixture of the three random variables is the random variable $U$ with density
 

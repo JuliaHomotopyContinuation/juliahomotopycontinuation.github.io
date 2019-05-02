@@ -76,7 +76,7 @@ Setting things up Our goal is to have a function writeSystem available which acc
       
       <guid>/examples/method_of_moments/</guid>
       <description>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1,\sigma_2,\sigma_3$. The density of $X_i$ is
-$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma^2}}.$$
+$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
 A mixture of the three random variables is the random variable $U$ with density
 $$\psi(x) = a_1\, \phi_1(x)\, + \,a_2 \,\phi_2(x)\, + \,a_3 \,\phi_3(x), \quad\text{ for } \quad a_1+a_2+a_3 =1.$$
 The method of moments recovers $\psi$ from the moments

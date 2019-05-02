@@ -80,12 +80,12 @@ which we can use as input data for the monodromy method for `q₀` being the par
 
 ```julia-repl
 julia> @polyvar p[1:9]
-julia> R = monodromy_solve(f - p, start_sol, q₀, parameters=p)
+julia> R = monodromy_solve(f - p, start_sol, q₀, parameters=p; target_solutions_count = 1350)
 MonodromyResult
 ==================================
 • 1350 solutions (0 real)
-• return code → interrupt
-• 16642 tracked paths
+• return code → success
+• 11009 tracked paths
 ```
 
 Now, we can track the solutions from $q₀$ to $p₀$.
@@ -131,7 +131,7 @@ Those are the parameters of the two mixtures Gaussian that give our moments `q�
 The group action can also be exploited in the monodromy computation:
 
 ```julia-repl
-julia> R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling)
+julia> R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling; target_solutions_count = 225)
 MonodromyResult
 ==================================
 • 225 classes of solutions (modulo group action) (0 real)

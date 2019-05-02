@@ -167,7 +167,7 @@ Note that you have to provide the start solutions for this kind of homotopy.</p>
 
 <p>The syntax in HomotopyContinuation.jl to construct such a homotopy is as follows.</p>
 
-<pre><code class="language-julia">solve(F, startsolutions; parameters=params, startparameters=q, targetparameters=p)
+<pre><code class="language-julia">solve(F, startsolutions; parameters=params, start_parameters=q, target_parameters=p)
 </code></pre>
 
 <p>where <code>p</code> and <code>q</code> are vectors of parameter values for <code>F</code>.
@@ -183,7 +183,7 @@ Necessarily, <code>length(params)</code>,  <code>length(p)</code>and <code>lengt
 <pre><code class="language-julia-repl">julia&gt; @polyvar x y a b
 julia&gt; F = [x^2 - a, x * y - a + b]
 julia&gt; startsolution = [[1, 1]]
-julia&gt; solve(F, startsolution; parameters=[a, b], startparameters=[1, 0], targetparameters=[2, 5])
+julia&gt; solve(F, startsolution; parameters=[a, b], start_parameters=[1, 0], target_parameters=[2, 5])
 Result with 1 solutions
 ==================================
 • 1 non-singular solution (1 real)

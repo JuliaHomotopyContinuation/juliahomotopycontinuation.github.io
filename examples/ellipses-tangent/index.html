@@ -190,7 +190,7 @@ F = [f₁; f₂; g];
 <pre><code class="language-julia-repl">julia&gt; params = [vec(Q₁); vec(Q₂); p₁; p₂]
 julia&gt; q = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, -1, 0]
 julia&gt; p = [vec([1 1; 1 0]); vec([0 2; 2 1]); [3, 0]; [1, 2]]
-julia&gt; solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=q, targetparameters=p)
+julia&gt; solve(F, [[0, 0, 1, -1]], parameters=params, start_parameters=q, target_parameters=p)
 Result with 1 solutions
 ==================================
 • 1 non-singular solution (1 real)

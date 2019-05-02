@@ -131,7 +131,7 @@
 
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="571">
+<meta itemprop="wordCount" content="577">
 
 
 
@@ -222,12 +222,12 @@ q₀ = [m([a; μ; σ²] =&gt; start_sol) for m in f]
 <p>which we can use as input data for the monodromy method for <code>q₀</code> being the parameters. Here, it doesn&rsquo;t matter that complex solutions have no interpretation as parameters. They only serve to solve one specific instance of the polynomial system.</p>
 
 <pre><code class="language-julia-repl">julia&gt; @polyvar p[1:9]
-julia&gt; R = monodromy_solve(f - p, start_sol, q₀, parameters=p)
+julia&gt; R = monodromy_solve(f - p, start_sol, q₀, parameters=p; target_solutions_count = 1350)
 MonodromyResult
 ==================================
 • 1350 solutions (0 real)
-• return code → interrupt
-• 16642 tracked paths
+• return code → success
+• 11009 tracked paths
 </code></pre>
 
 <p>Now, we can track the solutions from $q₀$ to $p₀$.</p>
@@ -268,7 +268,7 @@ julia&gt; true_real_solutions[3]
 
 <p>The group action can also be exploited in the monodromy computation:</p>
 
-<pre><code class="language-julia-repl">julia&gt; R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling)
+<pre><code class="language-julia-repl">julia&gt; R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling; target_solutions_count = 225)
 MonodromyResult
 ==================================
 • 225 classes of solutions (modulo group action) (0 real)

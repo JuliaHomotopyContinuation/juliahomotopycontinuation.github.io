@@ -125,4 +125,4 @@ Result with 16 solutions
 • random seed: 231232
 ```
 And we obtain 16 new solutions, but this time we only needed to track 16 paths.
-For even more performance improvements you can take a look at our [guide](guides/many-systems/) regarding the solution of many systems in a loop.
+For even more performance improvements you can take a look at our [guide](/guides/many-systems/) regarding the solution of many systems in a loop.

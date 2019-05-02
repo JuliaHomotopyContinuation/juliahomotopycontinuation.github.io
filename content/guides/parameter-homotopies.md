@@ -31,7 +31,7 @@ Note that you have to provide the start solutions for this kind of homotopy.
 The syntax in HomotopyContinuation.jl to construct such a homotopy is as follows.
 
 ```julia
-solve(F, startsolutions; parameters=params, startparameters=q, targetparameters=p)
+solve(F, startsolutions; parameters=params, start_parameters=q, target_parameters=p)
 ```
 
 where `p` and `q` are vectors of parameter values for ``F``.
@@ -49,7 +49,7 @@ For tracking the solution $(x,y) = (1,1)$ from $(a,b) = (1,0)$ to $(a,b) = (2,5)
 julia> @polyvar x y a b
 julia> F = [x^2 - a, x * y - a + b]
 julia> startsolution = [[1, 1]]
-julia> solve(F, startsolution; parameters=[a, b], startparameters=[1, 0], targetparameters=[2, 5])
+julia> solve(F, startsolution; parameters=[a, b], start_parameters=[1, 0], target_parameters=[2, 5])
 Result with 1 solutions
 ==================================
 • 1 non-singular solution (1 real)

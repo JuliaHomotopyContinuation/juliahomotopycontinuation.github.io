@@ -50,7 +50,7 @@ That is, the *parameters* are $p_1, p_2, Q_1, Q_2$ and the *variables* are $x,r,
 julia> params = [vec(Q₁); vec(Q₂); p₁; p₂]
 julia> q = [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, -1, 0]
 julia> p = [vec([1 1; 1 0]); vec([0 2; 2 1]); [3, 0]; [1, 2]]
-julia> solve(F, [[0, 0, 1, -1]], parameters=params, startparameters=q, targetparameters=p)
+julia> solve(F, [[0, 0, 1, -1]], parameters=params, start_parameters=q, target_parameters=p)
 Result with 1 solutions
 ==================================
 • 1 non-singular solution (1 real)

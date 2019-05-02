@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Method of Moments </title>
+
+  
+  <meta name="description" content="For mixtures of three Gaussians"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul">
+
+
+  <meta property="og:title" content="Method of Moments" />
+<meta property="og:description" content="For mixtures of three Gaussians" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/examples/method_of_moments/" /><meta property="article:published_time" content="2019-03-26T21:56:55&#43;01:00"/>
+<meta property="article:modified_time" content="2019-03-26T21:56:55&#43;01:00"/>
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/examples/method_of_moments/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+  
+
+    
+    <link rel="stylesheet" href="/css/atom-one-dark.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header> <div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    
+<meta itemprop="name" content="Method of Moments">
+<meta itemprop="description" content="For mixtures of three Gaussians">
+
+
+<meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
+<meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
+<meta itemprop="wordCount" content="571">
+
+
+
+<meta itemprop="keywords" content="example," />
+
+<div id="hero">
+    <h1 itemprop="headline">  Method of Moments</h1>
+    
+<blockquote itemprop="description">For mixtures of three Gaussians</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>3 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2019-03-26T21:56:55&#43;01:00">26 Mar, 2019</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1,\sigma_2,\sigma_3$. The density of $X_i$ is</p>
+
+<p>$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma^2}}.$$</p>
+
+<p>A mixture of the three random variables is the random variable $U$ with density</p>
+
+<p>$$\psi(x) = a_1\, \phi_1(x)\, + \,a_2 \,\phi_2(x)\, + \,a_3 \,\phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$</p>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Method_of_moments_(statistics)">method of moments</a> recovers $\psi$ from the moments</p>
+
+<p>$$m_k = \int x^k \,\psi(x)\; \mathrm{d}x.$$</p>
+
+<p>Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$. Let us set up a system for this in Julia.</p>
+
+<pre><code class="language-julia">@polyvar a[1:3] μ[1:3] σ[1:3]
+
+m0 = a[1]+a[2]+a[3];
+m1 = a[1]*μ[1]+a[2]*μ[2]+a[3]*μ[3];
+m2 = a[1]*(μ[1]^2+σ[1])+a[2]*(μ[2]^2+σ[2])+a[3]*(μ[3]^2+σ[3]);
+m3 = a[1]*(μ[1]^3+3*σ[1]*μ[1])+a[2]*(μ[2]^3+3*σ[2]*μ[2])+a[3]*(μ[3]^3+3*σ[3]*μ[3]);
+m4 = a[1]*(μ[1]^4+6*σ[1]*μ[1]^2+3*σ[1]^2)+a[2]*(μ[2]^4+6*σ[2]*μ[2]^2+3*σ[2]^2)+
+      a[3]*(μ[3]^4+6*σ[3]*μ[3]^2+3*σ[3]^2);
+m5 = a[1]*(μ[1]^5+10*σ[1]*μ[1]^3+15*μ[1]*σ[1]^2)+
+      a[2]*(μ[2]^5+10*σ[2]*μ[2]^3+15*μ[2]*σ[2]^2)+
+      a[3]*(μ[3]^5+10*σ[3]*μ[3]^3+15*μ[3]*σ[3]^2);
+m6 = a[1]*(μ[1]^6+15*σ[1]*μ[1]^4+45*μ[1]^2*σ[1]^2+15*σ[1]^3)+
+      a[2]*(μ[2]^6+15*σ[2]*μ[2]^4+45*μ[2]^2*σ[2]^2+15*σ[2]^3)+
+      a[3]*(μ[3]^6+15*σ[3]*μ[3]^4+45*μ[3]^2*σ[3]^2+15*σ[3]^3);
+m7 = a[1]*(μ[1]^7+21*σ[1]*μ[1]^5+105*μ[1]^3*σ[1]^2+105*μ[1]*σ[1]^3)+
+      a[2]*(μ[2]^7+21*σ[2]*μ[2]^5+105*μ[2]^3*σ[2]^2+105*μ[2]*σ[2]^3)+
+      a[3]*(μ[3]^7+21*σ[3]*μ[3]^5+105*μ[3]^3*σ[3]^2+105*μ[3]*σ[3]^3);
+m8 = a[1]*(μ[1]^8+28*σ[1]*μ[1]^6+210*μ[1]^4*σ[1]^2+420*μ[1]^2*σ[1]^3+105*σ[1]^4)+
+      a[2]*(μ[2]^8+28*σ[2]*μ[2]^6+210*μ[2]^4*σ[2]^2+420*μ[2]^2*σ[2]^3+105*σ[2]^4)+
+      a[3]*(μ[3]^8+28*σ[3]*μ[3]^6+210*μ[3]^4*σ[3]^2+420*μ[3]^2*σ[3]^3+105*σ[3]^4)
+
+f = [m0, m1, m2, m3, m4, m5, m6, m7, m8]
+</code></pre>
+
+<p>Let us consider the following moments:</p>
+
+<pre><code class="language-julia">p₀ =  [1; -1; 3; -5.5; 22.45; -50.75; 243.325; -635.725; 3420.7375]     
+</code></pre>
+
+<p>Solving for $f - p₀ = 0$ directly is difficult. The total number of paths is</p>
+
+<pre><code class="language-julia-repl">julia&gt; bezout_number(f - p₀)
+362880
+</code></pre>
+
+<p>yet, <a href="https://arxiv.org/pdf/1510.04654.pdf">Amendola, Faugere and Sturmfels</a> showed that the number of (complex) solutions of the polynomial system $f = p₀$ is 1350 (much less than 362880!).</p>
+
+<p>Instead of solving $f - p₀$ directly, we use monodromy for solving another instance $f - q₀$. Then we move the 1350 computed solutions from  $f - q₀$ to  $f - p₀$. First, we generate a start solution:</p>
+
+<pre><code class="language-julia">a₀ = randn(ComplexF64, 3)
+a₀ = a₀ / sum(a₀)
+μ₀ = rand(ComplexF64, 3)
+σ₀ = rand(ComplexF64, 3)
+start_sol = [a₀; μ₀; σ₀]
+
+q₀ = [m([a; μ; σ] =&gt; start_sol) for m in f]
+</code></pre>
+
+<p>which we can use as input data for the monodromy method for <code>q₀</code> being the parameters. Here, it doesn&rsquo;t matter that complex solutions have no interpretation as parameters. They only serve to solve one specific instance of the polynomial system.</p>
+
+<pre><code class="language-julia-repl">julia&gt; @polyvar p[1:9]
+julia&gt; R = monodromy_solve(f - p, start_sol, q₀, parameters=p)
+MonodromyResult
+==================================
+• 1350 solutions (0 real)
+• return code → interrupt
+• 16642 tracked paths
+</code></pre>
+
+<p>Now, we can track the solutions from $q₀$ to $p₀$.</p>
+
+<pre><code class="language-julia">sols_complex_parameters = convert(Array{Vector{ComplexF64}}, solutions(R))
+R2 = solve(f - p, sols_complex_parameters, parameters = p, start_parameters=q₀, target_parameters = p₀)
+</code></pre>
+
+<p>There are</p>
+
+<pre><code class="language-julia-repl">julia&gt; nreal(R2)
+36
+</code></pre>
+
+<p>real solutions. Let us keep only those for which the variances are positive:</p>
+
+<pre><code class="language-julia">true_real_solutions  = filter(r -&gt; all(r[7:9] .&gt; 0), realsolutions(R2))
+</code></pre>
+
+<p>There are 12 of those. Those 12 come in groups of 6, because the group that permutes ${1,2,3}$ acts on the solutions. We can filter this as follows</p>
+
+<pre><code class="language-julia-repl">julia&gt; S₃ = SymmetricGroup(3)
+julia&gt; relabeling(v) = map(p -&gt; (v[1:3][p]..., v[4:6][p]..., v[7:9][p]...), S₃)
+julia&gt; Mults = multiplicities(true_real_solutions, group_action = relabeling)
+[3, 4, 8, 9, 11, 12]
+[1, 2, 5, 6, 7, 10]
+</code></pre>
+
+<p>Let us thus look at the first and at the third real solution</p>
+
+<pre><code class="language-julia-repl">julia&gt; true_real_solutions[1]
+[-0.182136, -1.74012, 2.92226, -1.60721, 0.184633, -0.33243, 0.0927855, 1.11301, 1.76594]
+julia&gt; true_real_solutions[3]
+[1.30343, -0.396056, 0.0926208, -0.346632, 0.755685, -2.68724, 1.98223, 0.553889, 0.392889]
+</code></pre>
+
+<p>Those are the parameters of the two mixtures Gaussian that give our moments <code>q₀</code>.</p>
+
+<p>The group action can also be exploited in the monodromy computation:</p>
+
+<pre><code class="language-julia-repl">julia&gt; R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling)
+MonodromyResult
+==================================
+• 225 classes of solutions (modulo group action) (0 real)
+• return code → heuristic_stop
+• 8072 tracked paths
+</code></pre>
+
+<p>The full 1350 solutions can then be returned as</p>
+
+<pre><code class="language-julia">relabeling.(solutions(R_with_group_action))
+</code></pre>
+
+<p>Then, we can proceed with the parameter homotopy as above.</p>
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul</span>
+    
+  
+  <time datetime="2019-03-26T21:56:55&#43;01:00">
+    26 Mar, 2019
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+            <a href="/examples/">Examples</a>
+          </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

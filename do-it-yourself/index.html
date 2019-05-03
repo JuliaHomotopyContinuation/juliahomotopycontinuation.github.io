@@ -82,6 +82,13 @@
     
     <link href="/css/custom.css" rel="stylesheet" type="text/css">
     
+<script type="text/javascript" src="/js/paper-full.min.js"></script>
+<script type="text/javascript" src="/js/conics.js"></script>
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/unfetch/polyfill"></script>
+<link href="/css/do-it-yourself.css" rel="stylesheet" type="text/css">
+
 </head>
 
 
@@ -124,7 +131,61 @@
 </header>
   <main>
 
-<iframe src="//juliahomotopycontinuation.mis.mpg.de" style="position: absolute;height: 100%;width: 100%;" />
+<div id="hero" class="wrap">
+  <h2>Do It Yourself</h2>
+  <p>3264 conics in a second.</p>
+</div>
+
+<div id="post-box">
+  <div id="post" itemprop="articleBody"><p>A <a href="https://en.wikipedia.org/wiki/Conic"><em>conic</em></a> in the plane $\mathbb{R}^2$ is the zero set of a
+quadratic polynomial in two variables:</p>
+
+<p class="general-conic">
+    $$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+</p>
+
+<p>Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines.
+The last case is called a degenerate conic.</p>
+
+<p><a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner&rsquo;s conic problem</a> asks the question of how many conics are tangent to five given conics. This webpage gives an answer to a slightly different question:
+<p style="width: 100%; text-align: center;">
+<em>Which conics are tangent to your five conics?</em>
+</p></p>
+
+<p>Plug in the coefficients of your five personal conics, and get the answers in a second (your conics must be sufficiently generic in the sense that the 3264 <em>complex</em> conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).</p>
+
+<div id="do-it-yourself-container"></div>
+
+<p><br></p>
+
+<p>More information on how this works can be found in the article <a href="https://arxiv.org/abs/1902.05518">3264 conics in a Second</a>.</p>
+
+<p><br>
+<div id="action-buttons">
+  <a class="button primary big" href="https://www.juliahomotopycontinuation.org/3264/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">If you want to read about 3264 real conics, click here.</a>
+</div></p>
+</div>
+
+  <div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul Breiding, Bernd Sturmfels and Sascha Timme</span>
+    
+  
+  <time datetime="2019-02-12T21:56:55&#43;01:00">
+    12 Feb, 2019
+  </time>
+  
+</p>
+
+    
+  </div>
+</div>
+
+
+<script type="text/javascript" src="/js/do-it-yourself.js"></script>
 
 </main>
   <footer>   <footer id="footer">

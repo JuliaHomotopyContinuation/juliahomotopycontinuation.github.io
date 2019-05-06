@@ -34,3 +34,8 @@ HighlightJS = true
     name = "Do It Yourself"
     weight = 6
     url = "/do-it-yourself"
+
+[[menu.main]]
+    name = "Github"
+    weight = 7
+    url = "https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl"

@@ -80,10 +80,17 @@ pre code {
 }
 
 #top #top-nav-main {
-    padding-left: 40px;
+    padding-left: 24px;
 }
 
 #top #top-brand {
-    margin-right: 40px;
+    margin-right: 24px;
 }
 
+#top {
+    padding: 0 24px;
+}
+
+#top #top-nav-main li {
+    font-size: 15px;
+}

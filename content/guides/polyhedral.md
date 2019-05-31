@@ -9,7 +9,7 @@ group = "advanced"
 +++
 
 
-Using polyhedral geometry for constructing start systems for homotopy continuation goes back to [Huber and Sturmfels](https://dl.acm.org/citation.cfm?id=213837). The advantage of so called polyhedral homotopies over [totaldegree homotopies](totaldegree) is that the number of paths to track can be significantly smaller for the polyhedral homotopy.
+Using polyhedral geometry for constructing start systems for homotopy continuation goes back to [Huber and Sturmfels](https://dl.acm.org/citation.cfm?id=213837). The advantage of so called polyhedral homotopies over [totaldegree homotopies](/guides/totaldegree) is that the number of paths to track can be significantly smaller for the polyhedral homotopy.
 
 Here is how it works:
 

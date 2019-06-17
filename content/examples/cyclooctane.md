@@ -21,7 +21,7 @@ The energy of a configuration $z=(z_1,\ldots,z_8)$ is minimized when the angles 
 
 $$\Vert z_1-z_3\Vert^2 = \cdots =  \Vert z_6-z_8\Vert^2=\Vert z_7-z_1\Vert^2 =\Vert z_8-z_2\Vert^2= \frac{8c^2}{3}.$$
 
-It is known that the solution set of these equations is homeomorphic to a [union of the Klein bottle and a sphere](https://www.ncbi.nlm.nih.gov/pubmed/20572697), which intersect in two rings.
+It is known that the solution set of these equations, up to simultaneous translation and rotation of the $z_i$, is homeomorphic to a [union of the Klein bottle and a sphere](https://www.ncbi.nlm.nih.gov/pubmed/20572697), which intersect in two rings.
 
 In this example, we demonstrate how to obtain points from the cyclooctane variety, which then can be further processed using, for instance, [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology) and [Ripser](https://github.com/Ripser/ripser).
 

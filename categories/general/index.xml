@@ -6,10 +6,21 @@
     <description>Recent content in General on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Mar 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 16 Jun 2019 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/categories/general/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cyclooctane</title>
+      <link>/examples/cyclooctane/</link>
+      <pubDate>Sun, 16 Jun 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/cyclooctane/</guid>
+      <description>Cyclooctane (CH₂)₈ is a molecule that consists of eight carbon atoms aligned in a ring, and eight hydrogen atoms, each of which is attached to one of the carbon atoms. The distance $c&amp;gt;0$ between neighboring carbon atoms is fixed.
+In this example, we want to study the confirmation space of cyclooctane with Homotopy Continuation. The equations for the positions $z_i\in\mathbb{R}^3$ of the carbon atoms satisfy the algebraic equations
+$$\Vert z_1-z_2\Vert^2 = \cdots = \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^2.</description>
+    </item>
     
     <item>
       <title>Method of Moments</title>

@@ -88,7 +88,7 @@ end
 ```
 
 Now, `Ω` contains points from the cyclooctane variety.
-Here is a gif that shows 876 points from the cyclooctane variety, projected onto the three dimensional linear space spanned by the colums in the matrix below. One can nicely see the two rings in which the Klein bottle and  the sphere intersect.
+Here is a gif that shows 876 points from the cyclooctane variety, projected onto the three dimensional linear space spanned by the colums in the matrix below. 
 
 <p style="text-align:center;"><img src="/images/cyclooctane.gif" width="800px"/></p>
 

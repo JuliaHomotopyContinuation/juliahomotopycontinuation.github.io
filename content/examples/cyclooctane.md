@@ -17,7 +17,7 @@ The equations for the positions $z_i\in\mathbb{R}^3$ of the carbon atoms satisfy
 
 $$\Vert z_1-z_2\Vert^2 = \cdots =  \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^2.$$
 
-The energy of a configuration $z=(z_1,\ldots,z_8)$ is minimized when the angles between successive bonds are all equal to $120^\circ$, as was discussed [here](https://arxiv.org/pdf/1802.09436.pdf). If we assume this geometrical constraint, by the law of cosines, the $z_i$ also satisfy the following equations:
+The energy of a configuration $z=(z_1,\ldots,z_8)$ is minimized when the angles between successive bonds are all equal to $\text{arccos}(-\frac{1}{3}) \approx 109.5^\circ$, as was discussed [here](https://arxiv.org/pdf/1802.09436.pdf). If we assume this geometrical constraint, by the law of cosines, the $z_i$ also satisfy the following equations:
 
 $$\Vert z_1-z_3\Vert^2 = \cdots =  \Vert z_6-z_8\Vert^2=\Vert z_7-z_1\Vert^2 =\Vert z_8-z_2\Vert^2= \frac{8c^2}{3}.$$
 
@@ -88,7 +88,7 @@ end
 ```
 
 Now, `Ω` contains points from the cyclooctane variety.
-Here is a gif that shows 876 points from the cyclooctane variety, projected onto the three dimensional linear space spanned by the colums in the matrix below. 
+Here is a gif that shows 876 points from the cyclooctane variety, projected onto the three dimensional linear space spanned by the colums in the matrix below.
 
 <p style="text-align:center;"><img src="/images/cyclooctane.gif" width="800px"/></p>
 

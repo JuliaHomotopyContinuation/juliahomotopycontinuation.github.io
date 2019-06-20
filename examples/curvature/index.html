@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Maximal curvature of a surface </title>
+  <title> Curvature of plane curves </title>
 
   
   <meta name="description" content="How to compute curvature"> 
@@ -21,7 +21,7 @@
   <meta name="author" content="Paul">
 
 
-  <meta property="og:title" content="Maximal curvature of a surface" />
+  <meta property="og:title" content="Curvature of plane curves" />
 <meta property="og:description" content="How to compute curvature" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/examples/curvature/" /><meta property="article:published_time" content="2018-09-04T11:56:55&#43;01:00"/>
@@ -129,27 +129,27 @@
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     
-<meta itemprop="name" content="Maximal curvature of a surface">
+<meta itemprop="name" content="Curvature of plane curves">
 <meta itemprop="description" content="How to compute curvature">
 
 
 <meta itemprop="datePublished" content="2018-09-04T11:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-09-04T11:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1064">
+<meta itemprop="wordCount" content="227">
 
 
 
 <meta itemprop="keywords" content="example," />
 
 <div id="hero">
-    <h1 itemprop="headline">  Maximal curvature of a surface</h1>
+    <h1 itemprop="headline">  Curvature of plane curves</h1>
     
 <blockquote itemprop="description">How to compute curvature</blockquote>
 
 <time class="post-time"><span class="icon">
   <i class="fa fa-clock-o" aria-hidden="true"></i>
 </span>
-<span>5 minute read</span>
+<span>2 minute read</span>
 <span class="icon">
  <i class="fa fa-pencil" aria-hidden="true"></i>
 </span>
@@ -163,7 +163,7 @@
     
     <h3 class="section-head">Curvature of curves in the plane</h3>
 
-<p>Consider the problem of computing the point on a (smooth) real variety $V\subset \mathbb{R}^n$, where the curvature is maximal. For curves in the plane $ \mathbb{R}^2$ we can use the <a href="https://en.wikipedia.org/wiki/Implicit_curve#Slope_and_curvature">following formula</a> for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.</p>
+<p>Consider the problem of computing the point on a (smooth) curve $V\subset \mathbb{R}^n$, where the curvature is maximal. We can use the <a href="https://en.wikipedia.org/wiki/Implicit_curve#Slope_and_curvature">following formula</a> for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.</p>
 
 <p>$$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$</p>
 
@@ -209,113 +209,6 @@ Result with 56 solutions
 <p>Here is a picture of all solutions.</p>
 
 <p style="text-align:center;"><img src="/images/curvature.png" width="600px"/></p>
-
-<h3 class="section-head">Curvature of general hypersurfaces</h3>
-
-<p>The definition of maximal curvature for points on general <a href="https://en.wikipedia.org/wiki/Hypersurface">hypersurfaces</a> is the maximal curvature of a <a href="https://en.wikipedia.org/wiki/Geodesic">geodesic</a> through $p$:</p>
-
-<p>$$\sigma(p) = \mathrm{max} \,\{\Vert \ddot{\gamma}(0)\Vert \mid \gamma \in V \text{ geodesic with\ } \gamma(0)=p, \Vert \dot{\gamma}(0)\Vert = 1\}$$</p>
-
-<p>(curves with unit norm derivatives are called <a href="https://en.wikipedia.org/wiki/Differential_geometry_of_curves">parametrized by arc-length</a>).</p>
-
-<p>Here, the equations are more complicated.
-The math for deriving them requires some knowledge on <a href="https://en.wikipedia.org/wiki/Differential_geometry">differential geometry</a>. The theoretical part is at the end of this example. The reader who just wants to see code can execute the following script. It is written for the input data</p>
-
-<p>$$V=\{x_1^2 + x_1x_2 + x_2^2  + x_1 - 3x_2  -  2x_3 + 2 = 0\}.$$</p>
-
-<pre><code class="language-julia">n = 3
-@polyvar x[1:n] v[1:n] z[1:3]# initialize variables
-f = x[1]^2 + x[1]*x[2] + x[2]^2  + x[1] - 3x[2]  -  2x[3] + 2# define f
-
-∇f = differentiate(f, x) # the gradient
-H = hcat([differentiate(∇f[i], x) for i in 1:n]...) # the Hessian
-
-g = ∇f ⋅ ∇f
-h = v ⋅ (H * v)
-∇g = differentiate(g, x)
-∇h = differentiate(h, x)
-A = [(g .* ∇h - (3/2 * h) .* ∇g) ∇f H*v zeros(n); g.*(H*v) zeros(n) ∇f v]
-
-# F is the system that is solved
-F = [
-    A * [1;z]
-    v ⋅ v - 1;
-    ∇f ⋅ v;
-    f
-]
-
-S = solve(F)
-
-# extract the real solutions
-real_sols =  realsolutions(S)
-
-# find the maximal σ
-σ = map(p -&gt; abs(h([x;v] =&gt; p[1:2n]) / g([x;v] =&gt; p[1:2n])^(3/2)), real_sols)
-σ_max, i = findmax(σ)
-p = real_sols[i][1:n]
-
-</code></pre>
-
-<p>The following animation was created with the <code>@gif</code> macro from the <a href="http://docs.juliaplots.org/latest/">Plots.jl</a> package.</p>
-
-<p style="text-align:center;"><img src="/images/curvature2.gif" width="500px"/></p>
-
-<h3 class="section-head">The Algebraic Geometry of Curvature</h3>
-
-<p>Here is why the code above does what it is supposed to do.</p>
-
-<p>It can be shown that for hypersurfaces $V = \{f=0\}.$ the maximal geodesic curvature at $p$ is the <a href="http://mathworld.wolfram.com/SpectralNorm.html">spectral norm</a> of the derivative of the <a href="https://en.wikipedia.org/wiki/Gauss_map">Gauss map</a> $G: V \to \mathbb{P}^{n-1}\mathbb{R},\, p\mapsto (\mathrm{T}_p V)^\perp$.
-The Gauss map sends a point $p$ to the normal space of $V$ at $p$. Since $V$ is of codimension $1$, the normal space is a line and lines are parametrized by the $(n-1)$-dimensional <a href="https://en.wikipedia.org/wiki/Projective_space">projective space</a> $\mathbb{P}^{n-1}\mathbb{R}$. Summarizing:</p>
-
-<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in \mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \,  \Vert v\Vert = \Vert w \Vert_L =1}  \,\langle w, DG(p)v\rangle_L.$$</p>
-
-<p>where $L=G(p)$ and $\langle \,,\,\rangle_L$ is the metric on $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R}$.
-What is this metric? First, $V$ being embedded in $\mathbb{R}^n$ inherits the usual euclidean inner product $\langle\;,\,\rangle$. The inner product on the tangent space to $L$ is as follows: if $L$ is a line through $q\in \mathbb{R}^n$, then  $\mathrm{T}_L \mathbb{P}^{n-1}\mathbb{R} \cong q^\perp$ and the inner product on $q^\perp$ is $\langle \;,\,\rangle_L  = \frac{\langle\;,\,\rangle}{\langle q,q \rangle}$. It follows that,</p>
-
-<p>$$\sigma(p) = \max_{v\in \mathrm{T}_p V,\, w\in q^\perp \,   v^Tv = 1, \,w^Tw = q^T q}  \,\frac{w^T \,DG(p) \,v}{q^Tq}$$
-where $q$ is a point on $G(p)=(\mathrm{T}_p V)^\perp$.</p>
-
-<p>A point on $(\mathrm{T}_p V)^\perp$ that can be computed easily from the input data is the <a href="https://en.wikipedia.org/wiki/Gradient">gradient</a></p>
-
-<p>$$\nabla_p f = \left(\frac{\partial f}{\partial x_1}(p),\ldots, \frac{\partial f}{\partial x_n}(p)\right)^T,$$</p>
-
-<p>so that</p>
-
-<p>$$\sigma(p) = \max_{v,w\in \nabla_p f^\perp,\,  v^Tv = 1,\, w^Tw = \nabla_p f^T\,\nabla_p f}  \,\frac{w^T \,DG(p)\, v}{\nabla_p f^T\,\nabla_p f}.$$</p>
-
-<p>It remains to compute $DG(p)$. For this let $\pi : \mathbb{R}^n \to \mathbb{P}^{n-1}\mathbb{R}$ be the projection that sends $q\in  \mathbb{R}^n$ to the line through $q$. Then, the Gauss map is written as $G(p) = \pi(\nabla_p f).$ Consequently, by the chain rule of differentiation:</p>
-
-<p>$$DG(p) = D\pi(\nabla_p f) \, H$$
-where $H = \begin{bmatrix} \frac{\partial \nabla}{\partial x_1} &amp; \ldots &amp; \frac{\partial \nabla}{\partial x_n}\end{bmatrix}$ is the Hessian of $f$.</p>
-
-<p>One can show that $D\pi(\nabla_p f)$ is the orthogonal projection onto $\nabla_p f^\perp$. If $I_n$ denotes the $n\times n$ identity matrix: $D\pi(\nabla_p f) =  I_n - \frac{\nabla_p f \nabla_p f^T}{\nabla_p f^T \nabla_p f}$. From this it is easy to see that $w^T\,D\pi(\nabla_p f) = w^T$ for all $w\in \nabla_p f^\perp$. Therefore, the following is an equation for $\sigma(p)$:</p>
-
-<p>$$\sigma(p) = \max_{v, w\in \nabla_p f^\perp \,  v^Tv = 1,\, w^Tw = \nabla_p f^T\,\nabla_p f}  \,\frac{w^T \,H\, v}{\nabla_p f^T\,\nabla_p f}.$$</p>
-
-<p>Diving $w$ by $\sqrt{g}$ for $g:=\nabla_p f^T\,\nabla_p f$ and using that $H$ is symmetric we have</p>
-
-<p>$$\sigma(p) = \max_{v \in \nabla_p f^\perp \,  v^Tv = 1}  \,\frac{v^T \,H\, v}{g^\frac{3}{2}}.$$</p>
-
-<p>(for curves in the plane this is the formula from above). Finally, the following formula for $\sigma$</p>
-
-<p>$$\sigma = \max_{p\in V, v \in\nabla_p f^\perp \,  v^Tv = 1}  \,\frac{v^T \,H\, v}{g^\frac{3}{2}}$$</p>
-
-<p>(actually, the last $\max$ is a $\sup$).</p>
-
-<p>Writing $h =  v^T H v$, $\nabla h = (\frac{\partial h}{\partial x_i})^{1\leq i\leq n}$ and $\nabla g = (\frac{\partial g}{\partial x_i})^{1\leq i\leq n}$
-the corresponding critical equations of this are:</p>
-
-<ul>
-<li><p>$A \begin{bmatrix} 1\\ z \end{bmatrix} = 0$ for $A= \begin{bmatrix}\nabla h \cdot g - \frac{3}{2} \cdot h \cdot \nabla g &amp;  \nabla f &amp; Hv&amp;  0 \\ Hv &amp;  0 &amp; \nabla f &amp; v \end{bmatrix}$ and $z=(z_1,z_2,z_3)^T$.</p></li>
-
-<li><p>$f=0$.</p></li>
-
-<li><p>$v^Tv = 1$</p></li>
-
-<li><p>$\nabla f^T v = 0$</p></li>
-</ul>
-
-<p>These are the equations solved with the code above. It would be interesting to understand the degree of the equations for generic $f$.</p>
 
 
 </div>

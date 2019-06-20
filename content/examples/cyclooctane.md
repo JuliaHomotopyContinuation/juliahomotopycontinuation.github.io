@@ -25,12 +25,12 @@ It is known that the solution set of these equations, up to simultaneous transla
 
 In this example, we demonstrate how to obtain points from the cyclooctane variety, which then can be further processed using, for instance, [persistent homology](https://en.wikipedia.org/wiki/Persistent_homology) and [Ripser](https://github.com/Ripser/ripser).
 
-Let's define the equations in Julia for $c^2 = 5$. For this, we use the following normalization: since the equation of cyclooctane are invariant under simultaneous translation and rotation of the $z_i$, we define $z_1$ to be the origin, $z_8=(c,0,0)$ and $z_7$ to be rotated, such that its last entry is equal to zero. Thus we get a system of equations in $17$ variables.
+Let's define the equations in Julia for $c^2 = 2$. For this, we use the following normalization: since the equation of cyclooctane are invariant under simultaneous translation and rotation of the $z_i$, we define $z_1$ to be the origin, $z_8=(c,0,0)$ and $z_7$ to be rotated, such that its last entry is equal to zero. Thus we get a system of equations in $17$ variables.
 
 ```julia
-using HomotopyContinuation
+using HomotopyContinuation, LinearAlgebra, DynamicPolynomials
 
-c² = 5
+c² = 2
 @polyvar z[1:3, 1:6]
 z_vec = vec(z)[1:17] # the 17 variables in a vector
 Z = [zeros(3) z[:,1:5] [z[1,6]; z[2,6]; 0] [√c²; 0; 0]] # the eight points in a matrix
@@ -88,14 +88,9 @@ end
 ```
 
 Now, `Ω` contains points from the cyclooctane variety.
-Here is a gif that shows 876 points from the cyclooctane variety, projected onto the three dimensional linear space spanned by the colums in the matrix below.
+Here is a gif that shows 4470 points from the cyclooctane variety, projected onto a random three dimensional linear space.
 
 <p style="text-align:center;"><img src="/images/cyclooctane.gif" width="800px"/></p>
 
-Here is the matrix.
-
-$${\small \begin{bmatrix}
--0.870834 &   0.016606 &   0.105596  \\\0.0291089&  -0.960009  &  0.131155  \\\ -0.0862039 & -0.108634  & -0.960795  \\\ 0.290577   &-0.0451294 &  0.00544617\\\ 0.196227  & -0.0306267  &-0.0143163 \\\ 0.0234775 & -0.0212117 &  0.106754\\\ -0.0599742&    0.0175282 &  0.0752043\\\ 0.0401599  & -0.0441447 &  0.0387969\\\ -0.0674219  & -0.0201766 &  0.0255016\\\ 0.00794201 & -0.0169972 & -0.0560899\\\ 0.137655   &  0.0216517 & -0.014594 \\\ 0.0680622  &  0.0181186 &  0.0429857\\\ 0.112206  &  0.138351  &   0.133597  \\\ 0.0418083 & -0.0355782 &  -0.00320533\\\ 0.0657858 & -0.0761925  & -0.0730775 \\\  -0.227023  & -0.181425  &   0.0153024 \\\ -0.0792036  & 0.00207062 & -0.0209654
-\end{bmatrix}}$$
 
 It is also possible to control the distribution of the points obtained by intersecting with linear spaces; see [here](https://arxiv.org/abs/1810.06271).

@@ -15,7 +15,7 @@ Consider the problem of computing the point on a (smooth) curve $V\subset \mathb
 
 $$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$
 
-where $v^T \,\nabla_p f(p) = 0$, $H$ is the Hessian of $f$ at $p$ and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T \, \nabla_p \sigma(p)=0$ and $f(p)=0$.
+where $v^T \,\nabla_p f(p) = 0$, $v^Tv=1, and $H$ is the Hessian of $f$ at $p$, and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T \, \nabla_p \sigma(p)=0$ and $f(p)=0$.
 
 Thus, for maximizing $\sigma$ over
 

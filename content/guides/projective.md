@@ -13,7 +13,7 @@ group = "advanced"
 
 
 
-Sometimes, it is required to compute solutions in [projective space](https://en.wikipedia.org/wiki/Projective_space) $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems of defined over projective space and adjusts the output.
+Sometimes, one has to compute solutions in [projective space](https://en.wikipedia.org/wiki/Projective_space) $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems of defined over projective space and adjusts the output.
 
 
 Here is a simple example involving two random quadrics in $\mathbb{CP}^2$

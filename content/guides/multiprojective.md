@@ -51,18 +51,4 @@ julia> bezout_number(f)
 ```
 
 
-It is also possible to declare variable groups for affine systems:
-
-```julia-repl
-julia> @polyvar x y z
-julia> g = [x*y - 6, x^2 - 5]
-julia> R = solve(g, variable_groups=[(x,), (y,)])
-Result with 2 solutions
-==================================
-• 2 non-singular solutions (2 real)
-• 0 singular solutions (0 real)
-• 2 paths tracked
-• random seed: 192959
-julia> all(isaffine, R)
-true
-```
+It is also possible to declare variable groups for [affine systems](/guides/variable-groups).

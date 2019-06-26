@@ -13,7 +13,7 @@ Declaring variable groups can reduce the number of paths that one has to track.
 
 ```julia-repl
 julia> using HomotopyContinuation
-julia> @polyvar x y z
+julia> @polyvar x y
 julia> g = [x*y - 6, x^2 - 5]
 julia> solve(g, variable_groups=[[x], [y]])
 Result with 2 solutions

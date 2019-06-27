@@ -29,4 +29,4 @@ f = [x^2 + y - 1, y - 4]
 solve(f, affine_tracking = false)
 ```
 
-The flat `affine_tracking` is dominant; i.e., `solve(f, affine_tracking = true, projective_tracking = true)` tracks in affine space.
+The flag `affine_tracking` is dominant; i.e., `solve(f, affine_tracking = true, projective_tracking = true)` tracks in affine space.

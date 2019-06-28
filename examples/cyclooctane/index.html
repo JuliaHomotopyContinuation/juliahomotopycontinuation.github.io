@@ -135,7 +135,7 @@
 
 <meta itemprop="datePublished" content="2019-06-16T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-06-16T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="684">
+<meta itemprop="wordCount" content="681">
 
 
 
@@ -207,7 +207,7 @@ b₀ = randn(ComplexF64, n)
 p₀ = [vec(A₀); b₀]
 
 F₀ = [subs(Fᵢ, p =&gt; [vec(A₀); b₀]) for Fᵢ in F]
-complex_result = solve(F₀, affine_tracking = true)
+complex_result = solve(F₀)
 S_p₀ = solutions(complex_result)
 </code></pre>
 

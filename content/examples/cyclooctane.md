@@ -58,7 +58,7 @@ b₀ = randn(ComplexF64, n)
 p₀ = [vec(A₀); b₀]
 
 F₀ = [subs(Fᵢ, p => [vec(A₀); b₀]) for Fᵢ in F]
-complex_result = solve(F₀, affine_tracking = true)
+complex_result = solve(F₀)
 S_p₀ = solutions(complex_result)
 ```
 

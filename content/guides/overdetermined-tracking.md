@@ -1,7 +1,7 @@
 +++
 title = "Overdetermined systems"
 description = "How to track solutions of systems with more equations than variables."
-weight = 5
+weight = 7
 draft = false
 toc = true
 bref = "We're tracking a solution of an overdetermined system"

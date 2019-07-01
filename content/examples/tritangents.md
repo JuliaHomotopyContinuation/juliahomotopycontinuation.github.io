@@ -9,13 +9,6 @@ weight = 5
 author = "Paul"
 +++
 
-
-
-
-
-
-
-
 A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface](https://en.wikipedia.org/wiki/Cubic_surface) $\mathcal{C}\subset \mathbb{C}^3$ with a [quadric](https://en.wikipedia.org/wiki/Quadric) $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \\{x\in\mathbb{C}^3 : C(x) = 0\\}$ and $\mathcal{Q} = \\{x\in\mathbb{C}^3 : Q(x) = 0\\}$.
 
 An interesting fact about such sextic curves is that they have 120 complex tritangents (at least almost all of them). This means that there are 120  affine complex planes, that touch the sextic at three points.
@@ -67,7 +60,7 @@ P_z = [p([h; x; c] => [h; z; c]) for p in P_x]
 F = [P_x; P_y; P_z]
 ```
 
-Let us first solve `F` by totaldegree homotopy when the coefficients of `C` are random complex numbers.
+Let us first solve `F` by total degree homotopy when the coefficients of `C` are random complex numbers.
 
 ```julia
 #create random complex coefficients for C
@@ -95,7 +88,7 @@ The count of 720 is correct: for each of the 120 tritangents I get 6 solutions c
 Let us extract the 720 solutions.
 
 ```julia
-sols = solutions(S, onlynonsingular = true)
+sols = solutions(S, only_nonsingular = true)
 ```
 
 One may use `sols` in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking `sols` from `c₁` to $C=x_1^3+x_2^3+x_3^3-1$.
@@ -104,7 +97,7 @@ One may use `sols` in a parameter homotopy for computing the tritangents of othe
 #define the coefficients for C
 c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
 #track the solutions from c₁ to c₀
-R = solve(F, sols, parameters = c, p₁ = c₁, p₀ = c₀)
+R = solve(F, sols, parameters = c, start_parameters = c₁, target_parameters = c₀)
 ```
 
 On my laptop this computation takes 0.281 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:

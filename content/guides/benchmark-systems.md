@@ -1,11 +1,11 @@
 +++
 title = "Benchmarks"
 description = "Polynomial systems for testing"
-weight = -1
-draft = false
+weight = 100
+draft = true
 toc = false
 bref = "Polynomial systems for testing"
-group = "advanced"
+group = "feature-guide"
 +++
 
 The auxiliary package [PolynomialTestSystems](https://github.com/JuliaHomotopyContinuation/PolynomialTestSystems.jl) is a collection of systems of polynomials for benchmarking, testing etc.

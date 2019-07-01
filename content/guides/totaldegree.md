@@ -1,11 +1,11 @@
 +++
 title = "Total Degree Homotopy"
 description = "The totaldegree start system"
-weight = -11
+weight = 100
 draft = false
 toc = false
 bref = "The totaldegree start system"
-group = "advanced"
+group = "feature-guide"
 +++
 
 Totaldegree is a particular choice of start system for homotopy continuation.

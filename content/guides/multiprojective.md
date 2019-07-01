@@ -1,7 +1,7 @@
 +++
 title = "Solutions in a product of projective spaces"
 description = "Solving systems over a product of projective spaces"
-weight = 101
+weight = 100
 draft = false
 toc = false
 bref = "Solving systems over a product of projective spaces"

@@ -91,8 +91,7 @@ MonodromyResult
 Now, we can track the solutions from $q₀$ to $p₀$.
 
 ```julia
-sols_complex_parameters = convert(Array{Vector{ComplexF64}}, solutions(R))
-R2 = solve(f - p, sols_complex_parameters, parameters = p, start_parameters=q₀, target_parameters = p₀)
+R2 = solve(f - p, solutions(R), parameters = p, start_parameters=q₀, target_parameters = p₀)
 ```
 
 There are
@@ -105,7 +104,7 @@ julia> nreal(R2)
 real solutions. Let us keep only those for which the variances are positive:
 
 ```julia
-true_real_solutions  = filter(r -> all(r[7:9] .> 0), realsolutions(R2))
+true_real_solutions  = filter(r -> all(r[7:9] .> 0), real_solutions(R2))
 ```
 
 There are 12 of those. Those 12 come in groups of 6, because the group that permutes $\{1,2,3\}$ acts on the solutions. We can filter this as follows

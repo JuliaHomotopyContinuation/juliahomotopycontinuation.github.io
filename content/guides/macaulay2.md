@@ -4,7 +4,7 @@ title = "Using HomotopyContinuation.jl from Macaulay2"
 bref = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 description = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 draft = false
-weight = 1
+weight = 4
 toc = true
 group = "feature-guide"
 +++

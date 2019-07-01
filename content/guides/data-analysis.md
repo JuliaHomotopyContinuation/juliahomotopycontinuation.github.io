@@ -1,7 +1,7 @@
 +++
 title = "Data analysis of solutions"
 description = "Analysing arrays of vectors"
-weight = 2
+weight = 100
 draft = false
 toc = true
 bref = "Analysing arrays of vectors"

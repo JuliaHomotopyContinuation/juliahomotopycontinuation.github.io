@@ -1,11 +1,11 @@
 +++
 title = "Polyhedral homotopy"
 description = "A start system from polyhedral geometry"
-weight = -10
+weight = 3
 draft = false
 toc = true
 bref = "A start system from polyhedral geometry"
-group = "advanced"
+group = "feature-guide"
 +++
 
 <h3 class="section-head" id="result"><a>Polyhedral start systems</a></h3>

@@ -1,7 +1,7 @@
 +++
 title = "Choosing a start system"
 description = "What start system should I choose?"
-weight = -700
+weight = 100
 draft = false
 toc = true
 bref = "What start system should I choose?"

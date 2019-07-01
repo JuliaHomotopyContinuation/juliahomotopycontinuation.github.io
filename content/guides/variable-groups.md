@@ -1,11 +1,11 @@
 +++
 title = "Groups of variables"
 description = "Declaring additional structure for homotopy continuation"
-weight = 20
+weight = 5
 draft = false
 toc = false
 bref = "Declaring additional structure for homotopy continuation"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

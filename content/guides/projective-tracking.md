@@ -1,11 +1,11 @@
 +++
 title = "Tracking in affine space or in projective space"
 description = "Define the space for the paths that are tracked"
-weight = 99
+weight = 100
 draft = false
 toc = false
 bref = "Define the space for the paths that are tracked"
-group = "advanced"
+group = "feature-guide"
 +++
 
 By default, HomotopyContinuation.jl tracks paths in the complex vector space $\mathbb{C}^n$.

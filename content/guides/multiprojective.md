@@ -5,7 +5,7 @@ weight = 101
 draft = false
 toc = false
 bref = "Solving systems over a product of projective spaces"
-group = "advanced"
+group = "feature-guide"
 +++
 
 When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.

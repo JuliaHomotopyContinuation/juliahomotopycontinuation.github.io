@@ -5,7 +5,7 @@ weight = 4
 draft = false
 toc = false
 bref =  "What to do, if you have to solve system in a loop"
-group = "advanced"
+group = "feature-guide"
 +++
 
 Polynomial systems arising in application very often have a coefficients which are determined by some parameters.

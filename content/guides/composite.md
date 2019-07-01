@@ -5,7 +5,7 @@ weight = 6
 draft = false
 toc = true
 bref = "How to construct and solve composite systems"
-group = "advanced"
+group = "feature-guide"
 +++
 
 If your system of polynomials is given as a composition of several systems, you can exploit this in HomotopyContinuation.jl.

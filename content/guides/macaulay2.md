@@ -6,7 +6,7 @@ description = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.
 draft = false
 weight = 1
 toc = true
-group = "advanced"
+group = "feature-guide"
 +++
 
 [Macaulay2](http://www2.macaulay2.com/Macaulay2/) is a great software for symbolic computations

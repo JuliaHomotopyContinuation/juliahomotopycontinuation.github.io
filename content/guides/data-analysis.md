@@ -5,7 +5,7 @@ weight = 2
 draft = false
 toc = true
 bref = "Analysing arrays of vectors"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

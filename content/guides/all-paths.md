@@ -5,7 +5,7 @@ weight = 2
 draft = false
 toc = false
 bref = "Let solve return the outcomes of all paths"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

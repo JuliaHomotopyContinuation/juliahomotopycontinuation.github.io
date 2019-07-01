@@ -5,7 +5,7 @@ weight = 5
 draft = false
 toc = true
 bref = "We're tracking a solution of an overdetermined system"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

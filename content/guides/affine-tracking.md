@@ -5,7 +5,7 @@ weight = 99
 draft = false
 toc = false
 bref = "Let the tracker make its computation in affine space"
-group = "advanced"
+group = "feature-guide"
 +++
 
 By default, HomotopyContinuation.jl tracks paths in [projective space](https://en.wikipedia.org/wiki/Projective_space). 

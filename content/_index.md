@@ -1,5 +1,5 @@
 +++
-description = "HomotopyContinuation.jl is a Julia package for solving systems of polynomial equations by numerical homotopy continuation."
+description = "A package for the numerical solution of systems of polynomial equations."
 title = "HomotopyContinuation.jl"
 draft = false
 +++

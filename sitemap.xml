@@ -7,25 +7,12 @@
   </url>
   
   <url>
-    <loc>/guides/solve-first-system/</loc>
-  </url>
-  
-  <url>
-    <loc>/guides/reading-output/</loc>
-  </url>
-  
-  <url>
-    <loc>/guides/how-does-it-work/</loc>
+    <loc>/guides/introduction/</loc>
   </url>
   
   <url>
     <loc>/examples/cyclooctane/</loc>
     <lastmod>2019-06-16T21:56:55+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/guides/macaulay2/</loc>
-    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -58,11 +45,7 @@
   </url>
   
   <url>
-    <loc>/guides/data-analysis/</loc>
-  </url>
-  
-  <url>
-    <loc>/guides/all-paths/</loc>
+    <loc>/guides/monodromy/</loc>
   </url>
   
   <url>
@@ -71,7 +54,12 @@
   </url>
   
   <url>
-    <loc>/guides/many-systems/</loc>
+    <loc>/guides/polyhedral/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/macaulay2/</loc>
+    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
   </url>
   
   <url>
@@ -80,11 +68,15 @@
   </url>
   
   <url>
-    <loc>/guides/overdetermined-tracking/</loc>
+    <loc>/guides/variable-groups/</loc>
   </url>
   
   <url>
-    <loc>/guides/composite/</loc>
+    <loc>/guides/many-systems/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/overdetermined-tracking/</loc>
   </url>
   
   <url>
@@ -108,15 +100,23 @@
   </url>
   
   <url>
-    <loc>/guides/monodromy/</loc>
+    <loc>/guides/start-systems/</loc>
   </url>
   
   <url>
-    <loc>/guides/affine-tracking/</loc>
+    <loc>/guides/composite/</loc>
   </url>
   
   <url>
-    <loc>/guides/projective/</loc>
+    <loc>/guides/custom-homotopy/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/data-analysis/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/all-paths/</loc>
   </url>
   
   <url>
@@ -124,7 +124,15 @@
   </url>
   
   <url>
-    <loc>/guides/custom-homotopy/</loc>
+    <loc>/guides/projective/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/totaldegree/</loc>
+  </url>
+  
+  <url>
+    <loc>/guides/projective-tracking/</loc>
   </url>
   
   <url>

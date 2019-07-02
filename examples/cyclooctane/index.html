@@ -53,6 +53,7 @@
 
 
   <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
 
   <script type="text/javascript" src="/js/tocbot.min.js"></script>
 
@@ -77,9 +78,9 @@
     <script src="/js/init-highlight.js"></script>
  
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
 
     
     <link href="/css/custom.css" rel="stylesheet" type="text/css">
@@ -223,7 +224,7 @@ data = [randn(n*N+n) for _ in 1:100]
     for s in S_p₀
         result = track(tracker, s; target_parameters=pp, details=:minimal)
         # check that the tracking was successfull and that we have a real solution
-        if issuccess(result) &amp;&amp; isreal(result)
+        if is_success(result) &amp;&amp; is_real(result)
             # only store the solutions
             push!(S_p, solution(result))
         end
@@ -297,7 +298,7 @@ Here is a gif that shows 4470 points from the cyclooctane variety, projected ont
            renderMathInElement(document.body, {delimiters: [
           {left: "$$", right: "$$", display: true},
           {left: "$", right: "$", display: false},
-          
+          {left: "``", right: "``", display: false},
           
           
           

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.50" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> An introduction to the numerical solution of polynomial systems </title>
+
+  
+  <meta name="description" content="The basics of the theory and techniques behind HomotopyContinuation.jl"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="An introduction to the numerical solution of polynomial systems" />
+<meta property="og:description" content="The basics of the theory and techniques behind HomotopyContinuation.jl" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/introduction/" />
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/introduction/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+ </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>An introduction to the numerical solution of polynomial systems</h1>
+    <p class="hero-lead">The basics of the theory and techniques behind HomotopyContinuation.jl</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+<nav id="contents">
+  <ol class="js-toc"></ol>
+</nav>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    tocbot.init({
+      
+      tocSelector: ".js-toc",
+      
+      contentSelector: ".content",
+      
+      headingSelector: "h2, h3, h4"
+    });
+  });
+</script>
+
+
+
+
+    
+
+<h2 id="a-first-example">A first example</h2>
+
+<p>We are interested in the numerical solution of systems of polynomial equations like
+$$\begin{array}{rl} -x^5y &amp;= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\ \frac12 &amp;=  x^2+2xy^2 - 2y^2 \;. \end{array}$$</p>
+
+<p>Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials
+$$
+    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 \;.
+$$
+The common zero set $V(f_1,f_2)$ is also called a <em>variety</em>.</p>
+
+<figure>
+<p style="text-align:center;">
+<img alt="simple-example" src="/images/simple-example.png" style="height:500px"/>
+</p>
+    <figcaption style="text-align: center;" >The zero set of $f_1$ in <span style="color:steelblue">blue</span> and the zero set of $f_2$ in <span style="color:indianred">red</span>. Their common zero set is depicted in <span style="color:black">black</span>.</figcaption>
+    
+</figure>
+
+<p>From the figure we can see that $f_1$ and $f_2$ have 4 common zeros.
+Using <a href="https://www.JuliaHomotopyContinuation.org">HomotopyContinuation.jl</a> we can compute them very easily.</p>
+
+<pre><code class="language-julia"># load the package
+using HomotopyContinuation
+# declare variables x and y
+@polyvar x y
+# define the polynomials
+f₁ = (x^4 + y^4 - 1) * (x^2 + y^2 - 2) + x^5 * y
+f₂ = x^2+2x*y^2 - 2y^2 - 1/2
+result = solve([f₁, f₂])
+</code></pre>
+
+<pre><code>Result with 18 solutions
+==================================
+• 18 non-singular solutions (4 real)
+• 0 singular solutions (0 real)
+• 18 paths tracked
+• random seed: 847678
+</code></pre>
+
+<p>Now, the result reports that we found <strong>18</strong> solutions and <strong>4  real</strong> solutions. Why do we have 14 solutions more than expected? The reason is that we do not compute the common zero set of $f_1$ and $f_2$ over the real numbers but rather over the <strong>complex numbers</strong>. Although there are usually much more complex solutions than real solutions this still makes the problem of computing all real solutions <em>much</em> easier.</p>
+
+<blockquote>
+<p>The shortest path between two truths in the real domain passes through the complex domain.
+&ndash; <cite>J. Hadamard</cite></p>
+</blockquote>
+
+<p>Since we (for now) only care about the real solutions we can simply extract them from the <code>result</code></p>
+
+<pre><code class="language-julia">real_solutions(result)
+</code></pre>
+
+<pre><code>4-element Array{Array{Float64,1},1}:
+ [-1.67142, 0.655205] 
+ [-0.936898, 0.312284]
+ [0.820979, -0.697133]
+ [0.899918, -1.24418] 
+</code></pre>
+
+<p>The <code>result</code> contains some additional informations about the different solutions.
+Let&rsquo;s take a look at the first real solution:</p>
+
+<pre><code class="language-julia">results(result; only_real=true)[1]
+</code></pre>
+
+<pre><code>PathResult
+=================
+ • return_code: success
+ • t: 0.0
+ • solution: Complex{Float64}[-1.67142-2.97795e-29im, 0.655205+1.18329e-29im]
+ • accuracy: 5.288e-15
+ • residual: 4.481e-16
+ • condition_jacobian: 1.177e+00
+ • path_number: 3
+</code></pre>
+
+<p>The meaning of those entries is as follows:</p>
+
+<ul>
+<li><code>return_code: success</code> means that the computation was successful.</li>
+<li><code>solution</code> is the solution that was computed.</li>
+<li><code>accuracy</code> is an approximation of $\Vert x-x^* \Vert$ where $x$ is the computed solution and $x^* $ is the true solution.</li>
+<li><code>residual</code> is the value of the euclidean norm of $f(x)$, where $x$ is the computed solution.</li>
+<li><code>condition_jacobian</code> is the condition number of the Jacobian of $f$ at the solution. A large value indicates that this solution is close to being singular.</li>
+<li><code>path_number</code> the number of the path which resulted int this solution.</li>
+</ul>
+
+<p>This is already everything you need to now to solve many polynomial systems! But in order to solve more challenging systems it is very helpful to understand the basics about the techniques used in <code>solve</code> and there are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.</p>
+
+<p>In the following we will got into some (light) details of the math used and then explore many techniques on a concrete application.</p>
+
+<h2 id="homotopy-continuation-methods">Homotopy continuation methods</h2>
+
+<p>HomotopyContinuation.jl uses <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry#Homotopy_continuation">homotopy continuation</a> methods to compute the zero set of polynomial systems (hence the name). The very basic idea is as follows:</p>
+
+<p>Suppose that
+$$F(\mathbf{x})= F(x_1,\ldots,x_n) = \begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots \\ f_m(x_1,\ldots,x_n) \end{bmatrix}$$
+is the polynomial system you want to compute the zero set of. Now assume that we have another system
+$$G(\mathbf{x}) = G(x_1,\ldots,x_n) = \begin{bmatrix} g_1(x_1,\ldots,x_n) \\ \vdots \\ g_m(x_1,\ldots,x_n) \end{bmatrix}$$
+where <strong>we already know  the solutions</strong> of and we also know that $G$ has at least as many solutions as $F$.</p>
+
+<p>Furthermore, let&rsquo;s assume that we know how to construct a <em>homotopy</em> $H(\mathbf{x},t)$ such that</p>
+
+<ul>
+<li>$H(x,1) = G(x)$</li>
+<li>$H(x,0) = F(x)$</li>
+<li>for all $t \in (0,1]$ the polynomial system $H(x,t)$ (in the variables $x_1,\ldots, x_n$) has the same number of isolated zeros.</li>
+</ul>
+
+<p>These are a lof of assumptions but we will see that we always can find $G$ and $H$ which satisfy these conditions.</p>
+
+<h3 id="tracking-solution-paths">Tracking solution paths</h3>
+
+<p>Now let $y$ be one of the solutions of $G$ resp. a solution of $H$ at $t=1$ and let $x(t)$ be the solution path implicitly defined by the conditions
+$$H(x(t),t)=0 \quad \text{ and } \quad x(1) = y$$
+for $t \in [0,1]$.</p>
+
+<p>If we now differentiate $H(x(t),t)$ with respect to $t$ we see that the path $x(t)$ is governed by an ordinary differential equation (ODE)! Therefore we can follow the solution path from $t=1$ to $t=0$ by any numerical method to solve ODEs. Since every solution $x(t_k)$ at time $t_k$ is also a zero of the polynomial system $H(x, t_k)$ we can use <strong>Newton&rsquo;s method</strong> to correct an approximated solution $x_k \approx x(t_k)$ to an accurate one! We say that we follow the solution path by a <em>predictor-corrector</em> method.</p>
+
+<figure>
+<p style="text-align:center;">
+<img alt="predictor-corrector" src="/images/predictor-corrector.png" style="height:300px"/>
+    <figcaption style="text-align: center;" >
+         A sketch of the predictor-corrector method. We compute a prediction $\tilde{x}_{k}$ of $x(t_k)$ using any ODE method and then correct using Newton's method.</figcaption>
+</p>
+</figure>
+
+<p>In the following, a path will always mean a solution path in the above sense.</p>
+
+<h3 id="constructing-start-systems-and-homotopies">Constructing start systems and homotopies</h3>
+
+<p>As we already discussed, homotopy continuation methods work by constructing a suitable start system resp. homotopy. For a given polynomial system there are <em>infinitely many</em> possible start systems and homotopies.
+We say that a homotopy is <em>optimal</em> if $H(x,1)$ has the same number of solutions as $F(x)=H(x,0)$ since we then only need to track the minimal number of paths possible to still get <em>all</em> solutions of $F(x)$. But constructing optimal homotopies is in general so far <em>not</em> possible. We don&rsquo;t even know an efficient method to compute the number of solutions of $F(x)$. <a href="https://en.wikipedia.org/wiki/Intersection_theory">Intersection theory</a> (a part of <a href="https://en.wikipedia.org/wiki/Algebraic_geometry">algebraic geometry</a>) allows to compute this in theory, but proving the number of solutions even for one particular polynomial system is usually worth a research paper :)</p>
+
+<p>Therefore, for polynomial systems we have to consider them as a part of a <em>family</em> of polynomial system where we know (or can construct) a homotopy. The most simple example of this is the <em>total degree homotopy</em>:</p>
+
+<p>Take our initial example
+$$    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 \,.$$
+    The polynomial $f_1$ has degree $6$ and the polynomial $f_2$ has degree 3. Now <a href="https://en.wikipedia.org/wiki/Bézout%27s_theorem">Bezout&rsquo;s theorem</a> tells us that such a polynomial system has at most $6 \cdot 3=18$ isolated solutions. We then can construct the polynomial system
+$$g(x,y) = \begin{bmatrix} x^6 - 1 \\ y^3 - 1\end{bmatrix}$$
+which has the $18$ solutions
+$$\left(e^{i 2\pi\frac{k_1}{6}}, \;e^{i 2\pi\frac{k_2}{3}}\right)$$
+where $k_1 \times k_2 \in {0,1,2,3,4,5} \times {0,1,2}$.
+Then a good homotopy is
+$$H(x,t) = \gamma t G(x) + (1-t)F(x)$$
+where $\gamma \in \mathbb{C}$ is a random complex number with absolute value one.</p>
+
+<p>This construction easily generalizes to polynomial systems with the $n$ polynomials in $n$ variables.
+If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then $f$ has at most $d_1 \cdot \ldots \cdot d_n$ many isolated solutions.</p>
+
+<p>For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:</p>
+
+<ul>
+<li>Multi-homogenous homotopies take a degree structure in the variables into account. This works by using a generalization of Bezout&rsquo;s theorem by <a href="https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem">Shafarevich</a>.</li>
+<li>Polyhedral homotopies take the sparsity of the polynomials into account. To each polynomial system you can associate the <a href="https://en.wikipedia.org/wiki/Mixed_volume"><em>mixed volume</em></a> of the Newton polytopes of the polynomials. Now the <a href="https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem">Bernstein–Khovanskii–Kushnirenko theorem</a> tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.</li>
+</ul>
+
+<p>Multi-homogenous as well as polyhedral homotopies are both supported by HomotopyContinuation.jl.
+A multi-homogenous homotopy will automatically constructed if you pass a set of <code>variable_groups</code> to solve
+and for a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
+
+<h2 id="case-study-euclidean-distance-optimization">Case Study: Euclidean Distance Optimization</h2>
+
+<p>Consider the distance from a point $u \in \mathbb{R}^n$ to the variety $X=V(f_1,\ldots,f_m)$.
+We want to solve the following optimization problem:</p>
+
+<div style="text-align:center;margin-top:20px;"><em>What is the nearest point on $X$ to $u$ with respect to the euclidean distance?</em></div>
+
+<p>Let us illustrate this at an example. Consider again the polynomial
+$$f(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y$$
+and the point $u_0 = [-0.32, -0.1]$.</p>
+
+<figure>
+<p style="text-align:center;">
+<img alt="simple-example" src="/images/ed-empty.png" style="height:500px"/>
+    <figcaption style="text-align: center;" >The zero set of $f$ in <span style="color:steelblue">blue</span> and the point $u_0$ in <span style="color:indianred">red</span>.</figcaption>
+</p>
+</figure>
+
+<p>We could formulate our problem as the constrained optimization problem</p>
+
+<p>$$\min\; (x + 0.32)^2 + (y+0.1)^2 \quad \text{ s.t.} \quad  f(x,y) = 0 $$</p>
+
+<p>Now this a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a  random point we (maybe) get as a result a <em>local</em> minima <em>but</em> we do <strong>not</strong> know whether this is the global minimum!</p>
+
+<p>In order to make sure that we find the <em>optimal</em> solution we will compute <strong>all</strong> critical points of this optimization problem.
+If we count the number of critical points over the <em>complex numbers</em> then this number will <em>almost always</em> be the same. It is called the <em>Euclidean Distance degree</em> of $X=V(f)$.</p>
+
+<h3 id="the-critical-equations">The critical equations</h3>
+
+<p>Let us derive the equations for the critical equations in general in order to apply them afterwards to our example.
+For a given $u \in \mathbb{R}^n$ and $X=V(f_1,\ldots, f_m)$ we want to solve the problem:</p>
+
+<p>$$\min =||x-u||_2=:d_u(x) \quad \text{subject to} \quad x \in X$$</p>
+
+<p>Considering the geometry of the problem  you can see that a point $x^{*} $ is a critical point of the distance function
+if and only if
+$x^{*} - u$ is orthogonal to the tangent space of $X$ at $x^{*} $, or formally
+$$ (x^{*} - u) \perp T_{(x^{*} )}X \,.$$</p>
+
+<p>Let us assume that $\dim(X)=n-m$ and denote by $J(x)$ the Jacobian of $F=(f_1,\ldots, f_m)$ where the $i$-th row of $J$ consists of the partial derivatives of $f_i$.
+    Then, critical points satisfy the equations
+$$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\in \mathbb{R}^m \end{array}$$</p>
+
+<p><strong>Note</strong>: These are the same equations you get from applying Lagrange multipliers to the optimization problem. We just ended up deriving Lagrange multipliers on our own :)</p>
+
+<h3 id="solving-the-critical-equations">Solving the critical equations</h3>
+
+<p>Now that we derived the critical equations we can go back to our initial example. Let&rsquo;s start with defining the critical equations in Julia.</p>
+
+<pre><code class="language-julia"># define f
+@polyvar x y
+f = (x^4 + y^4 - 1) * (x^2 + y^2 - 2) + x^5 * y
+# define new variables u₁, u₂ and λ₁
+@polyvar u[1:2] λ[1:1]
+# define the jacobian of F
+J = differentiate([f], [x,y])
+# J' defines the transpose of J
+C = [[x,y] - u - J'*λ;
+     f]
+</code></pre>
+
+<pre><code>3-element Array{DynamicPolynomials.Polynomial{true,Int64},1}:
+ -6x⁵λ₁ - 5x⁴yλ₁ - 4x³y²λ₁ - 2xy⁴λ₁ + 8x³λ₁ + 2xλ₁ + x - u₁
+ -x⁵λ₁ - 2x⁴yλ₁ - 4x²y³λ₁ - 6y⁵λ₁ + 8y³λ₁ + 2yλ₁ + y - u₂  
+ x⁶ + x⁵y + x⁴y² + x²y⁴ + y⁶ - 2x⁴ - 2y⁴ - x² - y² + 2     
+</code></pre>
+
+<p>Now that we have our equations let&rsquo;s define the point $u_0 =[-0.32, -0.1]$</p>
+
+<pre><code class="language-julia">u₀ = [-0.32, -0.1]
+</code></pre>
+
+<pre><code>2-element Array{Float64,1}:
+ -0.32
+ -0.1 
+</code></pre>
+
+<p>Our system $C$ is still parameterized by $u$.
+So we have to make the substitution $u \Rightarrow u_0$ before we can solve the system.</p>
+
+<pre><code class="language-julia">C_u₀ = [subs(c, u =&gt; u₀) for c in C]
+res = solve(C_u₀)
+</code></pre>
+
+<pre><code>Result with 36 solutions
+==================================
+• 36 non-singular solutions (8 real)
+• 0 singular solutions (0 real)
+• 216 paths tracked
+• random seed: 58134
+</code></pre>
+
+<p>We find that our problem has <strong>36</strong> solutions over the complex numbers (which is also the generic number of solutions).
+Thus the <em>Euclidean distance degree</em> is 36.
+Furthermore we can see that there are <strong>8</strong> real solutions.</p>
+
+<p>Now let&rsquo;s extract the real points.</p>
+
+<pre><code class="language-julia"># Let's get all real solutions
+real_sols = real_solutions(res)
+# We have to remove our artifical variable λ₁
+ed_points = map(p -&gt; p[1:2], real_sols)
+</code></pre>
+
+<pre><code>8-element Array{Array{Float64,1},1}:
+ [1.63906, -0.958966]  
+ [0.577412, 1.27259]   
+ [-1.57227, 1.0613]    
+ [0.798736, -0.739109] 
+ [0.926711, -0.362357] 
+ [-0.988532, 0.0487366]
+ [-0.337537, -0.997977]
+ [-0.666196, 1.28245]  
+</code></pre>
+
+<p>Now let&rsquo;s find the optimal solution:</p>
+
+<pre><code class="language-julia">using LinearAlgebra
+
+dist, idx = findmin([norm(x - u) for x in ed_points])
+println(&quot;Optimal solution: &quot;, ed_points[idx], &quot; with distance &quot;, sqrt(dist), &quot; to u₀&quot;)
+</code></pre>
+
+<pre><code>Optimal solution: [-0.988532, 0.0487366] with distance 1.31382768101552 to u₀
+</code></pre>
+
+<p>Here is a visualization of all (real) critical points we computed:</p>
+
+<figure>
+<p style="text-align:center;">
+<img alt="ed" src="/images/ed.png" style="height:500px"/>
+    <figcaption style="text-align: center;" >The zero set of $f$ in <span style="color:steelblue">blue</span>, the point ${u_{0}}$ in <span style="color:indianred">red</span> as well as all critical points of the euclidean distance function.</figcaption>
+</p>
+</figure>
+
+<h3 id="computing-the-critical-points-repeatedly">Computing the critical points repeatedly</h3>
+
+<p>Now assume you need to solve the same optimization problem many times for different values of $u$.
+We could apply the same computations as above, but note that we needed to track 216 paths in order to find only 36 solutions. Let&rsquo;s make use of the fact that we know that for almost all values of $u$ there are the same number of critical points and that for the other values $u$ the number of <em>isolated</em> solutions can only <em>decrease</em>.</p>
+
+<p>We start with computing all critical points to a random <em>complex</em> value $v \in \mathbb{C}^2$. Let&rsquo;s call the set of 36 critical points $S_v$.</p>
+
+<pre><code class="language-julia">v = randn(ComplexF64, 2)
+result_v = solve([subs(c, u =&gt; v) for c in C])
+</code></pre>
+
+<pre><code>Result with 36 solutions
+==================================
+• 36 non-singular solutions (0 real)
+• 0 singular solutions (0 real)
+• 216 paths tracked
+• random seed: 286792
+</code></pre>
+
+<p>Remember how we talked above about finding optimal homotopies and how it is hard to do this in general?
+Well, we just computed an optimal start system and now for a given $u_0$ the homotopy</p>
+
+<p>$$H(x, t) = C_{tv + (1-t)u_0}$$</p>
+
+<p>is an optimal homotopy! $H$ is called a <em>parameter homotopy</em> since we do a homotopy in the parameter space of our (family) of polynomial systems.</p>
+
+<p>Since this paradigm is so common we support it out of the box with HomotopyContinuation.jl:</p>
+
+<pre><code class="language-julia">solve(C, solutions(result_v); parameters=u, start_parameters=v, target_parameters=u₀)
+</code></pre>
+
+<pre><code>Result with 36 solutions
+==================================
+• 36 non-singular solutions (8 real)
+• 0 singular solutions (0 real)
+• 36 paths tracked
+• random seed: 364372
+</code></pre>
+
+<p>And we see that we only needed to compute $36$ paths to find all $36$ critical points for $u_0$.</p>
+
+<p><strong>Note:</strong> If the computation of $S_v$ takes some time you should store the solutions (together with $v$!) on your disk. Then you can load them from there if needed.</p>
+
+<h3 id="computing-the-solution-to-large-systems">Computing the solution to large systems</h3>
+
+<p>If we take a look at the defining equations
+$$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\in \mathbb{R}^m \end{array}$$
+we can see that the total degree of this system is approximately
+$$D^n\prod_{i=1}^m d_i$$ where $D:= \max_i d_i$, $m$ is the number of equations and $n$ the number of variables.
+So this can become large very quickly! But it is reasonable to expect that the number of solutions is relatively small in comparison.</p>
+
+<p>Now there are <strong>two options</strong>. The first is fairly simple, instead of the total degree homotopy try to use a <strong>polyhedral homotopy</strong>. Let&rsquo;s try this with our running example:</p>
+
+<pre><code class="language-julia">solve(C_u₀; start_system=:polyhedral)
+</code></pre>
+
+<pre><code>Result with 36 solutions
+==================================
+• 36 non-singular solutions (8 real)
+• 0 singular solutions (0 real)
+• 36 paths tracked
+• random seed: 509642
+</code></pre>
+
+<p>And we see that instead of the $216$ paths we tracked initially we only needed to track <strong>36</strong>, so here this is even optimal!</p>
+
+<h3 id="using-monodromy-to-compute-all-solutions">Using monodromy to compute all solutions</h3>
+
+<p>But sometimes even polyhedral homotopy is not enough. Another approach is a technique called <strong>monodromy</strong> which
+uses the fact that our problem has the same number of solutions for almost all values of $u$.
+The idea is the following: Assume we have parameter $v \in \mathbb{C}^n$ and suppose we know <strong>one</strong> solution $x_0$ for our problem. We call this a <em>start pair</em>. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
+The amazing part is that this loop induces a <em>permutation</em> on <strong>all</strong> solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with <strong>another</strong> solution than we started. By doing this process repeatedly we can recover <strong>all</strong> solutions!</p>
+
+<p>This sound&rsquo;s great so let&rsquo;s try to solve our example using this technique! But how do we obtain a start pair? This depends very much on your specific problem, but it can be often solved by either reverse engineering a parameter from a solution or by some knowledge about your problem.</p>
+
+<p>Since our initial example is picked to produce a pretty picture, we have take the reverse engineering approach. Our approach is the following. We first compute a solution to $f$ by intersecting it with a linear space. This will result in $6$ solutions (since $f$ is a curve of degree 6). Then we can use one of these solutions to compute the normal space of $V(f)$ at this point.</p>
+
+<pre><code class="language-julia"># create a random linear space
+l = sum(randn(ComplexF64,3) .* [x,y,1])
+# compute intersection points of the V(f) and V(l) and take the first solution
+s₀ = first(solutions(solve([f, l])))
+# The normal space is now generated by
+J_s₀ = [p([x,y]=&gt;s₀) for p in J]
+# creat normal vector
+λ₀ = randn(ComplexF64, 1)
+# x₀ - u₀ = J_s₀' * λ₀ =&gt; u = x -  J_s₀' * λ₀
+u₀ = s₀ - transpose(J_s₀) * λ₀
+</code></pre>
+
+<pre><code>2-element Array{Complex{Float64},1}:
+ -1.3145309760357284 - 6.764765173081119im 
+  3.6304286598010447 - 1.3732823625006585im
+</code></pre>
+
+<p>Let&rsquo;s verify that we computed a correct start pair:</p>
+
+<pre><code class="language-julia">[p(u =&gt; u₀, [x,y] =&gt; s₀, λ =&gt; λ₀) for p in C]
+</code></pre>
+
+<pre><code>3-element Array{Complex{Float64},1}:
+                    0.0 + 8.881784197001252e-16im
+                    0.0 + 8.881784197001252e-16im
+ 1.7763568394002505e-15 + 6.661338147750939e-16im
+</code></pre>
+
+<p>Now we can use the <code>monodromy_solve</code> routine to find all solutions.</p>
+
+<pre><code class="language-julia">result_u₀ = monodromy_solve(C, [s₀; λ₀], u₀; parameters=u)
+</code></pre>
+
+<pre><code>MonodromyResult
+==================================
+• 36 solutions (0 real)
+• return code → heuristic_stop
+• 1255 tracked paths
+</code></pre>
+
+<p>We see that the return code is <code>heuristic_stop</code>. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
+By default this is if after 10 loop we didn&rsquo;t find any more solutions. But we can also set this to another value by
+using the <code>max_loops_no_progress</code> flag. Additionally you can set the expected number with the <code>target_solutions_count</code>.</p>
+
+<pre><code class="language-julia">result_u₀ = monodromy_solve(C, [s₀; λ₀], u₀; parameters=u, max_loops_no_progress=100, target_solutions_count=36)
+</code></pre>
+
+<pre><code>MonodromyResult
+==================================
+• 36 solutions (0 real)
+• return code → success
+• 200 tracked paths
+</code></pre>
+
+<p>The solutions in the monodromy result then can be used again to compute the solutions we are interested in.</p>
+
+<pre><code class="language-julia">solve(C, solutions(result_u₀); parameters=u, start_parameters=u₀, target_parameters=u₀)
+</code></pre>
+
+<pre><code>Result with 36 solutions
+==================================
+• 36 non-singular solutions (8 real)
+• 0 singular solutions (0 real)
+• 36 paths tracked
+• random seed: 474907
+</code></pre>
+
+<p>The monodromy method is very powerful and also has features like the possibility to compute modulo a group action if there is a group acting on the solution set. For more information see our <a href="https://www.juliahomotopycontinuation.org/guides/monodromy/">monodromy guide</a>.</p>
+
+<h2 id="more-information">More information</h2>
+
+<p>If you want to find out more about HomotopyContinuation.jl visit www.JuliaHomotopyContinuation.org. The homepage also contains many <a href="https://www.JuliaHomotopyContinuation.org/examples">examples</a> and <a href="https://www.JuliaHomotopyContinuation.org/examples">guides</a> on how to make the most of numerical homotopy continuation methods.
+For more informations about the math behind homotopy continuation methods you should check out the book <a href="https://www.worldscientific.com/worldscibooks/10.1142/5763">The Numerical Solution of Systems of Polynomials Arising in Engineering and Science</a> by Sommese and Wampler.</p>
+
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

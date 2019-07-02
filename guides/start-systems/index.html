@@ -6,10 +6,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Using HomotopyContinuation.jl from Macaulay2 </title>
+  <title> Choosing a start system </title>
 
   
-  <meta name="description" content="How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"> 
+  <meta name="description" content="What start system should I choose?"> 
   
   
   
@@ -21,11 +21,10 @@
   <meta name="author" content="">
 
 
-  <meta property="og:title" content="Using HomotopyContinuation.jl from Macaulay2" />
-<meta property="og:description" content="How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?" />
+  <meta property="og:title" content="Choosing a start system" />
+<meta property="og:description" content="What start system should I choose?" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/guides/macaulay2/" /><meta property="article:published_time" content="2019-04-15T18:56:55&#43;01:00"/>
-<meta property="article:modified_time" content="2019-04-15T18:56:55&#43;01:00"/>
+<meta property="og:url" content="/guides/start-systems/" />
 
   
 
@@ -38,7 +37,7 @@
   
   
 
-  <link rel="canonical" href="/guides/macaulay2/">  
+  <link rel="canonical" href="/guides/start-systems/">  
 
   
 
@@ -131,8 +130,8 @@
   <main>
 <div id="main">
   <div id="hero">
-    <h1>Using HomotopyContinuation.jl from Macaulay2</h1>
-    <p class="hero-lead">How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?</p>
+    <h1>Choosing a start system</h1>
+    <p class="hero-lead">What start system should I choose?</p>
   </div>
   <div id="kube-component" class="content">
     
@@ -155,76 +154,57 @@
 
 
 
-    <p><a href="http://www2.macaulay2.com/Macaulay2/">Macaulay2</a> is a great software for symbolic computations
-and it has many features which are not yet available in Julia.
-In this guide we show a possible workflow where the <em>symbolic</em> computations are happening
-in Macaulay2 and the <em>numerical</em> work in Julia.</p>
+    <p>Choosing a start system for homotopy continuation is an art for itself. We give some basic rules for start systems. They can roughly be subdivided into three classes:</p>
 
-<h3 class="section-head" id="setting*up"><a href="#setting*up">Setting things up</a></h3>
+<h3 class="section-head" id="result"><a>I know nothing about the structure of my polynomial system</a></h3>
 
-<p>Our goal is to have a function <code>writeSystem</code> available which accepts
-as input an ideal <code>I</code> (or a list of polynomials) and a filename <code>f</code> and generates a file <code>f</code>
-containing the necessary Julia code to compute the solutions of <code>I</code> using HomotopyContinuation.jl.</p>
+<p>In this case, there are two options: choosing a <a href="/guides/totaldegree">totaldegree</a> start system, or a <a href="/guides/polyhedral">polyhedral</a> start system.</p>
 
-<p>For example, the Macaulay2 code</p>
+<p>The first one is suitable for system, which are dense. The second one is suitable for systems, which are sparse. Here is how it works:</p>
 
-<pre><code class="language-julia">R = QQ[x, y]
-I = ideal(x^2 + y^2 + 1, x - y - 4)
-writeSystem(I, &quot;example1.jl&quot;)
+<pre><code class="language-julia">using HomotopyContinuation
+@polyvar x y;
+f = [x^2 + 2y, y^2 - 2]
+solve(f; start_system = :total_degree) # using totaldegree
+solve(f; start_system = :polyhedral) # using polyhedral
 </code></pre>
 
-<p>should generate a file <code>example1.jl</code> containing</p>
+<h3 class="section-head" id="result"><a>My polynomial system has parameters</a></h3>
 
-<pre><code class="language-julia"># This file was auto generated from Macaulay2.
-# For more information about HomotopyContinuation.jl visit:
-#    https://www.JuliaHomotopyContinuation.org
-using HomotopyContinuation
+<p>In this case, one should first compute an intermediate solution with random <em>complex</em> coefficients. Why complex? The reason is that tracking over the complex numbers one can easily avoid the locus where homotopy continuation fails (and this is not possible tracking only over the real numbers!).</p>
 
-@polyvar x y
-f = [x^2+y^2+1, x-y-4];
+<p>Here is an example with parameters <code>p</code>:</p>
 
-result = solve(f)
+<pre><code class="language-julia">using HomotopyContinuation, DynamicPolynomials
+@polyvar x y z p[1:3]
+F = [
+    x + 3 + 2y + 2y^2 - p[1]^2,
+    (x - 2 + 5y)*z + 4 - p[2] * z,
+    (x + 2 + 4y)*z + 5 - p[3] * z    
+]
 </code></pre>
 
-<p>The function <code>writeSystem</code> can be achieved by the following code
-<script src="https://gist.github.com/saschatimme/02faf68103d639eb31f5706760b974d4.js"></script></p>
+<p>Suppose we want to solve the system for <code>p₁ = [1,1,2]</code>. Then, we first solve it for random complex coefficients:</p>
 
-<p>You can copy and paste this code in your current Macaulay2 session and then you have the <code>writeSystem</code> function available.
-But since it is annoying to define this for every new session again we <strong>recommend</strong> to add the code to your <a href="https://faculty.math.illinois.edu/Macaulay2/doc/Macaulay2-1.12/share/doc/Macaulay2/Macaulay2Doc/html/_initialization_spfile.html"><code>init.m2</code></a> file.</p>
-
-<p><strong>Acknowledgement</strong>: A first version of the code was written by <a href="http://people.math.gatech.edu/~tduff3/">Tim Duff</a> during a Macaulay2 workshop at the Max-Planck-Institute for Mathematics in the Sciences in Leipzig.</p>
-
-<h3 class="section-head" id="example"><a href="#example">An example from Schubert calculus</a></h3>
-
-<p>Let $M = (m_{ij})$ be a $3 \times 5$ matrix where the entries $m_{ij} \in \mathbb{Q}[x,y,z]$ are generic polynomials of degree 2.
-<a href="https://en.wikipedia.org/wiki/Schubert_calculus">Schubert calculus</a> tells us that the ideal $I$ generated by the maximal of minors of $M$ is zero dimensional with degree 80.</p>
-
-<p>The code to generate $I$ is</p>
-
-<pre><code>R = QQ[x,y,z];
-M = matrix apply(3,u-&gt;apply(5,t-&gt;random(2,R)+random(1,R)+random(0,R)))
-I = minors(3,M);
+<pre><code class="language-julia"># Generate generic parameters by sampling complex numbers from the normal distribution
+p₀ = randn(ComplexF64, 3)
+# Substitute p₀ for p
+F_p₀ = subs(F, p =&gt; p₀)
+# Compute all solutions for F_p₀
+result_p₀ = solve(F_p₀)
 </code></pre>
 
-<p>Now we can use our new <code>writeSystem</code> method to generate the necessary Julia code</p>
+<p>Now, we track <code>p₀</code> to <code>p₁</code> using a <a href="/guides/parameter-homotopies">parameter homotopy</a>.</p>
 
-<pre><code>writeSystem(I, &quot;minors35.jl&quot;)
+<pre><code class="language-julia">p₁ = [1, 1, 2]
+result_p₁ = solve(F, solutions(result_p₀); parameters=p, start_parameters=p₀, target_parameters=p₁)
 </code></pre>
 
-<p>Now let&rsquo;s start a Julia session and load the newly generated file</p>
+<p>This approach is particularly useful when one has to solve this system for many different sets of parameters, as we explain in <a href="/guides/many-systems">this guide</a>.</p>
 
-<pre><code class="language-julia-repl">julia&gt; include(&quot;minors35.jl&quot;)
-</code></pre>
+<h3 class="section-head" id="result"><a>I have one solution of my polynomial system already</a></h3>
 
-<pre><code>Result with 80 solutions
-==================================
-• 80 non-singular solutions (4 real)
-• 0 singular solutions (0 real)
-• 216 paths tracked
-• random seed: 488250
-</code></pre>
-
-<p>and we see that we found the correct number of solutions.</p>
+<p>In this case, one should use the <a href="/guides/monodromy">monodromy method</a>.</p>
 
     
     

@@ -172,11 +172,11 @@ The common zero set $V(f_1,f_2)$ is also called a <em>variety</em>.</p>
 <img alt="simple-example" src="/images/simple-example.png" style="height:500px"/>
 </p>
     <figcaption style="text-align: center;" >The zero set of $f_1$ in <span style="color:steelblue">blue</span> and the zero set of $f_2$ in <span style="color:indianred">red</span>. Their common zero set is depicted in <span style="color:black">black</span>.</figcaption>
-    
+
 </figure>
 
 <p>From the figure we can see that $f_1$ and $f_2$ have 4 common zeros.
-Using <a href="https://www.JuliaHomotopyContinuation.org">HomotopyContinuation.jl</a> we can compute them very easily.</p>
+Using <a href="https://www.JuliaHomotopyContinuation.org">HomotopyContinuation.jl</a> we can compute them.</p>
 
 <pre><code class="language-julia"># load the package
 using HomotopyContinuation
@@ -196,23 +196,23 @@ result = solve([f₁, f₂])
 • random seed: 847678
 </code></pre>
 
-<p>Now, the result reports that we found <strong>18</strong> solutions and <strong>4  real</strong> solutions. Why do we have 14 solutions more than expected? The reason is that we do not compute the common zero set of $f_1$ and $f_2$ over the real numbers but rather over the <strong>complex numbers</strong>. Although there are usually much more complex solutions than real solutions this still makes the problem of computing all real solutions <em>much</em> easier.</p>
+<p>Now, the result reports that we found <strong>18</strong> solutions and <strong>4  real</strong> solutions. Why do we have 14 solutions more than expected? The reason is that we do not compute the common zero set of $f_1$ and $f_2$ over the real numbers, but over the <strong>complex numbers</strong>. Although there are usually more complex solutions than real solutions, this makes the problem of computing all real solutions <em>much</em> easier.</p>
 
 <blockquote>
 <p>The shortest path between two truths in the real domain passes through the complex domain.
 &ndash; <cite>J. Hadamard</cite></p>
 </blockquote>
 
-<p>Since we (for now) only care about the real solutions we can simply extract them from the <code>result</code></p>
+<p>Since we (for now) only care about the real solutions, we extract them from the <code>result</code></p>
 
 <pre><code class="language-julia">real_solutions(result)
 </code></pre>
 
 <pre><code>4-element Array{Array{Float64,1},1}:
- [-1.67142, 0.655205] 
+ [-1.67142, 0.655205]
  [-0.936898, 0.312284]
  [0.820979, -0.697133]
- [0.899918, -1.24418] 
+ [0.899918, -1.24418]
 </code></pre>
 
 <p>The <code>result</code> contains some additional informations about the different solutions.
@@ -243,13 +243,11 @@ Let&rsquo;s take a look at the first real solution:</p>
 <li><code>path_number</code> the number of the path which resulted int this solution.</li>
 </ul>
 
-<p>This is already everything you need to now to solve many polynomial systems! But in order to solve more challenging systems it is very helpful to understand the basics about the techniques used in <code>solve</code> and there are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.</p>
-
-<p>In the following we will got into some (light) details of the math used and then explore many techniques on a concrete application.</p>
+<p>This is already everything you need to know for solving simple polynomial systems! But in order to solve more challenging systems it is helpful to understand the basics about the techniques used in <code>solve</code>. There are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.</p>
 
 <h2 id="homotopy-continuation-methods">Homotopy continuation methods</h2>
 
-<p>HomotopyContinuation.jl uses <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry#Homotopy_continuation">homotopy continuation</a> methods to compute the zero set of polynomial systems (hence the name). The very basic idea is as follows:</p>
+<p>HomotopyContinuation.jl uses <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry#Homotopy_continuation">homotopy continuation</a> methods to compute the zero set of polynomial systems (hence the name). The basic idea is as follows:</p>
 
 <p>Suppose that
 $$F(\mathbf{x})= F(x_1,\ldots,x_n) = \begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots \\ f_m(x_1,\ldots,x_n) \end{bmatrix}$$
@@ -273,7 +271,7 @@ where <strong>we already know  the solutions</strong> of and we also know that $
 $$H(x(t),t)=0 \quad \text{ and } \quad x(1) = y$$
 for $t \in [0,1]$.</p>
 
-<p>If we now differentiate $H(x(t),t)$ with respect to $t$ we see that the path $x(t)$ is governed by an ordinary differential equation (ODE)! Therefore we can follow the solution path from $t=1$ to $t=0$ by any numerical method to solve ODEs. Since every solution $x(t_k)$ at time $t_k$ is also a zero of the polynomial system $H(x, t_k)$ we can use <strong>Newton&rsquo;s method</strong> to correct an approximated solution $x_k \approx x(t_k)$ to an accurate one! We say that we follow the solution path by a <em>predictor-corrector</em> method.</p>
+<p>If we now differentiate $H(x(t),t)$ with respect to $t$ we see that the path $x(t)$ is governed by an ordinary differential equation (ODE)! Therefore, we can follow the solution path from $t=1$ to $t=0$ by any numerical method solving ODEs. Every solution $x(t_k)$ at time $t_k$ is a zero of the polynomial system $H(x, t_k)$, and so using <strong>Newton&rsquo;s method</strong> corrects an approximated solution $x_k \approx x(t_k)$ to an accurate one! We say that we follow the solution path by a <em>predictor-corrector</em> method.</p>
 
 <figure>
 <p style="text-align:center;">
@@ -287,14 +285,14 @@ for $t \in [0,1]$.</p>
 
 <h3 id="constructing-start-systems-and-homotopies">Constructing start systems and homotopies</h3>
 
-<p>As we already discussed, homotopy continuation methods work by constructing a suitable start system resp. homotopy. For a given polynomial system there are <em>infinitely many</em> possible start systems and homotopies.
-We say that a homotopy is <em>optimal</em> if $H(x,1)$ has the same number of solutions as $F(x)=H(x,0)$ since we then only need to track the minimal number of paths possible to still get <em>all</em> solutions of $F(x)$. But constructing optimal homotopies is in general so far <em>not</em> possible. We don&rsquo;t even know an efficient method to compute the number of solutions of $F(x)$. <a href="https://en.wikipedia.org/wiki/Intersection_theory">Intersection theory</a> (a part of <a href="https://en.wikipedia.org/wiki/Algebraic_geometry">algebraic geometry</a>) allows to compute this in theory, but proving the number of solutions even for one particular polynomial system is usually worth a research paper :)</p>
+<p>Homotopy continuation methods work by constructing a suitable start system resp. homotopy. For a given polynomial system there are <em>infinitely many</em> possible start systems and homotopies.
+We say that a homotopy is <em>optimal</em> if $H(x,1)$ has the same number of solutions as $F(x)=H(x,0)$ since we then only need to track the minimal number of paths possible to still get <em>all</em> solutions of $F(x)$. But constructing optimal homotopies is in general so far <em>not</em> possible. We don&rsquo;t even know an efficient method to compute the number of solutions of $F(x)$. <a href="https://en.wikipedia.org/wiki/Intersection_theory">Intersection theory</a> (a part of <a href="https://en.wikipedia.org/wiki/Algebraic_geometry">algebraic geometry</a>) allows to compute this in theory, but proving the number of solutions even for one particular polynomial system is usually worth a research paper.</p>
 
-<p>Therefore, for polynomial systems we have to consider them as a part of a <em>family</em> of polynomial system where we know (or can construct) a homotopy. The most simple example of this is the <em>total degree homotopy</em>:</p>
+<p>Instead of aiming at optimal homotopies, we consider polynomial systems as part of a <em>family</em> of polynomial system where we know (or can construct) an optimal homotopy $H(x,t)$ for almost all members of this family. A theorem in algebraic geometry says that the number of solutions of our particular system is always bounded by the number of solutions of the start system $H(x,1)$. The most simple example of this is the <em>total degree homotopy</em>:</p>
 
 <p>Take our initial example
 $$    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 \,.$$
-    The polynomial $f_1$ has degree $6$ and the polynomial $f_2$ has degree 3. Now <a href="https://en.wikipedia.org/wiki/Bézout%27s_theorem">Bezout&rsquo;s theorem</a> tells us that such a polynomial system has at most $6 \cdot 3=18$ isolated solutions. We then can construct the polynomial system
+The polynomial $f_1$ has degree $6$ and the polynomial $f_2$ has degree 3. Now <a href="https://en.wikipedia.org/wiki/Bézout%27s_theorem">Bezout&rsquo;s theorem</a> tells us that such a polynomial system has at most $6 \cdot 3=18$ isolated solutions. We then can construct the polynomial system
 $$g(x,y) = \begin{bmatrix} x^6 - 1 \\ y^3 - 1\end{bmatrix}$$
 which has the $18$ solutions
 $$\left(e^{i 2\pi\frac{k_1}{6}}, \;e^{i 2\pi\frac{k_2}{3}}\right)$$
@@ -309,22 +307,21 @@ If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then 
 <p>For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:</p>
 
 <ul>
-<li>Multi-homogenous homotopies take a degree structure in the variables into account. This works by using a generalization of Bezout&rsquo;s theorem by <a href="https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem">Shafarevich</a>.</li>
-<li>Polyhedral homotopies take the sparsity of the polynomials into account. To each polynomial system you can associate the <a href="https://en.wikipedia.org/wiki/Mixed_volume"><em>mixed volume</em></a> of the Newton polytopes of the polynomials. Now the <a href="https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem">Bernstein–Khovanskii–Kushnirenko theorem</a> tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.</li>
+<li><a href="/guides/variable-groups">Multi-homogenous homotopies</a> take a degree structure in the variables into account. This works by using a generalization of Bezout&rsquo;s theorem by <a href="https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem">Shafarevich</a>.</li>
+<li><a href="/guides/polyhedral">Polyhedral homotopies</a> take the sparsity of the polynomials into account. To each polynomial system you can associate the <a href="https://en.wikipedia.org/wiki/Mixed_volume"><em>mixed volume</em></a> of the Newton polytopes of the polynomials. The <a href="https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem">Bernstein–Khovanskii–Kushnirenko theorem</a> tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.</li>
 </ul>
 
-<p>Multi-homogenous as well as polyhedral homotopies are both supported by HomotopyContinuation.jl.
-A multi-homogenous homotopy will automatically constructed if you pass a set of <code>variable_groups</code> to solve
-and for a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
+<p>Both multi-homogenous and polyhedral homotopies are supported by HomotopyContinuation.jl.
+A multi-homogenous homotopy will automatically be constructed if you pass a set of <code>variable_groups</code> to <code>solve</code>. For a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
 
-<h2 id="case-study-euclidean-distance-optimization">Case Study: Euclidean Distance Optimization</h2>
+<h2 id="case-study-optimization">Case Study: Optimization</h2>
 
 <p>Consider the distance from a point $u \in \mathbb{R}^n$ to the variety $X=V(f_1,\ldots,f_m)$.
 We want to solve the following optimization problem:</p>
 
 <div style="text-align:center;margin-top:20px;"><em>What is the nearest point on $X$ to $u$ with respect to the euclidean distance?</em></div>
 
-<p>Let us illustrate this at an example. Consider again the polynomial
+<p>Let us illustrate this with an example. Consider again the polynomial
 $$f(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y$$
 and the point $u_0 = [-0.32, -0.1]$.</p>
 
@@ -339,12 +336,12 @@ and the point $u_0 = [-0.32, -0.1]$.</p>
 
 <p>$$\min\; (x + 0.32)^2 + (y+0.1)^2 \quad \text{ s.t.} \quad  f(x,y) = 0 $$</p>
 
-<p>Now this a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a  random point we (maybe) get as a result a <em>local</em> minima <em>but</em> we do <strong>not</strong> know whether this is the global minimum!</p>
+<p>Now this a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a random point we might get as a result a <em>local</em> minimum <em>but</em> we do <strong>not</strong> know whether this is the global minimum!</p>
 
 <p>In order to make sure that we find the <em>optimal</em> solution we will compute <strong>all</strong> critical points of this optimization problem.
 If we count the number of critical points over the <em>complex numbers</em> then this number will <em>almost always</em> be the same. It is called the <em>Euclidean Distance degree</em> of $X=V(f)$.</p>
 
-<h3 id="the-critical-equations">The critical equations</h3>
+<h3 id="solving-the-critical-equations">Solving the critical equations</h3>
 
 <p>Let us derive the equations for the critical equations in general in order to apply them afterwards to our example.
 For a given $u \in \mathbb{R}^n$ and $X=V(f_1,\ldots, f_m)$ we want to solve the problem:</p>
@@ -360,9 +357,7 @@ $$ (x^{*} - u) \perp T_{(x^{*} )}X \,.$$</p>
     Then, critical points satisfy the equations
 $$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\in \mathbb{R}^m \end{array}$$</p>
 
-<p><strong>Note</strong>: These are the same equations you get from applying Lagrange multipliers to the optimization problem. We just ended up deriving Lagrange multipliers on our own :)</p>
-
-<h3 id="solving-the-critical-equations">Solving the critical equations</h3>
+<p><strong>Note</strong>: These are the same equations you get from applying Lagrange multipliers to the optimization problem.</p>
 
 <p>Now that we derived the critical equations we can go back to our initial example. Let&rsquo;s start with defining the critical equations in Julia.</p>
 
@@ -384,18 +379,18 @@ C = [[x,y] - u - J'*λ;
  x⁶ + x⁵y + x⁴y² + x²y⁴ + y⁶ - 2x⁴ - 2y⁴ - x² - y² + 2     
 </code></pre>
 
-<p>Now that we have our equations let&rsquo;s define the point $u_0 =[-0.32, -0.1]$</p>
+<p>We also define the point $u_0 =[-0.32, -0.1]$</p>
 
 <pre><code class="language-julia">u₀ = [-0.32, -0.1]
 </code></pre>
 
 <pre><code>2-element Array{Float64,1}:
  -0.32
- -0.1 
+ -0.1
 </code></pre>
 
-<p>Our system $C$ is still parameterized by $u$.
-So we have to make the substitution $u \Rightarrow u_0$ before we can solve the system.</p>
+<p>Our system $C$ is parametrized by $u$.
+We have to make the substitution $u \Rightarrow u_0$ before we can solve the system.</p>
 
 <pre><code class="language-julia">C_u₀ = [subs(c, u =&gt; u₀) for c in C]
 res = solve(C_u₀)
@@ -409,11 +404,9 @@ res = solve(C_u₀)
 • random seed: 58134
 </code></pre>
 
-<p>We find that our problem has <strong>36</strong> solutions over the complex numbers (which is also the generic number of solutions).
-Thus the <em>Euclidean distance degree</em> is 36.
-Furthermore we can see that there are <strong>8</strong> real solutions.</p>
+<p>We find that our problem has <strong>36</strong> solutions over the complex numbers, and we can see that there are <strong>8</strong> real solutions.</p>
 
-<p>Now let&rsquo;s extract the real points.</p>
+<p>Let&rsquo;s extract the real points.</p>
 
 <pre><code class="language-julia"># Let's get all real solutions
 real_sols = real_solutions(res)
@@ -425,14 +418,14 @@ ed_points = map(p -&gt; p[1:2], real_sols)
  [1.63906, -0.958966]  
  [0.577412, 1.27259]   
  [-1.57227, 1.0613]    
- [0.798736, -0.739109] 
- [0.926711, -0.362357] 
+ [0.798736, -0.739109]
+ [0.926711, -0.362357]
  [-0.988532, 0.0487366]
  [-0.337537, -0.997977]
  [-0.666196, 1.28245]  
 </code></pre>
 
-<p>Now let&rsquo;s find the optimal solution:</p>
+<p>The optimal solution is found as follows:</p>
 
 <pre><code class="language-julia">using LinearAlgebra
 
@@ -443,7 +436,7 @@ println(&quot;Optimal solution: &quot;, ed_points[idx], &quot; with distance &qu
 <pre><code>Optimal solution: [-0.988532, 0.0487366] with distance 1.31382768101552 to u₀
 </code></pre>
 
-<p>Here is a visualization of all (real) critical points we computed:</p>
+<p>Here is a visualization of all (real) critical points:</p>
 
 <figure>
 <p style="text-align:center;">
@@ -452,9 +445,9 @@ println(&quot;Optimal solution: &quot;, ed_points[idx], &quot; with distance &qu
 </p>
 </figure>
 
-<h3 id="computing-the-critical-points-repeatedly">Computing the critical points repeatedly</h3>
+<h3 id="computing-critical-points-repeatedly">Computing critical points repeatedly</h3>
 
-<p>Now assume you need to solve the same optimization problem many times for different values of $u$.
+<p>Now assume you need to solve the optimization problem many times for different values of $u$.
 We could apply the same computations as above, but note that we needed to track 216 paths in order to find only 36 solutions. Let&rsquo;s make use of the fact that we know that for almost all values of $u$ there are the same number of critical points and that for the other values $u$ the number of <em>isolated</em> solutions can only <em>decrease</em>.</p>
 
 <p>We start with computing all critical points to a random <em>complex</em> value $v \in \mathbb{C}^2$. Let&rsquo;s call the set of 36 critical points $S_v$.</p>
@@ -478,7 +471,7 @@ Well, we just computed an optimal start system and now for a given $u_0$ the hom
 
 <p>is an optimal homotopy! $H$ is called a <em>parameter homotopy</em> since we do a homotopy in the parameter space of our (family) of polynomial systems.</p>
 
-<p>Since this paradigm is so common we support it out of the box with HomotopyContinuation.jl:</p>
+<p>This strategy is so essential that we support it out of the box with HomotopyContinuation.jl:</p>
 
 <pre><code class="language-julia">solve(C, solutions(result_v); parameters=u, start_parameters=v, target_parameters=u₀)
 </code></pre>
@@ -491,19 +484,19 @@ Well, we just computed an optimal start system and now for a given $u_0$ the hom
 • random seed: 364372
 </code></pre>
 
-<p>And we see that we only needed to compute $36$ paths to find all $36$ critical points for $u_0$.</p>
+<p>We see that only $36$ paths had to be tracked for finding all $36$ critical points of $u_0$.</p>
 
-<p><strong>Note:</strong> If the computation of $S_v$ takes some time you should store the solutions (together with $v$!) on your disk. Then you can load them from there if needed.</p>
+<p><strong>Note:</strong> If the computation of $S_v$ takes some time you should store the solutions (together with $v$!) on your disk. Then you can load them if needed.</p>
 
-<h3 id="computing-the-solution-to-large-systems">Computing the solution to large systems</h3>
+<h3 id="alternative-start-systems">Alternative start systems</h3>
 
 <p>If we take a look at the defining equations
 $$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\in \mathbb{R}^m \end{array}$$
 we can see that the total degree of this system is approximately
 $$D^n\prod_{i=1}^m d_i$$ where $D:= \max_i d_i$, $m$ is the number of equations and $n$ the number of variables.
-So this can become large very quickly! But it is reasonable to expect that the number of solutions is relatively small in comparison.</p>
+This can become large very quickly! However, it is reasonable to expect that the number of solutions is relatively small in comparison.</p>
 
-<p>Now there are <strong>two options</strong>. The first is fairly simple, instead of the total degree homotopy try to use a <strong>polyhedral homotopy</strong>. Let&rsquo;s try this with our running example:</p>
+<p>There are <strong>two options</strong> to avoid the total degree. The first is fairly simple, instead of the total degree homotopy try to use a <strong>polyhedral homotopy</strong>. Let&rsquo;s try this with our running example:</p>
 
 <pre><code class="language-julia">solve(C_u₀; start_system=:polyhedral)
 </code></pre>
@@ -518,16 +511,14 @@ So this can become large very quickly! But it is reasonable to expect that the n
 
 <p>And we see that instead of the $216$ paths we tracked initially we only needed to track <strong>36</strong>, so here this is even optimal!</p>
 
-<h3 id="using-monodromy-to-compute-all-solutions">Using monodromy to compute all solutions</h3>
-
-<p>But sometimes even polyhedral homotopy is not enough. Another approach is a technique called <strong>monodromy</strong> which
+<p>Sometimes even polyhedral homotopy is not enough. Another approach is a technique called <strong>monodromy</strong> which
 uses the fact that our problem has the same number of solutions for almost all values of $u$.
-The idea is the following: Assume we have parameter $v \in \mathbb{C}^n$ and suppose we know <strong>one</strong> solution $x_0$ for our problem. We call this a <em>start pair</em>. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
+The idea is the following: assume we have parameter $v \in \mathbb{C}^n$ and suppose we know <strong>one</strong> solution $x_0$ for our problem. We call this a <em>start pair</em>. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
 The amazing part is that this loop induces a <em>permutation</em> on <strong>all</strong> solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with <strong>another</strong> solution than we started. By doing this process repeatedly we can recover <strong>all</strong> solutions!</p>
 
 <p>This sound&rsquo;s great so let&rsquo;s try to solve our example using this technique! But how do we obtain a start pair? This depends very much on your specific problem, but it can be often solved by either reverse engineering a parameter from a solution or by some knowledge about your problem.</p>
 
-<p>Since our initial example is picked to produce a pretty picture, we have take the reverse engineering approach. Our approach is the following. We first compute a solution to $f$ by intersecting it with a linear space. This will result in $6$ solutions (since $f$ is a curve of degree 6). Then we can use one of these solutions to compute the normal space of $V(f)$ at this point.</p>
+<p>Our approach here is the following. We first compute a solution to $f$ by intersecting it with a linear space. This will result in $6$ solutions (since $f$ is a curve of degree 6). Then we can use one of these solutions to compute the normal space of $V(f)$ at this point.</p>
 
 <pre><code class="language-julia"># create a random linear space
 l = sum(randn(ComplexF64,3) .* [x,y,1])
@@ -542,7 +533,7 @@ u₀ = s₀ - transpose(J_s₀) * λ₀
 </code></pre>
 
 <pre><code>2-element Array{Complex{Float64},1}:
- -1.3145309760357284 - 6.764765173081119im 
+ -1.3145309760357284 - 6.764765173081119im
   3.6304286598010447 - 1.3732823625006585im
 </code></pre>
 
@@ -570,7 +561,7 @@ u₀ = s₀ - transpose(J_s₀) * λ₀
 </code></pre>
 
 <p>We see that the return code is <code>heuristic_stop</code>. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
-By default this is if after 10 loop we didn&rsquo;t find any more solutions. But we can also set this to another value by
+The default stopping criterion is to stop after 10 loop without finding any new solutions. We can also set this to another value by
 using the <code>max_loops_no_progress</code> flag. Additionally you can set the expected number with the <code>target_solutions_count</code>.</p>
 
 <pre><code class="language-julia">result_u₀ = monodromy_solve(C, [s₀; λ₀], u₀; parameters=u, max_loops_no_progress=100, target_solutions_count=36)
@@ -583,7 +574,7 @@ using the <code>max_loops_no_progress</code> flag. Additionally you can set the 
 • 200 tracked paths
 </code></pre>
 
-<p>The solutions in the monodromy result then can be used again to compute the solutions we are interested in.</p>
+<p>The solutions in the monodromy result can be used for computing the solutions we are interested in.</p>
 
 <pre><code class="language-julia">solve(C, solutions(result_u₀); parameters=u, start_parameters=u₀, target_parameters=u₀)
 </code></pre>
@@ -600,7 +591,7 @@ using the <code>max_loops_no_progress</code> flag. Additionally you can set the 
 
 <h2 id="more-information">More information</h2>
 
-<p>If you want to find out more about HomotopyContinuation.jl visit www.JuliaHomotopyContinuation.org. The homepage also contains many <a href="https://www.JuliaHomotopyContinuation.org/examples">examples</a> and <a href="https://www.JuliaHomotopyContinuation.org/examples">guides</a> on how to make the most of numerical homotopy continuation methods.
+<p>If you want to find out more about HomotopyContinuation.jl visit <a href="https://www.JuliaHomotopyContinuation.org">www.JuliaHomotopyContinuation.org</a>. The homepage also contains many <a href="https://www.JuliaHomotopyContinuation.org/examples">examples</a> and <a href="https://www.JuliaHomotopyContinuation.org/examples">guides</a> on how to make the most of numerical homotopy continuation methods.
 For more informations about the math behind homotopy continuation methods you should check out the book <a href="https://www.worldscientific.com/worldscibooks/10.1142/5763">The Numerical Solution of Systems of Polynomials Arising in Engineering and Science</a> by Sommese and Wampler.</p>
 
     

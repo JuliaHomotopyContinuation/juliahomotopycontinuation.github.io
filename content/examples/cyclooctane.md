@@ -75,7 +75,7 @@ data = [randn(n*N+n) for _ in 1:100]
     for s in S_p₀
         result = track(tracker, s; target_parameters=pp, details=:minimal)
         # check that the tracking was successfull and that we have a real solution
-        if issuccess(result) && isreal(result)
+        if is_success(result) && is_real(result)
             # only store the solutions
             push!(S_p, solution(result))
         end

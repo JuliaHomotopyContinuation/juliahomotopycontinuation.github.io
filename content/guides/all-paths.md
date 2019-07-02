@@ -1,11 +1,11 @@
 +++
 title = "Solutions at infinity"
 description = "Let solve return the outcomes of all paths"
-weight = 2
+weight = 100
 draft = false
 toc = false
 bref = "Let solve return the outcomes of all paths"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

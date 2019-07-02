@@ -94,3 +94,87 @@ pre code {
 #top #top-nav-main li {
     font-size: 15px;
 }
+
+
+.tab-content>.tab-pane {
+    display: none;
+}
+
+
+.tab-content>.active {
+    display: block;
+}
+.fade {
+    transition: opacity .15s linear;
+}
+
+.fade:not(.show) {
+    opacity: 0;
+}
+.fade {
+    transition: opacity .15s linear;
+}
+
+#application-tab {
+    border: 0;
+    width: 100%;
+    margin: 0;
+}
+
+.nav-tabs {
+    display: flex;
+}
+.nav-tabs {
+    display: none;
+}
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+}
+.nav {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    justify-content: space-around;
+}
+
+.main-hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+}
+
+
+
+
+#application-tab .nav-item a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5)
+}
+
+#application-tab .nav-item a.active {
+    font-weight: bold;
+    color: #000;
+}
+
+.tab-divider {
+    border-color: rgba(0,0,0, 0.05);
+    margin: 0;
+    margin-top: 4px;
+}
+
+.tab-content {
+    padding: 8px 56px;
+}
+
+img.ecosystem-image {
+    float: left;
+    margin-right: 20px;
+}
+.pb-2, .py-2 {
+    padding-bottom: .5rem!important;
+}

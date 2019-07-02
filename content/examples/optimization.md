@@ -84,7 +84,7 @@ In order to find the global minimum we now have to evaluate all *real* solutions
 
 
 ```julia
-reals = realsolutions(result);
+reals = real_solutions(result);
 # Now we simply evaluate the objective J and find the minimum
 minval, minindex = findmin(map(s -> J(s[1:3]), reals))
 ```

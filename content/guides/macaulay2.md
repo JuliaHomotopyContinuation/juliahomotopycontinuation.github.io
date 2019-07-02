@@ -4,9 +4,9 @@ title = "Using HomotopyContinuation.jl from Macaulay2"
 bref = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 description = "How do I solve my ideal from Macaulay2 with HomotopyContinuation.jl?"
 draft = false
-weight = 1
+weight = 4
 toc = true
-group = "advanced"
+group = "feature-guide"
 +++
 
 [Macaulay2](http://www2.macaulay2.com/Macaulay2/) is a great software for symbolic computations

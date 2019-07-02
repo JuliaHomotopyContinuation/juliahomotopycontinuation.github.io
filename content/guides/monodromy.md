@@ -1,11 +1,11 @@
 +++
 title = "Monodromy"
 description = "How to solve polynomial system by using the monodromy method."
-weight = 40
+weight = 2
 draft = false
 toc = true
 bref = "We're solving a system by monodromy"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

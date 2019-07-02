@@ -5,7 +5,7 @@ weight = 1
 draft = false
 toc = true
 bref = "How to track parametrized systems of equations"
-group = "advanced"
+group = "feature-guide"
 +++
 
 

@@ -9,10 +9,10 @@
     <p>{{.Description}}</p>
   </div>
   <div id="action-buttons">
-    <a class="button primary big" href="{{"/guides/installation/" | relURL}}">Get started</a> 
+    <a class="button primary big" href="{{"/guides/installation/" | relURL}}">Get started</a>
     <a class="button outline big" href="{{"/guides/introduction/" | relURL}}">Crash Course</a>
   </div>
-</div> 
+</div>
 
 
 <!-- Desktop version  -->
@@ -62,8 +62,8 @@
           </h4>
           <p>
               The problem of finding all four-bar linkages whose coupler curve passes through nine prescribed points has been a
-              longstanding unsolved problem in kinematics until it got solved by Wampler, Morgan and Sommese in 1992. While
-              this has been an outstanding computational achievement at the time we now can synthesize the mechanism from scratch in a matter of minutes using HomotopyContinuation.jl.
+              longstanding unsolved problem in kinematics. It was eventually solved in 1992 by Wampler, Morgan and Sommese. While
+              this has been an outstanding computational achievement at the time, we now can synthesize the mechanism from scratch in a matter of minutes using HomotopyContinuation.jl.
           </p>
           </div>
         <div class="col-2"></div>
@@ -76,24 +76,23 @@
         <div class="col-3">
           <video autoplay loop muted playsinline src="/videos/bottlenecks.mp4" height="300px"></video>
         </div>
-        <div class="col-1"></div> 
+        <div class="col-1"></div>
         <div class="col-5">
           <h4>
             Topological Data Analysis
           </h4>
           <p>
               The geometry of bottlenecks plays an important
-              role in several important aspects of real geometry in connection with analysis of data with support on an
-              algebraic variety $X$.
-              Together with the maximal curvature of the variety they define the <em>reach</em> of $X$.
-              Knowing the reach allows to compute the correct homology of an variety.
+              role in the analysis of data with support on an
+              algebraic variety.
+              Together with the maximal curvature of the variety they define the <em>reach</em>.
               Using HomotopyContinuation.jl we can compute the reach for surfaces curves and surfaces.
           </p>
           </div>
           <div class="col-2"></div>
       </div>
     </div>
-  
+
     <div class="tab-pane" id="tab-comp-chemistry" role="tabpanel" aria-labelledby="comp-chemistry-tab">
         <div class="row">
               <div class="col-1"></div>
@@ -107,7 +106,7 @@
                   </h4>
                   <p>
                       Homotopy continuation methods allow us to study the confirmation space of molecules as for example cyclooctane
-                      (CH₂)₈. It consists of eight carbon atoms aligned in a ring, and eight hydrogen atoms,
+                      (CH₂)₈. This molecule consists of eight carbon atoms aligned in a ring, and eight hydrogen atoms,
                       each of which is attached to one of the carbon atoms.
                       It is known that the confirmation space is homeomorphic to a union of the Klein bottle and a sphere, which intersect in two rings.
                       Follow our <a href="/examples/cyclooctane">example</a> to find out how to sample from this confirmation space.
@@ -116,7 +115,7 @@
               <div class="col-2"></div>
         </div>
     </div>
-    
+
     <div class="tab-pane" id="tab-optim" role="tabpanel" aria-labelledby="optim-tab">
       <div class="row">
           <div class="col-5">
@@ -130,7 +129,7 @@
                 Many models in the sciences and engineering are expressed as sets of real solutions to systems
                 of polynomial equations. We can optimize any objective whose gradient is an algebraic function using homotopy methods
                 by computing <emph>all</emph> critical points of the objective function.
-                An important special case is the case that the objective function is the euclidean distance to a given point.
+                An important special case is when the objective function is the euclidean distance to a given point.
                 An example of an non-algebraic objective function whose derivative is algebraic is the Kullback–Leibler divergence.
             </p>
           </div>
@@ -148,7 +147,7 @@
           Applications
         </h3>
     </div>
-  
+
     <div style="padding:12px;">
       <h4>
         Kinematic synthesis
@@ -190,7 +189,7 @@
               Follow our <a href="/examples/cyclooctane">example</a> to find out how to sample from this confirmation space.
           </p>
       </div>
-  
+
       <div style="padding:12px;">
           <h4>
             Constrained Optimization
@@ -204,10 +203,10 @@
               An example of an non-algebraic objective function whose derivative is algebraic is the Kullback–Leibler divergence.
           </p>
         </div>
-  
+
     </div>
-  
+
   </div>
- 
+
 {{ end }}
 {{ define "footer"}} {{ partial "footer" .}} {{end}}

@@ -23,6 +23,19 @@ pkg&amp;gt; add HomotopyContinuation  Alternatively, you can also use</descripti
     </item>
     
     <item>
+      <title>How to solve a system of polynomial equations</title>
+      <link>/guides/solve-first-system/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/solve-first-system/</guid>
+      <description>Requirements If you have not yet installed HomotopyContinuation.jl, please consider the installation guide.
+Solve your first system of equations Consider the following simple system of two polynomials in two variables.
+$$ f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix} $$
+Solving the equation $f=0$ can be accomplished as follows
+using HomotopyContinuation # load the package into the current Julia session @polyvar x y; # declare the variables x and y f = [x^2 + 2y, y^2 - 2] result = solve(f) # solve f  After the computation has finished, you should see the following output.</description>
+    </item>
+    
+    <item>
       <title>An introduction to the numerical solution of polynomial systems</title>
       <link>/guides/introduction/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

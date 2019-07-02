@@ -4,7 +4,7 @@ title = "Cyclooctane"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "The confirmation space of cyclooctane"
+description = "The conformation space of cyclooctane"
 weight = 1
 author = "Paul"
 +++
@@ -12,7 +12,7 @@ author = "Paul"
 
 [Cyclooctane](https://en.wikipedia.org/wiki/Cyclooctane) (CH₂)₈ is a molecule that consists of eight carbon atoms aligned in a ring, and eight hydrogen atoms, each of which is attached to one of the carbon atoms. The distance $c>0$ between neighboring carbon atoms is fixed.
 
-In this example, we want to study the confirmation space of cyclooctane with Homotopy Continuation.
+In this example, we want to study the conformation space of cyclooctane with Homotopy Continuation.
 The equations for the positions $z_i\in\mathbb{R}^3$ of the carbon atoms satisfy the algebraic equations
 
 $$\Vert z_1-z_2\Vert^2 = \cdots =  \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^2.$$

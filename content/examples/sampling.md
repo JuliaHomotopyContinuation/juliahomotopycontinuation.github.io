@@ -9,7 +9,7 @@ weight = 1
 author = "Paul"
 +++
 
-The article [Random points on an algebraic manifold](https://arxiv.org/abs/1810.06271) proposes an algorithm for sampling from probability densities on a variety that based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
+The article [Random points on an algebraic manifold](https://arxiv.org/abs/1810.06271) proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
 
 $$V = \\{ x=(x_1,x_2) \in \mathbb{R}^2 : x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\\}.$$
 

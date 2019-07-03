@@ -1,10 +1,10 @@
 +++
 date = "2019-07-02T21:56:55+01:00"
-title = "Sampling from varieties"
+title = "Sampling"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "Sampling from a probability density on a variety"
+description = "Sampling from a variety"
 weight = 1
 author = "Paul"
 +++

@@ -46,7 +46,7 @@ W = 4K*(1+C)
 
 function α(z, J)
     N = normalize!([j(x=>z) for j in J])
-    π * (1 + z⋅z)/sqrt(1 + (z ⋅ N)^2)
+    (1 + z⋅z) / sqrt(1 + (z ⋅ N)^2)
 end
 ```
 

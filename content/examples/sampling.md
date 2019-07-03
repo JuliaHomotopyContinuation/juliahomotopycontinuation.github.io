@@ -15,7 +15,7 @@ $$V = \\{ x=(x_1,x_2) \in \mathbb{R}^2 : x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\\}.
 
 intersected with the box $B = [-2,2]\times [-2,2]$.
 
-Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x)\mathrm{d}V)$. We will consider the example $f(x)=1$, which gives the uniform distribution on $V\cap B$. For the algorithm we need upper bounds
+Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x)\, \mathrm{d}V)$. We will consider the example $f(x)=1$, which gives the uniform distribution on $V\cap B$. For the algorithm we need upper bounds
 
 $$K\geq \sup \\{ f(x) : x\in V\cap B\\} \quad \text{and}\quad C\geq \sup \\{\Vert x\Vert^2 : x\in V\cap B\\}.$$
 We take $K = 1$ and $C = 8$.

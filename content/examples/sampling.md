@@ -23,9 +23,9 @@ We take $K = 1$ and $C = 8$.
 The algorithm goes as follows. Intersect $V\cap B$ with a random line $L=\{a_1x+a_2y=b\}$, where $a_1,a_2$ and $b$ are independent standard Gaussian random variables.
 Then, compute the following sum over the points $x\in V\cap B\cap L$:
 
-$$g(a_1,a_2,b) := \sum \, f(x) \cdot \alpha(x), \text{ where } \alpha(x)=\frac{\sqrt{\pi}^{n+1}}{\Gamma(\frac{n+1}{2})}\cdot \frac{1+\Vert x\Vert^2}{\sqrt{1+ \langle x,\pi_x x\rangle}},$$
+$$g(a_1,a_2,b) := \sum \, f(x) \cdot \alpha(x), \text{ where } \alpha(x)= \frac{1+\Vert x\Vert^2}{\sqrt{1+ \langle x,\pi_x x\rangle}},$$
 
-and where $n=\mathrm{dim} V$, and $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$ (*careful*: the $\alpha$ here is $1/\alpha$ in the paper). Because $V$ has degree $4$, there are at most 4 points in the section, and so
+and $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$ (*careful*: the $\alpha$ here is $1/(\pi\alpha)$ in the paper). Because $V$ has degree $4$, there are at most 4 points in the section, and so
 
 $$p:= \frac{g(a_1,a_2,b)}{4K(1+C)} \leq 1.$$
 

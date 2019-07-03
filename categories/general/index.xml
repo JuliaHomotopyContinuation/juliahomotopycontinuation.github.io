@@ -20,7 +20,7 @@
       <description>The article Random points on an algebraic manifold proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
 $$V = \{ x=(x_1,x_2) \in \mathbb{R}^2 : x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\}.$$
 intersected with the box $B = [-2,2]\times [-2,2]$.
-Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x)\mathrm{d}V)$.</description>
+Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x)\, \mathrm{d}V)$.</description>
     </item>
     
     <item>

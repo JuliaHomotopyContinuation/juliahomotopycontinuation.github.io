@@ -93,4 +93,4 @@ Here is a gif that shows 4470 points from the cyclooctane variety, projected ont
 <p style="text-align:center;"><img src="/images/cyclooctane.gif" width="800px"/></p>
 
 
-It is also possible to control the distribution of the points obtained by intersecting with linear spaces; see [here](https://arxiv.org/abs/1810.06271).
+It is also possible to control the distribution of the points obtained by intersecting with linear spaces. We discuss this in [this example](/examples/sampling).

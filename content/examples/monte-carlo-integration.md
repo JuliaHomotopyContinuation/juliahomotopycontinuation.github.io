@@ -16,7 +16,7 @@ $$\int \,f(x) \, \mathrm{d}V,$$
 
 where $V\subset \mathbb{R}^N$ is an [algebraic manifold](https://en.wikipedia.org/wiki/Algebraic_manifold), $\mathrm{d}V$ is the volume form on $V$ and $f:V\to \mathbb{R}$ is a measurable function.
 
-For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed [in this article](https://arxiv.org/abs/1810.06271)
+For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed [in this article](https://arxiv.org/abs/1810.06271).
 
 Let $n=\mathrm{dim}\, V$, and let $A\in \mathbb{R}^{n\times N}$ and $b\in \mathbb{R}^n$ be a matrix-vector pair with independent standard Gaussian entries. Then, almost surely, $\\{x\in \mathbb{R}^N : Ax=b\\}$ is a linear space of dimension $N-n$, which intersects $V$ in finitely many points.
 

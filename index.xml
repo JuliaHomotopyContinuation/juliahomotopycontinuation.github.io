@@ -142,6 +142,18 @@ To not destroy the solution structure it is desirable to not leave $P$ during th
     </item>
     
     <item>
+      <title>Monte Carlo Integration</title>
+      <link>/examples/monte-carlo-integration/</link>
+      <pubDate>Tue, 02 Jul 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/monte-carlo-integration/</guid>
+      <description>Consider the problem of numerically approximating an integral of the form
+$$\int \,f(x) \, \mathrm{d}V,$$
+where $V\subset \mathbb{R}^N$ is an algebraic manifold, $\mathrm{d}V$ is the volume form on $V$ and $f:V\to \mathbb{R}$ is a measurable function.
+For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed in this article</description>
+    </item>
+    
+    <item>
       <title>Monodromy</title>
       <link>/guides/monodromy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

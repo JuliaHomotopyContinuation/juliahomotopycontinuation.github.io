@@ -105,7 +105,7 @@ using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁
       <description>Consider the problem of numerically approximating an integral of the form
 $$\int \,f(x) \, \mathrm{d}V,$$
 where $V\subset \mathbb{R}^N$ is an algebraic manifold, $\mathrm{d}V$ is the volume form on $V$ and $f:V\to \mathbb{R}$ is a measurable function.
-For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed in this article</description>
+For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed in this article.</description>
     </item>
     
     <item>

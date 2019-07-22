@@ -41,7 +41,7 @@ description = "The people behind HomotopyContinuation.jl"
         {{<image src="/images/pic_sascha.jpg" class="about-image" >}}
     </div>
     <div class="col col-6">
-        <h2><a href="http://sascha.timme.xyz">Sascha Timme</a></h2>
+        <h2><a href="https://sascha.timme.xyz">Sascha Timme</a></h2>
         <p>I am a PhD student at TU Berlin working with <a href="https://page.math.tu-berlin.de/~joswig/">Michael Joswig</a> and
         <a href="https://math.berkeley.edu/~bernd/">Bernd Sturmfels</a>.</p>
     </div>

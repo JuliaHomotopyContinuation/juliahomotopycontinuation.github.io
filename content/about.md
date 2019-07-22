@@ -18,7 +18,7 @@ description = "The people behind HomotopyContinuation.jl"
         <p>I am a Postdoc in the group <a href="https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/algorithmische_algebra/">Algorithmic Algebra</a> at TU Berlin.</p>
     </div>
     <div class="col col-6">
-        <h2><a href="http://sascha.timme.xyz">Sascha Timme</a></h2>
+        <h2><a href="https://sascha.timme.xyz">Sascha Timme</a></h2>
         <p>I am a PhD student at TU Berlin working with Michael Joswig and Bernd Sturmfels.</p>
     </div>
 </div>

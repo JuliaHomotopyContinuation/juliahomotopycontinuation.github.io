@@ -143,7 +143,7 @@ If we now differentiate $H(x(t),t)$ with respect to $t$ we see that the path $x(
 <p style="text-align:center;">
 <img alt="predictor-corrector" src="/images/predictor-corrector.png" style="height:300px"/>
     <figcaption style="text-align: center;" >
-         A sketch of the predictor-corrector method. We compute a prediction $\tilde{x}_{k}$ of $x(t_k)$ using any ODE method and then correct using Newton's method.</figcaption>
+         A sketch of the predictor-corrector method. We compute a prediction $\tilde{x}_{k+1}$ of $x(t_{k+1})$ using any ODE method and then correct using Newton's method.</figcaption>
 </p>
 </figure>
 

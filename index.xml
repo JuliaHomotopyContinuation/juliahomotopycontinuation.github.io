@@ -6,7 +6,7 @@
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 02 Jul 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 02 Sep 2019 16:50:00 +0200</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -43,6 +43,16 @@ using HomotopyContinuation # load the package into the current Julia session @po
       <guid>/guides/introduction/</guid>
       <description>A first example We are interested in the numerical solution of systems of polynomial equations like $$\begin{array}{rl} -x^5y &amp;amp;= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\ \frac12 &amp;amp;= x^2+2xy^2 - 2y^2 \;. \end{array}$$
 Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials $$ f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2) + x^5y \quad \text{ and } \quad f_2(x,y) = x^2+2xy^2 - 2y^2 - \frac12 \;.</description>
+    </item>
+    
+    <item>
+      <title>Computing a logarithmic Voronoi cell</title>
+      <link>/examples/logarithmic-voronoi/</link>
+      <pubDate>Mon, 02 Sep 2019 16:50:00 +0200</pubDate>
+      
+      <guid>/examples/logarithmic-voronoi/</guid>
+      <description>Authors: Alex Heaton, Yulia Alexandr, and Sascha Timme
+Consider the following problem: Bob has three biased coins. He tosses the first one. If it&amp;rsquo;s heads he chooses the biased coin in his left pocket, and if it&amp;rsquo;s tails he chooses the biased coin in his right pocket. Bob then flips that coin 5 times. We consider those last 5 flips as the experiment. Therefore there are 6 possible outcomes: 0 heads, 1 head, 2 heads, 3 heads, 4 heads, or 5 heads.</description>
     </item>
     
     <item>

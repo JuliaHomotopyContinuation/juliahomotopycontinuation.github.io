@@ -3,12 +3,13 @@ date = "2019-09-02T16:50:00+02:00"
 title = "Computing a logarithmic Voronoi cell"
 tags = ["example"]
 categories = ["general"]
-draft = true
-description = "An adventure in probability"
+draft = false
+description = "An adventure at the intersection of statistics and nonlinear algebra."
 weight = 1
 author = "Yulia Alexandr, Alex Heaton, and Sascha Timme"
 +++
 
+<span style="color:gray">Authors:</span> <a href="https://sites.google.com/view/alexander-heaton">Alex Heaton</a>, <a href="https://mathymath.github.io">Yulia Alexandr</a>, and <a href="https://sascha.timme.xyz">Sascha Timme</a>
 
 Consider the following problem: Bob has three biased coins. He tosses the first one. If it's heads he chooses the biased coin in his left pocket, and if it's tails he chooses the biased coin in his right pocket. Bob then flips that coin 5 times. We consider those last 5 flips as the experiment. Therefore there are 6 possible outcomes: 0 heads, 1 head, 2 heads, 3 heads, 4 heads, or 5 heads. Can we discover the biases $b_1,b_2,b_3$ of the three coins if we make Bob repeat the entire thing many, many times? Mathematically, we have a 3-dimensional statistical model living inside the 5-dimensional simplex (since probabilities sum to 1).
 
@@ -68,6 +69,7 @@ How do we obtain this picture?
 One can verify that our statistical model is defined by the following five algebraic equations:
 
 $$
+\small
 \begin{array}{rl} f_0 &= p_0+p_1+p_2+p_3+p_4+p_5-1 \\\\ f_1 &= 20p_0p_2p_4-10p_0p_3^2-8p_1^2p_4+4p_1p_2p_3-p_2^3\\\\ f_2 &= 100p_0p_2p_5-20p_0p_3p_4-40p_1^2p_5+4p_1p_2p_4+2p_1p_3^2-p_2^2p_3\\\\ f_3 &= 100p_0p_3p_5-40p_0p_4^2-20p_1p_2p_5+4p_1p_3p_4+2p_2^2p_4-p_2p_3^2\\\\ f_4 &= 20p_1p_3p_5-8p_1p_4^2-10p_2^2p_5+4p_2p_3p_4-p_3^3
 \end{array}
 $$
@@ -82,14 +84,14 @@ Using the idea of *Lagrange multipliers*, we can ask for the gradient of our obj
 If the gradient of our objective function is in the span of this 3-dimensional space, then our matrix will have exactly rank 3, which is a condition cut out by the 225 $4 \times 4 $ minors of this 6$\times$6 matrix. In conclusion, for a fixed data point $u$, our critical points are the points $p$ which make all 225 minors evaluate to zero. Among these points we will find our global maximum, which might be $p\_{fav}$.
 
 $$
-\small
+\scriptsize
 \left(\begin{array}{rrrr}
 1 & 1 & 1 & ... \\\\ -10 \, p_3^2 + 20 \, p_2 p_4 & 4 \, p_2 p_3 - 16 \, p_1 p_4 & -3 \, p_2^2 + 4 \, p_1 p_3 + 20 \, p_0 p_4 & ...\\\\ -20 \, p_3 p_4 + 100 \, p_2 p_5 & 2 \, p_3^2 + 4 \, p_2 p_4 - 80 \, p_1 p_5 & -2 \, p_2 p_3 + 4 \, p_1 p_4 + 100 \, p_0 p_5 & ... \\\\ -40 \, p_4^2 + 100 \, p_3 p_5 & 4 \, p_3 p_4 - 20 \, p_2 p_5 & -p_3^2 + 4 \, p_2 p_4 - 20 \, p_1 p_5 & ... \\\\ 0 & -8 \, p_4^2 + 20 \, p_3 p_5 & 4 \, p_3 p_4 - 20 \, p_2 p_5 & ...\\\\ \frac{u_0}{p_0} & \frac{u_1}{p_1} & \frac{u_2}{p_2} & ...
 \end{array}\right.
 $$
 
 $$
-\small
+\scriptsize
 \left.\begin{array}{rrrr}
  ... & 1 & 1 & 1 \\\\ ... & 4 \, p_1 p_2 - 20 \, p_0 p_3 & -8 \, p_1^2 + 20 \, p_0 p_2 & 0 \\\\  ... & -p_2^2 + 4 \, p_1 p_3 - 20 \, p_0 p_4 & 4 \, p_1 p_2 - 20 \, p_0 p_3 & -40 \, p_1^2 + 100 \, p_0 p_2 \\\\  ... & -2 \, p_2 p_3 + 4 \, p_1 p_4 + 100 \, p_0 p_5 & 2 \, p_2^2 + 4 \, p_1 p_3 - 80 \, p_0 p_4 & -20 \, p_1 p_2 + 100 \, p_0 p_3 \\\\  ... & -3 \, p_3^2 + 4 \, p_2 p_4 + 20 \, p_1 p_5 & 4 \, p_2 p_3 - 16 \, p_1 p_4 & -10 \, p_2^2 + 20 \, p_1 p_3 \\\\ ... & \frac{u_3}{p_3} & \frac{u_4}{p_4} & \frac{u_5}{p_5}
 \end{array}\right)
@@ -110,12 +112,12 @@ using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
 p = @polyvar p0 p1 p2 p3 p4 p5
 u = @polyvar u0 u1 u2 u3 u4 u5
 
-f0 = p0+p1+p2+p3+p4+p5-1
-f1 = 20*p0*p2*p4-10*p0*p3^2-8*p1^2*p4+4*p1*p2*p3-p2^3
-f2 = 100*p0*p2*p5-20*p0*p3*p4-40*p1^2*p5+4*p1*p2*p4+2*p1*p3^2-p2^2*p3
-f3 = 100*p0*p3*p5-40*p0*p4^2-20*p1*p2*p5+4*p1*p3*p4+2*p2^2*p4-p2*p3^2
-f4 = 20*p1*p3*p5-8*p1*p4^2-10*p2^2*p5+4*p2*p3*p4-p3^3
-F = [f0, f1, f2, f3, f4]
+f₀ = p0+p1+p2+p3+p4+p5-1
+f₁ = 20*p0*p2*p4-10*p0*p3^2-8*p1^2*p4+4*p1*p2*p3-p2^3
+f₂ = 100*p0*p2*p5-20*p0*p3*p4-40*p1^2*p5+4*p1*p2*p4+2*p1*p3^2-p2^2*p3
+f₃ = 100*p0*p3*p5-40*p0*p4^2-20*p1*p2*p5+4*p1*p3*p4+2*p2^2*p4-p2*p3^2
+f₄ = 20*p1*p3*p5-8*p1*p4^2-10*p2^2*p5+4*p2*p3*p4-p3^3
+F = [f₀, f₁, f₂, f₃, f₄]
 ```
 
 At this point we could try and set up the 6$\times$6 matrix referenced earlier, take all 225 of its minors, and ask HomotopyContinuation.jl to find solutions. However, there may be a more numerically stable way. We describe this method now.
@@ -138,9 +140,10 @@ D_AF = differentiate(A * F, p)
 G = [(p .* D_AF') * la .- u; F];
 ```
 
-This is a much nicer system of polynomial equations. Now, we could start with a randomly generated point $u_{start}$, substitute, and ask HomotopyContinuation to solve the system for us. We call the resulting solutions *starting solutions*, because we will use these solutions, obtained via an expensive and long calculation, to more quickly *track* solutions for the 60000 points $u_i$ that we generated from our hexagon. For more information on this process we recommend the book \cite{SW2005}, or alternatively, our guide [An introduction to the numerical solution of polynomial systems](https://www.juliahomotopycontinuation.org/guides/introduction/).
+This is a much nicer system of polynomial equations. Now, we could start with a randomly generated point $u_{start}$, substitute, and ask HomotopyContinuation to solve the system for us. We call the resulting solutions *starting solutions*, because we will use these solutions, obtained via an expensive and long calculation, to more quickly *track* solutions for the 60000 points $u_i$ that we generated from our hexagon. For more information on this process take a look at our guide [An introduction to the numerical solution of polynomial systems](https://www.juliahomotopycontinuation.org/guides/introduction/).
 
-However, yet again there is a more numerically stable way. Indeed, if you try the above method, often you do not get the expected number of solutions. Sometimes you get 34, sometimes 45, etc. However, by a result in \cite{HKS2005}, the *maximum likelihood degree* of our problem is exactly 39. The *ML degree* of a statistical model is the number of complex solutions to the system of equations which finds critical points of the log-likelihood function on the model. This means that for generic data $(u_0, u_1,u_2,u_3,u_4,u_5)$ we should find exactly 39 points $p$ on our model which are critical points of the log-likelihood function $l\_{u}(p)$. Among these 39 critical points, one of them maximizes the log-likelihood. That critical point is the *maximum likelihood estimate* on our model which best explains the data $(u_0,u_1,u_2,u_3,u_4,u_5)$. Therefore, the fact that sometimes we find 34 and sometimes 47 is problem.
+Now, a naive `solve(G)` reports that we have to track $110592$ paths. However, by a result in [[HKS2005]](https://doi.org/10.1007/s10208-004-0156-8), the *maximum likelihood degree* of our problem is exactly 39. The *ML degree* of a statistical model is the number of complex solutions to the system of equations which finds critical points of the log-likelihood function on the model. This means that for generic data $(u_0, u_1,u_2,u_3,u_4,u_5)$ we should find exactly 39 points $p$ on our model which are critical points of the log-likelihood function $l\_{u}(p)$. Among these 39 critical points, one of them maximizes the log-likelihood. That critical point is the *maximum likelihood estimate* on our model which best explains the data $(u_0,u_1,u_2,u_3,u_4,u_5)$.
+We could use the `solve(G)` command to obtain a result in a couple minutes but this approach does not scale for larger systems.
 
 #### Using monodromy
 
@@ -148,14 +151,14 @@ Instead, we use *monodromy*. We know that $p\_{\text{fav}}$ is a point on our st
 
 ```julia
 pfav =  [518/9375, 124/625, 192/625, 168/625, 86/625, 307/9375];
-la_0 = randn(ComplexF64, 3)
-u_0 = [g_i( p=> pfav) for g_i in (p .* D_AF')] * la_0
+la₀ = randn(ComplexF64, 3)
+u₀ = [g_i( p=> pfav) for g_i in (p .* D_AF')] * la₀
 ```
 
 We can check that indeed this is a solution.
 
 ```julia
-norm([g_i(p => pfav, u => u_0, la => la_0) for g_i in G])
+norm([gᵢ(p => pfav, u => u₀, la => la₀) for gᵢ in G])
 ```
 
 which outputs `1.1653e-16`. Now we have one legitimate solution to our system of equations $G$. Using monodromy, we can stably and successfully find the other 38. The idea is to perturb our system of equations around a loop, tracking our one legitimate solution along the way. Our system of equations is parametrized by which data point $u_i$ in the simplex we choose. For the parameter $u_0$ above, we know one solution. So we take it for a walk around a loop. When we have returned to our original system of equations (after traversing a loop in parameter space) our original solution will most likely not return to itself, but have moved to another one of the 39 solutions! Now we have two legitimate solutions. We can perturb in another loop, and most likely find 2 new solutions upon our return home. Now we have 4 legitimate solutions. Repeating this process, we are likely to discover all 39 solutions!
@@ -163,7 +166,7 @@ which outputs `1.1653e-16`. Now we have one legitimate solution to our system of
 In `HomotopyContinuation.jl` this is very easy to accomplish.
 
 ```julia
-res_generic = monodromy_solve(G, [pfav; la_0], u_0; parameters=[u...], target_solutions_count=39)
+res_generic = monodromy_solve(G, [pfav; la₀], u₀; parameters=[u...], target_solutions_count=39)
 ```
 
 which produces the output
@@ -241,10 +244,10 @@ We are ready to compute. In the following code we sample 60000 points from insid
 sample_coords = [sampler() for _ in 1:60000]
 sample_points = [vertices[1] +  B * v for v in sample_coords];
 
-c_0 = B \ (pfav - vertices[1])
+c₀ = B \ (pfav - vertices[1])
 
 S = solutions(res_generic)
-tracker = pathtracker(G, S; parameters=[u...], start_parameters=u_0, target_parameters=sample_points[1])
+tracker = pathtracker(G, S; parameters=[u...], start_parameters=u₀, target_parameters=sample_points[1])
 
 function best_result(result, p)
     argmax = nothing
@@ -277,7 +280,7 @@ green = sample_coords[distances .< 1e-8]
 plot(hexagon; fill=:transparent)
 scatter!(first.(sample_coords), last.(sample_coords), color=:pink, markersize=0.8, markerstrokewidth=0)
 scatter!(first.(green), last.(green), color=:green, markersize=1.0, markerstrokewidth=0)
-scatter!(c_0[1:1], c_0[2:2], color=:yellow, markersize=5, markerstrokewidth=0)
+scatter!(c₀[1:1], c₀[2:2], color=:yellow, markersize=5, markerstrokewidth=0)
 ```
 
 For more on using monodromy to solve polynomial systems, we recommend the [monodromy guide](guides/monodromy/). But finally, the result: Our logarithmic Voronoi cell appears in green, the fibre of $\phi_{MLE}$ above our favorite point $p\_{fav}$.
@@ -285,3 +288,5 @@ For more on using monodromy to solve polynomial systems, we recommend the [monod
 <p style="text-align:center;">
     <image src="/images/logarithmic-voronoi/green_voronoi_60000_sparse.png" />
 </p>
+
+{{<bibtex >}} 

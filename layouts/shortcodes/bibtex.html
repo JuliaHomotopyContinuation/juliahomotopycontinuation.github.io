@@ -3,7 +3,7 @@
 <code class="language-julia hljs">@Misc{ {{.Page.File.BaseFileName }}{{ now.Format "2006"}} ,
     author =  { {{with .Get "author"}}{{.}}{{ end }}{{ if not (.Get "author") }}{{ .Page.Params.author }}{{ end }} },
     title = { {{with .Get "title"}}{{.}}{{ end }}{{ if not (.Get "title") }}{{ .Page.Title }}{{ end }} },
-    howpublished = { \url{ {{ .Site.BaseURL }}{{ .Page.Permalink}} } },
+    howpublished = { \url{ https://www.JuliaHomotopyContinuation.org{{ .Page.Permalink}} } },
     note = { Accessed: {{ now.Format "January 2, 2006"}} }
 }</code>
 </pre>

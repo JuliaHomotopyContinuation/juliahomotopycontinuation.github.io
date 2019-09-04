@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Sampling from a variety"
 weight = 1
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 The article [Random points on an algebraic manifold](https://arxiv.org/abs/1810.06271) proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
@@ -107,3 +107,6 @@ The points we get from executing this code are shown next.
 The code can easily be adapted to sample from other densities. For instance, changing to `f(x) = exp(2x[2])`, `K=exp(4)` and `W=4K*(1+C)` samples from a distribution that gives more weight to points in the upper half plane. Here is a picture.
 
 <p style="text-align:center;"><img src="/images/exp.png" width="700px"/></p>
+
+
+{{<bibtex >}} 

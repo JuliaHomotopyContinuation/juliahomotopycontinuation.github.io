@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Using HomotopyContinuation.jl for a problem in kinematics"
 weight = 1
-author = "Sascha"
+author = "Sascha Timme"
 +++
 
 The following example is from Section 7.3 in [A. Sommese, C. Wampler: The Numerical Solution of Systems of Polynomial Arising in Engineering and Science](https://www.worldscientific.com/worldscibooks/10.1142/5763)
@@ -26,7 +26,7 @@ Let us denote by $z_1,\ldots,z_6$ the unit vectors that point in the direction o
   * $a_1\, (z_1 \times z_2) + \cdots + a_5\, (z_5 \times z_6) + a_6 \,z_2 + \cdots + a_9  \,z_5= p.$
 
 
-for $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and $p=(p_1,p_2,p_3)$. 
+for $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and $p=(p_1,p_2,p_3)$.
 The $\alpha_i$ are the "twist angle" between joints, the $a_i$ are the "link length" between joint axes
 and the $p$ encodes the position of the hand. Here $\times$ is the cross product in $\mathbb{R}^3$.
 
@@ -126,3 +126,5 @@ Result with 16 solutions
 ```
 And we obtain 16 new solutions, but this time we only needed to track 16 paths.
 For even more performance improvements you can take a look at our [guide](/guides/many-systems/) regarding the solution of many systems in a loop.
+
+{{<bibtex >}} 

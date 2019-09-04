@@ -25,7 +25,7 @@ The goal is to compute the following 3D picture
 In theory, it suffices to have two matching 2D points and the configuration of the cameras to *exactly* reconstruct the corresponding 3D point. In practice, there is lens distortion, pixelation, the algorithm matching the 2D points is not working fully precise and so on. This is why we are looking for 3D points that minimize the euclidean distance regarding their 2D image points. We want to solve an optimization problem.
 
 This post is restricted to the case $n=2$, i.e. we want to reconstruct 3D points from images captured by two cameras at a time. We take the [dinosaur] data set from the Visual Geometry Group
-Department of Engineering Science at the University of Oxford. This contains a list of [36 cameras](https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-cameras-jl) as $3\times 4$ matrices and a corresponding list of [pictures taken from 4983 world points](https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-pictures-jl). (The use the code below one must download the files from these links.)
+Department of Engineering Science at the University of Oxford. This contains a list of [36 cameras](https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-cameras-jl) as $3\times 4$ matrices and a corresponding list of [pictures taken from 4983 world points](https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-pictures-jl). (For using the code below one must download the files from these links.)
 
 Let $x\in\mathbb{R}^3$ be a 3D point. Then, taking a picture $u=(u_1,u_2)\in\mathbb{R}^2$ of $x$ is modeled as
 
@@ -33,7 +33,7 @@ $$ \begin{pmatrix} u_1 \\\ u_2 \\\ 1 \end{pmatrix} = t \, A \, \begin{pmatrix}x_
 
 where $A\in \mathbb{R}^{3\times 4}$ is the camera matrix and $t \in \mathbb{R}, t \neq 0$, is a scalar. This is called the pinhole camera model. Let us write $y(x)$ for the first two entries of  $A \begin{pmatrix} x\\\ 1\end{pmatrix}$, and $z(x)$ for the third entry. Then, $u=t y(x)$ and $1 = t z(x)$.
 
-If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set with camera matrices $A_1,A_2$, we want to solve the following minimization problem:
+If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set, we want to solve the following minimization problem:
 
 $$
 \underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \\{0\\})^2}{\operatorname{argmin}}\; \lVert t_1 \, y_1(x) - p_1 \rVert^2 + \lVert  t_2 \,  y_2(x) - p_2 \rVert^2
@@ -76,7 +76,7 @@ For `G` we generate the critical equations `F=0` using Lagrange multipliers.
 F = differentiate(G - sum(λ[i] * (t[i] * z[i] - 1) for i in 1:2), [x;t;λ])
 ```
 
-`F` is a system of polynomials in the variables `x` and `λ` and the parameters `p`. We want to solve this system many times for different parameters. For this, we want to use the guide on how to [track many systems in a loop](guides/many-systems).
+`F` is a system of polynomials in the variables `x`, `t` and `λ` and the parameters `p`. We want to solve this system many times for different parameters. For this, we use the guide on how to [track many systems in a loop](guides/many-systems).
 
 First, we need an initial solution for a random set of parameters.
 ```julia
@@ -125,7 +125,7 @@ Doing this for several pairs of cameras we get the above picture.
 
 The closure (under [Zariski topology]) of
 
-$$\\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  \, \mid \, t_iz_i(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \\{0\\})^2\\}$$
+$$\\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  \, \mid \, t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \\{0\\})^2\\}$$
 
 is called *(affine) multiview variety* for two cameras.
 

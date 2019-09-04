@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "For mixtures of three Gaussians"
 weight = 1
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 
@@ -145,3 +145,6 @@ relabeling.(solutions(R_with_group_action))
 ```
 
 Then, we can proceed with the parameter homotopy as above.
+
+
+{{<bibtex >}} 

@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "How to compute curvature"
 weight = 10
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 <h3 class="section-head">Curvature of curves in the plane</h3>
@@ -59,3 +59,5 @@ Result with 56 solutions
 Here is a picture of all solutions.
 
 <p style="text-align:center;"><img src="/images/curvature.png" width="600px"/></p>
+
+{{<bibtex >}} 

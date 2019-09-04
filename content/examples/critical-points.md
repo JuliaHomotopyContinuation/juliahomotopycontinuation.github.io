@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Computing critical points"
 weight = 1
-author = "Paul"
+author = "Paul Breiding, Sascha Timme"
 +++
 
 
@@ -81,3 +81,6 @@ We get the three solutions. The following picture shows them:
 
 
 The minimizer is $x^\star \approx (-1.68, -0.86)^T$.
+
+
+{{<bibtex >}}

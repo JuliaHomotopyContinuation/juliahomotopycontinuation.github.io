@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Let two ellipses grow until they intersect"
 weight = 1
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 
@@ -63,3 +63,5 @@ Result with 1 solutions
 The computation reveals that $r^\star \approx 1.317$. Here is a picture.
 
 <p style="text-align:center;"><img src="/images/ellipses.png" width="600px"/></p>
+
+{{<bibtex >}} 

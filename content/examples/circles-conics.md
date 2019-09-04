@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Using HomotopyContinuation.jl for a problem in enumerative geometry"
 weight = 20
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 Consider the problem of computing all circles that are tangent to 3 [conics](https://en.wikipedia.org/wiki/Conic_section) $C_1,C_2,C_3 \subset \mathbb{R}^2$. For instance, the following picture shows 14 circles that are tangent to
@@ -90,3 +90,5 @@ Result with 60 solutions
 • 512 paths tracked
 • random seed: 483355
 ```
+
+{{<bibtex >}} 

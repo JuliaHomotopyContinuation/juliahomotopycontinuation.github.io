@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Using homotopy continuation for computing the CPD of a tensor"
 weight = 3
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 In this blog I want to repeat the computations from the article "[Homotopy Techniques for Tensor Decomposition and Perfect Identifiability](https://arxiv.org/pdf/1501.00090.pdf)" by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of [canonical polyadic decompositions](https://en.wikipedia.org/wiki/Tensor_rank_decomposition) (CPD) of a random $2\times 2\times 2\times 3$-[tensor](https://en.wikipedia.org/wiki/Tensor) by using the [monodromy method](/guides/monodromy.md). It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor  has rank equal to 4:
@@ -71,3 +71,5 @@ MonodromyResult
 ```
 
 There are 24 solutions. However, since 1 solution gives $4!=24$ solutions, corresponding to all orderings of the summands, I actually found one solution. This confirms the computations from the paper: a random complex $2\times 2\times 2\times 3$-tensor has a unique CPD.
+
+{{<bibtex >}} 

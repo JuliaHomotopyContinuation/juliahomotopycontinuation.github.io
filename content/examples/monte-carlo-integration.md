@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Integrating measurable functions on a variety"
 weight = 2
-author = "Paul"
+author = "Paul Breiding"
 +++
 
 
@@ -100,3 +100,6 @@ julia> volume = π * μ
 ```
 
 The actual volume is $2\pi \approx 6.2832$. Thus, we have the volume with 3 correct digits. Considering that we have used a sample of size $10^5$, the speed of convergence of the law of large numbers seems to be rather slow. Nevertheless, the methods is fast enough to give a good and quick guess on the true volume.
+
+
+{{<bibtex >}} 

@@ -6,7 +6,7 @@ categories = ["general"]
 draft = false
 description = "Using HomotopyContinuation.jl for a problem in optimization"
 weight = 1
-author = "Sascha"
+author = "Sascha Timme"
 +++
 
 
@@ -107,3 +107,6 @@ minarg = reals[minindex][1:3]
 
 
 We found that the minimum of $J$ over the unit sphere is attained at $(0.496876, 0.0946083, 0.862649)$ with objective value $-1.32842$.
+
+
+{{<bibtex >}} 

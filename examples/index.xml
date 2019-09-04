@@ -6,10 +6,20 @@
     <description>Recent content in Examples on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Sep 2019 16:50:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 03 Sep 2019 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/examples/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision</title>
+      <link>/examples/computer-vision/</link>
+      <pubDate>Tue, 03 Sep 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/computer-vision/</guid>
+      <description>We want to reconstruct a three-dimensional object from two-dimensional images. Think of an object, maybe a dinosaur, that is captured by $n$ cameras from different angles. Suppose we have the following information available:
+ the configuration of the cameras (in the form of camera matrices); sets of 2D points in the $n$ two-dimensional images, where each set corresponds to one 3D point.  (Actually, the second bullet is the more challenging part in reconstructing three-dimensional objects.</description>
+    </item>
     
     <item>
       <title>Computing a logarithmic Voronoi cell</title>

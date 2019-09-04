@@ -136,7 +136,7 @@
 
 <meta itemprop="datePublished" content="2019-09-03T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-09-03T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="952">
+<meta itemprop="wordCount" content="949">
 
 
 
@@ -180,7 +180,7 @@
 <p>In theory, it suffices to have two matching 2D points and the configuration of the cameras to <em>exactly</em> reconstruct the corresponding 3D point. In practice, there is lens distortion, pixelation, the algorithm matching the 2D points is not working fully precise and so on. This is why we are looking for 3D points that minimize the euclidean distance regarding their 2D image points. We want to solve an optimization problem.</p>
 
 <p>This post is restricted to the case $n=2$, i.e. we want to reconstruct 3D points from images captured by two cameras at a time. We take the <a href="https://www.robots.ox.ac.uk/~vgg/data/data-mview.html&gt;">dinosaur</a> data set from the Visual Geometry Group
-Department of Engineering Science at the University of Oxford. This contains a list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-cameras-jl">36 cameras</a> as $3\times 4$ matrices and a corresponding list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-pictures-jl">pictures taken from 4983 world points</a>. (The use the code below one must download the files from these links.)</p>
+Department of Engineering Science at the University of Oxford. This contains a list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-cameras-jl">36 cameras</a> as $3\times 4$ matrices and a corresponding list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-pictures-jl">pictures taken from 4983 world points</a>. (For using the code below one must download the files from these links.)</p>
 
 <p>Let $x\in\mathbb{R}^3$ be a 3D point. Then, taking a picture $u=(u_1,u_2)\in\mathbb{R}^2$ of $x$ is modeled as</p>
 
@@ -188,7 +188,7 @@ Department of Engineering Science at the University of Oxford. This contains a l
 
 <p>where $A\in \mathbb{R}^{3\times 4}$ is the camera matrix and $t \in \mathbb{R}, t \neq 0$, is a scalar. This is called the pinhole camera model. Let us write $y(x)$ for the first two entries of  $A \begin{pmatrix} x\\ 1\end{pmatrix}$, and $z(x)$ for the third entry. Then, $u=t y(x)$ and $1 = t z(x)$.</p>
 
-<p>If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set with camera matrices $A_1,A_2$, we want to solve the following minimization problem:</p>
+<p>If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set, we want to solve the following minimization problem:</p>
 
 <p>$$
 \underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \{0\})^2}{\operatorname{argmin}}\; \lVert t_1 \, y_1(x) - p_1 \rVert^2 + \lVert  t_2 \,  y_2(x) - p_2 \rVert^2
@@ -228,7 +228,7 @@ G = sum(gᵢ ⋅ gᵢ for gᵢ in g)
 F = differentiate(G - sum(λ[i] * (t[i] * z[i] - 1) for i in 1:2), [x;t;λ])
 </code></pre>
 
-<p><code>F</code> is a system of polynomials in the variables <code>x</code> and <code>λ</code> and the parameters <code>p</code>. We want to solve this system many times for different parameters. For this, we want to use the guide on how to <a href="guides/many-systems">track many systems in a loop</a>.</p>
+<p><code>F</code> is a system of polynomials in the variables <code>x</code>, <code>t</code> and <code>λ</code> and the parameters <code>p</code>. We want to solve this system many times for different parameters. For this, we use the guide on how to <a href="guides/many-systems">track many systems in a loop</a>.</p>
 
 <p>First, we need an initial solution for a random set of parameters.</p>
 
@@ -274,7 +274,7 @@ end
 
 <p>The closure (under <a href="https://en.wikipedia.org/wiki/Zariski_topology&gt;">Zariski topology</a>) of</p>
 
-<p>$$\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  \, \mid \, t_iz_i(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \{0\})^2\}$$</p>
+<p>$$\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  \, \mid \, t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \{0\})^2\}$$</p>
 
 <p>is called <em>(affine) multiview variety</em> for two cameras.</p>
 

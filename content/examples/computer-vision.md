@@ -59,7 +59,7 @@ G = sum(gᵢ ⋅ gᵢ for gᵢ in g)
 # G is the function that we want to optimize
 ```
 
-For `G=0` we generate the critical equations `F=0`.
+For `G` we generate the critical equations `F=0`.
 
 ```julia
 F = differentiate(G, [x;λ])
@@ -113,9 +113,13 @@ Doing this for several pairs of cameras we get the above picture.
 
 ## EDdegree of the Multiview variety
 
-The closure (under [Zariski topology]) of $\\{(y_1(x),y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2 \mid x \in \mathbb{R}^3\\}$ is called *(affine) multiview variety* for two cameras.
+The closure (under [Zariski topology]) of
 
-Regarding such an affine multiview variety, the number of (complex) critical points of the squared distance function is an invariant, which is called the *euclidean distance degree* (ED degree). [Maxim, Rodriguez and Wang proved][ED degree paper] showed that the EDdegree of the Multiview variety for 2 cameras is 6. We used this information in the code above for verifying that the initial computation for `F₀` was correct.
+$$\left\\{(u^{(1)},u^{(2)})\in \mathbb{R}^2\times \mathbb{R}^2  \,\Bigg\vert  \begin{pmatrix} u_1^{(i)} \\\ u_2^{(i)} \\\ 1 \end{pmatrix} = \lambda_i y_i(x), \, (x,\lambda)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \\{0\\})^2\right\\}$$
+
+is called *(affine) multiview variety* for two cameras.
+
+Regarding such an affine multiview variety, the number of (complex) critical points of the squared distance function `G` is an invariant, which is called the *euclidean distance degree* (ED degree). [Maxim, Rodriguez and Wang proved][ED degree paper] showed that the EDdegree of the Multiview variety for 2 cameras is 6. We used this information in the code above for verifying that the initial computation for `F₀` was correct.
 
 
 [dinosaur]: <https://www.robots.ox.ac.uk/~vgg/data/data-mview.html>

@@ -9,6 +9,7 @@ weight = 1
 author = "Paul Breiding, Christoph Schmidt"
 +++
 
+(This post was worked out in a [student seminar](https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/) that we held at TU Berlin in the summer 2019.)
 
 
 We want to reconstruct a three-dimensional object from two-dimensional images. Think of an object, maybe a [dinosaur], that is captured by $n$ cameras from different angles. Suppose we have the following information available:

@@ -1,0 +1,231 @@
+\usepackage{ amssymb, amsmath, amsthm, amsfonts,mathrsfs, tikz-cd }
+\usepackage[T1]{fontenc}
+
+\usepackage{xy}
+\xyoption{all}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% ENVIRONMENTS %%%%%
+
+
+\newtheorem{thm}{Theorem}[subsection]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{Claim}[thm]{Claim}
+\newtheorem{stm}[thm]{Statement}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{bigconj}[thm]{Big Conjecture}
+\newtheorem{question}[thm]{Question}
+
+
+\newtheorem*{mainthm}{Main Theorem}
+
+\theoremstyle{remark}
+\newtheorem*{claim}{Claim}
+\newtheorem*{conv}{Convention}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{example}[thm]{Example}
+\newtheorem{mainclaim}[thm]{Main Claim}
+
+
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% INDEPENDENCE RELATION SYMBOLS %%%%%
+
+
+\newcommand{\indep}{\,\,\raise.2em\hbox{$\,\mathrel|\kern-.93em\lower.4em\hbox{$\smile$}$}}
+\newcommand{\nindep}{\,\,\raise.2em\hbox{$\mathrel|\kern-.945em\lower.4em\hbox{$\smile$}
+\kern-.75em\hbox{\char'57}$}\;}
+
+\newcommand{\shiftleft}[2]{\makebox[0pt][r]{\makebox[#1][l]{#2}}}
+\newcommand{\shiftright}[2]{\makebox[#1][r]{\makebox[0pt][l]{#2}}}
+\newcommand{\myind}[1]{   \indep{\raise 7pt\hbox{\shiftleft{4pt}{{\tiny #1}}}}   }
+\newcommand{\nmyind}[1]{   \indep{\raise 7pt\hbox{\shiftleft{4pt}{{\tiny #1}}}}{\raise .5pt\hbox{\shiftleft{10pt}{$\not$}}}   }
+\newcommand{\myhatind}[1]{  \overset{\sim}{\indep}{\raise 7pt\hbox{\shiftleft{5pt}{{\tiny #1}}}}  }
+
+\newcommand{\dind}{\myind{$\mathrm{d}$}}
+\newcommand{\find}{\myind{$\mathrm{f}$}}
+\newcommand{\bind}{\myind{$\mathbf{b}$}}
+\newcommand{\oind}{\myind{$\circ$}}
+\newcommand{\thind}{\myind{\th}}
+
+\newcommand{\ndind}{\nmyind{$\mathbf{d}$}}
+\newcommand{\nfind}{\nmyind{$\mathbf{f}$}}
+\newcommand{\nbind}{\nmyind{$\mathbf{b}$}}
+\newcommand{\noind}{\nmyind{$\circ$}}
+\newcommand{\nthind}{\nmyind{\th}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% PROGRAMMING AND COMPLEXITY SYMBOLS %%%%%
+
+\newcommand{\mif}{\textbf{if }}
+\newcommand{\mthen}{\textbf{then }}
+\newcommand{\mend}{\textbf{end }}
+\newcommand{\mdo}{\textbf{do }}
+\newcommand{\mfor}{\textbf{for }}
+\newcommand{\mwhile}{\textbf{while }}
+\newcommand{\mreturn}{\textbf{return }}
+\newcommand{\melse}{\textbf{else }}
+\newcommand{\from}{\leftarrow}
+\newcommand{\invent}{\mathtt{inv}}
+
+\renewcommand{\mif}{\textbf{if}}
+\renewcommand{\mthen}{\textbf{then}}
+\renewcommand{\melse}{\textbf{else}}
+\renewcommand{\mwhile}{\textbf{while}}
+\renewcommand{\mdo}{\textbf{do}}
+
+
+\newcommand{\pl}{\mathbb{LP}}
+\newcommand{\datalog}{\textsc{Datalog}}
+\newcommand{\ptime}{\textsc{Ptime} }
+\newcommand{\nptime}{\textsc{NPtime}  }
+\newcommand{\pspace}{\textsc{Pspace} }
+\newcommand{\npspace}{\textsc{NPspace} }
+
+\newcommand{\mstep}{\textsc{Step}}
+\newcommand{\mtape}{\textsc{Tape}}
+\newcommand{\mhead}{\textsc{Head}}
+\newcommand{\mchar}{\textsc{Char}}
+\newcommand{\mstate}{\textsc{State}}
+\newcommand{\mquery}{\textsc{Query}}
+
+
+\newcommand{\fp}{\textbf{fp}}
+\newcommand{\henk}{\textbf{henk}}
+\newcommand{\ifp}{\textsc{ifp}}
+\newcommand{\lfp}{\textsc{lfp}}
+\newcommand{\pfp}{\textsc{pfp}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% MODEL THEORY SYMBOLS %%%%%
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathfrak{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\R}{\mathbf{R}}
+
+\renewcommand{\epsilon}{\varepsilon}
+
+
+\newcommand{\ps}{{\mathbb{P}}}
+\renewcommand{\L}{\mathscr{L}}
+\newcommand{\fin}{\textrm{fin}}
+\renewcommand{\P}{\mathcal{P}}
+
+
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\KK}{ \mathcal{K} }
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\MM}{\mathfrak{M}}
+\renewcommand{\AA}{\mathfrak{A}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\CC}{\mathscr{C}}
+\newcommand{\TT}{\mathbb{T}}
+
+\renewcommand{\mod}{\textbf{ mod }}
+\newcommand{\fcon}{\textbf{fcon}}
+\newcommand{\can}{\textbf{can}}
+\newcommand{\tab}{\textbf{tab}}
+
+\renewcommand{\models}{\vDash}
+\newcommand{\nmodels}{\nvDash}
+\newcommand{\proves}{\vdash}
+\newcommand{\nproves}{\nvdash}
+\newcommand{\forces}{\Vdash}
+\newcommand{\nforces}{\nVdash}
+
+\newcommand{\cond}{\rightarrow}
+\newcommand{\bic}{\leftrightarrow}
+\newcommand{\entails}{\rightrightarrows}
+
+\newcommand{\upom}{{^\omega}}
+\newcommand{\lupom}{{^{<\omega}}}
+
+\renewcommand{\aa}{\overline{a}}
+\newcommand{\bb}{\overline{b}}
+\newcommand{\cc}{\overline{c}}
+\newcommand{\dd}{\overline{d}}
+\newcommand{\nn}{\textbf{n}}
+\newcommand{\xx}{\overline{x}}
+\newcommand{\yy}{\overline{y}}
+\newcommand{\zz}{\overline{z}}
+\newcommand{\ww}{\overline{w}}
+\newcommand{\uu}{\overline{u}}
+\newcommand{\vv}{\overline{v}}
+\newcommand{\mm}{\overline{m}}
+\renewcommand{\tt}{\overline{t}}
+\renewcommand{\ss}{\overline{s}}
+\newcommand{\ii}{\overline{i}}
+
+\newcommand{\gen}[2]{\left\langle #1 \right\rangle_{#2}}
+\newcommand{\Q}{\overline{Q}}
+
+\newcommand{\embeds}{\hookrightarrow}
+\renewcommand{\r}{  {\upharpoonright} }
+
+\newcommand{\eq}{ {\textrm{eq}} }
+
+\newcommand{\diag}{\emph{diag}}
+\newcommand{\ediag}{\emph{ediag}}
+\newcommand{\inv}{\textrm{inv}}
+\newcommand{\game}{\textsc{gt}}
+\newcommand{\real}{\textrm{real}}
+\newcommand{\thorn}{\textrm{\th}}
+
+\newcommand{\fraisse}{\textrm{Fra\"iss\'e }}
+\newcommand{\Fraisse}{\textrm{Fra\"iss\'e}}
+
+\newcommand{\sortA}{\mathsf{A}}
+\newcommand{\sortB}{\mathsf{B}}
+\newcommand{\sortC}{\mathsf{C}}
+\newcommand{\sortD}{\mathsf{D}}
+\newcommand{\sortE}{\mathsf{E}}
+\newcommand{\sortF}{\mathsf{F}}
+\newcommand{\sortG}{\mathsf{G}}
+\newcommand{\sortH}{\mathsf{H}}
+\newcommand{\sortJ}{\mathsf{J}}
+\newcommand{\sortK}{\mathsf{K}}
+\newcommand{\sortL}{\mathsf{L}}
+\newcommand{\sortM}{\mathsf{M}}
+\newcommand{\sortN}{\mathsf{N}}
+\newcommand{\sortO}{\mathsf{O}}
+\newcommand{\sortP}{\mathsf{P}}
+\newcommand{\sortQ}{\mathsf{Q}}
+\newcommand{\sortR}{\mathsf{R}}
+\newcommand{\sortS}{\mathsf{S}}
+\newcommand{\sortU}{\mathsf{U}}
+\newcommand{\sortV}{\mathsf{V}}
+\newcommand{\sortW}{\mathsf{W}}
+\newcommand{\sortX}{\mathsf{X}}
+\newcommand{\sortY}{\mathsf{Y}}
+\newcommand{\sortZ}{\mathsf{Z}}
+
+
+\newcommand{\actson}{\curvearrowright}
+
+
+\usepackage{amscd}
+\DeclareMathOperator{\acl}{acl}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\dcl}{dcl}
+\DeclareMathOperator{\bdd}{bdd}
+\DeclareMathOperator{\tp}{tp}
+\DeclareMathOperator{\Cb}{Cb}
+\DeclareMathOperator{\stp}{stp}
+\DeclareMathOperator{\lstp}{lstp}
+\DeclareMathOperator{\ari}{ari}
+\DeclareMathOperator{\heq}{heq}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\qtp}{qtp}

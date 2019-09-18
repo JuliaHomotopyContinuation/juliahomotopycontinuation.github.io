@@ -136,7 +136,7 @@
 
 <meta itemprop="datePublished" content="2019-09-03T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-09-03T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="968">
+<meta itemprop="wordCount" content="969">
 
 
 
@@ -201,7 +201,7 @@ $$</p>
 
 <h2 id="implementation-with-homotopy-continuation">Implementation with Homotopy Continuation</h2>
 
-<p>Now let&rsquo;s this optimization problem using homotopy continuation by solving the critical equations. We use the cameras <code>n₁=1</code> and <code>n₂=2</code>. The camera data</p>
+<p>Now let&rsquo;s solve this optimization problem using homotopy continuation by solving the critical equations. We use the cameras <code>n₁=1</code> and <code>n₂=2</code>. The camera data</p>
 
 <pre><code class="language-julia">using DynamicPolynomials, LinearAlgebra, HomotopyContinuation
 
@@ -248,7 +248,7 @@ reconstructed_points = Vector{Vector{Float64}}()
 for pᵢ in photos
 	# the data from the dataset is incomplete.
 	# the cameras did not take pictures of all world points.
-	# if a world point was not capture, the entry in the data set is -1.
+	# if a world point was not captured, the entry in the data set is -1.
 	if all(pᵢ .&gt; 0)
 		# we divide by 648 for working with coordinates between 0 and 1
 		# (as explained above)
@@ -288,7 +288,7 @@ end
     author =  { Paul Breiding, Christoph Schmidt },
     title = { Computer Vision },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/computer-vision/ } },
-    note = { Accessed: September 4, 2019 }
+    note = { Accessed: September 18, 2019 }
 }</code>
 </pre>
 

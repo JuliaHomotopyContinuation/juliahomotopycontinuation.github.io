@@ -45,7 +45,7 @@ $$
 
 ## Implementation with Homotopy Continuation
 
-Now let's this optimization problem using homotopy continuation by solving the critical equations. We use the cameras `n₁=1` and `n₂=2`. The camera data
+Now let's solve this optimization problem using homotopy continuation by solving the critical equations. We use the cameras `n₁=1` and `n₂=2`. The camera data
 
 ```julia
 using DynamicPolynomials, LinearAlgebra, HomotopyContinuation
@@ -96,7 +96,7 @@ reconstructed_points = Vector{Vector{Float64}}()
 for pᵢ in photos
 	# the data from the dataset is incomplete.
 	# the cameras did not take pictures of all world points.
-	# if a world point was not capture, the entry in the data set is -1.
+	# if a world point was not captured, the entry in the data set is -1.
 	if all(pᵢ .> 0)
 		# we divide by 648 for working with coordinates between 0 and 1
 		# (as explained above)

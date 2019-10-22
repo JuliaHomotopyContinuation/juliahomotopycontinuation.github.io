@@ -25,7 +25,6 @@ $$V =\\{x_1^4 - x_1^2x_2^2 + x_2^4 - 4x_1^2 - 2x_2^2 - x_1 - 4x_2 + 1 = 0\\}$$
 we use the following code.
 ```julia
 using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
-# using JLD2
 
 @polyvar x[1:2]# initialize variables
 f = x[1]^4 - x[1]^2*x[2]^2 + x[2]^4 - 4x[1]^2 - 2x[2]^2 - x[1] - 4x[2] + 1
@@ -60,4 +59,4 @@ Here is a picture of all solutions.
 
 <p style="text-align:center;"><img src="/images/curvature.png" width="600px"/></p>
 
-{{<bibtex >}} 
+{{<bibtex >}}

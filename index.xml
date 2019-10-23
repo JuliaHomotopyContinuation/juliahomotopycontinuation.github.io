@@ -6,7 +6,7 @@
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Sep 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 21 Oct 2019 10:00:00 +0200</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -43,6 +43,17 @@ using HomotopyContinuation # load the package into the current Julia session @po
       <guid>/guides/introduction/</guid>
       <description>A first example We are interested in the numerical solution of systems of polynomial equations like $$\begin{array}{rl} -x^5y &amp;amp;= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\ \frac12 &amp;amp;= x^2+2xy^2 - 2y^2 \;. \end{array}$$
 Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials $$ f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2) + x^5y \quad \text{ and } \quad f_2(x,y) = x^2+2xy^2 - 2y^2 - \frac12 \;.</description>
+    </item>
+    
+    <item>
+      <title>The reach of a Curve</title>
+      <link>/examples/reach-curve/</link>
+      <pubDate>Mon, 21 Oct 2019 10:00:00 +0200</pubDate>
+      
+      <guid>/examples/reach-curve/</guid>
+      <description>The reach $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau &amp;gt;0$. The definition of $\tau$ is as follows:
+$$\tau = \sup \{t\mid \text{all $x\in\mathbb{R}^n$ with $\mathrm{dist}(x,M)&amp;lt;t$ have a unique nearest point on $M$}\}$$
+where the distance measure $\mathrm{dist}$ is the Euclidean distance.</description>
     </item>
     
     <item>

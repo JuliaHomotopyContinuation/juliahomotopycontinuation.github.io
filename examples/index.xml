@@ -6,10 +6,21 @@
     <description>Recent content in Examples on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Sep 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 21 Oct 2019 10:00:00 +0200</lastBuildDate>
     
 	<atom:link href="/examples/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The reach of a Curve</title>
+      <link>/examples/reach-curve/</link>
+      <pubDate>Mon, 21 Oct 2019 10:00:00 +0200</pubDate>
+      
+      <guid>/examples/reach-curve/</guid>
+      <description>The reach $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau &amp;gt;0$. The definition of $\tau$ is as follows:
+$$\tau = \sup \{t\mid \text{all $x\in\mathbb{R}^n$ with $\mathrm{dist}(x,M)&amp;lt;t$ have a unique nearest point on $M$}\}$$
+where the distance measure $\mathrm{dist}$ is the Euclidean distance.</description>
+    </item>
     
     <item>
       <title>Computer Vision</title>

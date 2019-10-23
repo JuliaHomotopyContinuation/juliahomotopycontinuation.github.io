@@ -7,6 +7,7 @@ draft = false
 description = "Using homotopy continuation for computing the CPD of a tensor"
 weight = 3
 author = "Paul Breiding"
+group = "algebraic-geometry"
 +++
 
 In this blog I want to repeat the computations from the article "[Homotopy Techniques for Tensor Decomposition and Perfect Identifiability](https://arxiv.org/pdf/1501.00090.pdf)" by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of [canonical polyadic decompositions](https://en.wikipedia.org/wiki/Tensor_rank_decomposition) (CPD) of a random $2\times 2\times 2\times 3$-[tensor](https://en.wikipedia.org/wiki/Tensor) by using the [monodromy method](/guides/monodromy.md). It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor  has rank equal to 4:

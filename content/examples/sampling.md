@@ -7,6 +7,7 @@ draft = false
 description = "Sampling from a variety"
 weight = 1
 author = "Paul Breiding"
+group = "math-data"
 +++
 
 The article [Random points on an algebraic manifold](https://arxiv.org/abs/1810.06271) proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve

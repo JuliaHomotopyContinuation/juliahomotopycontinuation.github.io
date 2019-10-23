@@ -7,6 +7,7 @@ draft = false
 description = "How to compute curvature"
 weight = 10
 author = "Paul Breiding"
+group = "math-data"
 +++
 
 <h3 class="section-head">Curvature of curves in the plane</h3>

@@ -7,6 +7,7 @@ draft = false
 description = "The conformation space of cyclooctane"
 weight = 1
 author = "Paul Breiding"
+group = "application"
 +++
 
 

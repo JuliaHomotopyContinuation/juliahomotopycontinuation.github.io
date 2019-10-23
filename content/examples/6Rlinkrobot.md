@@ -7,6 +7,7 @@ draft = false
 description = "Using HomotopyContinuation.jl for a problem in kinematics"
 weight = 1
 author = "Sascha Timme"
+group = "applications"
 +++
 
 The following example is from Section 7.3 in [A. Sommese, C. Wampler: The Numerical Solution of Systems of Polynomial Arising in Engineering and Science](https://www.worldscientific.com/worldscibooks/10.1142/5763)

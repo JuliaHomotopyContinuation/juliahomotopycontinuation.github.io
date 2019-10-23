@@ -7,6 +7,7 @@ draft = false
 description = "An adventure at the intersection of statistics and nonlinear algebra."
 weight = 1
 author = "Yulia Alexandr, Alex Heaton, and Sascha Timme"
+group = "math-data"
 +++
 
 <span style="color:gray">Authors:</span> <a href="https://sites.google.com/view/alexander-heaton">Alex Heaton</a>, <a href="https://mathymath.github.io">Yulia Alexandr</a>, and <a href="https://sascha.timme.xyz">Sascha Timme</a>

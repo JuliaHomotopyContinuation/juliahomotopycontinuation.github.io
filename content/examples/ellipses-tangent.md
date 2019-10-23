@@ -7,6 +7,7 @@ draft = false
 description = "Let two ellipses grow until they intersect"
 weight = 1
 author = "Paul Breiding"
+group = "algebraic-geometry"
 +++
 
 

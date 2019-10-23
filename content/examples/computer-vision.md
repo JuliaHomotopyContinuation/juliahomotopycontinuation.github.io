@@ -7,6 +7,7 @@ draft = false
 description = "Triangulation of a dinosaur"
 weight = 1
 author = "Paul Breiding, Christoph Schmidt"
+group = "applications"
 +++
 
 (This post was worked out in a [student seminar](https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/) that we held at TU Berlin in the summer 2019.)

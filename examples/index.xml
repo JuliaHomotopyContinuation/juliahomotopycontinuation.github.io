@@ -12,7 +12,7 @@
     
     
     <item>
-      <title>The Reach of a Curve</title>
+      <title>The reach of a plane curve</title>
       <link>/examples/reach-curve/</link>
       <pubDate>Mon, 21 Oct 2019 10:00:00 +0200</pubDate>
       
@@ -23,7 +23,7 @@ where the distance measure $\mathrm{dist}$ is the Euclidean distance.</descripti
     </item>
     
     <item>
-      <title>Computer Vision</title>
+      <title>Computer vision</title>
       <link>/examples/computer-vision/</link>
       <pubDate>Tue, 03 Sep 2019 21:56:55 +0100</pubDate>
       
@@ -67,7 +67,7 @@ $$\Vert z_1-z_2\Vert^2 = \cdots = \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^
     </item>
     
     <item>
-      <title>Method of Moments</title>
+      <title>Method of moments</title>
       <link>/examples/method_of_moments/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
@@ -129,7 +129,7 @@ using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁
     </item>
     
     <item>
-      <title>Monte Carlo Integration</title>
+      <title>Monte Carlo integration</title>
       <link>/examples/monte-carlo-integration/</link>
       <pubDate>Tue, 02 Jul 2019 21:56:55 +0100</pubDate>
       

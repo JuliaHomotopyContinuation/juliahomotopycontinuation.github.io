@@ -25,11 +25,13 @@ $$
 <p style="text-align:center;"><img src="/images/curve_reach.png" width="500px"/></p>
 
 
-As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the minimum of two factors: the curvature of the manifold and the width of the narrowest bottleneck of $M$, which quantifies how close M is from being self-intersecting. In symbols:
+As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the determined by two factors: the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$. That is,
 
-$$\tau = \min\\left\\{\rho, \, \frac{1}{\sigma}\\right\\},$$
+$$\tau = \min\\left\\{\frac{\rho}{2}, \, \frac{1}{\sigma}\\right\\},$$
 
-where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck. We compute both $\rho$ and $\sigma$. For this, we first define the equation of $C$ in `Julia`.
+where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck of $C$.
+
+We compute both $\rho$ and $\sigma$. For this, we first define the equation of $C$ in `Julia`.
 
 ```julia
 using HomotopyContinuation
@@ -43,7 +45,7 @@ $$\rho = 0.13835123592621174 \;\text{ and }\ \sigma =2097.165767782749$$
 
 and we have
 
-$$\min\\left\\{0.13835123592621174, \, \frac{1}{2097.165767782749}\\right\\} = 0.00047683402779230983$$
+$$\min\\left\\{\frac{0.13835123592621174}{2}, \, \frac{1}{2097.165767782749}\\right\\} = 0.00047683402779230983$$
 
 Therefore, the reach of the curve $C$ is $\tau = 0.00047683402779230983$.
 

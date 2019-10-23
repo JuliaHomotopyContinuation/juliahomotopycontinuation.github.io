@@ -307,12 +307,12 @@ If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then 
 <p>For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:</p>
 
 <ul>
-<li><a href="/guides/variable-groups">Multi-homogenous homotopies</a> take a degree structure in the variables into account. This works by using a generalization of Bezout&rsquo;s theorem by <a href="https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem">Shafarevich</a>.</li>
+<li><a href="/guides/variable-groups">Multi-homogeneous homotopies</a> take a degree structure in the variables into account. This works by using a generalization of Bezout&rsquo;s theorem by <a href="https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem">Shafarevich</a>.</li>
 <li><a href="/guides/polyhedral">Polyhedral homotopies</a> take the sparsity of the polynomials into account. To each polynomial system you can associate the <a href="https://en.wikipedia.org/wiki/Mixed_volume"><em>mixed volume</em></a> of the Newton polytopes of the polynomials. The <a href="https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem">Bernstein–Khovanskii–Kushnirenko theorem</a> tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.</li>
 </ul>
 
-<p>Both multi-homogenous and polyhedral homotopies are supported by HomotopyContinuation.jl.
-A multi-homogenous homotopy will automatically be constructed if you pass a set of <code>variable_groups</code> to <code>solve</code>. For a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
+<p>Both multi-homogeneous and polyhedral homotopies are supported by HomotopyContinuation.jl.
+A multi-homogeneous homotopy will automatically be constructed if you pass a set of <code>variable_groups</code> to <code>solve</code>. For a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
 
 <h2 id="case-study-optimization">Case Study: Optimization</h2>
 

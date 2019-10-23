@@ -220,8 +220,8 @@ Result with 16 solutions
 
 <p>We find 16 solutions, which is the correct number of solutions for these type of systems.</p>
 
-<p>But if we study the problem a little bit closer, we can see that the equations are bi-homogenous with respect to the variable groups $\{z_2, z_4\}$ and $\{z_3, z_5\}$.
-The multi-homogenous Bezout number with respect ot this variable group is</p>
+<p>But if we study the problem a little bit closer, we can see that the equations are bi-homogeneous with respect to the variable groups $\{z_2, z_4\}$ and $\{z_3, z_5\}$.
+The multi-homogeneous Bezout number with respect ot this variable group is</p>
 
 <pre><code class="language-julia">julia&gt; variable_groups=[[z[2,:]; z[4,:]], [z[3,:]; z[5,:]]];
 julia&gt; bezout_number(F; variable_groups=variable_groups)
@@ -283,7 +283,7 @@ For even more performance improvements you can take a look at our <a href="/guid
     author =  { Sascha Timme },
     title = { The 6R-serial link robot },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/6rlinkrobot/ } },
-    note = { Accessed: September 18, 2019 }
+    note = { Accessed: October 23, 2019 }
 }</code>
 </pre>
 

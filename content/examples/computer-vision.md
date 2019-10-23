@@ -1,6 +1,6 @@
 +++
 date = "2019-09-03T21:56:55+01:00"
-title = "Computer Vision"
+title = "Computer vision"
 tags = ["example"]
 categories = ["general"]
 draft = false

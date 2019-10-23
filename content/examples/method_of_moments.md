@@ -1,6 +1,6 @@
 +++
 date = "2019-03-26T21:56:55+01:00"
-title = "Method of Moments"
+title = "Method of moments"
 tags = ["example"]
 categories = ["general"]
 draft = false
@@ -148,4 +148,4 @@ relabeling.(solutions(R_with_group_action))
 Then, we can proceed with the parameter homotopy as above.
 
 
-{{<bibtex >}} 
+{{<bibtex >}}

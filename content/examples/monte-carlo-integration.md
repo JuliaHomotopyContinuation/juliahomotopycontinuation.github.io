@@ -1,13 +1,13 @@
 +++
 date = "2019-07-02T21:56:55+01:00"
-title = "Monte Carlo Integration"
+title = "Monte Carlo integration"
 tags = ["example"]
 categories = ["general"]
 draft = false
 description = "Integrating measurable functions on a variety"
 weight = 2
 author = "Paul Breiding"
-group = "applications"
+group = "math-data"
 +++
 
 
@@ -103,4 +103,4 @@ julia> volume = π * μ
 The actual volume is $2\pi \approx 6.2832$. Thus, we have the volume with 3 correct digits. Considering that we have used a sample of size $10^5$, the speed of convergence of the law of large numbers seems to be rather slow. Nevertheless, the methods is fast enough to give a good and quick guess on the true volume.
 
 
-{{<bibtex >}} 
+{{<bibtex >}}

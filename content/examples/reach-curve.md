@@ -1,6 +1,6 @@
 +++
 date = "2019-10-21T10:00:00+02:00"
-title = "The Reach of a Curve"
+title = "The reach of a plane curve"
 tags = ["example"]
 categories = ["general"]
 draft = false

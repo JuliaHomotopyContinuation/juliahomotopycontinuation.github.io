@@ -1,6 +1,6 @@
 +++
 date = "2019-10-21T10:00:00+02:00"
-title = "The reach of a variety"
+title = "The reach of a Curve"
 tags = ["example"]
 categories = ["general"]
 draft = false

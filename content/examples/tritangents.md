@@ -7,6 +7,7 @@ draft = false
 description = "Using HomotopyContinuation.jl for computing tritangents of sextic curves"
 weight = 5
 author = "Paul Breiding"
+group = "algebraic-geometry"
 +++
 
 A complex sextic curve in $\mathbb{C}^3$ is the intersection of a [cubic surface](https://en.wikipedia.org/wiki/Cubic_surface) $\mathcal{C}\subset \mathbb{C}^3$ with a [quadric](https://en.wikipedia.org/wiki/Quadric) $\mathcal{Q}\subset \mathbb{C}^3$; that is, there exist polynomials in three variables $C$ of degree 3 and $Q$ of degree 2, such that $\mathcal{C} = \\{x\in\mathbb{C}^3 : C(x) = 0\\}$ and $\mathcal{Q} = \\{x\in\mathbb{C}^3 : Q(x) = 0\\}$.

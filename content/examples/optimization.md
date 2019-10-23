@@ -7,6 +7,7 @@ draft = false
 description = "Using HomotopyContinuation.jl for a problem in optimization"
 weight = 1
 author = "Sascha Timme"
+group = "application"
 +++
 
 

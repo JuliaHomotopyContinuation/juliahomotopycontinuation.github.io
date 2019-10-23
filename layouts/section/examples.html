@@ -1,28 +1,91 @@
-{{ define "title"}} {{ .Title}} {{end}}
-{{ define "header"}} {{ partial "header" .}} {{end}}
+{{ define "title"}} {{ .Title}} {{ end }} {{ define "header"}}
+{{ partial "header" .}} {{ end }}
 
 {{ define "main" }}
 <div id="main">
-<div id="hero" class="wrap">
-  <h1>Examples</h1>
-    <p>Polynomial equations appear in a wide variety of topics.<br></p>
-</div>
-
-<div id="components">
-  <div class="row gutters">
-   {{ range .Pages.ByWeight }}
-    <div class="col col-4 item">
-      <h4>
-        <a href="{{ .Permalink }}">{{ .Title }}</a>
-      </h4>
-      <p>{{ .Params.description }}</p>
-    </div>
-    {{ end }}
+  <div id="hero" class="wrap">
+    <h1>Examples</h1>
+    <p>Polynomial equations appear in a wide variety of topics.<br /></p>
   </div>
-</div>
+
+  <nav id="contents">
+    <ol class="js-toc">
+      <ul class="toc-list ">
+        <li class="toc-list-item">
+          <a
+            data-scroll=""
+            href="#applications"
+            class="toc-link node-name--H3  is-active-link"
+            >Applications in the Sciences</a
+          >
+        </li>
+        <li class="toc-list-item">
+          <a data-scroll="" href="#math-data" class="toc-link node-name--H3 "
+            >Math of Data</a
+          >
+        </li>
+        <li class="toc-list-item">
+          <a
+            data-scroll=""
+            href="#algebraic-geometry"
+            class="toc-link node-name--H3 "
+            >Algebraic Geometry</a
+          >
+        </li>
+      </ul>
+    </ol>
+  </nav>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#applications">Applications in the Sciences</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      {{ range where .Pages.ByWeight "Params.group" "applications" }}
+      <div class="col col-4 item">
+        <h4>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h4>
+        <p>{{ .Params.description }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#math-data">Math of Data</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      {{ range where .Pages.ByWeight "Params.group" "math-data" }}
+      <div class="col col-4 item">
+        <h4>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h4>
+        <p>{{ .Params.description }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#algebraic-geometry">Algebraic Geometry</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      {{ range where .Pages.ByWeight "Params.group" "algebraic-geometry" }}
+      <div class="col col-4 item">
+        <h4>
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h4>
+        <p>{{ .Params.description }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
 </div>
 
 {{ end }}
 {{ define "footer" }}
-  {{ partial "footer" . }}
+{{ partial "footer" . }}
 {{ end }}

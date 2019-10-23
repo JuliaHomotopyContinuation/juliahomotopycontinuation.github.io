@@ -7,6 +7,7 @@ draft = false
 description = "Computing critical points"
 weight = 1
 author = "Paul Breiding, Sascha Timme"
+group = "math-data"
 +++
 
 

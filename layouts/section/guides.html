@@ -41,18 +41,6 @@
       {{ end }}
     </div>
   </div>
-  <div id="components">
-    <div class="row gutters">
-      {{ range where .Pages.ByWeight "Params.group" "theory" }}
-      <div class="col col-4 item">
-        <h4>
-          <a href="{{ .Permalink }}">{{ .Title }}</a>
-        </h4>
-        <p>{{ .Params.description }}</p>
-      </div>
-      {{ end }}
-    </div>
-  </div>
   <h2 class="section-head" id="feature-guide">
     <a href="#advanced">Feature guides</a>
   </h2>

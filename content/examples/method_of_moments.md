@@ -7,6 +7,7 @@ draft = false
 description = "For mixtures of three Gaussians"
 weight = 1
 author = "Paul Breiding"
+group = "math-data"
 +++
 
 

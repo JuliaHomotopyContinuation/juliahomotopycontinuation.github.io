@@ -7,6 +7,7 @@ draft = false
 description = "Integrating measurable functions on a variety"
 weight = 2
 author = "Paul Breiding"
+group = "applications"
 +++
 
 

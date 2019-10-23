@@ -91,7 +91,8 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
@@ -131,133 +132,161 @@
  </header>
   <main>
 <div id="main">
-<div id="hero" class="wrap">
-  <h1>Examples</h1>
-    <p>Polynomial equations appear in a wide variety of topics.<br></p>
-</div>
-
-<div id="components">
-  <div class="row gutters">
-   
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/computer-vision/">Computer Vision</a>
-      </h4>
-      <p>Triangulation of a dinosaur</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/logarithmic-voronoi/">Computing a logarithmic Voronoi cell</a>
-      </h4>
-      <p>An adventure at the intersection of statistics and nonlinear algebra.</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/sampling/">Sampling</a>
-      </h4>
-      <p>Sampling from a variety</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/cyclooctane/">Cyclooctane</a>
-      </h4>
-      <p>The conformation space of cyclooctane</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/method_of_moments/">Method of Moments</a>
-      </h4>
-      <p>For mixtures of three Gaussians</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/optimization/">Minimizing a function over the sphere</a>
-      </h4>
-      <p>Using HomotopyContinuation.jl for a problem in optimization</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/6rlinkrobot/">The 6R-serial link robot</a>
-      </h4>
-      <p>Using HomotopyContinuation.jl for a problem in kinematics</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/critical-points/">The point on a variety that minimizes the distance to a given point</a>
-      </h4>
-      <p>Computing critical points</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/ellipses-tangent/">When do two ellipses meet?</a>
-      </h4>
-      <p>Let two ellipses grow until they intersect</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/monte-carlo-integration/">Monte Carlo Integration</a>
-      </h4>
-      <p>Integrating measurable functions on a variety</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/cpd/">Tensor decomposition and homotopy continuation</a>
-      </h4>
-      <p>Using homotopy continuation for computing the CPD of a tensor</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/tritangents/">Tritangents</a>
-      </h4>
-      <p>Using HomotopyContinuation.jl for computing tritangents of sextic curves</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/curvature/">Curvature of plane curves</a>
-      </h4>
-      <p>How to compute curvature</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/3264/">3264 conics tangent to five conics</a>
-      </h4>
-      <p>All of them can be real.</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/circles-conics/">The number of circles that are tangent to 3 given conics</a>
-      </h4>
-      <p>Using HomotopyContinuation.jl for a problem in enumerative geometry</p>
-    </div>
-    
-    <div class="col col-4 item">
-      <h4>
-        <a href="/examples/do-it-yourself/">Do It Yourself</a>
-      </h4>
-      <p>3264 conics in a second.</p>
-    </div>
-    
+  <div id="hero" class="wrap">
+    <h1>Examples</h1>
+    <p>Polynomial equations appear in a wide variety of topics.<br /></p>
   </div>
-</div>
+
+  <nav id="contents">
+    <ol class="js-toc">
+      <ul class="toc-list ">
+        <li class="toc-list-item">
+          <a
+            data-scroll=""
+            href="#applications"
+            class="toc-link node-name--H3  is-active-link"
+            >Applications in the Sciences</a
+          >
+        </li>
+        <li class="toc-list-item">
+          <a data-scroll="" href="#math-data" class="toc-link node-name--H3 "
+            >Math of Data</a
+          >
+        </li>
+        <li class="toc-list-item">
+          <a
+            data-scroll=""
+            href="#algebraic-geometry"
+            class="toc-link node-name--H3 "
+            >Algebraic Geometry</a
+          >
+        </li>
+      </ul>
+    </ol>
+  </nav>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#applications">Applications in the Sciences</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/computer-vision/">Computer Vision</a>
+        </h4>
+        <p>Triangulation of a dinosaur</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/6rlinkrobot/">The 6R-serial link robot</a>
+        </h4>
+        <p>Using HomotopyContinuation.jl for a problem in kinematics</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/monte-carlo-integration/">Monte Carlo Integration</a>
+        </h4>
+        <p>Integrating measurable functions on a variety</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#math-data">Math of Data</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/logarithmic-voronoi/">Computing a logarithmic Voronoi cell</a>
+        </h4>
+        <p>An adventure at the intersection of statistics and nonlinear algebra.</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/sampling/">Sampling</a>
+        </h4>
+        <p>Sampling from a variety</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/method_of_moments/">Method of Moments</a>
+        </h4>
+        <p>For mixtures of three Gaussians</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/critical-points/">The point on a variety that minimizes the distance to a given point</a>
+        </h4>
+        <p>Computing critical points</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/curvature/">Curvature of plane curves</a>
+        </h4>
+        <p>How to compute curvature</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <h2 class="section-head" id="get*started">
+    <a href="#algebraic-geometry">Algebraic Geometry</a>
+  </h2>
+  <div id="components">
+    <div class="row gutters">
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/ellipses-tangent/">When do two ellipses meet?</a>
+        </h4>
+        <p>Let two ellipses grow until they intersect</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/cpd/">Tensor decomposition and homotopy continuation</a>
+        </h4>
+        <p>Using homotopy continuation for computing the CPD of a tensor</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/tritangents/">Tritangents</a>
+        </h4>
+        <p>Using HomotopyContinuation.jl for computing tritangents of sextic curves</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/3264/">3264 conics tangent to five conics</a>
+        </h4>
+        <p>All of them can be real.</p>
+      </div>
+      
+      <div class="col col-4 item">
+        <h4>
+          <a href="/examples/circles-conics/">The number of circles that are tangent to 3 given conics</a>
+        </h4>
+        <p>Using HomotopyContinuation.jl for a problem in enumerative geometry</p>
+      </div>
+      
+    </div>
+  </div>
 </div>
 
 </main>
   <footer>
-    <footer id="footer">
+  <footer id="footer">
     <nav>
       <ul>
         <li><span>HomotopyContinuation.jl</span></li>

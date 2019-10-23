@@ -1,5 +1,5 @@
 +++
-date = "2019-21-10T21:56:55+01:00"
+date = "2019-10-21T10:00:00+02:00"
 title = "The reach of a variety"
 tags = ["example"]
 categories = ["general"]

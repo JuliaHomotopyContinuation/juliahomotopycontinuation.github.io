@@ -7,6 +7,7 @@ draft = false
 description = "Computing the reach"
 weight = -1
 author = "Paul Breiding and Sascha Timme"
+group = "math-data"
 +++
 
 The reach  $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau >0$. The definition of $\tau$ is as follows:

@@ -1,16 +1,16 @@
 +++
 date = "2019-10-21T10:00:00+02:00"
-title = "The reach of a Curve"
+title = "The Reach of a Curve"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "Computing the reach"
+description = "Computing the Reach"
 weight = -1
 author = "Paul Breiding and Sascha Timme"
 group = "math-data"
 +++
 
-The reach  $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau >0$. The definition of $\tau$ is as follows:
+The *reach* $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau >0$. The definition of $\tau$ is as follows:
 
 $$\tau = \sup \\{t\mid \text{all $x\in\mathbb{R}^n$ with $\mathrm{dist}(x,M)<t$ have a unique nearest point on $M$}\\}$$
 

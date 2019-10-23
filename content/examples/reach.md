@@ -52,7 +52,7 @@ Bottlenecks of $C$ are pairs of points $(p,q)\in C\times C$ such that $p-q$ is p
 
 [Eklund](https://arxiv.org/pdf/1804.01015.pdf) and [di Rocco et. al.](https://arxiv.org/pdf/1904.04502.pdf) discuss the algebraic equations of bottlenecks. The equations are
 
-$$f(p) = 0, \; \det\begin{bmatrix} \nabla_p f & p-q\end{bmatrix} = 0, \; f(q) = 0 ,\; \det\begin{bmatrix} \nabla_q f & p-q\end{bmatrix}=0,$$
+$$f(p) = 0, \quad \det\begin{bmatrix} \nabla_p f & p-q\end{bmatrix} = 0, \quad f(q) = 0 ,\quad \det\begin{bmatrix} \nabla_q f & p-q\end{bmatrix}=0,$$
 
 where $\nabla_p f$ denotes the [gradient](https://en.wikipedia.org/wiki/Gradient) of $f$ at $p$. The first equation defines $p\in C$ and the second equation defines $p-q \perp \mathrm{T}_p C$. The third equation defines $q\in C$ and the fourth equation defines $p-q \perp \mathrm{T}_q C$.
 
@@ -70,7 +70,7 @@ f_q = subs(f, [x;y] => q)
 ∇_q = differentiate(f_q, q)
 bn_eqs = [f_p; det([∇_p p-q]); f_q; det([∇_q p-q])]
 
-bn_result = solve(bottleneck_eqs, start_system = :polyhedral)
+bn_result = solve(bn_eqs, start_system = :polyhedral)
 ```
 
 
@@ -91,7 +91,7 @@ Result{Array{Complex{Float64},1}} with 1858 solutions
 ```
 
 
-From `bn_result` we see that `C` has $1726$ (complex) bottleneck pairs and of those are
+From `bn_result` we see that $C$ has $1726$ (complex) bottleneck pairs and of those are
 $104$ real. Note that in our formulation we have for each bottleneck pair $(p,q)$
 also the pair $(q, p)$  as a solution. Therefore we find that the curve $C$ has $52$ distinct real bottlenecks.
 

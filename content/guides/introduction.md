@@ -172,11 +172,11 @@ If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then 
 
 For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:
 
-* [Multi-homogenous homotopies](/guides/variable-groups) take a degree structure in the variables into account. This works by using a generalization of Bezout's theorem by [Shafarevich](https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem).
+* [Multi-homogeneous homotopies](/guides/variable-groups) take a degree structure in the variables into account. This works by using a generalization of Bezout's theorem by [Shafarevich](https://en.wikipedia.org/wiki/Multi-homogeneous_Bézout_theorem).
 * [Polyhedral homotopies](/guides/polyhedral) take the sparsity of the polynomials into account. To each polynomial system you can associate the [*mixed volume*](https://en.wikipedia.org/wiki/Mixed_volume) of the Newton polytopes of the polynomials. The [Bernstein–Khovanskii–Kushnirenko theorem](https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem) tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.
 
-Both multi-homogenous and polyhedral homotopies are supported by HomotopyContinuation.jl.
-A multi-homogenous homotopy will automatically be constructed if you pass a set of `variable_groups` to `solve`. For a polyhedral homotopy you have to set the `start_system=:polyhedral` argument.
+Both multi-homogeneous and polyhedral homotopies are supported by HomotopyContinuation.jl.
+A multi-homogeneous homotopy will automatically be constructed if you pass a set of `variable_groups` to `solve`. For a polyhedral homotopy you have to set the `start_system=:polyhedral` argument.
 
 ## Case Study: Optimization
 

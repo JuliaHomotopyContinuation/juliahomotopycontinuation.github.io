@@ -71,8 +71,8 @@ Result with 16 solutions
 
 We find 16 solutions, which is the correct number of solutions for these type of systems.
 
-But if we study the problem a little bit closer, we can see that the equations are bi-homogenous with respect to the variable groups $\\{z_2, z_4\\}$ and $\\{z_3, z_5\\}$.
-The multi-homogenous Bezout number with respect ot this variable group is
+But if we study the problem a little bit closer, we can see that the equations are bi-homogeneous with respect to the variable groups $\\{z_2, z_4\\}$ and $\\{z_3, z_5\\}$.
+The multi-homogeneous Bezout number with respect ot this variable group is
 ```julia
 julia> variable_groups=[[z[2,:]; z[4,:]], [z[3,:]; z[5,:]]];
 julia> bezout_number(F; variable_groups=variable_groups)

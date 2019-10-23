@@ -269,4 +269,4 @@ AffineResult with 8 tracked paths
 ```
 
 
-Alternatively we could also construct the homotopy directly and give it to `solve` together with start solutions. Note that in this case we have to ensure that our homotopy is already homogenous.
+Alternatively we could also construct the homotopy directly and give it to `solve` together with start solutions. Note that in this case we have to ensure that our homotopy is already homogeneous.

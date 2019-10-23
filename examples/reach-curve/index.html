@@ -136,7 +136,7 @@
 
 <meta itemprop="datePublished" content="2019-10-21T10:00:00&#43;02:00" />
 <meta itemprop="dateModified" content="2019-10-21T10:00:00&#43;02:00" />
-<meta itemprop="wordCount" content="987">
+<meta itemprop="wordCount" content="984">
 
 
 
@@ -178,11 +178,13 @@ $$</p>
 
 <p style="text-align:center;"><img src="/images/curve_reach.png" width="500px"/></p>
 
-<p>As pointed out by <a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et. al.</a> the reach is the minimum of two factors: the curvature of the manifold and the width of the narrowest bottleneck of $M$, which quantifies how close M is from being self-intersecting. In symbols:</p>
+<p>As pointed out by <a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et. al.</a> the reach is the determined by two factors: the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$. That is,</p>
 
-<p>$$\tau = \min\left\{\rho, \, \frac{1}{\sigma}\right\},$$</p>
+<p>$$\tau = \min\left\{\frac{\rho}{2}, \, \frac{1}{\sigma}\right\},$$</p>
 
-<p>where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck. We compute both $\rho$ and $\sigma$. For this, we first define the equation of $C$ in <code>Julia</code>.</p>
+<p>where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck of $C$.</p>
+
+<p>We compute both $\rho$ and $\sigma$. For this, we first define the equation of $C$ in <code>Julia</code>.</p>
 
 <pre><code class="language-julia">using HomotopyContinuation
 @polyvar x y
@@ -195,7 +197,7 @@ f = (x^3 - x*y^2 + y + 1)^2 * (x^2 + y^2 - 1) + y^2 - 5
 
 <p>and we have</p>
 
-<p>$$\min\left\{0.13835123592621174, \, \frac{1}{2097.165767782749}\right\} = 0.00047683402779230983$$</p>
+<p>$$\min\left\{\frac{0.13835123592621174}{2}, \, \frac{1}{2097.165767782749}\right\} = 0.00047683402779230983$$</p>
 
 <p>Therefore, the reach of the curve $C$ is $\tau = 0.00047683402779230983$.</p>
 

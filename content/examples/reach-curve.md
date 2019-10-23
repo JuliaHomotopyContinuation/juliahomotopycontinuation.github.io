@@ -25,7 +25,7 @@ $$
 <p style="text-align:center;"><img src="/images/curve_reach.png" width="500px"/></p>
 
 
-As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the determined by two factors: the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$. That is,
+As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the determined by two factors: the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$. That is
 
 $$\tau = \min\\left\\{\frac{\rho}{2}, \, \frac{1}{\sigma}\\right\\},$$
 

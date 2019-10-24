@@ -41,13 +41,11 @@ f = (x^3 - x*y^2 + y + 1)^2 * (x^2 + y^2 - 1) + y^2 - 5
 
 Our computation below finds
 
-$$\rho = 0.13835123592621174 \;\text{ and }\ \sigma =2097.165767782749$$
+$$\rho \approx 0.13835 \;\text{ and }\ \sigma \approx 2097.17$$
 
-and we have
+and therefore the reach of the curve $C$ is
 
-$$\min\\left\\{\frac{0.13835123592621174}{2}, \, \frac{1}{2097.165767782749}\\right\\} = 0.00047683402779230983$$
-
-Therefore, the reach of the curve $C$ is $\tau = 0.00047683402779230983$.
+$$\tau \approx \min\\left\\{\frac{0.13835}{2}, \, \frac{1}{2097.167}\\right\\} \approx 0.000479\,.$$
 
 ## Bottlenecks
 

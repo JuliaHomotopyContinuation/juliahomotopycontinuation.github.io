@@ -22,7 +22,12 @@ $$
 f(x,y) = (x^3 - xy^2 + y + 1)^2(x^2+y^2 - 1)+y^2-5 = 0
 $$
 
-<p style="text-align:center;"><img src="/images/curve_reach.png" width="500px"/></p>
+<figure>
+<img src="/images/curve_reach.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<figcaption style="text-align:center;">
+The curve $C \subset \mathbb{R}^2$ defined by $f(x,y) = (x^3 - xy^2 + y + 1)^2(x^2+y^2 - 1)+y^2-5 = 0$.
+</figcaption>
+</figure>
 
 
 As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the determined by the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$:
@@ -121,13 +126,19 @@ for (p₁,p₂,q₁,q₂) in bn_pairs
   plot!([p₁, q₁], [p₂, q₂];
         color = :slategray, grid=false, linestyle=:dot)
 end
-# Draw smallest bottleneck in red
+# Draw narrowest bottleneck in red
 narrowest_bn_pair = bn_pairs[ρ_min_ind]
 plot!(narrowest_bn_pair[[1,3]], narrowest_bn_pair[[2,4]];
       color = :tomato, grid=false, linewidth = 3)
 ```
 
-<p style="text-align:center;"><img src="/images/curve_reach_bottlenecks.png" width="500px"/></p>
+
+<figure>
+<img src="/images/curve_reach_bottlenecks.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<figcaption style="text-align:center;">
+The curve $C$ and its bottlenecks dashed in gray. The narrowest bottleneck is colored <span style="color:tomato">red</span>.
+</figcaption>
+</figure>
 
 ## Maximal curvature
 
@@ -203,7 +214,11 @@ scatter!(max_curv_pt[1:1], max_curv_pt[2:2];
          color=:tomato, grid=false)
 ```
 
-<p style="text-align:center;"><img src="/images/curve_reach_curvature.png" width="500px"/></p>
-
+<figure>
+<img src="/images/curve_reach_curvature.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<figcaption style="text-align:center;">
+The curve $C$ and its points of critical curvature. The point of maximal curvature is in <span style="color:tomato">red</span>.
+</figcaption>
+</figure>
 
 {{<bibtex >}}

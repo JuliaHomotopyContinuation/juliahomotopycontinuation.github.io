@@ -64,11 +64,18 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
     gtag('config', 'UA-130815722-1');
   </script>
+
 
   
 

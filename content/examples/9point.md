@@ -10,11 +10,14 @@ author = "Paul Breiding, Anna Eckhardt and Sascha Timme"
 group = "applications"
 +++
 
+<span style="color: gray">This post was worked out in a [student seminar](https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/) that we held at TU Berlin in summer 2019. </span>
+
 The four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:
 
 <p style="text-align:center;"><img src="/videos/four-bar.mp4" width="400px"/></p>
 
-The synthesis problem describes the problem of finding all four bars whose coupler curve passes through a given number of precision points. The largest possible number of prescribed precision points is $9$. This problem was first formulated by Alt in 1923 and completely solved by Wampler et al. in 1999 using homotopy continuation.
+The synthesis problem describes the problem of finding all four bars whose coupler curve passes through a given number of precision points. The largest possible number of prescribed precision points is $9$. This problem was first formulated by Alt in 1923 and completely solved by [Wampler et al.](https://asmedigitalcollection.asme.org/mechanicaldesign/article-abstract/114/1/153/429455/Complete-Solution-of-the-Nine-Point-Path-Synthesis)
+in 1992 using homotopy continuation.
 
 In case the reader just wants to create videos like the one above, we have created a [shortcut](https://github.com/JuliaHomotopyContinuation/FourBarLinkages.jl):
 
@@ -117,7 +120,7 @@ $$
 (\overline b-\overline \delta_i)y\gamma_i+(b-\delta_i)\overline y\overline \gamma_i+(\overline b-\overline y)\delta_i+(b-y)\overline \delta_i-\delta_i\overline \delta_i =0.
 $$
 
-The last three equations completely determine the coupler curve. However, they are not algebraic equations, because complex conjugation is not algebraic. The idea is to set $x=x_1+ix_2$ and $y=y_1+iy_2$, etc. and then treating $x_1, x_2$ as complex variables and solve the corresponding equations. Afterwards, we filter out the solutions that correspond to complex numbers $x$ and $y$; i.e., solutions such that $x_1, x_2, y_1,y_2 \in \mathbb{R}$.
+The last three equations completely determine the coupler curve. However, they are not algebraic equations, because complex conjugation is not algebraic. To obtain a polynomial system we consider $x$ and $\bar{x}$ as *independent* variables (and similarly for all others). Afterwards, we filter out the solutions for which $x$ and $\bar{x}$ are not complex conjugates. We call the solutions where complex conjugation relations are satisfied *real solutions*  since they correspond to real vectors in the plane.
 
 Substituting the $\delta_i$s with our given precision points results in a polynomial system of $24$ variables in $24$ equations.
 
@@ -145,25 +148,25 @@ using HomotopyContinuation
 @polyvar x x̄ a ā y ȳ b b̄
 @polyvar γ[1:8] γ̄[1:8]
 @polyvar δ[1:8] δ̄[1:8]
-
+```
+<!-- 
 #variable groups
 vargroups=[[x x̄ a ā],[y ȳ b b̄]];
 for i in 1:8
-	push!(vargroups, [γ[i], γ̄[i]])
-end
-```
+    push!(vargroups, [γ[i], γ̄[i]])
+end -->
 
 Next we define the polynomial system as above.
 
 ```julia
 #system of polynomials
-D1 = [(ā * x - δ̄[i] * x) * γ[i] + (a * x̄ - δ[i] * x̄) *  γ̄[i] + (ā - x̄) * δ[i] + (a - x) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
-
-D2 = [b̄ * y - δ̄[i] * y) * γ[i] + (b * ȳ - δ[i] * ȳ) * γ̄[i] + (b̄ - ȳ) * δ[i] + (b - y) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
-
+D1 = [(ā * x - δ̄[i] * x) * γ[i] + (a * x̄ - δ[i] * x̄) *  γ̄[i] +
+      (ā - x̄) * δ[i] + (a - x) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
+D2 = [b̄ * y - δ̄[i] * y) * γ[i] + (b * ȳ - δ[i] * ȳ) * γ̄[i] +
+      (b̄ - ȳ) * δ[i] + (b - y) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
 D3 = [γ[i] * γ̄[i] + γ[i] + γ̄[i] for i in 1:8]
 
-FSystem = [D1; D2; D3];
+fourbar_system = [D1; D2; D3];
 ```
 
 ## Step 1
@@ -172,117 +175,89 @@ For our first step it is not necessary to pick a four bar with physical meaning.
 This can be done separately for each $i\in\\{1,\ldots,8\}$ as the pair of equations `D1[i] = D2[i] = 0` only depends on $\delta_i$ and $\overline \delta_i$.
 
 ```julia
-Γ_help = rand(8)
-Γ = [exp(Γ_help[i] * 2 * pi * im) - 1 for i in 1:8]
-Γ̄ = [exp(-Γ_help * 2 * pi * im) - 1 for i in 1:8]
+args = 2π * im .* rand(8)
+Γ = exp.(args) .- 1
+Γ̄ = exp.(-.args) .- 1
 xayb = rand(ComplexF64,8)
 
-results = [];
-for i in 1:8
-	F = [D1[i]; D2[i]]
-	startF = [subs(f, [x; x̄; a; ā; y; ȳ; b; b̄] => xayb, γ => Γ, γ̄ => Γ̄) for f in F];
-	result = solve(startF);
-	push!(results, solutions(result));
+δδ̄_results = map(D1, D2) do d1, d2
+    d = [d1; d2]
+    start_sys = [subs(f, [x; x̄; a; ā; y; ȳ; b; b̄] => xayb, γ => Γ, γ̄ => Γ̄) for f in d]
+    # only keep first solution
+    first(solutions(solve(start_sys)))
 end
 ```
 
 ## Step 2
-In the next step we turn our problem around. Instead of looking for the precision points we act as if we picked these precision points and wanted to find all other four bars whose coupler curves move through these precision points. Wampler et. al. showed that there are $8562$ solutions for this.
+In the next step we turn our problem around. Instead of looking for the precision points we act as if we picked these precision points and wanted to find all other four bars whose coupler curves move through these precision points. Wampler et. al. showed that there are $8652$ solutions for this polynomial system.
 
 Since we already have one solution we can use [monodromy](guides/monodromy) to find all other solutions.
 In order to speed up the calculation we can exploit two group actions acting on the solution set.
 
-## Group Actions
-One group action appears when we relabel the bars. If we exchange $x$ and $y$, $a$ and $b$ etc. we also get a valid solution. This group action halfs the number of solutions leaving us with 4321 solutions modulo this group action.
+### Group Actions
+One group action appears when we relabel the bars. If we exchange $x$ and $y$, $a$ and $b$ etc. we also get a valid solution. This group action halves the number of solutions leaving us with 4326 solutions modulo this group action.
 
 ```julia
-S = GroupActions(s->([s[5],s[6],s[7],s[8],
-s[1],s[2],s[3],s[4],s[9],s[10],s[11],s[12],
-s[13],s[14],s[15],s[16],s[17],s[18],s[19],s[20],
-s[21],s[22],s[23],s[24]], ));
+relabeling(s) = [[s[3],s[4],s[1],s[2],s[7],s[8],s[5],s[6]]; s[9:24]]
 ```
 
-<!--
 The next group action is due to Roberts. It states that given a four bar, we can find two related four bars (called Roberts cognates) that follow the same coupler curve:
 $$
-	r(x,a,y,b,\theta, \lambda, \mu) =
-	\\left(\frac{(x-a)y}{x-y}, \frac{bx-ay}{x-y},a-x,a, \lambda, \mu, \theta\\right).
+    r(x,a,y,b,\theta, \lambda, \mu) =
+    \\left(\frac{(x-a)y}{x-y}, \frac{bx-ay}{x-y},a-x,a, \lambda, \mu, \theta\\right).
 $$
 These cognates are also solutions of our problem. This leaves us with $1442$ solutions modulo both group actions.
 
-
-Since $\theta, \lambda, \mu$ aren't variables of our system, we make the following adjustment: substitute $x,a,y,b$ and $\theta=\gamma_i+1$ and define $\lambda$ and $\mu$ as follows.
+Since $\theta, \lambda, \mu$ aren't variables of our system, we make the following adjustment: substitute $x,a,y,b$ and $\theta=\gamma_i+1$ and define $\lambda$ and $\mu$ as follows
 
 $$
 \lambda_j = \frac{x \theta_j + \delta_j -a}{x-a }  \quad \text{and} \quad
 \mu_j = \frac{y \theta_j + \delta_j -b}{y-b}.
-$$ -->
+$$
 
-## Computing all solutions
+Since the Roberts' cognates depend on $\delta_j$ and $\bar{\delta}_j$ we have to give the values of `Γ` and `Γ̄` to the implementation
+in the `FourBarLinkages` package
+```julia
+roberts_cognates(s) = FourBarLinkages.robert_cognates(s, Γ, Γ̄)
+```
+
+### Computing all solutions
 
 Here is the code for computing all solutions with monodromy.
 
 ```julia
-start_help = [results[i][1] for i in 1:8];
-start_par  = [[start_help[i][1] for i in 1:8];
-		[start_help[i][2] for i in 1:8]];
-start_var = [xayb; Γ; Γ̄];
+start_solution = [xayb; Γ; Γ̄];
+start_params  = [first.(δδ̄_results); last.(δδ̄_results)]
 
-start_sol = monodromy_solve(
-		FSystem,
-		start_var,
-		start_par,
-		parameters=[δ; δ̄],
-		group_actions=S,
-		target_solutions_count=4321,
-		timeout=1200,
-		equivalence_classes=false);
+monodromy_result = monodromy_solve(fourbar_system, start_solution, start_params:
+                                   parameters = [δ; δ̄],
+                                   group_actions = [relabeling, roberts_cognates],
+                                   target_solutions_count = 1442)
+
+start_solutions = solutions(monodromy_result)
 ```
 
 
 ## Step 3
-For the third step we track from our set of start solutions to any solution given nine precision points. This looks as follows:
+For the third step we track from our set of start solutions to any solution given nine precision points.
+Assume we are given the 9 `coupler_points` from the beginning. For them this looks as follows:
 
 ```julia
-target_p = [array[i][1]+array[i][2]*im -
-		(array[1][1]+array[1][2]*im)
-		for i in 2:9]
-target_phat = conj(target_p);
-totalresult = solve(FSystem,
-		sols_complex_parameters,
-		parameters = [δ; δ̄],
-		start_parameters = start_par,
-		target_parameters=[target_p; target_phat],
-	  	variable_groups = vargroups);
-results = solutions(totalresult)
+δ = coupler_points[2:9] - coupler_points[1]
+δ̄ = conj.(δ)
+final_result = solve(fourbar_system, start_solutions;
+                     parameters = [δ; δ̄],
+                     start_parameters = start_params,
+                     target_parameters=[δ; δ̄])
+
+results = solutions(final_result)
 ```
 
 ## Step 4
-Since we are only interested in solutions with physical meaning, we now filter for real solutions. This we can do by checking if $\overline{x} \approx \overline{x}$, $\overline{y} \approx \overline{y}$,...
+Since we are only interested in solutions with physical meaning, we now filter for real solutions. This we can do by checking if $\mathrm{conj}(x) \approx \overline{x}$, $\mathrm{conj}(y) \approx \overline{y}$,...
 
 ```julia
-function isReal(a ::ComplexF64,b ::ComplexF64)
-	x1=reim(a);
-	x2=reim(b);
-	if abs(x1[1]-x2[1])<1e-10
-		if abs(x1[2]+x2[2])<1e10
-			return x1
-		end
-	end
-	return -1
-end
-
-function realFourbars(res)
-	results=[]
-	for i in 1:length(res)
-		q = [isReal(res[i][2*j-1],res[i][2*j])
-				for j in 1:4]
-		if findall(x->x==-1, q)==[]
-			push!(results,res[i][1:8])
-		end
-	end
-	return results;
-end
+real_fourbars(results) = filter(r -> all(i -> r[i] ≈ conj(r[i+1]), 1:2:8), results)
 ```
 
 ### Results
@@ -301,7 +276,6 @@ Following Wampler et al. we try our method on the following examples:
 <p style="text-align:center;"><img src="/images/line.png" width="300px"/></p>
 
 In the pictures one can see that the coupler curve is not necessarily connected.
-
 
 
 {{<bibtex >}}

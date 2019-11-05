@@ -1,6 +1,6 @@
 +++
 date = "2019-10-28T21:56:55+01:00"
-title = "Nine point path synthesis problem"
+title = "Alt's problem"
 tags = ["example"]
 categories = ["general"]
 draft = false
@@ -12,7 +12,7 @@ group = "applications"
 
 <span style="color: gray">This post was worked out in a [student seminar](https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/) that we held at TU Berlin in summer 2019. </span>
 
-The four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:
+A four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:
 
 <p style="text-align:center;"><img src="/videos/four-bar.mp4" width="400px"/></p>
 
@@ -23,25 +23,27 @@ In case the reader just wants to create videos like the one above, we have creat
 
 ```julia
 using Pkg
-Pkg.add("github.com/JuliaHomotopyContinuation/FourBarLinkages.jl.git")
+pkg"add https://github.com/JuliaHomotopyContinuation/FourBarLinkages.jl.git"
 using FourBarLinkages
 
 # coupler points in isotropic coordinates
-coupler_points = [complex(0.8961867,-0.09802917),
-        complex(1.2156535, -1.18749100),
-        complex(1.5151435, -0.85449808),
-        complex(1.6754775,  -0.48768058),
-        complex(1.7138690,-0.30099232),
-        complex(1.7215236,0.03269953),
-        complex(1.6642029, 0.33241088),
-        complex(1.4984171, 0.74435576),
-        complex(1.3011834,  0.92153806)]
+coupler_points = [
+    complex(0.8961867,-0.09802917),
+    complex(1.2156535, -1.18749100),
+    complex(1.5151435, -0.85449808),
+    complex(1.6754775,  -0.48768058),
+    complex(1.7138690,-0.30099232),
+    complex(1.7215236,0.03269953),
+    complex(1.6642029, 0.33241088),
+    complex(1.4984171, 0.74435576),
+    complex(1.3011834,  0.92153806)
+]
 
 # compute four bar linkages for the couple points from the stored results
-fourbars = four_bars(coupler_points, "data/four_bar_start_solutions.jld2")
+fourbars = four_bars(coupler_points)
 
 # pick a fourbar
-F = fourbars[3])
+F = fourbars[3]
 # animate
 animate(F, coupler_points)
 # create endless loop (interrupt to stop)
@@ -145,16 +147,10 @@ First we define the variables in `Julia`.
 ```julia
 using HomotopyContinuation
 
-@polyvar x x̄ a ā y ȳ b b̄
+@polyvar x a y b x̄ ā ȳ b̄
 @polyvar γ[1:8] γ̄[1:8]
 @polyvar δ[1:8] δ̄[1:8]
 ```
-<!-- 
-#variable groups
-vargroups=[[x x̄ a ā],[y ȳ b b̄]];
-for i in 1:8
-    push!(vargroups, [γ[i], γ̄[i]])
-end -->
 
 Next we define the polynomial system as above.
 
@@ -162,23 +158,23 @@ Next we define the polynomial system as above.
 #system of polynomials
 D1 = [(ā * x - δ̄[i] * x) * γ[i] + (a * x̄ - δ[i] * x̄) *  γ̄[i] +
       (ā - x̄) * δ[i] + (a - x) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
-D2 = [b̄ * y - δ̄[i] * y) * γ[i] + (b * ȳ - δ[i] * ȳ) * γ̄[i] +
+D2 = [(b̄ * y - δ̄[i] * y) * γ[i] + (b * ȳ - δ[i] * ȳ) * γ̄[i] +
       (b̄ - ȳ) * δ[i] + (b - y) * δ̄[i] - δ[i] * δ̄[i] for i in 1:8]
 D3 = [γ[i] * γ̄[i] + γ[i] + γ̄[i] for i in 1:8]
 
-fourbar_system = [D1; D2; D3];
+fourbar_system = [D1; D2; D3]
 ```
 
 ## Step 1
 
 For our first step it is not necessary to pick a four bar with physical meaning. We generate $x, \overline{x}, a , \overline{a},...$ as random complex numbers. For $\gamma_1, ...,\gamma_8, \overline{\gamma}_1,... \overline{\gamma}_8$ we generate random angles $\theta_1$,...,$\theta_8$ and then compute $\gamma_i:= e^{i \theta_j}-1$ and the conjugates respectively. Next we substitute these variables and solve `D1 = D2 = 0` as equations in $\delta_1,\ldots,\delta_8$ and $\overline{\delta}_1,\ldots,\overline{\delta}_8$.
-This can be done separately for each $i\in\\{1,\ldots,8\}$ as the pair of equations `D1[i] = D2[i] = 0` only depends on $\delta_i$ and $\overline \delta_i$.
+This can be done separately for each $i\in \{1,\ldots,8\}$ as the pair of equations `D1[i] = D2[i] = 0` only depends on $\delta_i$ and $\overline \delta_i$.
 
 ```julia
 args = 2π * im .* rand(8)
 Γ = exp.(args) .- 1
-Γ̄ = exp.(-.args) .- 1
-xayb = rand(ComplexF64,8)
+Γ̄ = exp.(-args) .- 1
+xayb = randn(ComplexF64,8)
 
 δδ̄_results = map(D1, D2) do d1, d2
     d = [d1; d2]
@@ -186,10 +182,12 @@ xayb = rand(ComplexF64,8)
     # only keep first solution
     first(solutions(solve(start_sys)))
 end
+δ_start = first.(δδ̄_results)
+δ̄_start = last.(δδ̄_results)
 ```
 
 ## Step 2
-In the next step we turn our problem around. Instead of looking for the precision points we act as if we picked these precision points and wanted to find all other four bars whose coupler curves move through these precision points. Wampler et. al. showed that there are $8652$ solutions for this polynomial system.
+In the next step we turn our problem around. Instead of looking for the precision points we act as if we picked these precision points and wanted to find all other four bars whose coupler curves move through these precision points. Wampler et. al. showed that there are $6 \cdot 1442 = 8652$ solutions for this polynomial system.
 
 Since we already have one solution we can use [monodromy](guides/monodromy) to find all other solutions.
 In order to speed up the calculation we can exploit two group actions acting on the solution set.
@@ -198,6 +196,9 @@ In order to speed up the calculation we can exploit two group actions acting on 
 One group action appears when we relabel the bars. If we exchange $x$ and $y$, $a$ and $b$ etc. we also get a valid solution. This group action halves the number of solutions leaving us with 4326 solutions modulo this group action.
 
 ```julia
+# Switch roles of (x,a) and (y,b).
+# We have the variable ordering x a y b x̂ â ŷ b̂
+# so we need to switch to y b x a ŷ b̂ x̂ â
 relabeling(s) = [[s[3],s[4],s[1],s[2],s[7],s[8],s[5],s[6]]; s[9:24]]
 ```
 
@@ -218,7 +219,7 @@ $$
 Since the Roberts' cognates depend on $\delta_j$ and $\bar{\delta}_j$ we have to give the values of `Γ` and `Γ̄` to the implementation
 in the `FourBarLinkages` package
 ```julia
-roberts_cognates(s) = FourBarLinkages.robert_cognates(s, Γ, Γ̄)
+roberts_cognates(s) = FourBarLinkages.roberts_cognates(s, δ_start, δ̄_start)
 ```
 
 ### Computing all solutions
@@ -226,10 +227,10 @@ roberts_cognates(s) = FourBarLinkages.robert_cognates(s, Γ, Γ̄)
 Here is the code for computing all solutions with monodromy.
 
 ```julia
-start_solution = [xayb; Γ; Γ̄];
-start_params  = [first.(δδ̄_results); last.(δδ̄_results)]
+start_solution = [xayb; Γ; Γ̄]
+start_params  = [δ_start; δ̄_start]
 
-monodromy_result = monodromy_solve(fourbar_system, start_solution, start_params:
+monodromy_result = monodromy_solve(fourbar_system, start_solution, start_params;
                                    parameters = [δ; δ̄],
                                    group_actions = [relabeling, roberts_cognates],
                                    target_solutions_count = 1442)
@@ -243,7 +244,7 @@ For the third step we track from our set of start solutions to any solution give
 Assume we are given the 9 `coupler_points` from the beginning. For them this looks as follows:
 
 ```julia
-δ = coupler_points[2:9] - coupler_points[1]
+δ = coupler_points[2:9] .- coupler_points[1]
 δ̄ = conj.(δ)
 final_result = solve(fourbar_system, start_solutions;
                      parameters = [δ; δ̄],
@@ -257,7 +258,7 @@ results = solutions(final_result)
 Since we are only interested in solutions with physical meaning, we now filter for real solutions. This we can do by checking if $\mathrm{conj}(x) \approx \overline{x}$, $\mathrm{conj}(y) \approx \overline{y}$,...
 
 ```julia
-real_fourbars(results) = filter(r -> all(i -> r[i] ≈ conj(r[i+1]), 1:2:8), results)
+real_fourbars = filter(s -> all(i -> s[i] ≈ conj(s[i+4]), 1:4), solutions(final_result))
 ```
 
 ### Results

@@ -57,12 +57,22 @@ where the distance measure $\mathrm{dist}$ is the Euclidean distance.</descripti
     </item>
     
     <item>
+      <title>Alt&#39;s problem</title>
+      <link>/examples/alts-problem/</link>
+      <pubDate>Mon, 28 Oct 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/alts-problem/</guid>
+      <description>This post was worked out in a student seminar that we held at TU Berlin in summer 2019. 
+A four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:</description>
+    </item>
+    
+    <item>
       <title>Computer vision</title>
       <link>/examples/computer-vision/</link>
       <pubDate>Tue, 03 Sep 2019 21:56:55 +0100</pubDate>
       
       <guid>/examples/computer-vision/</guid>
-      <description>(This post was worked out in a student seminar that we held at TU Berlin in the summer 2019.)
+      <description>This post was worked out in a student seminar that we held at TU Berlin in summer 2019. 
 We want to reconstruct a three-dimensional object from two-dimensional images. Think of an object, maybe a dinosaur, that is captured by $n$ cameras from different angles. Suppose we have the following information available:
  the configuration of the cameras (in the form of camera matrices); sets of 2D points in the $n$ two-dimensional images, where each set corresponds to one 3D point.</description>
     </item>

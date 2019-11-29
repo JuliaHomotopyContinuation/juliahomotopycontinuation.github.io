@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Solving systems defined over projective space" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/projective/" />
+
 
   
 
@@ -145,35 +146,26 @@
 
 
     <p>Sometimes, one has to compute solutions in <a href="https://en.wikipedia.org/wiki/Projective_space">projective space</a> $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems of defined over projective space and adjusts the output.</p>
-
 <p>Here is a simple example involving two random quadrics in $\mathbb{CP}^2$</p>
-
-<pre><code class="language-julia">using HomotopyContinuation, LinearAlgebra
-@polyvar x y z
-v = [x, y, z]
-F = [
-  v ⋅ (randn(ComplexF64, 3, 3) * v);
-  v ⋅ (randn(ComplexF64, 3, 3) * v);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span>
+v<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span>, y<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>]
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
+  v<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> (randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> v<span style="color:#f92672"></span>);
+  v<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> (randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>) <span style="color:#f92672">*</span> v<span style="color:#f92672"></span>);
 ]
-</code></pre>
-
-<p>For solving $F=0$ one can just use the <code>solve</code> command</p>
-
-<pre><code class="language-julia-repl">julia&gt; R = solve(F)
+</code></pre></div><p>For solving $F=0$ one can just use the <code>solve</code> command</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; R = solve(F)
 Result with 4 solutions
 ==================================
 • 4 non-singular solutions (0 real)
 • 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 310676
-</code></pre>
-
-<p>We can check that the solutions are projective:</p>
-
-<pre><code class="language-julia-repl">julia&gt; all(isprojective(r), R)
+</code></pre><p>We can check that the solutions are projective:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; all(isprojective(r), R)
 true
 </code></pre>
-
     
     
   </div>

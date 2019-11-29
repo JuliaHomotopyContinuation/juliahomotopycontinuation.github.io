@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Analysing arrays of vectors" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/data-analysis/" />
+
 
   
 
@@ -162,24 +163,16 @@
 
 
     <p>We provide two special functions for analysing data: <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/sorting/#Computing-unique-points-in-an-array-of-vectors-1">UniquePoints</a> and <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/sorting/#Computing-points-in-an-array-of-vectors-which-appear-multiple-times-1">Multiplicities</a>. They do the following: suppose that <code>A</code> is an array of real or complex vectors. Then, <code>UniquePoints(A)</code> filters multiple elements of <code>A</code>, such that each entry appears once.  On the other hand, <code>multiplicities(A)</code> returns the indices of multiple elements in <code>A</code>.</p>
-
 <h3 class="section-head" id="uniquepoints"><a>UniquePoints</a></h3>
-
 <p>Here is the full syntax of <code>UniquePoints</code></p>
-
-<pre><code class="language-julia">UniquePoints(A, distance; tol=1e-5)
-</code></pre>
-
-<p>where</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">UniquePoints<span style="color:#f92672"></span>(A<span style="color:#f92672"></span>, distance<span style="color:#f92672"></span>; tol<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">1e-5</span>)
+</code></pre></div><p>where</p>
 <ul>
 <li><code>distance</code> is a function to measure the distance between two vectors. The default option is using the euclidean distance.</li>
 <li><code>tol</code> is the value, such that <code>v</code> and <code>w</code> are regarded equal, if <code>distance(v,w) &lt; tol</code>.</li>
 </ul>
-
 <p>Here is an example:</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; A = [[1.0,0.5], [0.99,0.49], [2.0,0.1], [0.5,1.0]]
 julia&gt; U = UniquePoints(A)
 julia&gt; points(U)
@@ -188,79 +181,48 @@ julia&gt; points(U)
  [0.99, 0.49]
  [2.0, 0.1]  
  [0.5, 1.0]
-</code></pre>
-
-<p>If we relax the tolerance, we get</p>
-
-<pre><code class="language-julia-repl">julia&gt; U = UniquePoints(A, tol = 0.5)
+</code></pre><p>If we relax the tolerance, we get</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; U = UniquePoints(A, tol = 0.5)
 julia&gt; points(U)
 3-element Array{Array{Float64,1},1}:
  [1.0, 0.5]
  [2.0, 0.1]
  [0.5, 1.0]
-</code></pre>
-
-<p>We can also use another distance function:</p>
-
-<pre><code class="language-julia-repl">julia&gt; U = UniquePoints(A, (v,w) -&gt; 0.0)
+</code></pre><p>We can also use another distance function:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; U = UniquePoints(A, (v,w) -&gt; 0.0)
 julia&gt; points(U)
 1-element Array{Array{Float64,1},1}:
  [1.0, 0.5]
-</code></pre>
-
-<h3 class="section-head" id="multiplicities"><a>Multiplicities</a></h3>
-
+</code></pre><h3 class="section-head" id="multiplicities"><a>Multiplicities</a></h3>
 <p>Here is the syntax of <code>multiplicities</code></p>
-
-<pre><code class="language-julia">multiplicities(A; distance=euclidean_distance, tol::Real = 1e-5)
-</code></pre>
-
-<p>where <code>distance</code> and <code>tol</code> have the same meaning as above.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">multiplicities<span style="color:#f92672"></span>(A<span style="color:#f92672"></span>; distance<span style="color:#f92672"></span><span style="color:#f92672">=</span>euclidean_distance<span style="color:#f92672"></span>, tol<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Real</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-5</span>)
+</code></pre></div><p>where <code>distance</code> and <code>tol</code> have the same meaning as above.</p>
 <p>We use the <code>multiplicities</code> function on the same example as above:</p>
-
-<pre><code class="language-julia-repl">julia&gt; M = multiplicities(A)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; M = multiplicities(A)
 0-element Array{Array{Int64,1},1}
-</code></pre>
-
-<p>For the <code>tol = 0.5</code> we get one multiplicity:</p>
-
-<pre><code class="language-julia-repl">julia&gt; M = multiplicities(A, tol = 0.5)
+</code></pre><p>For the <code>tol = 0.5</code> we get one multiplicity:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; M = multiplicities(A, tol = 0.5)
 1-element Array{Array{Int64,1},1}:
  [1, 2]
-</code></pre>
-
-<p>This means that the first and the second entry of $A$ are the same up to <code>distance &lt; 0.5</code>. For the all-zero distance function all points are equal:</p>
-
-<pre><code class="language-julia-repl">julia&gt; M = multiplicities(A, distance = (v,w) -&gt; 0.0)
+</code></pre><p>This means that the first and the second entry of $A$ are the same up to <code>distance &lt; 0.5</code>. For the all-zero distance function all points are equal:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; M = multiplicities(A, distance = (v,w) -&gt; 0.0)
 1-element Array{Array{Int64,1},1}:
  [1, 2, 3, 4]
-</code></pre>
-
-<h3 class="section-head" id="groupactions"><a>Group Actions</a></h3>
-
+</code></pre><h3 class="section-head" id="groupactions"><a>Group Actions</a></h3>
 <p>It is also possible to define equality up to group action. For instance, consider the group that interchanges the first and the second entry of a vector in <code>A</code>.</p>
-
-<pre><code class="language-julia-repl">julia&gt; G = GroupActions( x -&gt; ([x[2]; x[1]], ) )
-</code></pre>
-
-<p>Then, we have</p>
-
-<pre><code class="language-julia-repl">julia&gt; U = UniquePoints(A, group_actions = G)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; G = GroupActions( x -&gt; ([x[2]; x[1]], ) )
+</code></pre><p>Then, we have</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; U = UniquePoints(A, group_actions = G)
 julia&gt; points(U)
 3-element Array{Array{Float64,1},1}:
  [1.0, 0.5]  
  [0.99, 0.49]
  [2.0, 0.1]  
-</code></pre>
-
-<p>because <code>A[1] = [1.0, 0.5]</code> and <code>A[4] = [0.5, 1.0]</code> are now considered equal:</p>
-
-<pre><code class="language-julia-repl">julia&gt; M = multiplicities(A, group_actions = G)
+</code></pre><p>because <code>A[1] = [1.0, 0.5]</code> and <code>A[4] = [0.5, 1.0]</code> are now considered equal:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; M = multiplicities(A, group_actions = G)
 1-element Array{Array{Int64,1},1}:
  [1, 4]
 </code></pre>
-
     
     
   </div>

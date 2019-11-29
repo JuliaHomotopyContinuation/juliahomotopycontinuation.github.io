@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="How to track parametrized systems of equations" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/parameter-homotopies/" />
+
 
   
 
@@ -162,35 +163,24 @@
 
 
     <h3 class="section-head" id="parameter*homotopies"><a href="#parameter*homotopies">Parameter Homotopies</a></h3>
-
 <p>Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems</p>
-
 <p>$$
 P = \{F(x,p) = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\}.
 $$</p>
-
 <p>To not destroy the solution structure it is desirable to not leave $P$ during the homotopy.
 This can be accomplished by using the homotopy
 $$H(x,t) := F(x, (1-t)p + tq)$$
 where $p$ and $q$ are parameters in $\mathbb{C}^m$.
 Note that you have to provide the start solutions for this kind of homotopy.</p>
-
 <p>The syntax in HomotopyContinuation.jl to construct such a homotopy is as follows.</p>
-
-<pre><code class="language-julia">solve(F, startsolutions; parameters=params, start_parameters=q, target_parameters=p)
-</code></pre>
-
-<p>where <code>p</code> and <code>q</code> are vectors of parameter values for <code>F</code>.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, startsolutions<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>params<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>q<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>)
+</code></pre></div><p>where <code>p</code> and <code>q</code> are vectors of parameter values for <code>F</code>.
 <code>params</code> is a vector of variables that specify the parameters of <code>F</code>.
 Necessarily, <code>length(params)</code>,  <code>length(p)</code>and <code>length(q)</code> must all be equal.</p>
-
 <h3 class="section-head" id="simple-example"><a href="#simple-example">A simple example</a></h3>
-
 <p>$$F(x,y,a,b) = \begin{bmatrix} x^2-a \\ xy-a+b \end{bmatrix}.$$</p>
-
 <p>For tracking the solution $(x,y) = (1,1)$ from $(a,b) = (1,0)$ to $(a,b) = (2,5)$ we do the following.</p>
-
-<pre><code class="language-julia-repl">julia&gt; @polyvar x y a b
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar x y a b
 julia&gt; F = [x^2 - a, x * y - a + b]
 julia&gt; startsolution = [[1, 1]]
 julia&gt; solve(F, startsolution; parameters=[a, b], start_parameters=[1, 0], target_parameters=[2, 5])
@@ -201,7 +191,6 @@ Result with 1 solutions
 • 1 paths tracked
 • random seed: 772337
 </code></pre>
-
     
     
   </div>

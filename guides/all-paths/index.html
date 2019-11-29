@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Let solve return the outcomes of all paths" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/all-paths/" />
+
 
   
 
@@ -145,15 +146,10 @@
 
 
     <p>By default, <code>solve(f)</code> return only &ldquo;true&rdquo; solutions of <code>f</code>. But when tracking towards <code>f</code> paths might diverge to infinity (solutions at infinity describe solutions of the <a href="https://en.wikipedia.org/wiki/Homogeneous_polynomial#Homogenization">homogenization</a> of <code>f</code> which are no solutions of <code>f</code> itself).</p>
-
 <p>To save the results of all paths, one has to use</p>
-
-<pre><code class="language-julia">solve(f, save_all_paths = true)
-</code></pre>
-
-<p>Here is an example that has solutions at infinity.</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, save_all_paths<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>)
+</code></pre></div><p>Here is an example that has solutions at infinity.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y
 julia&gt; f = [x^2 - y^2 - 1, x - y]
 julia&gt; solve(f, save_all_paths = true)
@@ -165,7 +161,6 @@ Result with 0 solutions
 • 2 paths tracked
 • random seed: 229664
 </code></pre>
-
     
     
   </div>

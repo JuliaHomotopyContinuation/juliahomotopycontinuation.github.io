@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="A start system from polyhedral geometry" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/polyhedral/" />
+
 
   
 
@@ -162,14 +163,10 @@
 
 
     <h3 class="section-head" id="result"><a>Polyhedral start systems</a></h3>
-
 <p>Polyhedral is a particular choice of start system for homotopy continuation.</p>
-
 <p>The advantage of so called polyhedral homotopies over <a href="/guides/totaldegree">totaldegree homotopies</a> is that the number of paths to track can be significantly smaller for the polyhedral homotopy.</p>
-
 <p>Here is how it works:</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation, PolynomialTestSystems
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation, PolynomialTestSystems
 julia&gt; f = equations(cyclic(7))  
 julia&gt; solve(f; start_system = :polyhedral)
 Result with 924 solutions
@@ -178,34 +175,22 @@ Result with 924 solutions
 • 0 singular solutions (0 real)
 • 924 paths tracked
 • random seed: 606778
-</code></pre>
-
-<p>For comparison:</p>
-
-<pre><code class="language-julia-repl">julia&gt; solve(f; start_system = :total_degree)
+</code></pre><p>For comparison:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; solve(f; start_system = :total_degree)
 Result with 924 solutions
 ==================================
 • 924 non-singular solutions (56 real)
 • 0 singular solutions (0 real)
 • 5040 paths tracked
 • random seed: 286291
-</code></pre>
-
-<p>The number of paths for the totaldegree start system is 5040, while for the polyhedral homotopy it is only 924.</p>
-
+</code></pre><p>The number of paths for the totaldegree start system is 5040, while for the polyhedral homotopy it is only 924.</p>
 <p>The underlying idea goes back to <a href="https://dl.acm.org/citation.cfm?id=213837">Huber and Sturmfels</a>.
-In our implementation we use <a href="https://arxiv.org/pdf/1601.02818.pdf">Anders Jensen&rsquo;s algorithm</a>.</p>
-
+In our implementation we use <a href="https://arxiv.org/pdf/1601.02818.pdf">Anders Jensen's algorithm</a>.</p>
 <h3 class="section-head" id="result"><a>Solutions with non-zero entries</a></h3>
-
 <p>If it is known that all of the zeros of the system have non-zero entries (i.e., that they are points in $(\mathbb{C}\backslash\{0\})^n$), then one can accelerate the computation as follows:</p>
-
-<pre><code class="language-julia">solve(f; start_system = :polyhedral, only_torus = true)
-</code></pre>
-
-<p>Here is an example:</p>
-
-<pre><code class="language-julia-repl">julia&gt; @polyvar x y
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>; start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>, only_torus<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>)
+</code></pre></div><p>Here is an example:</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar x y
 julia&gt; f = [2y + 3y^2 - x*y^3, x + 4*x^2 - 2*x^3*y]
 julia&gt; solve(f, start_system=:polyhedral, only_torus=true)
 Result with 3 solutions
@@ -214,11 +199,8 @@ Result with 3 solutions
 • 0 singular solutions (0 real)
 • 3 paths tracked
 • random seed: 154150
-</code></pre>
-
-<p>whereas</p>
-
-<pre><code class="language-julia-repl">julia&gt; solve(f, start_system=:polyhedral, only_torus=false)
+</code></pre><p>whereas</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; solve(f, start_system=:polyhedral, only_torus=false)
 Result with 6 solutions
 ==================================
 • 6 non-singular solutions (6 real)
@@ -226,7 +208,6 @@ Result with 6 solutions
 • 8 paths tracked
 • random seed: 45414
 </code></pre>
-
     
     
   </div>

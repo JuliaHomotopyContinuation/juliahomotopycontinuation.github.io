@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
@@ -165,6 +165,41 @@
   </url>
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/example/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/examples/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/general/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-10-28T21:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/guides/</loc>
+    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/3264/</loc>
     <lastmod>2019-02-12T21:56:55+01:00</lastmod>
   </url>
@@ -184,47 +219,7 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/example/</loc>
-    <lastmod>2019-10-21T10:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/examples/</loc>
-    <lastmod>2019-10-21T10:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/faq/</loc>
-  </url>
-  
-  <url>
-    <loc>/categories/general/</loc>
-    <lastmod>2019-10-21T10:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/guides/</loc>
-    <lastmod>2019-04-15T18:56:55+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2019-10-21T10:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2019-10-21T10:00:00+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

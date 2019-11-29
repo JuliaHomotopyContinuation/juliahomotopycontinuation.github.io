@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="How to solve polynomial system by using the monodromy method." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/monodromy/" />
+
 
   
 
@@ -162,23 +163,14 @@
 
 
     <h3 class="section-head" id="monodromy"><a href="#monodromy">The monodromy method</a></h3>
-
 <p>An alternative to using the <a href="/guides/examples.md">solve function</a> is solving a polynomial system $F=(f_1,\ldots,f_n)$ by monodromy. This approach is more efficient, but requires the user to provide at least one solution of $F=0$. Here is the basic idea:</p>
-
 <p>Suppose $x$ is a solution $F(x)=0$ and that $F=F_{u_0}$ is a point in a family of polynomial systems $\mathcal{F}=\{F_u : u\in \mathbb{C}^k\}$ which is defined with $k\geq 1$ parameters. The monodromy method consists in moving around $u$ in a loop starting and ending at $u_0$ while tracking $x$ along that loop. After one iteration usually one has found a new solution $y\in \mathbb{C}^n$. This process then is repeated until some stopping criterion is fulfilled.</p>
-
 <p>The general syntax for this is:</p>
-
-<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u)
-</code></pre>
-
-<p>Here is a simple example: take</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">monodromy_solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>, parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>)
+</code></pre></div><p>Here is a simple example: take</p>
 <p>$$F_u(x,y) = \begin{bmatrix} x^4 + y - 2u_1\\ x^4 + x^2 - 2u_2y^2 \end{bmatrix}.$$</p>
-
 <p>For $u=1$ we have the solution $(x,y) = (1,1)$. For finding all solutions of $F_2$ we use</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y u[1:2]
 julia&gt; F = [x^4 + y - 2u[1], x^4 + x^2 - 2*u[2]*y^2]
 julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u)
@@ -187,43 +179,28 @@ MonodromyResult
 • 8 solutions (4 real)
 • return code → heuristic_stop
 • 644 tracked paths
-</code></pre>
-
-<h3 class="section-head" id="monodromy"><a href="#monodromy">Group Actions</a></h3>
-
+</code></pre><h3 class="section-head" id="monodromy"><a href="#monodromy">Group Actions</a></h3>
 <p>If the set of solutions of <code>F</code> is invariant under some group actions you can exploit this in your computation.</p>
-
-<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u, group_actions = G)
-</code></pre>
-
-<p>computes only with equivalence classes modulo <code>G</code>.</p>
-
-<pre><code class="language-julia">monodromy_solve(F, [x], u₀, parameters = u, group_actions = G, equivalence_classes = false)
-</code></pre>
-
-<p>computes only with all solutions but exploits <code>G</code> to find solutions more quickly.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">monodromy_solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>, parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>, group_actions<span style="color:#f92672"></span> <span style="color:#f92672">=</span> G<span style="color:#f92672"></span>)
+</code></pre></div><p>computes only with equivalence classes modulo <code>G</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">monodromy_solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>, parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>, group_actions<span style="color:#f92672"></span> <span style="color:#f92672">=</span> G<span style="color:#f92672"></span>, equivalence_classes<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>)
+</code></pre></div><p>computes only with all solutions but exploits <code>G</code> to find solutions more quickly.</p>
 <p>In the above example, the group that interchanges <code>x</code> and <code>y</code> acts on the solution set of <code>F</code>. We can use the group that multiplies <code>x</code> by $\pm 1$.</p>
-
-<pre><code class="language-julia-repl">julia&gt; G = GroupActions( a -&gt; ([-a[1], a[2]], ))
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; G = GroupActions( a -&gt; ([-a[1], a[2]], ))
 julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
 MonodromyResult
 ==================================
 • 4 classes of solutions (modulo group action) (2 real)
 • return code → heuristic_stop
 • 322 tracked paths
-</code></pre>
-
-<p>Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then</p>
-
-<pre><code class="language-julia-repl">julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
+</code></pre><p>Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
 MonodromyResult
 ==================================
 • 8 solutions (4 real)
 • return code → heuristic_stop
 • 644 tracked paths
 </code></pre>
-
     
     
   </div>

@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,9 @@
   <meta property="og:title" content="3264 conics tangent to five conics" />
 <meta property="og:description" content="All of them can be real." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/3264/" /><meta property="article:published_time" content="2019-02-12T21:56:55&#43;01:00"/>
-<meta property="article:modified_time" content="2019-02-12T21:56:55&#43;01:00"/>
+<meta property="og:url" content="/3264/" />
+<meta property="article:published_time" content="2019-02-12T21:56:55+01:00" />
+<meta property="article:modified_time" content="2019-02-12T21:56:55+01:00" />
 
   
 
@@ -150,64 +151,52 @@
 <div id="post-box">
   <div id="post" itemprop="articleBody"><p>A <a href="https://en.wikipedia.org/wiki/Conic"><em>conic</em></a> in the plane $\mathbb{R}^2$ is the zero set of a
 quadratic polynomial in two variables:</p>
-
-<p>$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$</p>
-
+<p>$$ ,, a_1 x^2 ,+, a_2 xy ,+, a_3 y^2 , +, a_4 x , + , a_5 y , + , a_6 ,.$$</p>
 <p>Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines.
 The last case is a degenerate conic. Double lines are allowed.</p>
-
 <p>A classic problem in <a href="https://en.wikipedia.org/wiki/Enumerative_geometry">enumerative geometry</a>
-is <a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner&rsquo;s conic problem</a> which asks:
+is <a href="https://en.wikipedia.org/wiki/Steiner%27s_conic_problem">Steiner's conic problem</a> which asks:</p>
 <p style="width: 100%; text-align: center;">
-<em>How many conics are tangent to five given conics?</em>
-</p></p>
-
-<p>Here is an example of Steiner&rsquo;s problem:</p>
-
+*How many conics are tangent to five given conics?*
+</p>
+<p>Here is an example of Steiner's problem:</p>
 <figure>
 <img src="/images/given_conics_example.png" style="width:60%;display: block;margin-left: auto;margin-right: auto;">
 <figcaption>
 The picture shows in blue the 5 given conics below. The red ellipse is tangent to the 5 blue conics.
 </figcaption>
 </figure>
-
 <p>Steiner claimed in 1848 that there are at most 7776 conics tangent to 5 given conics.
 He phrased his problem as that of solving five equations
 of degree six on the 5-dimensional projective space $\mathbb{P}^5$.
-Using Bézout&rsquo;s Theorem he argued that the equations coming from this question
+Using Bézout's Theorem he argued that the equations coming from this question
 have $6^5 = 7776$ solutions over the <a href="https://en.wikipedia.org/wiki/Complex_numbers">complex numbers</a>.
 However, this number over counts because
 there is a <em>Veronese surface</em> of extraneous solutions, namely
 the conics that are squares of linear forms, i.e., double lines.</p>
-
 <p>The correct count of non-degenerate conics is <strong>3264</strong>.
-This was shown in 1859 by <a href="https://en.wikipedia.org/wiki/Ernest_de_Jonquières">Jonquières</a> and
+This was shown in 1859 by <a href="https://en.wikipedia.org/wiki/Ernest_de_Jonqui%C3%A8res">Jonquières</a> and
 independently in 1864 by <a href="https://en.wikipedia.org/wiki/Michel_Chasles">Chasles</a>.
 The number 3264 appears prominently in the book
 <a href="https://scholar.harvard.edu/files/joeharris/files/000-final-3264.pdf"><em>3264 and all that</em></a>
 by <a href="https://en.wikipedia.org/wiki/David_Eisenbud">Eisenbud</a> and
 <a href="https://en.wikipedia.org/wiki/Joe_Harris_(mathematician)">Harris</a>.</p>
-
-<p>A delightful introduction to Steiner&rsquo;s problem was given by
+<p>A delightful introduction to Steiner's problem was given by
 <a href="https://www.maa.org/sites/default/files/images/upload_library/22/Ford/Bashelor.pdf">Bashelor, Ksir and Traves</a>.
 <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.36.1425&amp;rep=rep1&amp;type=pdf">Ronga, Tognoli and Vust</a> and <a href="https://arxiv.org/abs/alg-geom/9609007">Sottile</a> showed how to
 choose 5 real conics such that all
 3264 complex solutions are <i>real</i>.
 Although their proofs starts with an explicit construction, it is <em>not</em> constructive.</p>
-
 <p>Using methods from <a href="https://en.wikipedia.org/wiki/Numerical_algebraic_geometry">numerical algebraic geometry</a>
 we adapted the proposed construction to find an explicit instance for which there are 3264 real conics.
 We use <strong>numerical homotopy continuation</strong> to compute the 3264 conics.
-<a href="https://link.springer.com/chapter/10.1007/978-1-4612-4984-9_13">Smale&rsquo;s $\alpha$-theory</a> provides a way to give a <strong>mathematical proof</strong> that we found 3264 real conics; the keyword is <a href="http://www.math.tamu.edu/~sottile/research/stories/alphaCertified/">alphaCertified</a>.
+<a href="https://link.springer.com/chapter/10.1007/978-1-4612-4984-9_13">Smale's $\alpha$-theory</a> provides a way to give a <strong>mathematical proof</strong> that we found 3264 real conics; the keyword is <a href="http://www.math.tamu.edu/~sottile/research/stories/alphaCertified/">alphaCertified</a>.
 The computational proof can be downloaded <a href="https://github.com/JuliaHomotopyContinuation/3264Data/archive/v1.0.zip">here</a>.</p>
-
 <p>An illustration of the arrangement is shown below.</p>
-
-<p><br>
+<br>
 <figure>
 <div id="all_real_conics_container"></div>
-<figcaption></p>
-
+<figcaption>
 <p>There are 3264 real conics, which are tangent to the 5 blue conics. The 5 blue conics are given by
 $$
 \small{
@@ -219,28 +208,23 @@ $$
 \frac{8275097}{452566634}x^2 &amp;-&amp; \frac{19174153}{408565940}xy&amp;+&amp; \frac{5184916}{172253855}y^2&amp;-&amp; \frac{23713234}{87670601}x &amp;+&amp; \frac{28246737}{81404569} y &amp;+&amp; 1
 \end{array}
 }
-$$
+$$</p>
 </figcaption>
 </figure>
-<br></p>
-
+<br>
 <p>It looks like the arrangement consists of 5 blue lines, rather than 5 blue conics. The next picture clarifies the situation.</p>
-
-<p><br>
+<br>
 <figure>
 <img src="/images/conic-zoom.png" style="display: block;margin-left: auto;margin-right: auto;">
   <figcaption>
    The red ellipse is tangential to all 5 blue conics. The close ups show that the conics that look like double lines, are actually hyperbolas.</figcaption>
-</figure></p>
-
-<p><br></p>
-
+</figure>
+<br>
 <p>More details on the geometry of these five special conics are in our article <a href="https://arxiv.org/abs/1902.05518">3264 conics in a Second</a>. There is also an <a href="https://www.geogebra.org/m/ceacbe2k">interactive plot</a> for <a href="https://www.geogebra.org">GeoGebra</a>, which lets you zoom in at the points of tangency.</p>
-
-<p><br>
+<br>
 <div id="action-buttons">
   <a class="button primary big" href="https://www.juliahomotopycontinuation.org/do-it-yourself/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">If you want to compute your own 3264 conics, click here.</a>
-</div></p>
+</div>
 </div>
 
   <div class="">

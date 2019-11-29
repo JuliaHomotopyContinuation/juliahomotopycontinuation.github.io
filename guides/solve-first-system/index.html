@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="For this guide, we&#39;re going to walk through an illustrative example" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/solve-first-system/" />
+
 
   
 
@@ -144,50 +145,32 @@
     
 
 
-    
-
-<h3 id="requirements">Requirements</h3>
-
+    <h3 id="requirements">Requirements</h3>
 <p>If you have not yet installed HomotopyContinuation.jl, please consider the <a href="/guides/installation/">installation guide</a>.</p>
-
 <h3 id="solve-your-first-system-of-equations">Solve your first system of equations</h3>
-
 <p>Consider the following simple system of two polynomials in two variables.</p>
-
 <p>$$
 f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix}
 $$</p>
-
 <p>Solving the equation $f=0$ can be accomplished as follows</p>
-
-<pre><code class="language-julia">using HomotopyContinuation # load the package into the current Julia session
-@polyvar x y; # declare the variables x and y
-f = [x^2 + 2y, y^2 - 2]
-result = solve(f) # solve f
-</code></pre>
-
-<p>After the computation has finished, you should see the following output.</p>
-
-<pre><code class="language-julia">Result with 4 solutions
-==================================
-• 4 non-singular solutions (2 real)
-• 0 singular solutions (0 real)
-• 4 paths tracked
-• random seed: 902575
-</code></pre>
-
-<p>We see that $f$ has two real zeros. They are</p>
-
-<pre><code class="language-julia-repl">julia&gt; realsolutions(result)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span> <span style="color:#75715e"># load the package into the current Julia session</span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>; <span style="color:#75715e"># declare the variables x and y</span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span>, y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>]
+result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>) <span style="color:#75715e"># solve f</span>
+</code></pre></div><p>After the computation has finished, you should see the following output.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">Result<span style="color:#f92672"></span> with<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> solutions<span style="color:#f92672"></span>
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> non<span style="color:#f92672"></span><span style="color:#f92672">-</span>singular<span style="color:#f92672"></span> solutions<span style="color:#f92672"></span> (<span style="color:#ae81ff">2</span> real<span style="color:#f92672"></span>)
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">0</span> singular<span style="color:#f92672"></span> solutions<span style="color:#f92672"></span> (<span style="color:#ae81ff">0</span> real<span style="color:#f92672"></span>)
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> paths<span style="color:#f92672"></span> tracked<span style="color:#f92672"></span>
+•<span style="color:#f92672"></span> random<span style="color:#f92672"></span> seed<span style="color:#f92672"></span><span style="color:#f92672">:</span> <span style="color:#ae81ff">902575</span>
+</code></pre></div><p>We see that $f$ has two real zeros. They are</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; realsolutions(result)
 2-element Array{Array{Float64,1},1}:
  [1.68179, -1.41421]
  [-1.68179, -1.41421]
-</code></pre>
-
-<p>It is possible to interrupt the computations using <code>control+c</code>. All solutions that have been computed before the interruption will be returned.</p>
-
+</code></pre><p>It is possible to interrupt the computations using <code>control+c</code>. All solutions that have been computed before the interruption will be returned.</p>
 <h3 id="what-else-should-i-know">What else should I know?</h3>
-
 <p>The <a href="/guides/introduction">next guide</a> explains in greater detail how to use HomotopyContinuation.jl. You should also check the rest of our detailed <a href="/guides/">Guides</a> for learning more about the full power of homotopy continuation. Furthermore, our <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1">API Docs</a> lists all options of <code>solve(f)</code>.</p>
 
     

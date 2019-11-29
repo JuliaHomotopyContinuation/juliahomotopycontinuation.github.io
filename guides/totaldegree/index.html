@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="The totaldegree start system" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/totaldegree/" />
+
 
   
 
@@ -145,24 +146,17 @@
 
 
     <p>Totaldegree is a particular choice of start system for homotopy continuation.</p>
-
 <p>It is the simplest start system for a system</p>
-
 <p>$$
 F(x_1,\ldots,x_n)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots\\ f_n(x_1,\ldots,x_n) \end{bmatrix}.
 $$</p>
-
 <p>The totaldegree start system of $F$ is</p>
-
 <p>$$
 G(x_1,\ldots,x_n) = \begin{bmatrix} x_1^{d_1} - a_1 \\ \vdots \\  x_n^{d_n} - a_n\end{bmatrix}, \text{ where } d_i = \text{deg}(F_i),
 $$</p>
-
-<p>and where the $a_i$ are random numbers. There are $d_1\cdots d_n$ many solutions to this system, which are easy to write down. A <a href="https://en.wikipedia.org/wiki/Bézout%27s_theorem">theorem by Bézout</a> says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1 \cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a <em>total degree homotopy</em>.</p>
-
+<p>and where the $a_i$ are random numbers. There are $d_1\cdots d_n$ many solutions to this system, which are easy to write down. A <a href="https://en.wikipedia.org/wiki/B%C3%A9zout%27s_theorem">theorem by Bézout</a> says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1 \cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a <em>total degree homotopy</em>.</p>
 <p>Here is how it works:</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y;
 julia&gt; f = [x^2 + 2y, y^2 - 2]
 julia&gt; solve(f; start_system = :total_degree)
@@ -173,7 +167,6 @@ Result with 4 solutions
 • 4 paths tracked
 • random seed: 161239
 </code></pre>
-
     
     
   </div>

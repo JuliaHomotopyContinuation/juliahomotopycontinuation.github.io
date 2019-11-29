@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Examples on HomotopyContinuation.jl</title>
@@ -6,7 +6,7 @@
     <description>Recent content in Examples on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Oct 2019 10:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 28 Oct 2019 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/examples/index.xml" rel="self" type="application/rss+xml" />
     
@@ -50,7 +50,7 @@ We want to reconstruct a three-dimensional object from two-dimensional images. T
       
       <guid>/examples/logarithmic-voronoi/</guid>
       <description>Authors: Alex Heaton, Yulia Alexandr, and Sascha Timme
-Consider the following problem: Bob has three biased coins. He tosses the first one. If it&amp;rsquo;s heads he chooses the biased coin in his left pocket, and if it&amp;rsquo;s tails he chooses the biased coin in his right pocket. Bob then flips that coin 5 times. We consider those last 5 flips as the experiment. Therefore there are 6 possible outcomes: 0 heads, 1 head, 2 heads, 3 heads, 4 heads, or 5 heads.</description>
+Consider the following problem: Bob has three biased coins. He tosses the first one. If it&#39;s heads he chooses the biased coin in his left pocket, and if it&#39;s tails he chooses the biased coin in his right pocket. Bob then flips that coin 5 times. We consider those last 5 flips as the experiment. Therefore there are 6 possible outcomes: 0 heads, 1 head, 2 heads, 3 heads, 4 heads, or 5 heads.</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@ Consider the following problem: Bob has three biased coins. He tosses the first 
       <description>The article Random points on an algebraic manifold proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
 $$V = \{ x=(x_1,x_2) \in \mathbb{R}^2 : x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\}.$$
 intersected with the box $B = [-2,2]\times [-2,2]$.
-Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x)\, \mathrm{d}V)$.</description>
+Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x), \mathrm{d}V)$.</description>
     </item>
     
     <item>
@@ -83,11 +83,11 @@ $$\Vert z_1-z_2\Vert^2 = \cdots = \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^
       
       <guid>/examples/method_of_moments/</guid>
       <description>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1^2,\sigma_2^2,\sigma_3^2$. The density of $X_i$ is
-$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
+$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
 A mixture of the three random variables is the random variable $U$ with density
-$$\psi(x) = a_1\, \phi_1(x)\, + \,a_2 \,\phi_2(x)\, + \,a_3 \,\phi_3(x), \quad\text{ for } \quad a_1+a_2+a_3 =1.$$
+$$\psi(x) = a_1, \phi_1(x), + ,a_2 ,\phi_2(x), + ,a_3 ,\phi_3(x), \quad\text{ for } \quad a_1+a_2+a_3 =1.$$
 The method of moments recovers $\psi$ from the moments
-$$m_k = \int x^k \,\psi(x)\; \mathrm{d}x.$$
+$$m_k = \int x^k ,\psi(x); \mathrm{d}x.$$
 Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$.</description>
     </item>
     
@@ -98,9 +98,9 @@ Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$
       
       <guid>/examples/optimization/</guid>
       <description>We want to solve following optimization problem
-$$ \text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1 $$
+$$ \text{minimize} ; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1 $$
 The strategy to find the global optimum is to use the method of Lagrange multipliers to find all critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.
-using HomotopyContinuation, DynamicPolynomials @polyvar x y z J = 3x^3*y+y^2*z^2-2x*y-x*4z^3 g = x^2+y^2+z^2-1 # Introduce auxillary variable for Lagrangian @polyvar λ # define Lagrangian L = J - λ * g  3x³y - 4xz³ + y²z² - x²λ - y²λ - z²λ - 2xy + λ  In order to compute all critical points we have to solve the square system of equations</description>
+using HomotopyContinuation, DynamicPolynomials @polyvar x y z J = 3x^3*y+y^2*z^2-2x*y-x*4z^3 g = x^2+y^2+z^2-1 # Introduce auxillary variable for Lagrangian @polyvar λ # define Lagrangian L = J - λ * g 3x³y - 4xz³ + y²z² - x²λ - y²λ - z²λ - 2xy + λ In order to compute all critical points we have to solve the square system of equations</description>
     </item>
     
     <item>
@@ -133,9 +133,9 @@ where $\nabla_x(f)$ is the gradient of $f$ at $x$.</description>
       <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
       <guid>/examples/ellipses-tangent/</guid>
-      <description>Let two ellipses be centered at points $p_1,p_2$: $$ E_i( r ) = \{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\},\; i=1,2, $$ where $Q_1, Q_2$ are symmetric matrices.
+      <description>Let two ellipses be centered at points $p_1,p_2$: $$ E_i( r ) = \{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\},; i=1,2, $$ where $Q_1, Q_2$ are symmetric matrices.
 We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. In Julia we translate this into a polynomial system:
-using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2] @polyvar x[1:2] r z₁ = x - p₁ z₂ = x - p₂ # initialize the equations for E₁ and E₂ f₁ = (Q₁ * z₁) ⋅ (Q₁ * z₁) - r^2 f₂ = (Q₂ * z₂) ⋅ (Q₂ * z₂) - r^2 # initialize the equation for E₁ and E₂ being tangent @polyvar λ g = (Q₁&#39; * Q₁) * z₁ - λ .</description>
+using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2] @polyvar x[1:2] r z₁ = x - p₁ z₂ = x - p₂ # initialize the equations for E₁ and E₂ f₁ = (Q₁ * z₁) ⋅ (Q₁ * z₁) - r^2 f₂ = (Q₂ * z₂) ⋅ (Q₂ * z₂) - r^2 # initialize the equation for E₁ and E₂ being tangent @polyvar λ g = (Q₁&amp;#39; * Q₁) * z₁ - λ .</description>
     </item>
     
     <item>
@@ -145,7 +145,7 @@ using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁
       
       <guid>/examples/monte-carlo-integration/</guid>
       <description>Consider the problem of numerically approximating an integral of the form
-$$\int \,f(x) \, \mathrm{d}V,$$
+$$\int ,f(x) , \mathrm{d}V,$$
 where $V\subset \mathbb{R}^N$ is an algebraic manifold, $\mathrm{d}V$ is the volume form on $V$ and $f:V\to \mathbb{R}$ is a measurable function.
 For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration scheme proposed in this article.</description>
     </item>
@@ -178,7 +178,7 @@ An interesting fact about such sextic curves is that they have 120 complex trita
       <guid>/examples/curvature/</guid>
       <description>Curvature of curves in the plane Consider the problem of computing the point on a (smooth) curve $V\subset \mathbb{R}^n$, where the curvature is maximal. We can use the following formula for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.
 $$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$
-where $v^T \,\nabla_p f(p) = 0$, and $v^T \, v=1$, and $H$ is the Hessian of $f$ at $p$, and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T \, \nabla_p \sigma(p)=0$ and $f(p)=0$.</description>
+where $v^T ,\nabla_p f(p) = 0$, and $v^T , v=1$, and $H$ is the Hessian of $f$ at $p$, and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T , \nabla_p \sigma(p)=0$ and $f(p)=0$.</description>
     </item>
     
     <item>
@@ -188,7 +188,7 @@ where $v^T \,\nabla_p f(p) = 0$, and $v^T \, v=1$, and $H$ is the Hessian of $f$
       
       <guid>/examples/3264/</guid>
       <description>A conic in the plane $\mathbb{R}^2$ is the zero set of a quadratic polynomial in two variables:
-$$ \,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+$$ ,, a_1 x^2 ,+, a_2 xy ,+, a_3 y^2 , +, a_4 x , + , a_5 y , + , a_6 ,.$$
 Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines. The last case is a degenerate conic. Double lines are allowed.</description>
     </item>
     

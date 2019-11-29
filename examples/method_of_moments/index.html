@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,9 @@
   <meta property="og:title" content="Method of moments" />
 <meta property="og:description" content="For mixtures of three Gaussians" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/examples/method_of_moments/" /><meta property="article:published_time" content="2019-03-26T21:56:55&#43;01:00"/>
-<meta property="article:modified_time" content="2019-03-26T21:56:55&#43;01:00"/>
+<meta property="og:url" content="/examples/method_of_moments/" />
+<meta property="article:published_time" content="2019-03-26T21:56:55+01:00" />
+<meta property="article:modified_time" content="2019-03-26T21:56:55+01:00" />
 
   
 
@@ -136,11 +137,8 @@
  </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
-    
-<meta itemprop="name" content="Method of moments">
+    <meta itemprop="name" content="Method of moments">
 <meta itemprop="description" content="For mixtures of three Gaussians">
-
-
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="wordCount" content="608">
@@ -148,7 +146,6 @@
 
 
 <meta itemprop="keywords" content="example," />
-
 <div id="hero">
     <h1 itemprop="headline">  Method of moments</h1>
     
@@ -170,137 +167,92 @@
 <div id="post" itemprop="articleBody">
     
     <p>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1^2,\sigma_2^2,\sigma_3^2$. The density of $X_i$ is</p>
-
-<p>$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$</p>
-
+<p>$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$</p>
 <p>A mixture of the three random variables is the random variable $U$ with density</p>
-
-<p>$$\psi(x) = a_1\, \phi_1(x)\, + \,a_2 \,\phi_2(x)\, + \,a_3 \,\phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$</p>
-
+<p>$$\psi(x) = a_1, \phi_1(x), + ,a_2 ,\phi_2(x), + ,a_3 ,\phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Method_of_moments_(statistics)">method of moments</a> recovers $\psi$ from the moments</p>
-
-<p>$$m_k = \int x^k \,\psi(x)\; \mathrm{d}x.$$</p>
-
+<p>$$m_k = \int x^k ,\psi(x); \mathrm{d}x.$$</p>
 <p>Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$. Let us set up a system for this in Julia.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 
-<pre><code class="language-julia">@polyvar a[1:3] μ[1:3] σ²[1:3]
+m0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>];
+m1<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>];
+m2<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>])<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]);
+m3<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>])<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]);
+m4<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">6</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">6</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">6</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>);
+m5<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>);
+m6<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">45</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">45</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span><span style="color:#ae81ff">45</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">15</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>);
+m7<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">7</span><span style="color:#f92672">+</span><span style="color:#ae81ff">21</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">7</span><span style="color:#f92672">+</span><span style="color:#ae81ff">21</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">7</span><span style="color:#f92672">+</span><span style="color:#ae81ff">21</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">5</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>);
+m8<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">8</span><span style="color:#f92672">+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">210</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">420</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">8</span><span style="color:#f92672">+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">210</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">420</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span>)<span style="color:#f92672">+</span>
+      a<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>(μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">8</span><span style="color:#f92672">+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">6</span><span style="color:#f92672">+</span><span style="color:#ae81ff">210</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">420</span><span style="color:#f92672">*</span>μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">105</span><span style="color:#f92672">*</span>σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span>)
 
-m0 = a[1]+a[2]+a[3];
-m1 = a[1]*μ[1]+a[2]*μ[2]+a[3]*μ[3];
-m2 = a[1]*(μ[1]^2+σ²[1])+a[2]*(μ[2]^2+σ²[2])+a[3]*(μ[3]^2+σ²[3]);
-m3 = a[1]*(μ[1]^3+3*σ²[1]*μ[1])+a[2]*(μ[2]^3+3*σ²[2]*μ[2])+a[3]*(μ[3]^3+3*σ²[3]*μ[3]);
-m4 = a[1]*(μ[1]^4+6*σ²[1]*μ[1]^2+3*σ²[1]^2)+a[2]*(μ[2]^4+6*σ²[2]*μ[2]^2+3*σ²[2]^2)+
-      a[3]*(μ[3]^4+6*σ²[3]*μ[3]^2+3*σ²[3]^2);
-m5 = a[1]*(μ[1]^5+10*σ²[1]*μ[1]^3+15*μ[1]*σ²[1]^2)+
-      a[2]*(μ[2]^5+10*σ²[2]*μ[2]^3+15*μ[2]*σ²[2]^2)+
-      a[3]*(μ[3]^5+10*σ²[3]*μ[3]^3+15*μ[3]*σ²[3]^2);
-m6 = a[1]*(μ[1]^6+15*σ²[1]*μ[1]^4+45*μ[1]^2*σ²[1]^2+15*σ²[1]^3)+
-      a[2]*(μ[2]^6+15*σ²[2]*μ[2]^4+45*μ[2]^2*σ²[2]^2+15*σ²[2]^3)+
-      a[3]*(μ[3]^6+15*σ²[3]*μ[3]^4+45*μ[3]^2*σ²[3]^2+15*σ²[3]^3);
-m7 = a[1]*(μ[1]^7+21*σ²[1]*μ[1]^5+105*μ[1]^3*σ²[1]^2+105*μ[1]*σ²[1]^3)+
-      a[2]*(μ[2]^7+21*σ²[2]*μ[2]^5+105*μ[2]^3*σ²[2]^2+105*μ[2]*σ²[2]^3)+
-      a[3]*(μ[3]^7+21*σ²[3]*μ[3]^5+105*μ[3]^3*σ²[3]^2+105*μ[3]*σ²[3]^3);
-m8 = a[1]*(μ[1]^8+28*σ²[1]*μ[1]^6+210*μ[1]^4*σ²[1]^2+420*μ[1]^2*σ²[1]^3+105*σ²[1]^4)+
-      a[2]*(μ[2]^8+28*σ²[2]*μ[2]^6+210*μ[2]^4*σ²[2]^2+420*μ[2]^2*σ²[2]^3+105*σ²[2]^4)+
-      a[3]*(μ[3]^8+28*σ²[3]*μ[3]^6+210*μ[3]^4*σ²[3]^2+420*μ[3]^2*σ²[3]^3+105*σ²[3]^4)
-
-f = [m0, m1, m2, m3, m4, m5, m6, m7, m8]
-</code></pre>
-
-<p>Let us consider the following moments:</p>
-
-<pre><code class="language-julia">p₀ =  [1; -1; 3; -5.5; 22.45; -50.75; 243.325; -635.725; 3420.7375]     
-</code></pre>
-
-<p>Solving for $f - p₀ = 0$ directly is difficult. The total number of paths is</p>
-
-<pre><code class="language-julia-repl">julia&gt; bezout_number(f - p₀)
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [m0<span style="color:#f92672"></span>, m1<span style="color:#f92672"></span>, m2<span style="color:#f92672"></span>, m3<span style="color:#f92672"></span>, m4<span style="color:#f92672"></span>, m5<span style="color:#f92672"></span>, m6<span style="color:#f92672"></span>, m7<span style="color:#f92672"></span>, m8<span style="color:#f92672"></span>]
+</code></pre></div><p>Let us consider the following moments:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  [<span style="color:#ae81ff">1</span>; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>; <span style="color:#ae81ff">3</span>; <span style="color:#f92672">-</span><span style="color:#ae81ff">5.5</span>; <span style="color:#ae81ff">22.45</span>; <span style="color:#f92672">-</span><span style="color:#ae81ff">50.75</span>; <span style="color:#ae81ff">243.325</span>; <span style="color:#f92672">-</span><span style="color:#ae81ff">635.725</span>; <span style="color:#ae81ff">3420.7375</span>]     
+</code></pre></div><p>Solving for $f - p₀ = 0$ directly is difficult. The total number of paths is</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; bezout_number(f - p₀)
 362880
-</code></pre>
-
-<p>yet, <a href="https://arxiv.org/pdf/1510.04654.pdf">Amendola, Faugere and Sturmfels</a> showed that the number of (complex) solutions of the polynomial system $f = p₀$ is 1350 (much less than 362880!).</p>
-
+</code></pre><p>yet, <a href="https://arxiv.org/pdf/1510.04654.pdf">Amendola, Faugere and Sturmfels</a> showed that the number of (complex) solutions of the polynomial system $f = p₀$ is 1350 (much less than 362880!).</p>
 <p>Instead of solving $f - p₀$ directly, we use monodromy for solving another instance $f - q₀$. Then we move the 1350 computed solutions from  $f - q₀$ to  $f - p₀$. First, we generate a start solution:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">a₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
+a₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a₀<span style="color:#f92672"></span> <span style="color:#f92672">/</span> sum<span style="color:#f92672"></span>(a₀<span style="color:#f92672"></span>)
+μ₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
+σ²₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
+start_sol<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [a₀<span style="color:#f92672"></span>; μ₀<span style="color:#f92672"></span>; σ²₀<span style="color:#f92672"></span>]
 
-<pre><code class="language-julia">a₀ = randn(ComplexF64, 3)
-a₀ = a₀ / sum(a₀)
-μ₀ = rand(ComplexF64, 3)
-σ²₀ = rand(ComplexF64, 3)
-start_sol = [a₀; μ₀; σ²₀]
-
-q₀ = [m([a; μ; σ²] =&gt; start_sol) for m in f]
-</code></pre>
-
-<p>which we can use as input data for the monodromy method for <code>q₀</code> being the parameters. Here, it doesn&rsquo;t matter that complex solutions have no interpretation as parameters. They only serve to solve one specific instance of the polynomial system.</p>
-
-<pre><code class="language-julia-repl">julia&gt; @polyvar p[1:9]
+q₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [m<span style="color:#f92672"></span>([a<span style="color:#f92672"></span>; μ<span style="color:#f92672"></span>; σ²<span style="color:#f92672"></span>] <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> start_sol<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> m<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> f<span style="color:#f92672"></span>]
+</code></pre></div><p>which we can use as input data for the monodromy method for <code>q₀</code> being the parameters. Here, it doesn't matter that complex solutions have no interpretation as parameters. They only serve to solve one specific instance of the polynomial system.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar p[1:9]
 julia&gt; R = monodromy_solve(f - p, start_sol, q₀, parameters=p; target_solutions_count = 1350)
 MonodromyResult
 ==================================
 • 1350 solutions (0 real)
 • return code → success
 • 11009 tracked paths
-</code></pre>
-
-<p>Now, we can track the solutions from $q₀$ to $p₀$.</p>
-
-<pre><code class="language-julia">R2 = solve(f - p, solutions(R), parameters = p, start_parameters=q₀, target_parameters = p₀)
-</code></pre>
-
-<p>There are</p>
-
-<pre><code class="language-julia-repl">julia&gt; nreal(R2)
+</code></pre><p>Now, we can track the solutions from $q₀$ to $p₀$.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">R2<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>), parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>q₀<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p₀<span style="color:#f92672"></span>)
+</code></pre></div><p>There are</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; nreal(R2)
 36
-</code></pre>
-
-<p>real solutions. Let us keep only those for which the variances are positive:</p>
-
-<pre><code class="language-julia">true_real_solutions  = filter(r -&gt; all(r[7:9] .&gt; 0), real_solutions(R2))
-</code></pre>
-
-<p>There are 12 of those. Those 12 come in groups of 6, because the group that permutes ${1,2,3}$ acts on the solutions. We can filter this as follows</p>
-
-<pre><code class="language-julia-repl">julia&gt; S₃ = SymmetricGroup(3)
+</code></pre><p>real solutions. Let us keep only those for which the variances are positive:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">true_real_solutions<span style="color:#f92672"></span>  <span style="color:#f92672">=</span> filter<span style="color:#f92672"></span>(r<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> all<span style="color:#f92672"></span>(r<span style="color:#f92672"></span>[<span style="color:#ae81ff">7</span><span style="color:#f92672">:</span><span style="color:#ae81ff">9</span>] <span style="color:#f92672">.&gt;</span> <span style="color:#ae81ff">0</span>), real_solutions<span style="color:#f92672"></span>(R2<span style="color:#f92672"></span>))
+</code></pre></div><p>There are 12 of those. Those 12 come in groups of 6, because the group that permutes ${1,2,3}$ acts on the solutions. We can filter this as follows</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; S₃ = SymmetricGroup(3)
 julia&gt; relabeling(v) = map(p -&gt; (v[1:3][p]..., v[4:6][p]..., v[7:9][p]...), S₃)
 julia&gt; Mults = multiplicities(true_real_solutions, group_action = relabeling)
 [3, 4, 8, 9, 11, 12]
 [1, 2, 5, 6, 7, 10]
-</code></pre>
-
-<p>Let us thus look at the first and at the third real solution</p>
-
-<pre><code class="language-julia-repl">julia&gt; true_real_solutions[1]
+</code></pre><p>Let us thus look at the first and at the third real solution</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; true_real_solutions[1]
 [-0.182136, -1.74012, 2.92226, -1.60721, 0.184633, -0.33243, 0.0927855, 1.11301, 1.76594]
 julia&gt; true_real_solutions[3]
 [1.30343, -0.396056, 0.0926208, -0.346632, 0.755685, -2.68724, 1.98223, 0.553889, 0.392889]
-</code></pre>
-
-<p>Those are the parameters of the two mixtures Gaussian that give our moments <code>q₀</code>.</p>
-
+</code></pre><p>Those are the parameters of the two mixtures Gaussian that give our moments <code>q₀</code>.</p>
 <p>The group action can also be exploited in the monodromy computation:</p>
-
-<pre><code class="language-julia-repl">julia&gt; R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling; target_solutions_count = 225)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; R_with_group_action = monodromy_solve(f - p, start_sol, q₀, parameters=p, group_action = relabeling; target_solutions_count = 225)
 MonodromyResult
 ==================================
 • 225 classes of solutions (modulo group action) (0 real)
 • return code → heuristic_stop
 • 8072 tracked paths
-</code></pre>
-
-<p>The full 1350 solutions can then be returned as</p>
-
-<pre><code class="language-julia">relabeling.(solutions(R_with_group_action))
-</code></pre>
-
-<p>Then, we can proceed with the parameter homotopy as above.</p>
-
+</code></pre><p>The full 1350 solutions can then be returned as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">relabeling<span style="color:#f92672"></span><span style="color:#f92672">.</span>(solutions<span style="color:#f92672"></span>(R_with_group_action<span style="color:#f92672"></span>))
+</code></pre></div><p>Then, we can proceed with the parameter homotopy as above.</p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">
 <code class="language-julia hljs">@Misc{ method_of_moments2019 ,
     author =  { Paul Breiding },
     title = { Method of moments },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/method_of_moments/ } },
-    note = { Accessed: November 5, 2019 }
+    note = { Accessed: November 29, 2019 }
 }</code>
 </pre>
 

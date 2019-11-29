@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Declaring additional structure for homotopy continuation" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/variable-groups/" />
+
 
   
 
@@ -145,8 +146,7 @@
 
 
     <p>Declaring variable groups can reduce the number of paths that one has to track.</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y
 julia&gt; g = [x*y - 6, x^2 - 5]
 julia&gt; solve(g, variable_groups=[[x], [y]])
@@ -156,20 +156,15 @@ Result with 2 solutions
 • 0 singular solutions (0 real)
 • 2 paths tracked
 • random seed: 73638
-</code></pre>
-
-<p>whereas</p>
-
-<pre><code class="language-julia-repl">julia&gt; solve(g)
+</code></pre><p>whereas</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; solve(g)
 Result with 2 solutions
 ==================================
 • 2 non-singular solutions (2 real)
 • 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 892652
-</code></pre>
-
-<p>The number of paths tracked is halved using the variable structure.</p>
+</code></pre><p>The number of paths tracked is halved using the variable structure.</p>
 
     
     

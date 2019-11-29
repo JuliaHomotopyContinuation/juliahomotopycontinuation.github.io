@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Define the space for the paths that are tracked" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/projective-tracking/" />
+
 
   
 
@@ -145,26 +146,18 @@
 
 
     <p>By default, HomotopyContinuation.jl tracks paths in the complex vector space $\mathbb{C}^n$.</p>
-
 <p>It is also possible to track paths in <a href="https://en.wikipedia.org/wiki/Projective_space">projective space</a>. This has the advantage that all paths have finite length, because projective space is compact.</p>
-
 <p>One can tell HomotopyContinuation.jl to track over projective space by using the flag <code>projective_tracking = true</code>:</p>
-
-<pre><code class="language-julia">using HomotopyContinuation
-@polyvar x y
-f = [x^2 + y - 1, y - 4]
-solve(f, projective_tracking = true)
-</code></pre>
-
-<p>This is the same as</p>
-
-<pre><code class="language-julia">using HomotopyContinuation
-@polyvar x y
-f = [x^2 + y - 1, y - 4]
-solve(f, affine_tracking = false)
-</code></pre>
-
-<p>The flag <code>affine_tracking</code> is dominant; i.e., <code>solve(f, affine_tracking = true, projective_tracking = true)</code> tracks in affine space.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>]
+solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, projective_tracking<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>)
+</code></pre></div><p>This is the same as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4</span>]
+solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, affine_tracking<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>)
+</code></pre></div><p>The flag <code>affine_tracking</code> is dominant; i.e., <code>solve(f, affine_tracking = true, projective_tracking = true)</code> tracks in affine space.</p>
 
     
     

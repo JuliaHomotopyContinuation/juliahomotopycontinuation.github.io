@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="How to track solutions of systems with more equations than variables." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/overdetermined-tracking/" />
+
 
   
 
@@ -162,16 +163,11 @@
 
 
     <h3 class="section-head" id="overdetermined*systems"><a href="#overdetermined*systems">Overdetermined systems</a></h3>
-
 <p>A system of polynomial equations $f=(f_1(x_1,\ldots, x_m),\ldots,  f_n(x_1,\ldots,x_m))$ is called <em>overdetermined</em>, if it has more equations than variables; i.e., when $n&gt;m$. HomotopyContinuation.jl can solve overdetermined systems. Here is a simple example.</p>
-
 <p>$$f(x,y,z) = \begin{bmatrix} xz-y^2 \\ y-z^2 \\ x-yz \\ x + y + z + 1\end{bmatrix}.$$</p>
-
 <p>This system has 4 equation in 3 variables. One might expect that it has no solution, but actually it has solutions, as is explained <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">here</a>.</p>
-
 <p>The Julia code is as follows</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y z
 julia&gt; solve([x*z - y^2, y - z^2, x - y*z, x + y + z + 1])
 Result with 3 solutions
@@ -181,7 +177,6 @@ Result with 3 solutions
 • 8 paths tracked
 • random seed: 157717
 </code></pre>
-
     
     
   </div>

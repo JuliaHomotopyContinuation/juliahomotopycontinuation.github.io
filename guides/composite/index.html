@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="How to construct and solve composite systems" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/composite/" />
+
 
   
 
@@ -162,21 +163,13 @@
 
 
     <p>If your system of polynomials is given as a composition of several systems, you can exploit this in HomotopyContinuation.jl.</p>
-
 <h3 class="section-head"><a>Composition of two systems</a></h3>
-
 <p>If $f$ and $g$ are your systems, and you want to solve $f \circ g$, then you can do this by</p>
-
-<pre><code class="language-julia">solve(f ∘ g)
-</code></pre>
-
-<p>For instance, if</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span> ∘<span style="color:#f92672"></span> g<span style="color:#f92672"></span>)
+</code></pre></div><p>For instance, if</p>
 <p>$$ f = \begin{bmatrix} ab - 2\\  ac- 1\end{bmatrix}, \quad g =  \begin{bmatrix}x + y\\ y + 3\\ x + 2\end{bmatrix},$$</p>
-
 <p>then you solve $f\circ g$ by</p>
-
-<pre><code class="language-julia-repl">julia&gt; @polyvar a b c x y
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar a b c x y
 julia&gt; f = [a * b - 2, a * c- 1]
 julia&gt; g = [x + y, y + 3, x + 2]
 julia&gt; solve(f ∘ g)
@@ -186,13 +179,9 @@ Result with 2 solutions
 • 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 446964
-</code></pre>
-
-<h3 class="section-head"><a>Composition of several systems</a></h3>
-
+</code></pre><h3 class="section-head"><a>Composition of several systems</a></h3>
 <p>You can also iterate the above process:</p>
-
-<pre><code class="language-julia-repl">julia&gt; @polyvar u v
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar u v
 julia&gt; h = [u^2 - 1, u + v - 2]
 julia&gt; solve(f ∘ g ∘ h)
 Result with 4 solutions
@@ -201,17 +190,11 @@ Result with 4 solutions
 • 0 singular solutions (0 real)
 • 12 paths tracked
 • random seed: 386832
-</code></pre>
-
-<h3 class="section-head"><a>Systems with parameters</a></h3>
-
+</code></pre><h3 class="section-head"><a>Systems with parameters</a></h3>
 <p>You can also track a <a href="/guides/parameter-homotopies">parameter homotopy</a> in a composite system. If</p>
-
 <p>$$ f = \begin{bmatrix} ab - q\\  ac - p\end{bmatrix}, \quad g =  \begin{bmatrix}x + y\\ y + 3\\ x + 2\end{bmatrix},$$</p>
-
 <p>and you want to track solutions from $(p,q) = (1, 2)$ to $(p,q) = (2, 3)$, this is how it works:</p>
-
-<pre><code class="language-julia-repl">julia&gt; res = solve(f ∘ g)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; res = solve(f ∘ g)
 julia&gt; @polyvar p q
 julia&gt; f2 = [a * b - q, a * c - p]
 julia&gt; res2 = solve(f2 ∘ g, solutions(res), parameters=[p, q], p₁=[1, 2], p₀=[2, 3])
@@ -221,9 +204,7 @@ Result with 2 solutions
 • 0 singular solutions (0 real)
 • 2 paths tracked
 • random seed: 48821
-</code></pre>
-
-<p>It does not matter at which level the parameters are.</p>
+</code></pre><p>It does not matter at which level the parameters are.</p>
 
     
     

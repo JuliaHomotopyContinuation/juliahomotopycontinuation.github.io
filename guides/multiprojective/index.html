@@ -2,7 +2,7 @@
 <html lang="en-us">
 
 <head>
-  <meta name="generator" content="Hugo 0.50" />
+  <meta name="generator" content="Hugo 0.60.0" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,6 +25,7 @@
 <meta property="og:description" content="Solving systems over a product of projective spaces" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/multiprojective/" />
+
 
   
 
@@ -145,14 +146,10 @@
 
 
     <p>When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.</p>
-
 <p>Here is a simple example for the following system defined over $\mathbb{CP}^1\times  \mathbb{CP}^1$:</p>
-
 <p>$$f(u,y,u,v) = \begin{bmatrix} xy - 6uv\\ x^2 - u^2 \end{bmatrix}.$$</p>
-
 <p>The Julia code for the variable groups ${x,y}$ and ${u,v}$ is as follows.</p>
-
-<pre><code class="language-julia-repl">julia&gt; using HomotopyContinuation
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
 julia&gt; @polyvar x y u v
 julia&gt; f = [x*y - 6u*v, x^2 - u^2]
 julia&gt; S = solve(f, variable_groups=[(x,u), (y,v)])
@@ -162,28 +159,20 @@ Result with 2 solutions
 • 0 singular solutions (0 real)
 • 2 paths tracked
 • random seed: 127575
-</code></pre>
-
-<p>With out the declaration of groups we would have</p>
-
-<pre><code class="language-julia-repl">julia&gt; S = solve(f)
+</code></pre><p>With out the declaration of groups we would have</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; S = solve(f)
 Result with 2 solutions
 ==================================
 • 2 non-singular solutions (2 real)
 • 0 singular solutions (0 real)
 • 4 paths tracked
 • random seed: 202895
-</code></pre>
-
-<p>The number of solutions found is the same, but the number of paths tracked is different. This is because</p>
-
-<pre><code class="language-julia-repl">julia&gt; bezout_number(f, variable_groups=[[x], [y]])
+</code></pre><p>The number of solutions found is the same, but the number of paths tracked is different. This is because</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; bezout_number(f, variable_groups=[[x], [y]])
 2
 julia&gt; bezout_number(f)
 4
-</code></pre>
-
-<p>It is also possible to declare variable groups for <a href="/guides/variable-groups">affine systems</a>.</p>
+</code></pre><p>It is also possible to declare variable groups for <a href="/guides/variable-groups">affine systems</a>.</p>
 
     
     

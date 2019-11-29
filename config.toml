@@ -39,3 +39,8 @@ HighlightJS = true
     name = "Github"
     weight = 7
     url = "https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

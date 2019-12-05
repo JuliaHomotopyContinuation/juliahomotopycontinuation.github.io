@@ -7,7 +7,7 @@ draft = false
 description = "The conformation space of cyclooctane"
 weight = 1
 author = "Paul Breiding"
-group = "application"
+group = "applications"
 +++
 
 
@@ -97,4 +97,4 @@ Here is a gif that shows 4470 points from the cyclooctane variety, projected ont
 It is also possible to control the distribution of the points obtained by intersecting with linear spaces. We discuss this in [this example](/examples/sampling).
 
 
-{{<bibtex >}} 
+{{<bibtex >}}

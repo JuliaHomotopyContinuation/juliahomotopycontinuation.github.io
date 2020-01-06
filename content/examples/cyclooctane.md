@@ -66,26 +66,16 @@ S_p₀ = solutions(complex_result)
 Now, we track the solutions from `S_p₀` towards systems we are interested in (here is a quick comment for algebraic geometers: the size of `S_p₀` is 1408; in other words, the cyclooctane variety has degree 1408).
 
 ```julia
-tracker = pathtracker(F; parameters=p, generic_parameters=p₀)
-
 # we compute 100 random intersections
-data = [randn(n*N+n) for _ in 1:100]
-Ω = map(data) do pp
-    # We want to store all solutions. Create an empty array.
-    S_p = similar(S_p₀, 0)
-    for s in S_p₀
-        result = track(tracker, s; target_parameters=pp, details=:minimal)
-        # check that the tracking was successfull and that we have a real solution
-        if is_success(result) && is_real(result)
-            # only store the solutions
-            push!(S_p, solution(result))
-        end
-    end
-    # return an array of type Array{Float64}
-    # (and not Array{ComplexF64})
-    real.(S_p)
-end
-Ω = vcat(Ω...)
+Ω  = solve(
+    F,
+    S_p₀;
+    parameters = p,
+    start_parameters =  p₀,
+    target_parameters = [randn(n * N + n) for _ in 1:100],
+    transform_result = (R,p) -> real_solutions(R),
+    flatten = true
+)
 ```
 
 Now, `Ω` contains points from the cyclooctane variety.

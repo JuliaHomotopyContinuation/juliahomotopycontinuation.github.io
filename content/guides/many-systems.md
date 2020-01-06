@@ -21,12 +21,11 @@ F = [
     (x - 2 + 5y)*z + 4 - p[2] * z,
     (x + 2 + 4y)*z + 5 - p[3] * z    
 ]
-
 ```
 
 
-Since we need to solve `F` many times for different values of `p` it makes sense to first compute all
-solutions for generic parameters and then to use  a [parameter homotopy](/guides/parameter-homotopies/).
+First, we compute the
+solutions for generic parameters and then use  a [parameter homotopy](/guides/parameter-homotopies/).
 
 ```julia
 # Generate generic parameters by sampling complex numbers from the normal distribution
@@ -50,44 +49,32 @@ We see that our polynomial system $F$ has at most **2** isolated solutions (inst
 The idea is to use these two generic solutions to find the solutions for the specific parameters we are interested in.
 For this we are using a [parameter homotopy](/guides/parameter-homotopies/) from the generic parameters $p_0$ to the specific parameters.
 
-In order to avoid to setup the necessary data structures over and over again we construct a [`PathTracker`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#HomotopyContinuation.PathTracker) once
-and reuse it to track all paths.
-```julia
-# Let's store the generic solutions
-S_p₀ = solutions(result_p₀)
-# Construct the PathTracker
-tracker = pathtracker(F; parameters=p, generic_parameters=p₀)
-```
-
-Since we do not have any real world data for our toy example, let's generate some random data.
-
+This can be done as follows:
 ```julia
 # generate some random data to simulate the parameters
 data = [randn(3) for _ in 1:10_000]
+
+# track p₀ towards the entries of data
+data_points = solve(
+    F,
+    solutions(result_p₀);
+    parameters = p,
+    start_parameters =  p₀,
+    target_parameters = data
+)
 ```
 
-Now we have everything to solve the equations for all parameters.
+It is also possible to immediately postprocess the output. For instance, suppose that we are only interested in the real solutions. Then:
+
+This can be done as follows:
 ```julia
-# Map over each parameter of our data
-# and compute the corresponding solutions
-data_solutions = map(data) do p
-    # We want to store all solutions. Create an empty array.
-    S_p = similar(S_p₀, 0)
-    for s in S_p₀
-        result = track(tracker, s; target_parameters=p)
-        # check that the tracking was successfull
-        if issuccess(result)
-            # only store the solutions
-            push!(S_p, solution(result))
-        end
-    end
-    S_p
-end
-```
-
-In real applications you probably don't want to store all solution but instead you have a measure of what the *best* solution is.
-
-Also note that `track` will assemble for each tracked path a [`PathResult`](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1) with [additional informations](/guides/reading-output/#pathresult-entries). If you want to avoid to minimize this overhead you can add the keyword argument `details = :minimal`, i.e.,
-```
-result = track(tracker, s; target_parameters=p, details=:minimal)
+data_points = solve(
+    F,
+    solutions(result_p₀);
+    parameters = p,
+    start_parameters =  p₀,
+    target_parameters = data,
+    transform_result = (r,p) -> real_solutions(r),
+    flatten = true
+)
 ```

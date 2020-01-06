@@ -65,31 +65,26 @@ start_sols = solutions(start)
 Now, we track `start_sols` to $10^5$ random Gaussian linear spaces, following [this guide](/guides/many-systems).
 
 ```julia
-tracker = pathtracker(G; parameters=[vec(A); b], generic_parameters=[vec(A₀); b₀])
 f(x) = 1.0 # so that ∫ f(x) dx gives the volume
 
-points = Vector{Vector{Float64}}()
-
-empirical_distribution =  map(1:10^5) do _
-    # We want to store all solutions. Create an empty array.
-    S = Vector{Vector{Float64}}()
-    for s in start_sols
-        A = randn(n, N)
-        b = randn(n)
-        result = track(tracker, s; target_parameters=[vec(A); b], details=:minimal)
-        # check that the tracking was successfull and that we have a real solution
-        if is_success(result) && is_real(result)
-            s = real(solution(result))
-            push!(S, s)
-        end
-    end
-
-    if isempty(S)
+#define the random variable Σ
+function Σ(R)
+    if nreal(R) == 0
         return 0.0
     else
-        return sum(z -> f(z) * α(z, ∇V), S)
+        return sum(z -> f(z) * α(z, ∇V), real_solutions(R))
     end
 end
+
+#track towards 10^5 random linear spaces
+empirical_distribution = solve(
+    G,
+    start_sols;
+    parameters = [vec(A); b],
+    start_parameters =  [vec(A₀); b₀],
+    target_parameters = [randn(n*N + n) for _ in 1:10^5],
+    transform_result = (R,p) -> Σ(R)
+)
 ```
 
 Let us check the volume:
@@ -100,7 +95,6 @@ julia> volume = π * μ
 6.284680060171913
 ```
 
-The actual volume is $2\pi \approx 6.2832$. Thus, we have the volume with 3 correct digits. Considering that we have used a sample of size $10^5$, the speed of convergence of the law of large numbers seems to be rather slow. Nevertheless, the methods is fast enough to give a good and quick guess on the true volume.
-
+The actual volume is $2\pi \approx 6.2832$. Thus, we have the volume with 3 correct digits.
 
 {{<bibtex >}}

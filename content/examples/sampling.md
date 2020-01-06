@@ -66,39 +66,39 @@ start_sols = solutions(start)
 Now, we track `start_sols` to various random real intersections, following [this guide](/guides/many-systems). In the code below we make 1000 trials to get points.
 
 ```julia
-tracker = pathtracker(G; parameters=[a; b], generic_parameters=[a₀; b₀])
-f(x) = 1.0
+f(x) = 1.0 # so that we sample the uniform distribution
 
-points = Vector{Vector{Float64}}()
+#define the random variable Σ
+function rejection_step(R)
+    if nreal(R) > 0
+        S = real_solutions(R)
+        filter!(s -> abs(s[1]) < 2 && abs(s[2]) < 2, S)
+        if !isempty(S)
+            β = map(z -> f(z)*α(z, ∇V), S)
+            Σβ = sum(β)
+            p = Σβ / W
 
-for i in 1:1000
-    # We want to store all solutions. Create an empty array.
-    S = Vector{Vector{Float64}}()
-    for s in start_sols
-        result = track(tracker, s; target_parameters=randn(3), details=:minimal)
-        # check that the tracking was successfull and that we have a real solution
-        if is_success(result) && is_real(result)
-            s = real(solution(result))
-            if abs(s[1]) < 2 && abs(s[2]) < 2
-                # only store the solutions
-                push!(S, s)
+            # rejection step
+            if rand(Bernoulli(p)) == 1
+                q = β ./ Σβ
+                i = rand(Categorical(q))
+                return S[i]
             end
         end
     end
-
-    if !isempty(S)
-        β = map(z -> f(z)*α(z, ∇V), S)
-        Σβ = sum(β)
-        p = Σβ / W
-
-        # rejection step
-        if rand(Bernoulli(p)) == 1
-            q = β ./ Σβ
-            i = rand(Categorical(q))
-            push!(points, S[i])
-        end
-    end
+    return fill(Inf,2)
 end
+
+#track towards 10^5 random linear spaces
+points = solve(
+    G,
+    start_sols;
+    parameters = [a; b],
+    start_parameters =  [a₀; b₀],
+    target_parameters = [randn(3) for _ in 1:10^4],
+    transform_result = (R,p) -> rejection_step(R)
+)
+filter!(p -> !(Inf in p), points)
 ```
 
 The points we get from executing this code are shown next.
@@ -110,4 +110,4 @@ The code can easily be adapted to sample from other densities. For instance, cha
 <p style="text-align:center;"><img src="/images/exp.png" width="700px"/></p>
 
 
-{{<bibtex >}} 
+{{<bibtex >}}

@@ -54,6 +54,7 @@ using DynamicPolynomials, LinearAlgebra, HomotopyContinuation
 include("cameras.jl")
 include("pictures.jl")
 n₁, n₂ = 1, 2
+camera_numbers = [n₁, n₂]
 
 @polyvar x[1:3]
 @polyvar t[1:2]
@@ -87,36 +88,41 @@ F₀ = [subs(Fᵢ, vec(p)=>p₀) for Fᵢ in F]
 start = solutions(solve(F₀))
 ```
 
-`start` contains 6 solutions. By the discussion at the end of this example, the number of critical points `F=0` is indeed 6. Now, we track these 6 solutions towards the photo parameters we are interested in.
+`start` contains 6 solutions. At the end of this example we discuss that the number of critical points `F=0` is indeed 6. Now, we track these 6 solutions towards the photo parameters we are interested in.
 
 ```julia
-photos = ps[:, [1, 2, 3, 4]]
-tracker = pathtracker(F; parameters=vec(p), generic_parameters=p₀)
-reconstructed_points = Vector{Vector{Float64}}()
+#first, we need to preprocess the photo data
+photos = [ps[i, [2 * n₁ - 1, 2 * n₁, 2 * n₂ - 1, 2 * n₂]] for i in 1:4983]
 
-for pᵢ in photos
-	# the data from the dataset is incomplete.
-	# the cameras did not take pictures of all world points.
-	# if a world point was not captured, the entry in the data set is -1.
-	if all(pᵢ .> 0)
-		# we divide by 648 for working with coordinates between 0 and 1
-		# (as explained above)
-		set_parameters!(tracker; target_parameters=pᵢ./648)
-		R = Vector{Vector{Float64}}() # array for the real solutions
-		N = Vector{Float64}() # array for the values of the target function G
-		for s in start
-			result = track(tracker, s)
-			if is_success(result) && is_real(result)
-				r = real.(solution(result))
-				push!(R,r[1:3])
-				push!(N, G([x;t]=>r[1:5], vec(p) => pᵢ))
-			end
-			# add the real solution that minimizes the target function
-			i = findmin(N)
-			push!(reconstructed_points, R[i[2]])
-		end
+# the data from the dataset is incomplete.
+# the cameras did not take pictures of all world points.
+# if a world point was not captured, the entry in the data set is -1.
+filter!(pᵢ -> all(pᵢ .> 0), photos)
+
+# we divide the photo coordinates by 648
+# to work with coordinates between 0 and 1
+# (as explained above)
+photos= map(pᵢ -> pᵢ./648, photos)
+
+function reconstruction_from_critical_points(R, pᵢ, G)
+	r = real_solutions(R)
+	N = map(r) do rᵢ
+		G([x;t] => rᵢ[1:5], vec(p) => pᵢ)
+	end
+	i = findmin(N)
+
+	return r[i[2]][1:3]
 end
 
+
+reconstructed_points = solve(
+    F,
+    start;
+    parameters = vec(p),
+    start_parameters =  p₀,
+    target_parameters = photos,
+    transform_result = (R,pᵢ) -> reconstruction_from_critical_points(R,pᵢ,G)
+)
 ```
 
 Doing this for several pairs of cameras we get the above picture.

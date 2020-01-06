@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Triangulation of a dinosaur">
 <meta itemprop="datePublished" content="2019-09-03T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-09-03T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="968">
+<meta itemprop="wordCount" content="977">
 
 
 
@@ -194,6 +194,7 @@ $$</p>
 include<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">c</span><span style="color:#e6db74">a</span><span style="color:#e6db74">m</span><span style="color:#e6db74">e</span><span style="color:#e6db74">r</span><span style="color:#e6db74">a</span><span style="color:#e6db74">s</span><span style="color:#e6db74">.</span><span style="color:#e6db74">j</span><span style="color:#e6db74">l</span><span style="color:#e6db74">&#34;</span>)
 include<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">p</span><span style="color:#e6db74">i</span><span style="color:#e6db74">c</span><span style="color:#e6db74">t</span><span style="color:#e6db74">u</span><span style="color:#e6db74">r</span><span style="color:#e6db74">e</span><span style="color:#e6db74">s</span><span style="color:#e6db74">.</span><span style="color:#e6db74">j</span><span style="color:#e6db74">l</span><span style="color:#e6db74">&#34;</span>)
 n₁<span style="color:#f92672"></span>, n₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>
+camera_numbers<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [n₁<span style="color:#f92672"></span>, n₂<span style="color:#f92672"></span>]
 
 <span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 <span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> t<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
@@ -213,34 +214,39 @@ F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differ
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">4</span>)
 F₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(Fᵢ<span style="color:#f92672"></span>, vec<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>)<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>p₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> Fᵢ<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F<span style="color:#f92672"></span>]
 start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(solve<span style="color:#f92672"></span>(F₀<span style="color:#f92672"></span>))
-</code></pre></div><p><code>start</code> contains 6 solutions. By the discussion at the end of this example, the number of critical points <code>F=0</code> is indeed 6. Now, we track these 6 solutions towards the photo parameters we are interested in.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">photos<span style="color:#f92672"></span> <span style="color:#f92672">=</span> ps<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]]
-tracker<span style="color:#f92672"></span> <span style="color:#f92672">=</span> pathtracker<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>vec<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>), generic_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₀<span style="color:#f92672"></span>)
-reconstructed_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}}()
+</code></pre></div><p><code>start</code> contains 6 solutions. At the end of this example we discuss that the number of critical points <code>F=0</code> is indeed 6. Now, we track these 6 solutions towards the photo parameters we are interested in.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e">#first, we need to preprocess the photo data</span>
+photos<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [ps<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, [<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n₁<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n₁<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n₂<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n₂<span style="color:#f92672"></span>]] <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4983</span>]
 
-<span style="color:#66d9ef">for</span> pᵢ<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> photos<span style="color:#f92672"></span>
-	<span style="color:#75715e"># the data from the dataset is incomplete.</span>
-	<span style="color:#75715e"># the cameras did not take pictures of all world points.</span>
-	<span style="color:#75715e"># if a world point was not captured, the entry in the data set is -1.</span>
-	<span style="color:#66d9ef">if</span> all<span style="color:#f92672"></span>(pᵢ<span style="color:#f92672"></span> <span style="color:#f92672">.&gt;</span> <span style="color:#ae81ff">0</span>)
-		<span style="color:#75715e"># we divide by 648 for working with coordinates between 0 and 1</span>
-		<span style="color:#75715e"># (as explained above)</span>
-		set_parameters!<span style="color:#f92672"></span>(tracker<span style="color:#f92672"></span>; target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>pᵢ<span style="color:#f92672"></span><span style="color:#f92672">./</span><span style="color:#ae81ff">648</span>)
-		R<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}}() <span style="color:#75715e"># array for the real solutions</span>
-		N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}() <span style="color:#75715e"># array for the values of the target function G</span>
-		<span style="color:#66d9ef">for</span> s<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> start<span style="color:#f92672"></span>
-			result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> track<span style="color:#f92672"></span>(tracker<span style="color:#f92672"></span>, s<span style="color:#f92672"></span>)
-			<span style="color:#66d9ef">if</span> is_success<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>) <span style="color:#f92672">&amp;&amp;</span> is_real<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>)
-				r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> real<span style="color:#f92672"></span><span style="color:#f92672">.</span>(solution<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>))
-				push!<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>,r<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>])
-				push!<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>, G<span style="color:#f92672"></span>([x<span style="color:#f92672"></span>;t<span style="color:#f92672"></span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>r<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>], vec<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>) <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> pᵢ<span style="color:#f92672"></span>))
-			<span style="color:#66d9ef">end</span>
-			<span style="color:#75715e"># add the real solution that minimizes the target function</span>
-			i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> findmin<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>)
-			push!<span style="color:#f92672"></span>(reconstructed_points<span style="color:#f92672"></span>, R<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]])
-		<span style="color:#66d9ef">end</span>
+<span style="color:#75715e"># the data from the dataset is incomplete.</span>
+<span style="color:#75715e"># the cameras did not take pictures of all world points.</span>
+<span style="color:#75715e"># if a world point was not captured, the entry in the data set is -1.</span>
+filter!<span style="color:#f92672"></span>(pᵢ<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> all<span style="color:#f92672"></span>(pᵢ<span style="color:#f92672"></span> <span style="color:#f92672">.&gt;</span> <span style="color:#ae81ff">0</span>), photos<span style="color:#f92672"></span>)
+
+<span style="color:#75715e"># we divide the photo coordinates by 648</span>
+<span style="color:#75715e"># to work with coordinates between 0 and 1</span>
+<span style="color:#75715e"># (as explained above)</span>
+photos<span style="color:#f92672"></span><span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(pᵢ<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> pᵢ<span style="color:#f92672"></span><span style="color:#f92672">./</span><span style="color:#ae81ff">648</span>, photos<span style="color:#f92672"></span>)
+
+<span style="color:#66d9ef">function</span> reconstruction_from_critical_points<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>, pᵢ<span style="color:#f92672"></span>, G<span style="color:#f92672"></span>)
+	r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> real_solutions<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
+	N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(r<span style="color:#f92672"></span>) <span style="color:#66d9ef">do</span> rᵢ<span style="color:#f92672"></span>
+		G<span style="color:#f92672"></span>([x<span style="color:#f92672"></span>;t<span style="color:#f92672"></span>] <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> rᵢ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>], vec<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>) <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> pᵢ<span style="color:#f92672"></span>)
+	<span style="color:#66d9ef">end</span>
+	i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> findmin<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>)
+
+	<span style="color:#66d9ef">return</span> r<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]][<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 <span style="color:#66d9ef">end</span>
 
+
+reconstructed_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+    F<span style="color:#f92672"></span>,
+    start<span style="color:#f92672"></span>;
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>),
+    start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> photos<span style="color:#f92672"></span>,
+    transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (R<span style="color:#f92672"></span>,pᵢ<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> reconstruction_from_critical_points<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>,pᵢ<span style="color:#f92672"></span>,G<span style="color:#f92672"></span>)
+)
 </code></pre></div><p>Doing this for several pairs of cameras we get the above picture.</p>
 <h2 id="eddegree-of-the-multiview-variety">EDdegree of the Multiview variety</h2>
 <p>The closure (under <a href="https://en.wikipedia.org/wiki/Zariski_topology">Zariski topology</a>) of</p>

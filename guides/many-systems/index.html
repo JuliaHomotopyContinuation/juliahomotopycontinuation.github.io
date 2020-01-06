@@ -156,9 +156,8 @@ F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
     (x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
     (x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>    
 ]
-
-</code></pre></div><p>Since we need to solve <code>F</code> many times for different values of <code>p</code> it makes sense to first compute all
-solutions for generic parameters and then to use  a <a href="/guides/parameter-homotopies/">parameter homotopy</a>.</p>
+</code></pre></div><p>First, we compute the
+solutions for generic parameters and then use  a <a href="/guides/parameter-homotopies/">parameter homotopy</a>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Generate generic parameters by sampling complex numbers from the normal distribution</span>
 p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
 <span style="color:#75715e"># Substitute p₀ for p</span>
@@ -174,35 +173,30 @@ result_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</sp
 </code></pre><p>We see that our polynomial system $F$ has at most <strong>2</strong> isolated solutions (instead of the 8 possible ones).
 The idea is to use these two generic solutions to find the solutions for the specific parameters we are interested in.
 For this we are using a <a href="/guides/parameter-homotopies/">parameter homotopy</a> from the generic parameters $p_0$ to the specific parameters.</p>
-<p>In order to avoid to setup the necessary data structures over and over again we construct a <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#HomotopyContinuation.PathTracker"><code>PathTracker</code></a> once
-and reuse it to track all paths.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Let&#39;s store the generic solutions</span>
-S_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>)
-<span style="color:#75715e"># Construct the PathTracker</span>
-tracker<span style="color:#f92672"></span> <span style="color:#f92672">=</span> pathtracker<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>, generic_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₀<span style="color:#f92672"></span>)
-</code></pre></div><p>Since we do not have any real world data for our toy example, let's generate some random data.</p>
+<p>This can be done as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># generate some random data to simulate the parameters</span>
 data<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10_000</span>]
-</code></pre></div><p>Now we have everything to solve the equations for all parameters.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Map over each parameter of our data</span>
-<span style="color:#75715e"># and compute the corresponding solutions</span>
-data_solutions<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(data<span style="color:#f92672"></span>) <span style="color:#66d9ef">do</span> p<span style="color:#f92672"></span>
-    <span style="color:#75715e"># We want to store all solutions. Create an empty array.</span>
-    S_p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> similar<span style="color:#f92672"></span>(S_p₀<span style="color:#f92672"></span>, <span style="color:#ae81ff">0</span>)
-    <span style="color:#66d9ef">for</span> s<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> S_p₀<span style="color:#f92672"></span>
-        result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> track<span style="color:#f92672"></span>(tracker<span style="color:#f92672"></span>, s<span style="color:#f92672"></span>; target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>)
-        <span style="color:#75715e"># check that the tracking was successfull</span>
-        <span style="color:#66d9ef">if</span> issuccess<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>)
-            <span style="color:#75715e"># only store the solutions</span>
-            push!<span style="color:#f92672"></span>(S_p<span style="color:#f92672"></span>, solution<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>))
-        <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">end</span>
-    S_p<span style="color:#f92672"></span>
-<span style="color:#66d9ef">end</span>
-</code></pre></div><p>In real applications you probably don't want to store all solution but instead you have a measure of what the <em>best</em> solution is.</p>
-<p>Also note that <code>track</code> will assemble for each tracked path a <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/path_tracker/#PathResult-1"><code>PathResult</code></a> with <a href="/guides/reading-output/#pathresult-entries">additional informations</a>. If you want to avoid to minimize this overhead you can add the keyword argument <code>details = :minimal</code>, i.e.,</p>
-<pre><code>result = track(tracker, s; target_parameters=p, details=:minimal)
-</code></pre>
+
+<span style="color:#75715e"># track p₀ towards the entries of data</span>
+data_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+    F<span style="color:#f92672"></span>,
+    solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>);
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,
+    start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> data<span style="color:#f92672"></span>
+)
+</code></pre></div><p>It is also possible to immediately postprocess the output. For instance, suppose that we are only interested in the real solutions. Then:</p>
+<p>This can be done as follows:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">data_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+    F<span style="color:#f92672"></span>,
+    solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>);
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,
+    start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> data<span style="color:#f92672"></span>,
+    transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (r<span style="color:#f92672"></span>,p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> real_solutions<span style="color:#f92672"></span>(r<span style="color:#f92672"></span>),
+    flatten<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+)
+</code></pre></div>
     
     
   </div>

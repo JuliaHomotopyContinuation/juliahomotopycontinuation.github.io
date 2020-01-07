@@ -13,7 +13,7 @@ group = "math-data"
 
 Consider the problem of numerically approximating an integral of the form
 
-$$\int \,f(x) \, \mathrm{d}V,$$
+$$\int f(x)  \mathrm{d}V,$$
 
 where $V\subset \mathbb{R}^N$ is an [algebraic manifold](https://en.wikipedia.org/wiki/Algebraic_manifold), $\mathrm{d}V$ is the volume form on $V$ and $f:V\to \mathbb{R}$ is a measurable function.
 
@@ -29,16 +29,16 @@ where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$.
 
 The equality that we want to exploit is in the main theorem of [the article](https://arxiv.org/abs/1810.06271), and it is as follows:
 
-$$\frac{\sqrt{\pi}^{n+1}}{\Gamma(\frac{n+1}{2})}\;\mathbb{E} \, \Sigma(f)(A,b) = \int \,f(x) \, \mathrm{d} V.$$
+$$\frac{\sqrt{\pi}^{n+1}}{\Gamma(\frac{n+1}{2})}\;\mathbb{E} \, \Sigma(f)(A,b) = \int f(x)  \mathrm{d} V.$$
 
 By the law of large numbers, if we sample many pairs $(A,b)$ and take the empirical mean of $\Sigma(f)(A,b)$, then this number will converge to the integral of $f$ over $V$.
 
-Let us now use this idea to approximate the volume of the unit circle.
+Let us now use this idea to approximate the volume of a curve.
 
 ```julia
 using HomotopyContinuation, LinearAlgebra, Statistics
 @polyvar x[1:2]
-V = x[1]^2 + x[2]^2 - 1
+V = x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1
 ∇V = differentiate(V, x)
 
 function α(z, J)
@@ -87,14 +87,12 @@ empirical_distribution = solve(
 )
 ```
 
-Let us check the volume:
+We get the following estimate for the volume:
 
 ```julia-repl
 julia> μ = mean(empirical_distribution)
 julia> volume = π * μ
-6.284680060171913
+11.199843707158607
 ```
-
-The actual volume is $2\pi \approx 6.2832$. Thus, we have the volume with 3 correct digits.
 
 {{<bibtex >}}

@@ -104,7 +104,7 @@ julia> mean(empirical_distribution)
 
 Let $\sigma^2$ be the variance of $\overline{f}(A,b)$. By Chebychevs inequality we have the following rate of convergence for the $k$-th empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$:
 
-$$\mathrm{Prob}\\{\vert \mathrm{E}(k) -  \int_V f(x)  \mathrm{d} x \vert \geq \varepsilon \\} \leq \frac{\sigma^2}{\varepsilon^2k},$$
+$$\mathrm{Prob}\\{\vert \mathrm{E}(f,k) -  \int_V f(x)  \mathrm{d} x \vert \geq \varepsilon \\} \leq \frac{\sigma^2}{\varepsilon^2k},$$
 
 One can show that
 $\sigma^2 \leq d^2(1+C)^2 \frac{\pi^{n+1}}{\Gamma\left(\frac{n+1}{2}\right)^2}\, \max_{x\in V} f(x)^2,$

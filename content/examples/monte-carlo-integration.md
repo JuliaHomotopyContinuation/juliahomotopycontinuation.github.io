@@ -63,7 +63,7 @@ start = solve(G₀)
 start_sols = solutions(start)
 ```
 
-Now, we track `start_sols` towards $10^6$ random Gaussian linear spaces.
+Now, we track `start_sols` towards $10^7$ random Gaussian linear spaces.
 
 ```julia
 f(x) = 1.0 # so that ∫ f(x) dx gives the volume
@@ -88,7 +88,7 @@ empirical_distribution = solve(
     start_sols;
     parameters = [vec(A); b],
     start_parameters =  [vec(A₀); b₀],
-    target_parameters = [randn(n*N + n) for _ in 1:10^6],
+    target_parameters = [randn(n*N + n) for _ in 1:10^7],
     transform_result = (R,p) -> f̄(R)
 )
 ```
@@ -121,8 +121,8 @@ C, d, n = 8, 4, 1
 For $\varepsilon = 0.1$ the probability of $\vert \mathrm{E}(1,k) - \mathrm{vol}(V)\vert\geq \varepsilon$ is
 
 ```julia-repl
-julia> k, ε = 10^6, 0.1
-julia> σ² / (ε * k)
+julia> k, ε = 10^7, 0.1
+julia> σ² / (ε^2 * k)
 0.12791007303811808
 ```
 

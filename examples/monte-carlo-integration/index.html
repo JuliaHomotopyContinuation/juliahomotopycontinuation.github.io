@@ -195,7 +195,7 @@ b₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> ran
 G₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(g<span style="color:#f92672"></span>, vec<span style="color:#f92672"></span>(A<span style="color:#f92672"></span>)<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>vec<span style="color:#f92672"></span>(A₀<span style="color:#f92672"></span>), b<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>b₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> g<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> G<span style="color:#f92672"></span>]
 start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(G₀<span style="color:#f92672"></span>)
 start_sols<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>)
-</code></pre></div><p>Now, we track <code>start_sols</code> towards $10^6$ random Gaussian linear spaces.</p>
+</code></pre></div><p>Now, we track <code>start_sols</code> towards $10^7$ random Gaussian linear spaces.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">f<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#75715e"># so that ∫ f(x) dx gives the volume</span>
 
 <span style="color:#75715e">#define the random variable f̄</span>
@@ -218,7 +218,7 @@ empirical_distribution<span style="color:#f92672"></span> <span style="color:#f9
     start_sols<span style="color:#f92672"></span>;
     parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [vec<span style="color:#f92672"></span>(A<span style="color:#f92672"></span>); b<span style="color:#f92672"></span>],
     start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  [vec<span style="color:#f92672"></span>(A₀<span style="color:#f92672"></span>); b₀<span style="color:#f92672"></span>],
-    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(n<span style="color:#f92672"></span><span style="color:#f92672">*</span>N<span style="color:#f92672"></span> <span style="color:#f92672">+</span> n<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">6</span>],
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(n<span style="color:#f92672"></span><span style="color:#f92672">*</span>N<span style="color:#f92672"></span> <span style="color:#f92672">+</span> n<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">7</span>],
     transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (R<span style="color:#f92672"></span>,p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> f̄<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
 )
 </code></pre></div><p>We get the following estimate for the volume:</p>
@@ -235,8 +235,8 @@ where $d = \mathrm{deg}(V)$ and $C\geq \max_{x\in V}\Vert x\Vert^2$.</p>
 C<span style="color:#f92672"></span>, d<span style="color:#f92672"></span>, n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>
 σ²<span style="color:#f92672"></span> <span style="color:#f92672">=</span> d<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>C<span style="color:#f92672"></span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> pi<span style="color:#f92672">^</span>(n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> gamma<span style="color:#f92672"></span>((n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>)
 </code></pre></div><p>For $\varepsilon = 0.1$ the probability of $\vert \mathrm{E}(1,k) - \mathrm{vol}(V)\vert\geq \varepsilon$ is</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; k, ε = 10^6, 0.1
-julia&gt; σ² / (ε * k)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; k, ε = 10^7, 0.1
+julia&gt; σ² / (ε^2 * k)
 0.12791007303811808
 </code></pre><p>Therefore, we can safely conclude that $\mathrm{vol}( C ) \approx 11.2$.</p>
 <strong>Cite this example:</strong>

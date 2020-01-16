@@ -117,10 +117,11 @@ Let $\sigma^2$ be the variance of $\overline{f}(A,b)$. By Chebychevs inequality 
 
 $$\mathrm{Prob}\\{\vert \mathrm{E}(f,k) -  \int_V f(x)  \mathrm{d} x \vert \geq \varepsilon \\} \leq \frac{\sigma^2}{\varepsilon^2k}.$$
 
-The empirical variance of our sample is.
+The empirical variance of our sample is
 
-```julia
-s² = std(empirical_distribution)
+```julia-repl
+julia> s² = std(empirical_distribution)
+8.198196919934363
 ```
 
 For $\varepsilon = 0.1$ the probability of $\vert \mathrm{E}(1,k) - \mathrm{vol}(V)\vert\geq \varepsilon$ is

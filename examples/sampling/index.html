@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Sampling from a variety">
 <meta itemprop="datePublished" content="2019-07-02T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-07-02T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="579">
+<meta itemprop="wordCount" content="591">
 
 
 
@@ -167,76 +167,82 @@
 <div id="post" itemprop="articleBody">
     
     <p>The article <a href="https://arxiv.org/abs/1810.06271">Random points on an algebraic manifold</a> proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve</p>
-<p>$$V = \{ x=(x_1,x_2) \in \mathbb{R}^2 : x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\}.$$</p>
+<p>$$V = \{ x=(x_1,x_2) \in \mathbb{R}^2 \mid x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\}.$$</p>
 <p>intersected with the box $B = [-2,2]\times [-2,2]$.</p>
-<p>Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int f(x), \mathrm{d}V)$. We will consider the example $f(x)=1$, which gives the uniform distribution on $V\cap B$. For the algorithm we need upper bounds</p>
-<p>$$K\geq \sup \{ f(x) : x\in V\cap B\} \quad \text{and}\quad C\geq \sup \{\Vert x\Vert^2 : x\in V\cap B\}.$$
+<p>Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int_{V} f(x) \mathrm{d}V)$. We will consider the example $f(x)=1$, which gives the uniform distribution on $V\cap B$. For the algorithm we need upper bounds</p>
+<p>$$K\geq \sup \{ f(x) \mid x\in V\cap B\} \quad \text{and}\quad C\geq \sup \{\Vert x\Vert^2 \mid x\in V\cap B\}.$$
 We take $K = 1$ and $C = 8$.</p>
 <p>The algorithm goes as follows. Intersect $V\cap B$ with a random line $L={a_1x+a_2y=b}$, where $a_1,a_2$ and $b$ are independent standard Gaussian random variables.
-Then, compute the following sum over the points $x\in V\cap B\cap L$:</p>
-<p>$$g(a_1,a_2,b) := \sum , f(x) \cdot \alpha(x), \text{ where } \alpha(x)= \frac{1+\Vert x\Vert^2}{\sqrt{1+ \langle x,\pi_x x\rangle}},$$</p>
-<p>and $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$ (<em>careful</em>: the $\alpha$ here is $1/(\pi\alpha)$ in the paper). Because $V$ has degree $4$, there are at most 4 points in the section, and so</p>
-<p>$$p:= \frac{g(a_1,a_2,b)}{4K(1+C)} \leq 1.$$</p>
+Then, compute the following sum:</p>
+<p>$$\overline{f}(a_1,a_2,b) := \sum_{x\in V\cap B\cap L}  \frac{f(x)}{\alpha(x)}, \text{ where } \alpha(x)= \frac{1}{\pi} \frac{\sqrt{1+ \langle x,\pi_x x\rangle}}{1+\Vert x\Vert^2},$$</p>
+<p>where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$. Because $d=\mathrm{deg}(V)=4$ has degree $4$, there are at most 4 points in the section $ V\cap B\cap L$, and so</p>
+<p>$$p:= \frac{\overline{f}(a_1,a_2,b)}{w} \leq 1, \text{ where } w=dK(1+C).$$</p>
 <p>Then, we throw a biased coin $Z$ with $\mathrm{Prob}\{Z=1\} = p$.</p>
-<p>If $Z=1$, we choose the point in $x\in V\cap B\cap L$ with probability $f(x) \alpha(x)/g(a_1,a_2,b)$. If $Z=0$, we don't take any point. The theorem in the paper says that this procedure produces points from the density $f(x)/(\int_V f(x)\mathrm{d}x)$.</p>
+<ul>
+<li>If $Z=1$, we choose $x\in V\cap B\cap L$ with probability $\frac{f(x) \alpha(x)}{\overline{f}(a_1,a_2,b)}$.</li>
+<li>If $Z=0$, we reject the sample.</li>
+</ul>
+<p>This procedure produces points from the density $f(x)/(\int_V f(x)\mathrm{d}x)$.</p>
 <p>Let us sample in Julia. First, we set up the equations</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, Distributions<span style="color:#f92672"></span>
 <span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
-V<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
-∇V<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(V<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
-K<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
-W<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>K<span style="color:#f92672"></span><span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>C<span style="color:#f92672"></span>)
-
-<span style="color:#66d9ef">function</span> α<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>, J<span style="color:#f92672"></span>)
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+K<span style="color:#f92672"></span>, C<span style="color:#f92672"></span>, d<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">4</span>
+w<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>K<span style="color:#f92672"></span><span style="color:#f92672">*</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>C<span style="color:#f92672"></span>)
+</code></pre></div><p>and we define $\alpha(x)$.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> α<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>, J<span style="color:#f92672"></span>)
     N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> normalize!<span style="color:#f92672"></span>([j<span style="color:#f92672"></span>(x<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> J<span style="color:#f92672"></span>])
-    (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> z⋅z<span style="color:#f92672"></span>) <span style="color:#f92672">/</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (z<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> N<span style="color:#f92672"></span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>)
+    sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (z<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> N<span style="color:#f92672"></span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> z⋅z<span style="color:#f92672"></span>) <span style="color:#f92672">/</span> pi
 <span style="color:#66d9ef">end</span>
-</code></pre></div><p>We create a suitable start system by intersecting $V$ with a random complex linear space.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>] b<span style="color:#f92672"></span>
-G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [V<span style="color:#f92672"></span>; a⋅x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> b<span style="color:#f92672"></span>]
-a₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span>)
-b₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>)
-
-start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>([subs<span style="color:#f92672"></span>(g<span style="color:#f92672"></span>, a<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>a₀<span style="color:#f92672"></span>, b<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>b₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> g<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> G<span style="color:#f92672"></span>])
-start_sols<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>)
-</code></pre></div><p>Now, we track <code>start_sols</code> to various random real intersections, following <a href="/guides/many-systems">this guide</a>. In the code below we make 1000 trials to get points.</p>
+</code></pre></div><p>Now, we define a function that implements the rejection sampling.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">f<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#75715e"># so that we sample the uniform distribution</span>
 
-<span style="color:#75715e">#define the random variable Σ</span>
 <span style="color:#66d9ef">function</span> rejection_step<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
     <span style="color:#66d9ef">if</span> nreal<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>
         S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> real_solutions<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
+
+        <span style="color:#75715e"># intersect M ∩ L with the box B</span>
         filter!<span style="color:#f92672"></span>(s<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> abs<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">&amp;&amp;</span> abs<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>, S<span style="color:#f92672"></span>)
         <span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>isempty<span style="color:#f92672"></span>(S<span style="color:#f92672"></span>)
-            β<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(z<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> f<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>α<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>, ∇V<span style="color:#f92672"></span>), S<span style="color:#f92672"></span>)
-            Σβ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sum<span style="color:#f92672"></span>(β<span style="color:#f92672"></span>)
-            p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Σβ<span style="color:#f92672"></span> <span style="color:#f92672">/</span> W<span style="color:#f92672"></span>
+            β<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(z<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> f<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>) <span style="color:#f92672">/</span> α<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>, J<span style="color:#f92672"></span>), S<span style="color:#f92672"></span>)
+            f̄<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sum<span style="color:#f92672"></span>(β<span style="color:#f92672"></span>)
+            p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> f̄<span style="color:#f92672"></span> <span style="color:#f92672">/</span> w<span style="color:#f92672"></span>
 
             <span style="color:#75715e"># rejection step</span>
             <span style="color:#66d9ef">if</span> rand<span style="color:#f92672"></span>(Bernoulli<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>)) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-                q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> β<span style="color:#f92672"></span> <span style="color:#f92672">./</span> Σβ<span style="color:#f92672"></span>
+                q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> β<span style="color:#f92672"></span> <span style="color:#f92672">./</span> f̄<span style="color:#f92672"></span>
                 i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand<span style="color:#f92672"></span>(Categorical<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>))
                 <span style="color:#66d9ef">return</span> S<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
             <span style="color:#66d9ef">end</span>
         <span style="color:#66d9ef">end</span>
     <span style="color:#66d9ef">end</span>
+    <span style="color:#75715e"># return Inf if sample was rejected</span>
     <span style="color:#66d9ef">return</span> fill<span style="color:#f92672"></span>(Inf,<span style="color:#ae81ff">2</span>)
 <span style="color:#66d9ef">end</span>
+</code></pre></div><p>We create a suitable start system by intersecting $V$ with a random complex linear space.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>] b<span style="color:#f92672"></span>
+G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F<span style="color:#f92672"></span>; a⋅x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> b<span style="color:#f92672"></span>]
+a₀<span style="color:#f92672"></span>, b₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span>), randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>)
 
-<span style="color:#75715e">#track towards 10^5 random linear spaces</span>
+start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>([subs<span style="color:#f92672"></span>(g<span style="color:#f92672"></span>, a<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>a₀<span style="color:#f92672"></span>, b<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>b₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> g<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> G<span style="color:#f92672"></span>])
+start_sols<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>)
+</code></pre></div><p>Now, we track <code>start_sols</code> to various random real intersections, following <a href="/guides/many-systems">this guide</a>. In the code below we make $k=10^2$ trials to get points.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">k<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>
+
+<span style="color:#75715e">#track towards k random linear spaces</span>
 points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
     G<span style="color:#f92672"></span>,
     start_sols<span style="color:#f92672"></span>;
     parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [a<span style="color:#f92672"></span>; b<span style="color:#f92672"></span>],
     start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  [a₀<span style="color:#f92672"></span>; b₀<span style="color:#f92672"></span>],
-    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span>],
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>k<span style="color:#f92672"></span>],
     transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (R<span style="color:#f92672"></span>,p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> rejection_step<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
 )
 filter!<span style="color:#f92672"></span>(p<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#f92672">!</span>(Inf <span style="color:#66d9ef">in</span> p<span style="color:#f92672"></span>), points<span style="color:#f92672"></span>)
 </code></pre></div><p>The points we get from executing this code are shown next.</p>
 <p style="text-align:center;"><img src="/images/unif.png" width="700px"/></p>
-<p>The code can easily be adapted to sample from other densities. For instance, changing to <code>f(x) = exp(2x[2])</code>, <code>K=exp(4)</code> and <code>W=4K*(1+C)</code> samples from a distribution that gives more weight to points in the upper half plane. Here is a picture.</p>
+<p>The code can easily be adapted to sample from other densities. For instance, changing to <code>f(x) = exp(2x[2])</code>, <code>K=exp(4)</code> samples from a distribution that gives more weight to points in the upper half plane. Here is a picture.</p>
 <p style="text-align:center;"><img src="/images/exp.png" width="700px"/></p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">

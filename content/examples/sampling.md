@@ -75,8 +75,8 @@ function rejection_step(R)
 
             # rejection step
             if rand(Bernoulli(p)) == 1
-                q = β ./ f̄
-                i = rand(Categorical(q))
+                p = β ./ f̄
+                i = rand(Categorical(p))
                 return S[i]
             end
         end

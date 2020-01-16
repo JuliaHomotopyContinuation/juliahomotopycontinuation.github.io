@@ -211,8 +211,8 @@ w<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span 
 
             <span style="color:#75715e"># rejection step</span>
             <span style="color:#66d9ef">if</span> rand<span style="color:#f92672"></span>(Bernoulli<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>)) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-                q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> β<span style="color:#f92672"></span> <span style="color:#f92672">./</span> f̄<span style="color:#f92672"></span>
-                i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand<span style="color:#f92672"></span>(Categorical<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>))
+                p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> β<span style="color:#f92672"></span> <span style="color:#f92672">./</span> f̄<span style="color:#f92672"></span>
+                i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand<span style="color:#f92672"></span>(Categorical<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>))
                 <span style="color:#66d9ef">return</span> S<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
             <span style="color:#66d9ef">end</span>
         <span style="color:#66d9ef">end</span>

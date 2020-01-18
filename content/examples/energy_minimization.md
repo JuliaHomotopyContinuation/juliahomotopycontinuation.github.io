@@ -250,7 +250,7 @@ using  Statistics
 ρ = map(m -> isnan(m) ? 0.0 : m, μ1 ./ μ2)
 ```
 
-The next plot shows plots of $\mu_1$ and $\mu_2$ in the log-scale:
+The next plot shows plots of $\mu_1$ and $\mu_2$ in the logarithmic scale:
 
 <p style="text-align:center;"><img src="/images/mus.png" width="520px"/></p>
 
@@ -284,7 +284,7 @@ julia> maximum(s²(const1̄) ./ (ε^2 * k))
 0.03996983475573611
 ```
 
-That is, the maximum deviation probability is less than $4\%$ in both cases. We conclude that our approximation of $\rho(\theta) = K\\mathrm{Prob}\\{\theta(q) = \theta_0\\}$ is a good approximation.
+That is, the maximum deviation probability is less than $4$% in both cases. We conclude that our approximation of $\rho(\theta) = K\\mathrm{Prob}\\{\theta(q) = \theta_0\\}$ is a good approximation.
 
 
 

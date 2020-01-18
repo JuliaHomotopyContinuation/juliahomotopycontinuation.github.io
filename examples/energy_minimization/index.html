@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Computing a macroscopic configuration">
 <meta itemprop="datePublished" content="2020-01-17T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2020-01-17T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1350">
+<meta itemprop="wordCount" content="1348">
 
 
 
@@ -209,7 +209,7 @@ q<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>) <span
 F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [(q<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>)[i<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> q<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>)[i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]) <span style="color:#f92672">⋅</span> (q<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>)[i<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> q<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>)[i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]) <span style="color:#f92672">-</span> c²<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>]
 </code></pre></div><h2 id="total-energy-of-a-configuration">Total energy of a configuration</h2>
 <p>We model the energy of a molecule using the <a href="https://en.wikipedia.org/wiki/Lennard-Jones_potential">Lennard Jones interaction potential</a></p>
-<p>$$ V(x,y) =  \frac{1}{4},\left(\frac{c}{r}\right)^{12} -\frac{1}{2}, \left(\frac{c}{r}\right)^{6}, \text{ where } r=\Vert x-y\Vert. $$</p>
+<p>$$ V(x,y) =  \frac{1}{4}\left(\frac{c}{r}\right)^{12} -\frac{1}{2} \left(\frac{c}{r}\right)^{6}, \text{ where } r=\Vert x-y\Vert. $$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">c⁶<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (c²<span style="color:#f92672"></span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>
 <span style="color:#66d9ef">function</span> V<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>)
     r⁶<span style="color:#f92672"></span> <span style="color:#f92672">=</span> ((x<span style="color:#f92672"></span><span style="color:#f92672">-</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">⋅</span>(x<span style="color:#f92672"></span><span style="color:#f92672">-</span>y<span style="color:#f92672"></span>))<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>
@@ -225,13 +225,16 @@ f<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>) <span
 <p>We approximate</p>
 <p>$$\rho(\theta_0) \approx \frac{\mu_1(\theta_0)}{\mu_2(\theta_0)},$$</p>
 <p>where</p>
-<p>$$\mu_1(\theta_0) = \int_{\theta_0 - \Delta\theta &lt; \theta(q) &lt; \theta_0 + \Delta\theta} f(q)\; \mathrm{d} q \quad\text{ and }\quad \mu_2(\theta_0) = \int_{\theta_0 - \Delta\theta &lt; \theta(q) &lt; \theta_0 + \Delta\theta} 1 \;\mathrm{d} q$$</p>
+<p>$$
+\mu_1(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} f(q)\; \mathrm{d} q \;\text{ and }\;
+\mu_2(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} 1 \;\mathrm{d} q
+$$</p>
 <p>for some $\Delta \theta &gt;0$. In our experiment we take $\Delta \theta = 3^\circ$ (degrees).</p>
-<p>The two integrals are evaluated using the <a href="/examples/monte-carlo-integration">integration guide</a>. Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E} , \overline{f}(A,b),$ where</p>
-<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} ,\frac{f(q)}{\alpha(q)}\quad\text{ and }\quad\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$</p>
+<p>The two integrals are evaluated using the <a href="/examples/monte-carlo-integration">integration guide</a>. Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E}  \overline{f}(A,b),$ where</p>
+<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\;\text{ and }\;\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$</p>
 <p>and where $\pi_x$ is the orthogonal projection onto the normal space $\mathrm{N}_x M$ of $M$ at $x$.</p>
 <p>Similarly, we define $\overline{1}(A,b)$ and get
-$\mu_2(\theta_0)= \mathbb{E} , \overline{1}(A,b).$</p>
+$\mu_2(\theta_0)= \mathbb{E}  \overline{1}(A,b).$</p>
 <p>Let us implement this in <code>Julia</code>. First, we define $\alpha(q)$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> StaticPolynomials<span style="color:#f92672"></span> <span style="color:#75715e"># for fast evaluation of the Jacobian</span>
 <span style="color:#66d9ef">const</span> SP<span style="color:#f92672"></span> <span style="color:#f92672">=</span> StaticPolynomials<span style="color:#f92672"></span>
@@ -340,7 +343,7 @@ julia&gt; maximum(s²(f̄) ./ (ε^2 * k))
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; s²(const1̄) = std.(empirical_distributions_const1̄)
 julia&gt; maximum(s²(const1̄) ./ (ε^2 * k))
 0.03996983475573611
-</code></pre><p>That is, the maximum deviation probability is less than $4%$ in both cases. We conclude that our approximation of $\rho(\theta) = K\,\mathrm{Prob}\{\theta(q) = \theta_0\}$ is a good approximation.</p>
+</code></pre><p>That is, the maximum deviation probability is less than $4%$ in both cases. We conclude that our approximation of $\rho(\theta) = K\mathrm{Prob}\{\theta(q) = \theta_0\}$ is a good approximation.</p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">
 <code class="language-julia hljs">@Misc{ energy_minimization2020 ,

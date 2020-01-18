@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Computing a macroscopic configuration">
 <meta itemprop="datePublished" content="2020-01-17T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2020-01-17T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1349">
+<meta itemprop="wordCount" content="1347">
 
 
 
@@ -327,7 +327,7 @@ empirical_distributions_f̄<span style="color:#f92672"></span> <span style="colo
 <span style="color:#75715e"># but  μ₁ ./ μ₂ has NaN entries, because μ₂ has zero entries</span>
 <span style="color:#75715e"># we have to filter out the NaNs</span>
 ρ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(m<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> isnan<span style="color:#f92672"></span>(m<span style="color:#f92672"></span>) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0.0</span> <span style="color:#f92672">:</span> m<span style="color:#f92672"></span>, μ1<span style="color:#f92672"></span> <span style="color:#f92672">./</span> μ2<span style="color:#f92672"></span>)
-</code></pre></div><p>The next plot shows plots of $\mu_1$ and $\mu_2$ in the logarithmic scale:</p>
+</code></pre></div><p>The next plot shows $\mu_1$ and $\mu_2$ in the logarithmic scale:</p>
 <p style="text-align:center;"><img src="/images/mus.png" width="520px"/></p>
 <h2 id="rate-of-convergence">Rate of convergence</h2>
 <p>How good is the estimate? The analysis of variance from the <a href="/examples/monte-carlo-integration">the integration guide</a> yields for the empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$:</p>

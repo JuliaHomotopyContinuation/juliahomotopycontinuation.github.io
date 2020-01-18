@@ -250,7 +250,7 @@ using  Statistics
 ρ = map(m -> isnan(m) ? 0.0 : m, μ1 ./ μ2)
 ```
 
-The next plot shows plots of $\mu_1$ and $\mu_2$ in the logarithmic scale:
+The next plot shows $\mu_1$ and $\mu_2$ in the logarithmic scale:
 
 <p style="text-align:center;"><img src="/images/mus.png" width="520px"/></p>
 

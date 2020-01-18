@@ -6,7 +6,7 @@
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Oct 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jan 2020 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -182,6 +182,17 @@ using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁
       <description>Parameter Homotopies Consider the situation in which one has to solve a specific instance of a parametrized family of polynomial systems
 $$ P = \{F(x,p) = (f_1(x,p), \ldots, f_n(x,p)) \mid p \in \mathbb{C}^m\}. $$
 To not destroy the solution structure it is desirable to not leave $P$ during the homotopy. This can be accomplished by using the homotopy $$H(x,t) := F(x, (1-t)p + tq)$$ where $p$ and $q$ are parameters in $\mathbb{C}^m$.</description>
+    </item>
+    
+    <item>
+      <title>Energy minimization</title>
+      <link>/examples/energy_minimization/</link>
+      <pubDate>Fri, 17 Jan 2020 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/energy_minimization/</guid>
+      <description>Consider a physical system of $N$ particles $q=(q_1,\ldots,q_N)\in M$. In our example we take $M$ to be the space of configurations of cyclohexane. The $q_i$ are then the spacial positions of the six carbon atoms in a cyclohexane molecule. The constraints of this molecule are the following algebraic equations:
+$$ M = \{(q_1,\ldots,q_6)\in (\mathbb{R}^3)^6 \mid \Vert q_1-q_2\Vert^2 = \cdots= \Vert q_5-q_6\Vert^2 = \Vert q_6-q_1\Vert^2 = c^2\}, $$
+where $c$ is the bond length between two neighboring atoms (the vectors $b_i = q_i - q_{i-1}$ are called bonds).</description>
     </item>
     
     <item>

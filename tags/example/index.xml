@@ -6,7 +6,7 @@
     <description>Recent content in example on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Oct 2019 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jan 2020 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/example/index.xml" rel="self" type="application/rss+xml" />
     
@@ -136,6 +136,17 @@ where $\nabla_x(f)$ is the gradient of $f$ at $x$.</description>
       <description>Let two ellipses be centered at points $p_1,p_2$: $$ E_i( r ) = \{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\},; i=1,2, $$ where $Q_1, Q_2$ are symmetric matrices.
 We wish to find the smallest radius $r$ for which $E_1( r )\cap E_2( r )$ is not empty. Let $r^\star$ be the solution for this optimization problem. In Julia we translate this into a polynomial system:
 using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁[1:2, 1:2] Q₂[1:2, 1:2] p₁[1:2] p₂[1:2] @polyvar x[1:2] r z₁ = x - p₁ z₂ = x - p₂ # initialize the equations for E₁ and E₂ f₁ = (Q₁ * z₁) ⋅ (Q₁ * z₁) - r^2 f₂ = (Q₂ * z₂) ⋅ (Q₂ * z₂) - r^2 # initialize the equation for E₁ and E₂ being tangent @polyvar λ g = (Q₁&amp;#39; * Q₁) * z₁ - λ .</description>
+    </item>
+    
+    <item>
+      <title>Energy minimization</title>
+      <link>/examples/energy_minimization/</link>
+      <pubDate>Fri, 17 Jan 2020 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/energy_minimization/</guid>
+      <description>Consider a physical system of $N$ particles $q=(q_1,\ldots,q_N)\in M$. In our example we take $M$ to be the space of configurations of cyclohexane. The $q_i$ are then the spacial positions of the six carbon atoms in a cyclohexane molecule. The constraints of this molecule are the following algebraic equations:
+$$ M = \{(q_1,\ldots,q_6)\in (\mathbb{R}^3)^6 \mid \Vert q_1-q_2\Vert^2 = \cdots= \Vert q_5-q_6\Vert^2 = \Vert q_6-q_1\Vert^2 = c^2\}, $$
+where $c$ is the bond length between two neighboring atoms (the vectors $b_i = q_i - q_{i-1}$ are called bonds).</description>
     </item>
     
     <item>

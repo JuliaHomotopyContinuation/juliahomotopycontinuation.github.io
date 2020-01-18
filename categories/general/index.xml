@@ -78,10 +78,10 @@ $$\Vert z_1-z_2\Vert^2 = \cdots = \Vert z_7-z_8\Vert^2=\Vert z_8-z_1\Vert^2 = c^
     
     <item>
       <title>Method of moments</title>
-      <link>/examples/method_of_moments/</link>
+      <link>/examples/method-of-moments/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
       
-      <guid>/examples/method_of_moments/</guid>
+      <guid>/examples/method-of-moments/</guid>
       <description>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1^2,\sigma_2^2,\sigma_3^2$. The density of $X_i$ is
 $$\phi_i(x) = \frac{1}{\sqrt{2\pi}}; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
 A mixture of the three random variables is the random variable $U$ with density
@@ -140,10 +140,10 @@ using HomotopyContinuation, LinearAlgebra # generate the variables @polyvar Q₁
     
     <item>
       <title>Energy minimization</title>
-      <link>/examples/energy_minimization/</link>
+      <link>/examples/energy-minimization/</link>
       <pubDate>Fri, 17 Jan 2020 21:56:55 +0100</pubDate>
       
-      <guid>/examples/energy_minimization/</guid>
+      <guid>/examples/energy-minimization/</guid>
       <description>Consider a physical system of $N$ particles $q=(q_1,\ldots,q_N)\in M$. In our example we take $M$ to be the space of configurations of cyclohexane. The $q_i$ are then the spacial positions of the six carbon atoms in a cyclohexane molecule. The constraints of this molecule are the following algebraic equations:
 $$ M = \{(q_1,\ldots,q_6)\in (\mathbb{R}^3)^6 \mid \Vert q_1-q_2\Vert^2 = \cdots= \Vert q_5-q_6\Vert^2 = \Vert q_6-q_1\Vert^2 = c^2\}, $$
 where $c$ is the bond length between two neighboring atoms (the vectors $b_i = q_i - q_{i-1}$ are called bonds).</description>

@@ -28,7 +28,7 @@ $$\overline{f}(a_1,a_2,b) := \sum\_{x\in V\cap B\cap L}  \frac{f(x)}{\alpha(x)},
 
 where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$. Because $d=\mathrm{deg}(V)=4$ has degree $4$, there are at most 4 points in the section $ V\cap B\cap L$, and so
 
-$$p:= \frac{\overline{f}(a_1,a_2,b)}{w} \leq 1, \text{ where } w=dK(1+C)\sup\_{x\in V} f(x).$$
+$$p:= \frac{\overline{f}(a_1,a_2,b)}{w} \leq 1, \text{ where } w=dK(1+C).$$
 
 Then, we throw a biased coin $Z$ with $\mathrm{Prob}\\{Z=1\\} = p$.
 
@@ -44,8 +44,8 @@ using HomotopyContinuation, LinearAlgebra, Distributions
 @polyvar x[1:2]
 F = x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1
 J = differentiate(F, x)
-K, C, d, supf = 1, 8, 4, 1
-w = 4 * K * (1+C) * supf
+K, C, d = 1, 8, 4
+w = d * K * (1+C)
 ```
 
 and we define $\alpha(x)$.

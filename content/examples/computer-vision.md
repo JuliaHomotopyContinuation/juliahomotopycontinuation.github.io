@@ -31,18 +31,18 @@ Department of Engineering Science at the University of Oxford. This contains a l
 
 Let $x\in\mathbb{R}^3$ be a 3D point. Then, taking a picture $u=(u_1,u_2)\in\mathbb{R}^2$ of $x$ is modeled as
 
-$$ \begin{pmatrix} u_1 \\\ u_2 \\\ 1 \end{pmatrix} = t \, A \, \begin{pmatrix}x_1 \\\ x_2 \\\ x_3  \\\ 1\end{pmatrix},$$
+$$ \begin{pmatrix} u_1 \\\ u_2 \\\ 1 \end{pmatrix} = t  A  \begin{pmatrix}x_1 \\\ x_2 \\\ x_3  \\\ 1\end{pmatrix},$$
 
 where $A\in \mathbb{R}^{3\times 4}$ is the camera matrix and $t \in \mathbb{R}, t \neq 0$, is a scalar. This is called the pinhole camera model. Let us write $y(x)$ for the first two entries of  $A \begin{pmatrix} x\\\ 1\end{pmatrix}$, and $z(x)$ for the third entry. Then, $u=t y(x)$ and $1 = t z(x)$.
 
 If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set, we want to solve the following minimization problem:
 
 $$
-\underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \\{0\\})^2}{\operatorname{argmin}}\; \lVert t_1 \, y_1(x) - p_1 \rVert^2 + \lVert  t_2 \,  y_2(x) - p_2 \rVert^2
+\underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \\{0\\})^2}{\operatorname{argmin}} \lVert t_1  y_1(x) - p_1 \rVert^2 + \lVert  t_2   y_2(x) - p_2 \rVert^2
 $$
 
 $$
-\text{s.t. }\; t_1 \, z_1(x) = 1 \;\text{ and } \;t_2 \, z_2(x)=1.\quad $$
+\text{s.t. } t_1  z_1(x) = 1 \text{ and } t_2  z_2(x)=1.\quad $$
 
 ## Implementation with Homotopy Continuation
 
@@ -133,7 +133,7 @@ Doing this for several pairs of cameras we get the above picture.
 
 The closure (under [Zariski topology]) of
 
-$$\\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  \, \mid \, t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \\{0\\})^2\\}$$
+$$\\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2   \mid  t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \\{0\\})^2\\}$$
 
 is called *(affine) multiview variety* for two cameras.
 

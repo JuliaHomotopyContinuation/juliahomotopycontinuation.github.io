@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Triangulation of a dinosaur">
 <meta itemprop="datePublished" content="2019-09-03T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-09-03T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="977">
+<meta itemprop="wordCount" content="969">
 
 
 
@@ -179,14 +179,14 @@
 <p>This post is restricted to the case $n=2$, i.e. we want to reconstruct 3D points from images captured by two cameras at a time. We take the <a href="https://www.robots.ox.ac.uk/~vgg/data/data-mview.html">dinosaur</a> data set from the Visual Geometry Group
 Department of Engineering Science at the University of Oxford. This contains a list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-cameras-jl">36 cameras</a> as $3\times 4$ matrices and a corresponding list of <a href="https://gist.github.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b#file-pictures-jl">pictures taken from 4983 world points</a>. (For using the code below one must download the files from these links.)</p>
 <p>Let $x\in\mathbb{R}^3$ be a 3D point. Then, taking a picture $u=(u_1,u_2)\in\mathbb{R}^2$ of $x$ is modeled as</p>
-<p>$$ \begin{pmatrix} u_1 \\ u_2 \\ 1 \end{pmatrix} = t , A , \begin{pmatrix}x_1 \\ x_2 \\ x_3  \\ 1\end{pmatrix},$$</p>
+<p>$$ \begin{pmatrix} u_1 \\ u_2 \\ 1 \end{pmatrix} = t  A  \begin{pmatrix}x_1 \\ x_2 \\ x_3  \\ 1\end{pmatrix},$$</p>
 <p>where $A\in \mathbb{R}^{3\times 4}$ is the camera matrix and $t \in \mathbb{R}, t \neq 0$, is a scalar. This is called the pinhole camera model. Let us write $y(x)$ for the first two entries of  $A \begin{pmatrix} x\\ 1\end{pmatrix}$, and $z(x)$ for the third entry. Then, $u=t y(x)$ and $1 = t z(x)$.</p>
 <p>If $p = (p_1, p_2) \in\mathbb{R}^2\times \mathbb{R}^2$ are two input pictures from the data set, we want to solve the following minimization problem:</p>
 <p>$$
-\underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \{0\})^2}{\operatorname{argmin}}; \lVert t_1 , y_1(x) - p_1 \rVert^2 + \lVert  t_2 ,  y_2(x) - p_2 \rVert^2
+\underset{(x,t) \in \mathbb{R}^3\times (\mathbb{R}\backslash \{0\})^2}{\operatorname{argmin}} \lVert t_1  y_1(x) - p_1 \rVert^2 + \lVert  t_2   y_2(x) - p_2 \rVert^2
 $$</p>
 <p>$$
-\text{s.t. }; t_1 , z_1(x) = 1 ;\text{ and } ;t_2 , z_2(x)=1.\quad $$</p>
+\text{s.t. } t_1  z_1(x) = 1 \text{ and } t_2  z_2(x)=1.\quad $$</p>
 <h2 id="implementation-with-homotopy-continuation">Implementation with Homotopy Continuation</h2>
 <p>Now let's solve this optimization problem using homotopy continuation by solving the critical equations. We use the cameras <code>n₁=1</code> and <code>n₂=2</code>. The camera data</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> DynamicPolynomials<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, HomotopyContinuation<span style="color:#f92672"></span>
@@ -250,7 +250,7 @@ reconstructed_points<span style="color:#f92672"></span> <span style="color:#f926
 </code></pre></div><p>Doing this for several pairs of cameras we get the above picture.</p>
 <h2 id="eddegree-of-the-multiview-variety">EDdegree of the Multiview variety</h2>
 <p>The closure (under <a href="https://en.wikipedia.org/wiki/Zariski_topology">Zariski topology</a>) of</p>
-<p>$$\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2  , \mid , t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \{0\})^2\}$$</p>
+<p>$$\{(t_1y_1(x), t_2y_2(x))\in \mathbb{R}^2\times \mathbb{R}^2   \mid  t_1z_1(x) = t_2z_2(x) = 1,  (x,t)\in \mathbb{R}^3 \times (\mathbb{R}\backslash \{0\})^2\}$$</p>
 <p>is called <em>(affine) multiview variety</em> for two cameras.</p>
 <p>Regarding such an affine multiview variety, the number of (complex) critical points of the squared distance function <code>G</code> is an invariant, which is called the <em>euclidean distance degree</em> (ED degree). <a href="https://arxiv.org/abs/1812.05648">Maxim, Rodriguez and Wang proved</a> showed that the EDdegree of the Multiview variety for 2 cameras is 6. We used this information in the code above for verifying that the initial computation for <code>F₀</code> was correct.</p>
 <strong>Cite this example:</strong>
@@ -259,7 +259,7 @@ reconstructed_points<span style="color:#f92672"></span> <span style="color:#f926
     author =  { Paul Breiding, Christoph Schmidt },
     title = { Computer vision },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/computer-vision/ } },
-    note = { Accessed: January 21, 2020 }
+    note = { Accessed: January 29, 2020 }
 }</code>
 </pre>
 

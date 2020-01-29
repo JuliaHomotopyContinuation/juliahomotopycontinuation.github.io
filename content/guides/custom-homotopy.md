@@ -18,7 +18,7 @@ To track solutions from a start system $G$ to the target system $F$ we use by de
 
 
 $$
-H(x,t) := (1-t)F+tG\;.
+H(x,t) := (1-t)F+tG.
 $$
 
 
@@ -54,7 +54,7 @@ To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$
 
 
 $$
-H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t)\;.
+H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t).
 $$
 
 
@@ -62,7 +62,7 @@ We denote the partial derivative of $H$ w.r.t. $x$ as the *Jacobian* of $H$. For
 
 
 $$
-\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y)\;.
+\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y).
 $$
 
 

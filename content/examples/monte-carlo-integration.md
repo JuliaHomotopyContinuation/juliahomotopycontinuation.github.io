@@ -21,7 +21,7 @@ For instance, for $f(x)=1$, this integral gives the volume of $V$. In this examp
 
 #### Integrating functions with homotopy continuation
 
-Let $n=\mathrm{dim}\, V$, and let $A\in \mathbb{R}^{n\times N}$ and $b\in \mathbb{R}^n$ be a matrix-vector pair with independent standard Gaussian entries. Then, almost surely, $\\{x\in \mathbb{R}^N : Ax=b\\}$ is a linear space of dimension $N-n$, which intersects $V$ in finitely many points.
+Let $n=\mathrm{dim} V$, and let $A\in \mathbb{R}^{n\times N}$ and $b\in \mathbb{R}^n$ be a matrix-vector pair with independent standard Gaussian entries. Then, almost surely, $\\{x\in \mathbb{R}^N : Ax=b\\}$ is a linear space of dimension $N-n$, which intersects $V$ in finitely many points.
 
 Consider the random variable
 
@@ -33,7 +33,7 @@ $$\alpha(x) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\lang
 
 and where $n=\mathrm{dim}(V)$, and where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$. The main theorem of [the article](https://arxiv.org/abs/1810.06271) yields
 
-$$\mathbb{E} \, \overline{f}(A,b) = \int_V f(x)  \mathrm{d} x.$$
+$$\mathbb{E}  \overline{f}(A,b) = \int_V f(x)  \mathrm{d} x.$$
 
 The empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$ for $k$ sample pairs $(A_1,b_1),\ldots, (A_k,b_k)$ converges to the integral of $f$ over $V$ as $k\to \infty$.
 

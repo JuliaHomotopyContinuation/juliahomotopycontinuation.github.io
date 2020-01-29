@@ -32,7 +32,7 @@ The curve $C \subset \mathbb{R}^2$ defined by $f(x,y) = (x^3 - xy^2 + y + 1)^2(x
 
 As pointed out by [Aamari et. al.](https://arxiv.org/pdf/1705.04565.pdf) the reach is the determined by the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$:
 
-$$\tau = \min\\left\\{\frac{\rho}{2}, \, \frac{1}{\sigma}\\right\\},$$
+$$\tau = \min\\left\\{\frac{\rho}{2},  \frac{1}{\sigma}\\right\\},$$
 
 where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck of $C$.
 
@@ -46,11 +46,11 @@ f = (x^3 - x*y^2 + y + 1)^2 * (x^2 + y^2 - 1) + y^2 - 5
 
 Our computation below finds
 
-$$\rho \approx 0.13835 \;\text{ and }\ \sigma \approx 2097.17$$
+$$\rho \approx 0.13835 \text{ and }\ \sigma \approx 2097.17$$
 
 and therefore the reach of the curve $C$ is
 
-$$\tau \approx \min\\left\\{\frac{0.13835}{2}, \, \frac{1}{2097.167}\\right\\} \approx 0.000479\,.$$
+$$\tau \approx \min\\left\\{\frac{0.13835}{2},  \frac{1}{2097.167}\\right\\} \approx 0.000479.$$
 
 ## Bottlenecks
 
@@ -155,7 +155,7 @@ and where $H(p)$ is the Hessian of $f$ at $p$ and $v(p) = \begin{bmatrix} 0 & -1
 For computing the maximum of $\sigma(p)$ over $C$ we solve the critical equations of $\sigma(p)$.  
 The critical equations are
 
-$$v(p)^T \, \nabla_p \sigma=0\quad \text{and}\quad f(p)=0.$$
+$$v(p)^T  \nabla_p \sigma=0\quad \text{and}\quad f(p)=0.$$
 
 We use the following code.
 

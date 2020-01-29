@@ -13,7 +13,7 @@ group = "algebraic-geometry"
 
 Let two ellipses be centered at points $p_1,p_2$:
 $$
-E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\},\; i=1,2,
+E_i( r ) = \\{x\in \mathbb{R}^2 \mid (x-p_i)^T Q_i^TQ_i(x-p_i) = r^2\\}, i=1,2,
 $$
 where $Q_1, Q_2$ are symmetric matrices.
 

@@ -13,15 +13,15 @@ group = "math-data"
 
 Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1^2,\sigma_2^2,\sigma_3^2$. The density of $X_i$ is
 
-$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}\; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
+$$\phi_i(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$
 
 A mixture of the three random variables is the random variable $U$ with density
 
-$$\psi(x) = a_1\, \phi_1(x)\, + \,a_2 \,\phi_2(x)\, + \,a_3 \,\phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$
+$$\psi(x) = a_1 \phi_1(x) + a_2 \phi_2(x) + a_3 \phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$
 
 The [method of moments](https://en.wikipedia.org/wiki/Method_of_moments_(statistics)) recovers $\psi$ from the moments
 
-  $$m_k = \\int x^k \,\psi(x)\; \mathrm{d}x.$$
+  $$m_k = \\int x^k \psi(x) \mathrm{d}x.$$
 
 Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$. Let us set up a system for this in Julia.
 

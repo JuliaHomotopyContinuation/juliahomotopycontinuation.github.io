@@ -10,11 +10,11 @@ group = "get-started"
 
 ## A first example
 We are interested in the numerical solution of systems of polynomial equations like
-$$\begin{array}{rl} -x^5y &= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\\\ \frac12 &=  x^2+2xy^2 - 2y^2 \;. \end{array}$$
+$$\begin{array}{rl} -x^5y &= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\\\ \frac12 &=  x^2+2xy^2 - 2y^2 . \end{array}$$
 
 Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials
 $$
-    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 \;.
+    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 .
 $$
 The common zero set $V(f_1,f_2)$ is also called a *variety*.
 
@@ -157,11 +157,11 @@ We say that a homotopy is *optimal* if $H(x,1)$ has the same number of solutions
 Instead of aiming at optimal homotopies, we consider polynomial systems as part of a *family* of polynomial system where we know (or can construct) an optimal homotopy $H(x,t)$ for almost all members of this family. A theorem in algebraic geometry says that the number of solutions of our particular system is always bounded by the number of solutions of the start system $H(x,1)$. The most simple example of this is the *total degree homotopy*:
 
 Take our initial example
-$$    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 \,.$$
+$$    f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2)  + x^5y \quad \text{ and } \quad f_2(x,y) =  x^2+2xy^2 - 2y^2 - \frac12 .$$
 The polynomial $f_1$ has degree $6$ and the polynomial $f_2$ has degree 3. Now [Bezout's theorem](https://en.wikipedia.org/wiki/Bézout%27s_theorem) tells us that such a polynomial system has at most $6 \cdot 3=18$ isolated solutions. We then can construct the polynomial system
 $$g(x,y) = \begin{bmatrix} x^6 - 1 \\\\ y^3 - 1\end{bmatrix}$$
 which has the $18$ solutions
-$$\left(e^{i 2\pi\frac{k_1}{6}}, \;e^{i 2\pi\frac{k_2}{3}}\right)$$
+$$\left(e^{i 2\pi\frac{k_1}{6}}, e^{i 2\pi\frac{k_2}{3}}\right)$$
 where $k_1 \times k_2 \in \{0,1,2,3,4,5\} \times \{0,1,2\}$.
 Then a good homotopy is
 $$H(x,t) = \gamma t G(x) + (1-t)F(x)$$
@@ -198,7 +198,7 @@ and the point $u_0 = [-0.32, -0.1]$.
 
 We could formulate our problem as the constrained optimization problem
 
-$$\min\; (x + 0.32)^2 + (y+0.1)^2 \quad \text{ s.t.} \quad  f(x,y) = 0 $$
+$$\min (x + 0.32)^2 + (y+0.1)^2 \quad \text{ s.t.} \quad  f(x,y) = 0 $$
 
 Now this a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a random point we might get as a result a *local* minimum *but* we do **not** know whether this is the global minimum!
 
@@ -215,7 +215,7 @@ $$\min =||x-u||_2=:d_u(x) \quad \text{subject to} \quad x \in X$$
 Considering the geometry of the problem  you can see that a point $x^{\*} $ is a critical point of the distance function
 if and only if
 $x^{*} - u$ is orthogonal to the tangent space of $X$ at $x^{\*} $, or formally
-$$ (x^{\*} - u) \perp T_{(x^{\*} )}X \,.$$
+$$ (x^{\*} - u) \perp T_{(x^{\*} )}X .$$
 
 Let us assume that $\dim(X)=n-m$ and denote by $J(x)$ the Jacobian of $F=(f_1,\ldots, f_m)$ where the $i$-th row of $J$ consists of the partial derivatives of $f_i$.
     Then, critical points satisfy the equations

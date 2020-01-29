@@ -22,9 +22,9 @@ Consider a robot that consists of 7 links connected by 6 joints. The first link 
 Let us denote by $z_1,\ldots,z_6$ the unit vectors that point in the direction of the joint axes.  They satisfy the following polynomial equations
 
 
-  * $z_i \cdot z_i = 1,\; i=1,\ldots,6.$
+  * $z_i \cdot z_i = 1, i=1,\ldots,6.$
   * $z_1 \cdot z_2 = \cos \alpha_1,\ldots, z_5 \cdot z_6 = \cos \alpha_5$.
-  * $a_1\, (z_1 \times z_2) + \cdots + a_5\, (z_5 \times z_6) + a_6 \,z_2 + \cdots + a_9  \,z_5= p.$
+  * $a_1 (z_1 \times z_2) + \cdots + a_5 (z_5 \times z_6) + a_6 z_2 + \cdots + a_9  z_5= p.$
 
 
 for $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and $p=(p_1,p_2,p_3)$.

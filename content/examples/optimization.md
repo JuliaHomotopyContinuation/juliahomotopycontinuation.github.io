@@ -15,7 +15,7 @@ We want to solve following optimization problem
 
 
 $$
-\text{minimize} \; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1
+\text{minimize}  3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1
 $$
 
 

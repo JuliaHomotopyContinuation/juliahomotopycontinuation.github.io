@@ -113,15 +113,15 @@ $$\rho(\theta_0) \approx \frac{\mu_1(\theta_0)}{\mu_2(\theta_0)},$$
  where
 
 $$
-\mu_1(\theta_0) = \int\_{\theta(q)>\theta_0 - \Delta\theta\atop \theta(q) < \theta_0 + \Delta\theta} f(q)\\; \mathrm{d} q \\;\text{ and }\\;
-\mu_2(\theta_0) = \int\_{\theta(q)>\theta_0 - \Delta\theta\atop \theta(q) < \theta_0 + \Delta\theta} 1 \\;\mathrm{d} q
+\mu_1(\theta_0) = \int\_{\theta(q)>\theta_0 - \Delta\theta\atop \theta(q) < \theta_0 + \Delta\theta} f(q) \mathrm{d} q \text{ and }
+\mu_2(\theta_0) = \int\_{\theta(q)>\theta_0 - \Delta\theta\atop \theta(q) < \theta_0 + \Delta\theta} 1 \mathrm{d} q
 $$
 
 for some $\Delta \theta >0$. In our experiment we take $\Delta \theta = 3^\circ$ (degrees).
 
 The two integrals are evaluated using the [integration guide](/examples/monte-carlo-integration). Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E}  \overline{f}(A,b),$ where
 
-$$\overline{f}(A,b):= \sum\_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta < \theta(q) < \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\\;\text{ and }\\;\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi\_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$
+$$\overline{f}(A,b):= \sum\_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta < \theta(q) < \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi\_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$
 
 and where $\pi_x$ is the orthogonal projection onto the normal space $\mathrm{N}_x M$ of $M$ at $x$.
 

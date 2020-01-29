@@ -30,7 +30,7 @@ The points $x,y,z$ are the contact points of the plane $H$ with $\mathcal{V}$.
 
 Let $h\in \mathbb{C}^3$ be a vector with $H=\\{x\in \mathbb{C}^3: h^Tx=1\\}$. Then, $H$ is a tritangent with contact points $x,y,z$, if and only if $(x,y,z,h)$ is a zero of the following polynomial system:
 
-$$ F = \begin{bmatrix} P(x,h) \\\ P(y,h)\\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\\ Q(x) \\\ C(x) \\\ \det([h \; \nabla_xQ\; \nabla_xC]) \end{bmatrix}.$$
+$$ F = \begin{bmatrix} P(x,h) \\\ P(y,h)\\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\\ Q(x) \\\ C(x) \\\ \det([h  \nabla_xQ \nabla_xC]) \end{bmatrix}.$$
 
 Here, $\nabla_x$ denotes the [gradient operator](https://en.wikipedia.org/wiki/Del). Let us create the system $F$ in `Julia`. For simplicity, I will consider the case when $Q=x_3 - x_1x_2$.
 

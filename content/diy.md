@@ -12,7 +12,7 @@ A [*conic*](https://en.wikipedia.org/wiki/Conic) in the plane $\mathbb{R}^2$ is 
 quadratic polynomial in two variables:
 
 <p class="general-conic">
-    $$\,\, a_1 x^2 \,+\, a_2 xy \,+\, a_3 y^2 \, +\, a_4 x \, + \, a_5 y \, + \, a_6 \,.$$
+    $$ a_1 x^2 + a_2 xy + a_3 y^2  + a_4 x  +  a_5 y  +  a_6 .$$
 </p>
 
 Geometrically, a conic can be either a circle, an ellipse, a hyperbola, a parabola or a union of two lines.

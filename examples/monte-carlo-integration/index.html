@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Integrating functions on a variety">
 <meta itemprop="datePublished" content="2019-07-02T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-07-02T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="572">
+<meta itemprop="wordCount" content="571">
 
 
 
@@ -171,13 +171,13 @@
 <p>where $V\subset \mathbb{R}^N$ is an open submanifold of an algebraic variety and $f:V\to \mathbb{R}$ is a measurable function.</p>
 <p>For instance, for $f(x)=1$, this integral gives the volume of $V$. In this example, we want to use homotopy continuation to approximate this integral. We will use the Monte Carlo integration proposed <a href="https://arxiv.org/abs/1810.06271">in this article</a>.</p>
 <h4 id="integrating-functions-with-homotopy-continuation">Integrating functions with homotopy continuation</h4>
-<p>Let $n=\mathrm{dim}, V$, and let $A\in \mathbb{R}^{n\times N}$ and $b\in \mathbb{R}^n$ be a matrix-vector pair with independent standard Gaussian entries. Then, almost surely, $\{x\in \mathbb{R}^N : Ax=b\}$ is a linear space of dimension $N-n$, which intersects $V$ in finitely many points.</p>
+<p>Let $n=\mathrm{dim} V$, and let $A\in \mathbb{R}^{n\times N}$ and $b\in \mathbb{R}^n$ be a matrix-vector pair with independent standard Gaussian entries. Then, almost surely, $\{x\in \mathbb{R}^N : Ax=b\}$ is a linear space of dimension $N-n$, which intersects $V$ in finitely many points.</p>
 <p>Consider the random variable</p>
 <p>$$\overline{f}(A,b):= \sum_{x\in V: Ax=b} \frac{f(x)}{\alpha(x)},$$</p>
 <p>where</p>
 <p>$$\alpha(x) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x, \pi_x x\rangle}}{1+\Vert x\Vert^2}$$</p>
 <p>and where $n=\mathrm{dim}(V)$, and where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$. The main theorem of <a href="https://arxiv.org/abs/1810.06271">the article</a> yields</p>
-<p>$$\mathbb{E} , \overline{f}(A,b) = \int_V f(x)  \mathrm{d} x.$$</p>
+<p>$$\mathbb{E}  \overline{f}(A,b) = \int_V f(x)  \mathrm{d} x.$$</p>
 <p>The empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$ for $k$ sample pairs $(A_1,b_1),\ldots, (A_k,b_k)$ converges to the integral of $f$ over $V$ as $k\to \infty$.</p>
 <h4 id="example-volume-of-a-planar-curve">Example: volume of a planar curve</h4>
 <p>Let us now use the empirical mean of $\overline{f}(A,b)$ for $f(x)=1$ to approximate the volume of the curve $C = \{x^4+y^4-3x^2-xy^2-x+1 = 0\}$. A plot of the curve is shown next.</p>

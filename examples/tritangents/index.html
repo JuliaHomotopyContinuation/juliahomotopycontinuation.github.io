@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Using HomotopyContinuation.jl for computing tritangents of sextic curves">
 <meta itemprop="datePublished" content="2018-11-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-11-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="798">
+<meta itemprop="wordCount" content="797">
 
 
 
@@ -176,7 +176,7 @@
 <p>$$x \in H, \mathrm{T}_x \mathcal{V} \subset H, \text{ and } y \in H, \mathrm{T}_y \mathcal{V} \subset H, \text{ and } z \in H, \mathrm{T}_z \mathcal{V} \subset H.$$</p>
 <p>The points $x,y,z$ are the contact points of the plane $H$ with $\mathcal{V}$.</p>
 <p>Let $h\in \mathbb{C}^3$ be a vector with $H=\{x\in \mathbb{C}^3: h^Tx=1\}$. Then, $H$ is a tritangent with contact points $x,y,z$, if and only if $(x,y,z,h)$ is a zero of the following polynomial system:</p>
-<p>$$ F = \begin{bmatrix} P(x,h) \\ P(y,h)\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\ Q(x) \\ C(x) \\ \det([h ; \nabla_xQ; \nabla_xC]) \end{bmatrix}.$$</p>
+<p>$$ F = \begin{bmatrix} P(x,h) \\ P(y,h)\\  P(z,h)\end{bmatrix}, \text{ where } P(x,h) = \begin{bmatrix} h^T x - 1 \\ Q(x) \\ C(x) \\ \det([h  \nabla_xQ \nabla_xC]) \end{bmatrix}.$$</p>
 <p>Here, $\nabla_x$ denotes the <a href="https://en.wikipedia.org/wiki/Del">gradient operator</a>. Let us create the system $F$ in <code>Julia</code>. For simplicity, I will consider the case when $Q=x_3 - x_1x_2$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
 <span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> h<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] <span style="color:#75715e"># variables for the plane</span>

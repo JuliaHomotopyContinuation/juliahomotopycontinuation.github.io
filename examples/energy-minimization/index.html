@@ -226,12 +226,12 @@ f<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>) <span
 <p>$$\rho(\theta_0) \approx \frac{\mu_1(\theta_0)}{\mu_2(\theta_0)},$$</p>
 <p>where</p>
 <p>$$
-\mu_1(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} f(q)\; \mathrm{d} q \;\text{ and }\;
-\mu_2(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} 1 \;\mathrm{d} q
+\mu_1(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} f(q) \mathrm{d} q \text{ and }
+\mu_2(\theta_0) = \int_{\theta(q)&gt;\theta_0 - \Delta\theta\atop \theta(q) &lt; \theta_0 + \Delta\theta} 1 \mathrm{d} q
 $$</p>
 <p>for some $\Delta \theta &gt;0$. In our experiment we take $\Delta \theta = 3^\circ$ (degrees).</p>
 <p>The two integrals are evaluated using the <a href="/examples/monte-carlo-integration">integration guide</a>. Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E}  \overline{f}(A,b),$ where</p>
-<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\;\text{ and }\;\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$</p>
+<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$</p>
 <p>and where $\pi_x$ is the orthogonal projection onto the normal space $\mathrm{N}_x M$ of $M$ at $x$.</p>
 <p>Similarly, we define $\overline{1}(A,b)$ and get
 $\mu_2(\theta_0)= \mathbb{E}  \overline{1}(A,b).$</p>

@@ -165,7 +165,7 @@
     <h3 class="section-head" id="h-introduction"><a href="#h-introduction">Introduction</a></h3>
 <p>To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy</p>
 <p>$$
-H(x,t) := (1-t)F+tG;.
+H(x,t) := (1-t)F+tG.
 $$</p>
 <p>But this is in general <em>not</em> the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.</p>
 <p>In the following we will illustrate how to setup a custom homotopy on the following example. For polynomial systems $F$ and $G$ we want to define the homotopy</p>
@@ -183,11 +183,11 @@ $$</p>
 <h3 class="section-head" id="h-math"><a href="#h-math">Figuring out the math</a></h3>
 <p>To define a homotopy we have to know how to compute for all $x \in \mathbb{C}^n$, $t \in \mathbb{C}$</p>
 <p>$$
-H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t);.
+H(x,t), \quad \frac{\partial H}{\partial x}(x,t) \quad \text{ and } \quad \frac{\partial H}{\partial t}(x,t).
 $$</p>
 <p>We denote the partial derivative of $H$ w.r.t. $x$ as the <em>Jacobian</em> of $H$. For simplification (in the math as well as in the implementation) we introduce the helper homotopy</p>
 <p>$$
-\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y);.
+\tilde{H}(y, t) := (1 - t) F( y ) +  tG(y).
 $$</p>
 <p>Note $H(x,t) = \tilde{H}(U(t)x, t)$. Using the chain rule we get for the partial derivatives</p>
 <p>$$

@@ -141,7 +141,7 @@
 <meta itemprop="description" content="An adventure at the intersection of statistics and nonlinear algebra.">
 <meta itemprop="datePublished" content="2019-09-02T16:50:00&#43;02:00" />
 <meta itemprop="dateModified" content="2019-09-02T16:50:00&#43;02:00" />
-<meta itemprop="wordCount" content="3083">
+<meta itemprop="wordCount" content="3033">
 
 
 
@@ -215,13 +215,13 @@ If the gradient of our objective function is in the span of this 3-dimensional s
 <p>$$
 \scriptsize
 \left(\begin{array}{rrrr}
-1 &amp; 1 &amp; 1 &amp; &hellip; \\ -10 , p_3^2 + 20 , p_2 p_4 &amp; 4 , p_2 p_3 - 16 , p_1 p_4 &amp; -3 , p_2^2 + 4 , p_1 p_3 + 20 , p_0 p_4 &amp; &hellip;\\ -20 , p_3 p_4 + 100 , p_2 p_5 &amp; 2 , p_3^2 + 4 , p_2 p_4 - 80 , p_1 p_5 &amp; -2 , p_2 p_3 + 4 , p_1 p_4 + 100 , p_0 p_5 &amp; &hellip; \\ -40 , p_4^2 + 100 , p_3 p_5 &amp; 4 , p_3 p_4 - 20 , p_2 p_5 &amp; -p_3^2 + 4 , p_2 p_4 - 20 , p_1 p_5 &amp; &hellip; \\ 0 &amp; -8 , p_4^2 + 20 , p_3 p_5 &amp; 4 , p_3 p_4 - 20 , p_2 p_5 &amp; &hellip;\\ \frac{u_0}{p_0} &amp; \frac{u_1}{p_1} &amp; \frac{u_2}{p_2} &amp; &hellip;
+1 &amp; 1 &amp; 1 &amp; &hellip; \\ -10  p_3^2 + 20  p_2 p_4 &amp; 4  p_2 p_3 - 16  p_1 p_4 &amp; -3  p_2^2 + 4  p_1 p_3 + 20  p_0 p_4 &amp; &hellip;\\ -20  p_3 p_4 + 100  p_2 p_5 &amp; 2  p_3^2 + 4  p_2 p_4 - 80  p_1 p_5 &amp; -2  p_2 p_3 + 4  p_1 p_4 + 100  p_0 p_5 &amp; &hellip; \\ -40  p_4^2 + 100  p_3 p_5 &amp; 4  p_3 p_4 - 20  p_2 p_5 &amp; -p_3^2 + 4  p_2 p_4 - 20  p_1 p_5 &amp; &hellip; \\ 0 &amp; -8  p_4^2 + 20  p_3 p_5 &amp; 4  p_3 p_4 - 20  p_2 p_5 &amp; &hellip;\\ \frac{u_0}{p_0} &amp; \frac{u_1}{p_1} &amp; \frac{u_2}{p_2} &amp; &hellip;
 \end{array}\right.
 $$</p>
 <p>$$
 \scriptsize
 \left.\begin{array}{rrrr}
-&hellip; &amp; 1 &amp; 1 &amp; 1 \\ &hellip; &amp; 4 , p_1 p_2 - 20 , p_0 p_3 &amp; -8 , p_1^2 + 20 , p_0 p_2 &amp; 0 \\  &hellip; &amp; -p_2^2 + 4 , p_1 p_3 - 20 , p_0 p_4 &amp; 4 , p_1 p_2 - 20 , p_0 p_3 &amp; -40 , p_1^2 + 100 , p_0 p_2 \\  &hellip; &amp; -2 , p_2 p_3 + 4 , p_1 p_4 + 100 , p_0 p_5 &amp; 2 , p_2^2 + 4 , p_1 p_3 - 80 , p_0 p_4 &amp; -20 , p_1 p_2 + 100 , p_0 p_3 \\  &hellip; &amp; -3 , p_3^2 + 4 , p_2 p_4 + 20 , p_1 p_5 &amp; 4 , p_2 p_3 - 16 , p_1 p_4 &amp; -10 , p_2^2 + 20 , p_1 p_3 \\ &hellip; &amp; \frac{u_3}{p_3} &amp; \frac{u_4}{p_4} &amp; \frac{u_5}{p_5}
+&hellip; &amp; 1 &amp; 1 &amp; 1 \\ &hellip; &amp; 4  p_1 p_2 - 20  p_0 p_3 &amp; -8  p_1^2 + 20  p_0 p_2 &amp; 0 \\  &hellip; &amp; -p_2^2 + 4  p_1 p_3 - 20  p_0 p_4 &amp; 4  p_1 p_2 - 20  p_0 p_3 &amp; -40  p_1^2 + 100  p_0 p_2 \\  &hellip; &amp; -2  p_2 p_3 + 4  p_1 p_4 + 100  p_0 p_5 &amp; 2  p_2^2 + 4  p_1 p_3 - 80  p_0 p_4 &amp; -20  p_1 p_2 + 100  p_0 p_3 \\  &hellip; &amp; -3  p_3^2 + 4  p_2 p_4 + 20  p_1 p_5 &amp; 4  p_2 p_3 - 16  p_1 p_4 &amp; -10  p_2^2 + 20  p_1 p_3 \\ &hellip; &amp; \frac{u_3}{p_3} &amp; \frac{u_4}{p_4} &amp; \frac{u_5}{p_5}
 \end{array}\right)
 $$</p>
 <p>On the other hand, if we fix our point $p = p_{\text{fav}}$, the $u$ variables only appear linearly in the 4$\times$4 minors of this matrix, since $u$ only appears in the last row. Thus we have linear equations which cut out our 2-dimensional log-normal space of $u$'s at the point $p_{\text{fav}}$. It is inside this space, which forms a hexagon when intersected with the positive orthant, where we will look for our fiber.</p>

@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Using HomotopyContinuation.jl for a problem in optimization">
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="334">
+<meta itemprop="wordCount" content="333">
 
 
 
@@ -168,7 +168,7 @@
     
     <p>We want to solve following optimization problem</p>
 <p>$$
-\text{minimize} ; 3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1
+\text{minimize}  3x^3y+y^2z^2-2xy-4xz^3 \quad \text{s.t.} \quad x^2+y^2+z^2=1
 $$</p>
 <p>The strategy to find the <em>global</em> optimum is to use the <a href="https://en.wikipedia.org/wiki/Lagrange_multiplier">method of Lagrange multipliers</a> to find <em>all</em> critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>

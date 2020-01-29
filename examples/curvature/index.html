@@ -141,7 +141,7 @@
 <meta itemprop="description" content="How to compute curvature">
 <meta itemprop="datePublished" content="2018-09-04T11:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2018-09-04T11:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="265">
+<meta itemprop="wordCount" content="263">
 
 
 
@@ -169,7 +169,7 @@
     <h3 class="section-head">Curvature of curves in the plane</h3>
 <p>Consider the problem of computing the point on a (smooth) curve $V\subset \mathbb{R}^n$, where the curvature is maximal. We can use the <a href="https://en.wikipedia.org/wiki/Implicit_curve#Slope_and_curvature">following formula</a> for curvature at a point $p\in V = \{f(x_1,x_2)=0\}$.</p>
 <p>$$\sigma(p) = \frac{v^T H v}{g^\frac{3}{2}}$$</p>
-<p>where $v^T ,\nabla_p f(p) = 0$, and $v^T , v=1$, and $H$ is the Hessian of $f$ at $p$, and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T , \nabla_p \sigma(p)=0$ and $f(p)=0$.</p>
+<p>where $v^T \nabla_p f(p) = 0$, and $v^T  v=1$, and $H$ is the Hessian of $f$ at $p$, and $g = \nabla_p f(p)^T\nabla_p f(p)$. The conditions for $\sigma(p)$ being maximal on $V$ are thus $v^T  \nabla_p \sigma(p)=0$ and $f(p)=0$.</p>
 <p>Thus, for maximizing $\sigma$ over</p>
 <p>$$V =\{x_1^4 - x_1^2x_2^2 + x_2^4 - 4x_1^2 - 2x_2^2 - x_1 - 4x_2 + 1 = 0\}$$</p>
 <p>we use the following code.</p>

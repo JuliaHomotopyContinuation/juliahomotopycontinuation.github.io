@@ -167,11 +167,11 @@
 <div id="post" itemprop="articleBody">
     
     <p>Consider three Gaussian random variables $X_1,X_2,X_3$ with means $\mu_1,\mu_2,\mu_3$ and variances $\sigma_1^2,\sigma_2^2,\sigma_3^2$. The density of $X_i$ is</p>
-<p>$$\phi_i(x) = \frac{1}{\sqrt{2\pi}}; e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$</p>
+<p>$$\phi_i(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{(x-\mu_i)^2}{2\sigma_i^2}}.$$</p>
 <p>A mixture of the three random variables is the random variable $U$ with density</p>
-<p>$$\psi(x) = a_1, \phi_1(x), + ,a_2 ,\phi_2(x), + ,a_3 ,\phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$</p>
+<p>$$\psi(x) = a_1 \phi_1(x) + a_2 \phi_2(x) + a_3 \phi_3(x), \quad\text{   for } \quad  a_1+a_2+a_3 =1.$$</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Method_of_moments_(statistics)">method of moments</a> recovers $\psi$ from the moments</p>
-<p>$$m_k = \int x^k ,\psi(x); \mathrm{d}x.$$</p>
+<p>$$m_k = \int x^k \psi(x) \mathrm{d}x.$$</p>
 <p>Since we have 8 unknowns, we expect to need at least 8 moments to recover $\psi$. Let us set up a system for this in Julia.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] μ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] σ²<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 

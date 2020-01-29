@@ -42,8 +42,8 @@ using HomotopyContinuation # load the package into the current Julia session @po
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/introduction/</guid>
-      <description>A first example We are interested in the numerical solution of systems of polynomial equations like $$\begin{array}{rl} -x^5y &amp;amp;= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\ \frac12 &amp;amp;= x^2+2xy^2 - 2y^2 ;. \end{array}$$
-Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials $$ f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2) + x^5y \quad \text{ and } \quad f_2(x,y) = x^2+2xy^2 - 2y^2 - \frac12 ;.</description>
+      <description>A first example We are interested in the numerical solution of systems of polynomial equations like $$\begin{array}{rl} -x^5y &amp;amp;= (x^4 + y^4 - 1)(x^2 + y^2 - 2) \\ \frac12 &amp;amp;= x^2+2xy^2 - 2y^2 . \end{array}$$
+Equivalently, we can see the solutions of this system of equations as the common zero set $V(f_1,f_2)$ of the polynomials $$ f_1(x,y) = (x^4 + y^4 - 1)(x^2 + y^2 - 2) + x^5y \quad \text{ and } \quad f_2(x,y) = x^2+2xy^2 - 2y^2 - \frac12 .</description>
     </item>
     
     <item>
@@ -152,7 +152,7 @@ $$ f = \begin{bmatrix} ab - 2\\ ac- 1\end{bmatrix}, \quad g = \begin{bmatrix}x +
       
       <guid>/guides/custom-homotopy/</guid>
       <description>Introduction To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy
-$$ H(x,t) := (1-t)F+tG;. $$
+$$ H(x,t) := (1-t)F+tG. $$
 But this is in general not the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.
 In the following we will illustrate how to setup a custom homotopy on the following example.</description>
     </item>

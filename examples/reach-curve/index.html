@@ -141,7 +141,7 @@
 <meta itemprop="description" content="Computing the reach">
 <meta itemprop="datePublished" content="2019-10-21T10:00:00&#43;02:00" />
 <meta itemprop="dateModified" content="2019-10-21T10:00:00&#43;02:00" />
-<meta itemprop="wordCount" content="1030">
+<meta itemprop="wordCount" content="1027">
 
 
 
@@ -180,16 +180,16 @@ The curve $C \subset \mathbb{R}^2$ defined by $f(x,y) = (x^3 - xy^2 + y + 1)^2(x
 </figcaption>
 </figure>
 <p>As pointed out by <a href="https://arxiv.org/pdf/1705.04565.pdf">Aamari et. al.</a> the reach is the determined by the bottlenecks of $C$, which quantify how close $C$ is from being self-intersecting, and the curvature of $C$:</p>
-<p>$$\tau = \min\left\{\frac{\rho}{2}, , \frac{1}{\sigma}\right\},$$</p>
+<p>$$\tau = \min\left\{\frac{\rho}{2},  \frac{1}{\sigma}\right\},$$</p>
 <p>where $\sigma$ is a the maximal curvature of a geodesic running through $C$ and $\rho$ is the width of the narrowest bottleneck of $C$.</p>
 <p>We compute both $\rho$ and $\sigma$. For this, we first define the equation of $C$ in <code>Julia</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 <span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
 f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> x<span style="color:#f92672"></span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>
 </code></pre></div><p>Our computation below finds</p>
-<p>$$\rho \approx 0.13835 ;\text{ and }\ \sigma \approx 2097.17$$</p>
+<p>$$\rho \approx 0.13835 \text{ and }\ \sigma \approx 2097.17$$</p>
 <p>and therefore the reach of the curve $C$ is</p>
-<p>$$\tau \approx \min\left\{\frac{0.13835}{2}, , \frac{1}{2097.167}\right\} \approx 0.000479,.$$</p>
+<p>$$\tau \approx \min\left\{\frac{0.13835}{2},  \frac{1}{2097.167}\right\} \approx 0.000479.$$</p>
 <h2 id="bottlenecks">Bottlenecks</h2>
 <p>Bottlenecks of $C$ are pairs of points $(p,q)\in C\times C$ such that $p-q$ is perpendicular to the tangent space $\mathrm{T}_p C$ and perpendicular to the tangent space $\mathrm{T}_q C$.</p>
 <p><a href="https://arxiv.org/pdf/1804.01015.pdf">Eklund</a> and <a href="https://arxiv.org/pdf/1904.04502.pdf">di Rocco et. al.</a> discuss the algebraic equations of bottlenecks. The equations are</p>
@@ -257,7 +257,7 @@ The curve $C$ and its bottlenecks dashed in gray. The narrowest bottleneck is co
 <p>and where $H(p)$ is the Hessian of $f$ at $p$ and $v(p) = \begin{bmatrix} 0 &amp; -1 \\ 1 &amp; 0 \end{bmatrix}\nabla_p f$.</p>
 <p>For computing the maximum of $\sigma(p)$ over $C$ we solve the critical equations of $\sigma(p)$.<br>
 The critical equations are</p>
-<p>$$v(p)^T , \nabla_p \sigma=0\quad \text{and}\quad f(p)=0.$$</p>
+<p>$$v(p)^T  \nabla_p \sigma=0\quad \text{and}\quad f(p)=0.$$</p>
 <p>We use the following code.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">∇<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>;y<span style="color:#f92672"></span>]) <span style="color:#75715e"># the gradient</span>
 H<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(∇<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>;y<span style="color:#f92672"></span>]) <span style="color:#75715e"># the Hessian</span>

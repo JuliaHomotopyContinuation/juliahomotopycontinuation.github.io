@@ -66,7 +66,7 @@ In the above example, the group that interchanges `x` and `y` acts on the soluti
 
 ```julia-repl
 julia> G = GroupActions( a -> ([-a[1], a[2]], ))
-julia> monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
+julia> monodromy_solve(F, [[1.0; 1.0]], [1.0, 1.0], parameters = u, group_actions = G)
 MonodromyResult
 ==================================
 • 4 classes of solutions (modulo group action) (2 real)
@@ -77,7 +77,7 @@ MonodromyResult
 Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then
 
 ```julia-repl
-julia> monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
+julia> monodromy_solve(F, [[1.0; 1.0]], [1.0, 1.0], parameters = u, group_actions = G, equivalence_classes = false)
 MonodromyResult
 ==================================
 • 8 solutions (4 real)

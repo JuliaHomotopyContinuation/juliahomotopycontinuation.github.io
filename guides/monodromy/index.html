@@ -187,14 +187,14 @@ MonodromyResult
 </code></pre></div><p>computes only with all solutions but exploits <code>G</code> to find solutions more quickly.</p>
 <p>In the above example, the group that interchanges <code>x</code> and <code>y</code> acts on the solution set of <code>F</code>. We can use the group that multiplies <code>x</code> by $\pm 1$.</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; G = GroupActions( a -&gt; ([-a[1], a[2]], ))
-julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G)
+julia&gt; monodromy_solve(F, [[1.0; 1.0]], [1.0, 1.0], parameters = u, group_actions = G)
 MonodromyResult
 ==================================
 • 4 classes of solutions (modulo group action) (2 real)
 • return code → heuristic_stop
 • 322 tracked paths
 </code></pre><p>Now, we found only 4 solutions: one from each orbit. If we suppress computing with equivalence classes, then</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; monodromy_solve(F, [[1; 1]], [1, 1], parameters = u, group_actions = G, equivalence_classes = false)
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; monodromy_solve(F, [[1.0; 1.0]], [1.0, 1.0], parameters = u, group_actions = G, equivalence_classes = false)
 MonodromyResult
 ==================================
 • 8 solutions (4 real)

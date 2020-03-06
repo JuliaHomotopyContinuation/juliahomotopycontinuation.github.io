@@ -188,7 +188,7 @@ probability measures on all configurations. As the probability measure we take t
 <p>$$\rho(\theta_0)=\int_{\theta(q) = \theta_0} f(q) \mathrm{d} q.$$</p>
 <p>In the following we will approximate this integral using homotopy continuation. At the end of the computation stands the following result summarized in the next plot.</p>
 <p style="text-align:center;"><img src="/images/cyclohexane_distribution.png" width="520px"/></p>
-<p>The plot shows a peak at around $\theta =  110^{\circ}$. It is known that the total energy of the cyclohexane system is minimized when all angles between consecutive bonds achieve $110.9^{\circ}$. Our experiment gives a good approximation of the true molecular geometry of cyclohexane. An example where all the angles between consecutive bonds are $110.9^{\circ}$ is shown in the picture above.</p>
+<p>The plot shows a peak at around $\theta =  114^{\circ}$. It is known that the total energy of the cyclohexane system is minimized when all angles between consecutive bonds achieve $110.9^{\circ}$. Our experiment gives a good approximation of the true molecular geometry of cyclohexane. An example where all the angles between consecutive bonds are $110.9^{\circ}$ is shown in the picture above.</p>
 <h2 id="equations-for-the-cyclohexane-variety">Equations for the cyclohexane variety</h2>
 <p>Due to rotational and translational invariance of the equations we define $q_1$ to be the origin, $q_6=(c,0,0)$ and $q_5$ to be rotated, such that its last entry is equal to zero (like in the <a href="cyclooctane.md">cyclooctane</a> example).</p>
 <p>We thus have $11$ variables $x(q)=(x_1,\ldots,x_{11})$. Let us implement this in <code>Julia</code>.</p>
@@ -231,7 +231,7 @@ f<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>) <span
 $$</p>
 <p>for some $\Delta \theta &gt;0$. In our experiment we take $\Delta \theta = 3^\circ$ (degrees).</p>
 <p>The two integrals are evaluated using the <a href="/examples/monte-carlo-integration">integration guide</a>. Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E}  \overline{f}(A,b),$ where</p>
-<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$</p>
+<p>$$\overline{f}(A,b):= \sum_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta &lt; \theta(q) &lt; \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi_{x(q)} x(q)\rangle}}{(1+\Vert x(q)\Vert)^{\frac{n+1}{2}}},$$</p>
 <p>and where $\pi_x$ is the orthogonal projection onto the normal space $\mathrm{N}_x M$ of $M$ at $x$.</p>
 <p>Similarly, we define $\overline{1}(A,b)$ and get
 $\mu_2(\theta_0)= \mathbb{E}  \overline{1}(A,b).$</p>
@@ -245,7 +245,7 @@ J<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>) <span
     J₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> J<span style="color:#f92672"></span>(x₀<span style="color:#f92672"></span>)
     U<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">Matrix</span>(qr<span style="color:#f92672"></span>(J₀<span style="color:#f92672"></span>)<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>)
     π_x₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> U<span style="color:#f92672"></span> <span style="color:#f92672">*</span> (transpose<span style="color:#f92672"></span>(U<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> x₀<span style="color:#f92672"></span>)
-    <span style="color:#66d9ef">return</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (x₀<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> π_x₀<span style="color:#f92672"></span>)) <span style="color:#f92672">/</span>  (<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (x₀<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> x₀<span style="color:#f92672"></span>))
+    <span style="color:#66d9ef">return</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (x₀<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> π_x₀<span style="color:#f92672"></span>)) <span style="color:#f92672">/</span>  sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (x₀<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> x₀<span style="color:#f92672"></span>))<span style="color:#f92672">^</span>(n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>We also need a function for the evaluation of $\theta(q)$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">θ<span style="color:#f92672"></span>(q<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">6</span>) <span style="color:#f92672">*</span> (
@@ -333,24 +333,24 @@ empirical_distributions_f̄<span style="color:#f92672"></span> <span style="colo
 <p>How good is the estimate? The analysis of variance from the <a href="/examples/monte-carlo-integration">the integration guide</a> yields for the empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$:</p>
 <p>$$\mathrm{Prob}\{\vert \mathrm{E}(f,k) -  \mu_1(\theta_0) \vert \geq \varepsilon \} \leq \frac{\sigma^2}{\varepsilon^2k},$$</p>
 <p>where $\sigma^2$ is the variance of $\overline{f}(A,b)$ and similar for $E(1,k)$. From the plot above we can deduce that</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">ε<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">ε<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e2</span>
 </code></pre></div><p>is a good accuracy for both $\mu_1(\theta_0)$ and $\mu_2(\theta_0)$.</p>
 <p>Using the empirical variances to approximate the true variance we get the following:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; s²(f̄) = std.(empirical_distributions_f̄)
 julia&gt; maximum(s²(f̄) ./ (ε^2 * k))
-0.020642667724759842
+0.0018945016028972723
 </code></pre><p>and</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; s²(const1̄) = std.(empirical_distributions_const1̄)
 julia&gt; maximum(s²(const1̄) ./ (ε^2 * k))
-0.03996983475573611
-</code></pre><p>That is, the maximum deviation probability is less than $4$% in both cases. We conclude that our approximation of $\rho(\theta) = K\mathrm{Prob}\{\theta(q) = \theta_0\}$ is a good approximation.</p>
+0.0018301742629020274
+</code></pre><p>That is, the maximum deviation probability is less than $1$% in both cases. We conclude that our approximation of $\rho(\theta) = K\mathrm{Prob}\{\theta(q) = \theta_0\}$ is a good approximation.</p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">
 <code class="language-julia hljs">@Misc{ energy-minimization2020 ,
     author =  { Paul Breiding },
     title = { Energy minimization },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/energy-minimization/ } },
-    note = { Accessed: February 10, 2020 }
+    note = { Accessed: March 6, 2020 }
 }</code>
 </pre>
 

@@ -51,7 +51,7 @@ In the following we will approximate this integral using homotopy continuation. 
 
 <p style="text-align:center;"><img src="/images/cyclohexane_distribution.png" width="520px"/></p>
 
-The plot shows a peak at around $\theta =  110^{\circ}$. It is known that the total energy of the cyclohexane system is minimized when all angles between consecutive bonds achieve $110.9^{\circ}$. Our experiment gives a good approximation of the true molecular geometry of cyclohexane. An example where all the angles between consecutive bonds are $110.9^{\circ}$ is shown in the picture above.
+The plot shows a peak at around $\theta =  114^{\circ}$. It is known that the total energy of the cyclohexane system is minimized when all angles between consecutive bonds achieve $110.9^{\circ}$. Our experiment gives a good approximation of the true molecular geometry of cyclohexane. An example where all the angles between consecutive bonds are $110.9^{\circ}$ is shown in the picture above.
 
 
 ## Equations for the cyclohexane variety
@@ -121,7 +121,7 @@ for some $\Delta \theta >0$. In our experiment we take $\Delta \theta = 3^\circ$
 
 The two integrals are evaluated using the [integration guide](/examples/monte-carlo-integration). Recall from this guide that we have $\mu_1(\theta_0) = \mathbb{E}  \overline{f}(A,b),$ where
 
-$$\overline{f}(A,b):= \sum\_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta < \theta(q) < \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi\_{x(q)} x(q)\rangle}}{1+\Vert x(q)\Vert^2},$$
+$$\overline{f}(A,b):= \sum\_{q\in M: Ax(q)=b, \atop \theta- \Delta\theta < \theta(q) < \theta + \Delta\theta} \frac{f(q)}{\alpha(q)}\text{ and }\alpha(q) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x(q), \pi\_{x(q)} x(q)\rangle}}{(1+\Vert x(q)\Vert)^{\frac{n+1}{2}}},$$
 
 and where $\pi_x$ is the orthogonal projection onto the normal space $\mathrm{N}_x M$ of $M$ at $x$.
 
@@ -140,7 +140,7 @@ function α(x₀)
     J₀ = J(x₀)
     U = Matrix(qr(J₀).Q)
     π_x₀ = U * (transpose(U) * x₀)
-    return sqrt(1 + (x₀ ⋅ π_x₀)) /  (1 + (x₀ ⋅ x₀))
+    return sqrt(1 + (x₀ ⋅ π_x₀)) /  sqrt(1 + (x₀ ⋅ x₀))^(n+1)
 end
 ```
 
@@ -263,7 +263,7 @@ $$\mathrm{Prob}\\{\vert \mathrm{E}(f,k) -  \mu_1(\theta_0) \vert \geq \varepsilo
 where $\sigma^2$ is the variance of $\overline{f}(A,b)$ and similar for $E(1,k)$. From the plot above we can deduce that
 
 ```julia
-ε = 2
+ε = 1e2
 ```
 
 is a good accuracy for both $\mu_1(\theta_0)$ and $\mu_2(\theta_0)$.
@@ -273,7 +273,7 @@ Using the empirical variances to approximate the true variance we get the follow
 ```julia-repl
 julia> s²(f̄) = std.(empirical_distributions_f̄)
 julia> maximum(s²(f̄) ./ (ε^2 * k))
-0.020642667724759842
+0.0018945016028972723
 ```
 
 and
@@ -281,10 +281,10 @@ and
 ```julia-repl
 julia> s²(const1̄) = std.(empirical_distributions_const1̄)
 julia> maximum(s²(const1̄) ./ (ε^2 * k))
-0.03996983475573611
+0.0018301742629020274
 ```
 
-That is, the maximum deviation probability is less than $4$% in both cases. We conclude that our approximation of $\rho(\theta) = K\\mathrm{Prob}\\{\theta(q) = \theta_0\\}$ is a good approximation.
+That is, the maximum deviation probability is less than $1$% in both cases. We conclude that our approximation of $\rho(\theta) = K\\mathrm{Prob}\\{\theta(q) = \theta_0\\}$ is a good approximation.
 
 
 

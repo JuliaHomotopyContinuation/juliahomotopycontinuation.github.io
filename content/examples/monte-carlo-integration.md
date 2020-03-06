@@ -29,7 +29,7 @@ $$\overline{f}(A,b):= \sum\_{x\in V: Ax=b} \frac{f(x)}{\alpha(x)},$$
 
 where
 
-$$\alpha(x) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x, \pi_x x\rangle}}{1+\Vert x\Vert^2}$$
+$$\alpha(x) = \frac{\Gamma(\frac{n+1}{2})}{\sqrt{\pi}^{n+1}} \frac{\sqrt{1+\langle x, \pi_x x\rangle}}{(1+\Vert x\Vert)^{\frac{n+1}{2}}}$$
 
 and where $n=\mathrm{dim}(V)$, and where $\pi_x$ is the orthogonal projection onto the normal space of $V$ at $x$. The main theorem of [the article](https://arxiv.org/abs/1810.06271) yields
 
@@ -72,7 +72,7 @@ function f̄(R)
 end
 function α(z, J)
     N = normalize!([j(x=>z) for j in J])
-    Γ * sqrt(1 + (z ⋅ N)^2) / (1 + z⋅z)
+    Γ * sqrt(1 + (z ⋅ N)^2) / sqrt(1 + z⋅z)^(n+1)
 end
 ```
 

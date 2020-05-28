@@ -178,7 +178,7 @@ xayb = randn(ComplexF64,8)
 
 δδ̄_results = map(D1, D2) do d1, d2
     d = [d1; d2]
-    start_sys = [subs(f, [x; x̄; a; ā; y; ȳ; b; b̄] => xayb, γ => Γ, γ̄ => Γ̄) for f in d]
+    start_sys = [subs(f, [x; a; y; b; x̄; ā; ȳ; b̄] => xayb, γ => Γ, γ̄ => Γ̄) for f in d]
     # only keep first solution
     first(solutions(solve(start_sys)))
 end

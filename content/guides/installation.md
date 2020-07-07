@@ -11,7 +11,7 @@ group = "get-started"
 ### Requirements
 In order to use HomotopyContinuation.jl you need to have at least Julia 1.1 installed.
 If this is not the case you can download it at [julialang.org](https://julialang.org/downloads/).
-Please see the [platform specific instructions](https://julialang.org/downloads/platform.html) if you have trouble installing Julia.
+Please see the [platform specific instructions](https://julialang.org/downloads/platform/) if you have trouble installing Julia.
 
 ### Installation
 HomotopyContinuation.jl is available through the Julia package manager.
@@ -23,9 +23,9 @@ pkg> add HomotopyContinuation
 
 Alternatively, you can also use
 
-```julia-repl
-julia> import Pkg
-julia> Pkg.add("HomotopyContinuation")
+```julia
+import Pkg
+Pkg.add("HomotopyContinuation")
 ```
 
 After you completed the installation you are ready to start with our [introduction to the numerical solution of polynomial systems](/guides/introduction).

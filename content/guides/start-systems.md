@@ -12,13 +12,13 @@ Choosing a start system for homotopy continuation is an art for itself. We give 
 
 <h3 class="section-head" id="result"><a>I know nothing about the structure of my polynomial system</a></h3>
 
-In this case, there are two options: choosing a [totaldegree](/guides/totaldegree) start system, or a [polyhedral](/guides/polyhedral) start system.
+In this case, there are two options: choosing a [totaldegree](/guides/totaldegree) start system, or a [polyhedral](/guides/polyhedral) start system (the default).
 
 The first one is suitable for system, which are dense. The second one is suitable for systems, which are sparse. Here is how it works:
 
 ```julia
 using HomotopyContinuation
-@polyvar x y;
+@var x y;
 f = [x^2 + 2y, y^2 - 2]
 solve(f; start_system = :total_degree) # using totaldegree
 solve(f; start_system = :polyhedral) # using polyhedral
@@ -31,13 +31,16 @@ In this case, one should first compute an intermediate solution with random *com
 Here is an example with parameters `p`:
 
 ```julia
-using HomotopyContinuation, DynamicPolynomials
-@polyvar x y z p[1:3]
-F = [
-    x + 3 + 2y + 2y^2 - p[1]^2,
-    (x - 2 + 5y)*z + 4 - p[2] * z,
-    (x + 2 + 4y)*z + 5 - p[3] * z    
-]
+using HomotopyContinuation,
+@var x y z p[1:3]
+F = System(
+    [
+        x + 3 + 2y + 2y^2 - p[1],
+        (x - 2 + 5y) * z + 4 - p[2] * z,
+        (x + 2 + 4y) * z + 5 - p[3] * z,
+    ];
+    parameters = p
+)
 ```
 
 Suppose we want to solve the system for `p₁ = [1,1,2]`. Then, we first solve it for random complex coefficients:
@@ -45,17 +48,15 @@ Suppose we want to solve the system for `p₁ = [1,1,2]`. Then, we first solve i
 ```julia
 # Generate generic parameters by sampling complex numbers from the normal distribution
 p₀ = randn(ComplexF64, 3)
-# Substitute p₀ for p
-F_p₀ = subs(F, p => p₀)
 # Compute all solutions for F_p₀
-result_p₀ = solve(F_p₀)
+result_p₀ = solve(F, target_parameters = p₀)
 ```
 
 Now, we track `p₀` to `p₁` using a [parameter homotopy](/guides/parameter-homotopies).
 
 ```julia
 p₁ = [1, 1, 2]
-result_p₁ = solve(F, solutions(result_p₀); parameters=p, start_parameters=p₀, target_parameters=p₁)
+result_p₁ = solve(F, solutions(result_p₀); start_parameters=p₀, target_parameters=p₁)
 ```
 This approach is particularly useful when one has to solve this system for many different sets of parameters, as we explain in [this guide](/guides/many-systems).
 

@@ -1,14 +1,14 @@
 +++
 title = "Total Degree Homotopy"
-description = "The totaldegree start system"
+description = "The total degree start system"
 weight = 100
 draft = false
 toc = false
-bref = "The totaldegree start system"
+bref = "The total degree start system"
 group = "feature-guide"
 +++
 
-Totaldegree is a particular choice of start system for homotopy continuation.
+Total degree is a particular choice of start system for homotopy continuation.
 
 It is the simplest start system for a system
 
@@ -17,7 +17,7 @@ $$
 F(x_1,\ldots,x_n)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\\ \vdots\\\ f_n(x_1,\ldots,x_n) \end{bmatrix}.
 $$
 
-The totaldegree start system of $F$ is
+The total degree start system of $F$ is
 
 $$
 G(x_1,\ldots,x_n) = \begin{bmatrix} x_1^{d_1} - a_1 \\\ \\vdots \\\  x_n^{d_n} - a_n\end{bmatrix}, \text{ where } d_i = \text{deg}(F_i),
@@ -29,8 +29,8 @@ Here is how it works:
 
 ```julia-repl
 julia> using HomotopyContinuation
-julia> @polyvar x y;
-julia> f = [x^2 + 2y, y^2 - 2]
+julia> @var x y;
+julia> f = System([x^2 + 2y, y^2 - 2])
 julia> solve(f; start_system = :total_degree)
 Result with 4 solutions
 ==================================

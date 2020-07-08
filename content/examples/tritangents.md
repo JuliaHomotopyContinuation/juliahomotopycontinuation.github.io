@@ -35,15 +35,14 @@ $$ F = \begin{bmatrix} P(x,h) \\\ P(y,h)\\\  P(z,h)\end{bmatrix}, \text{ where }
 Here, $\nabla_x$ denotes the [gradient operator](https://en.wikipedia.org/wiki/Del). Let us create the system $F$ in `Julia`. For simplicity, I will consider the case when $Q=x_3 - x_1x_2$.
 
 ```julia
-using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
-@polyvar h[1:3] # variables for the plane
-@polyvar x[1:3] y[1:3] z[1:3] #variables for the contact points
-@polyvar c[1:20] #variables for the cubic
+using HomotopyContinuation, LinearAlgebra
+@var h[1:3] # variables for the plane
+@var x[1:3] y[1:3] z[1:3] #variables for the contact points
 
 #the quadric
 Q = x[3] - x[1] * x[2]
-#the cubic
-C = c ⋅ unique(kron([x;1], [x;1], [x;1]))
+#the cubic C with coefficients c
+C, c = dense_poly(x, 3, coeff_name = :c)
 
 #generate the system P for the contact point x
 P_x = [
@@ -58,7 +57,7 @@ P_y = [p([h; x; c] => [h; y; c]) for p in P_x]
 P_z = [p([h; x; c] => [h; z; c]) for p in P_x]
 
 #define F
-F = [P_x; P_y; P_z]
+F = System([P_x; P_y; P_z]; variables = [h;x;y;z], parameters = c)
 ```
 
 Let us first solve `F` by total degree homotopy when the coefficients of `C` are random complex numbers.
@@ -66,22 +65,27 @@ Let us first solve `F` by total degree homotopy when the coefficients of `C` are
 ```julia
 #create random complex coefficients for C
 c₁ = randn(ComplexF64, 20)
-#plug in c₁ for c
-G = [f([h; x; y; z; c] => [h; x; y; z; c₁]) for f in F]
-
 #solve the system for c₁
-S = solve(G)
+S = solve(F; target_parameters = c)
 ```
 
-On my laptop the computation takes 102 seconds. Here is what I get.
+On my laptop the computation takes 14 seconds. Here is what I get.
 ```julia-repl
-Result with 7391 solutions
-==================================
+Result with 4020 solutions
+==========================
+• 12636 paths tracked
 • 720 non-singular solutions (0 real)
-• 6671 singular solutions (0 real)
-• 91 failed paths
-• 110592 paths tracked
-• random seed: 498802
+• 3300 singular solutions (0 real)
+• random_seed: 0x825eefa1
+• start_system: :polyhedral
+• multiplicity table of singular solutions:
+┌───────┬───────┬────────┬────────────┐
+│ mult. │ total │ # real │ # non-real │
+├───────┼───────┼────────┼────────────┤
+│   1   │ 2499  │   0    │    2499    │
+│   2   │  131  │   0    │    131     │
+│   3   │  670  │   0    │    670     │
+└───────┴───────┴────────┴────────────┘
 ```
 
 The count of 720 is correct: for each of the 120 tritangents I get 6 solutions corresponding to all permutations of the contact points $x,y,z$ --- and $6 \cdot 120 = 720$.
@@ -89,27 +93,26 @@ The count of 720 is correct: for each of the 120 tritangents I get 6 solutions c
 Let us extract the 720 solutions.
 
 ```julia
-sols = solutions(S, only_nonsingular = true)
+sols = solutions(S)
 ```
 
-One may use `sols` in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking `sols` from `c₁` to $C=x_1^3+x_2^3+x_3^3-1$.
+One may use `sols` in a parameter homotopy for computing the tritangents of other sextics. Here is code for tracking `sols` from `c₁` to $x_1^3+x_2^3+x_3^3-1$.
 
 ```julia
 #define the coefficients for C
-c₀ = [1; zeros(9); 1; zeros(5); 1; 0; 0; -1]
+c₀ = coeffs_as_dense_poly(x[1]^3+x[2]^3+x[3]^3-1, x, 3)
 #track the solutions from c₁ to c₀
-R = solve(F, sols, parameters = c, start_parameters = c₁, target_parameters = c₀)
+R = solve(F, sols, start_parameters = c₁, target_parameters = c₀)
 ```
 
-On my laptop this computation takes 0.281 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the totaldegree approach for `G`. Here is the summary of `R`:
+On my laptop this computation takes 0.048781 seconds --- tracking solutions from `c₁` to `c₀` is much faster than using the direct solve approach. Here is the summary of `R`:
 
 ```julia-repl
 Result with 684 solutions
-==================================
-• 684 non-singular solutions (24 real)
-• 0 singular solutions (0 real)
+=========================
 • 720 paths tracked
-• random seed: 757804
+• 684 non-singular solutions (24 real)
+• random_seed: 0x2bae05f8
 ```
 From the $4= \frac{24}{6}$ real solutions one was used in the gif above.
 

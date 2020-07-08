@@ -48,8 +48,8 @@ Let us define the equation for $C$ in `Julia`.
 
 ```julia
 using HomotopyContinuation, LinearAlgebra, Statistics
-@polyvar x[1:2]
-F = x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1
+@var x[1:2]
+F = System([x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1])
 ```
 
 We also define $\overline{f}$.
@@ -79,12 +79,8 @@ end
 For computing $f(A,b)$ we have to intersect $V$ with linear spaces. Following [this guide](/guides/many-systems) we first create a suitable start system by intersecting $V$ with a random complex linear space of dimension $N-n$.
 
 ```julia
-@polyvar A[1:n, 1:N] b[1:n]
-G = [F; A * x - b]
-
-A₀, b₀ = randn(ComplexF64, n, N), randn(ComplexF64, n)
-G₀ = [subs(g, vec(A)=>vec(A₀), b=>b₀) for g in G]
-start = solve(G₀)
+L₀ = rand_subspace(N; dim = N - n)
+start = solve(F, target_subspace = L₀)
 start_sols = solutions(start)
 ```
 
@@ -95,11 +91,10 @@ Now, we track `start_sols` towards $10^7$ random Gaussian linear spaces.
 k = 10^5
 #track towards k random linear spaces
 empirical_distribution = solve(
-    G,
+    F,
     start_sols;
-    parameters = [vec(A); b],
-    start_parameters =  [vec(A₀); b₀],
-    target_parameters = [randn(n*N + n) for _ in 1:k],
+    start_subspace =  L₀,
+    target_subspaces = [rand_subspace(N; dim = N - n, real = true) for _ in 1:k],
     transform_result = (R,p) -> f̄(R)
 )
 ```

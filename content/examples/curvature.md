@@ -25,9 +25,9 @@ $$V =\\{x_1^4 - x_1^2x_2^2 + x_2^4 - 4x_1^2 - 2x_2^2 - x_1 - 4x_2 + 1 = 0\\}$$
 
 we use the following code.
 ```julia
-using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
+using HomotopyContinuation, LinearAlgebra
 
-@polyvar x[1:2]# initialize variables
+@var x[1:2]# initialize variables
 f = x[1]^4 - x[1]^2*x[2]^2 + x[2]^4 - 4x[1]^2 - 2x[2]^2 - x[1] - 4x[2] + 1
 
 ∇ = differentiate(f, x) # the gradient
@@ -41,19 +41,16 @@ dh = differentiate(h, x)
 
 F = [(g .* dh - ((3/2) * h).* dg) ⋅ v; f]
 
-S = solve(F)
+solve(F)
 ```
 
-Then, `S` returns
-
-```julia-repl
-julia> S
+```
 Result with 56 solutions
-==================================
-• 56 non-singular solutions (12 real)
-• 0 singular solutions (0 real)
+========================
 • 64 paths tracked
-• random seed: 314288
+• 56 non-singular solutions (12 real)
+• random_seed: 0xa10d5d18
+• start_system: :polyhedral
 ```
 
 Here is a picture of all solutions.

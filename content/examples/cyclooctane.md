@@ -32,7 +32,7 @@ Let's define the equations in Julia for $c^2 = 2$. For this, we use the followin
 using HomotopyContinuation, LinearAlgebra, DynamicPolynomials
 
 c² = 2
-@polyvar z[1:3, 1:6]
+@var z[1:3, 1:6]
 z_vec = vec(z)[1:17] # the 17 variables in a vector
 Z = [zeros(3) z[:,1:5] [z[1,6]; z[2,6]; 0] [√c²; 0; 0]] # the eight points in a matrix
 
@@ -41,38 +41,34 @@ F1 = [(Z[:, i] - Z[:, i+1]) ⋅ (Z[:, i] - Z[:, i+1]) - c² for i in 1:7]
 F2 = [(Z[:, i] - Z[:, i+2]) ⋅ (Z[:, i] - Z[:, i+2]) - 8c²/3 for i in 1:6]
 F3 = (Z[:, 7] - Z[:, 1]) ⋅ (Z[:, 7] - Z[:, 1]) - 8c²/3
 F4 = (Z[:, 8] - Z[:, 2]) ⋅ (Z[:, 8] - Z[:, 2]) - 8c²/3
-f = [F1; F2; F3; F4]
+f = System([F1; F2; F3; F4])
 ```
 
 The plan is now to intersect `f=0` with a linear space of codimension $2$ many times to get points. The guide [Solving many systems in a loop](https://www.juliahomotopycontinuation.org/guides/many-systems/) explains how to do this. We follow this guide and first generate a complex start system.
 
 ```julia
-n = 2 # dimension of the cyclooctane variety
 N = 17 # ambient dimension
-@polyvar Aᵥ[1:n, 1:N] bᵥ[1:n] # variables for the linear equations
-p = [vec(Aᵥ); bᵥ] # parameters
-F = [f; Aᵥ * z_vec - bᵥ] # the polynomial system we have to solve
-
-# now we solve one particular instance for A,b complex. we use this as start system
-A₀ = randn(ComplexF64, n, N)
-b₀ = randn(ComplexF64, n)
-p₀ = [vec(A₀); b₀]
-
-F₀ = [subs(Fᵢ, p => [vec(A₀); b₀]) for Fᵢ in F]
-complex_result = solve(F₀)
-S_p₀ = solutions(complex_result)
+L₀ = rand_subspace(N; codim = 2)
+R_L₀ = solve(f; target_subspace = L₀)
+```
+```
+Result with 1408 solutions
+==========================
+• 32768 paths tracked
+• 1408 non-singular solutions (0 real)
+• random_seed: 0x9edd6171
+• start_system: :polyhedral
 ```
 
-Now, we track the solutions from `S_p₀` towards systems we are interested in (here is a quick comment for algebraic geometers: the size of `S_p₀` is 1408; in other words, the cyclooctane variety has degree 1408).
+Now, we track the solutions from `R_L₀` towards systems we are interested in (here is a quick comment for algebraic geometers: the size of `R_p₀` is 1408; in other words, the cyclooctane variety has degree 1408).
 
 ```julia
 # we compute 100 random intersections
-Ω  = solve(
-    F,
-    S_p₀;
-    parameters = p,
-    start_parameters =  p₀,
-    target_parameters = [randn(n * N + n) for _ in 1:100],
+Ω = solve(
+    f,
+    solutions(R_L₀);
+    start_subspace = L₀,
+    target_subspaces = [rand_subspace(N; codim = 2, real = true) for _ in 1:100],
     transform_result = (R,p) -> real_solutions(R),
     flatten = true
 )

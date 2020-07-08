@@ -35,14 +35,14 @@ Here is code to generate the above system for random coefficients of the conics.
 
 ```julia
 using HomotopyContinuation, DynamicPolynomials, LinearAlgebra
-@polyvar a[1:2] r #variables for the circle center and radius
-@polyvar x y #variables of the circle
-@polyvar B[1:3,1:3] #coefficients of the conics
-@polyvar v[1:2, 1:3] #variables of the 3 points at which the circle is tangent
+@var a[1:2] r #variables for the circle center and radius
+@var x y #variables of the circle
+@var B[1:3,1:3] #coefficients of the conics
+@var v[1:2, 1:3] #variables of the 3 points at which the circle is tangent
 
 circle = ([x; y] - a) ⋅ ([x; y] - a) - r
 conic  = [x; y; 1] ⋅ (B * [x; y; 1]);
-tangential_condition = det([differentiate(circle, [x; y]) differentiate(conic, [x; y])])
+tangential_condition = det([differentiate(circle, [x, y]) differentiate(conic, [x, y])])
 
 conditions = [circle; conic; tangential_condition]
 
@@ -63,33 +63,35 @@ solve(F)
 ```
 
 I get the following answer.
-```julia-repl
+```
 Result with 184 solutions
-==================================
-• 184 non-singular solutions (22 real)
-• 0 singular solutions (0 real)
-• 512 paths tracked
-• random seed: 390710
+=========================
+• 256 paths tracked
+• 184 non-singular solutions (26 real)
+• random_seed: 0xfcbca7ff
+• start_system: :polyhedral
 ```
 
 And here is the code for $C_1$, $C_2$ and $C_3$ above.
 
-```julia-repl
-julia> C1 = [-1 0 1; 0 0 -0.5; 1 -0.5 5]
-julia> C2 = [2 0 2.5; 0 0 -0.5; 2.5 -0.5 -8]
-julia> C3 = [8 0 -1.5; 0 0 -0.5; -1.5 -0.5 -2]
-julia> F = [
+```julia
+C1 = [-1 0 1; 0 0 -0.5; 1 -0.5 5]
+C2 = [2 0 2.5; 0 0 -0.5; 2.5 -0.5 -8]
+C3 = [8 0 -1.5; 0 0 -0.5; -1.5 -0.5 -2]
+F = [
     f([x; y; a; r; vec(B)] => [v[:,i]; a; r; vec(C)])
     for f in conditions
     for (i,C) in enumerate([C1, C2, C3])
     ]
-julia> solve(F)
-Result with 60 solutions
-==================================
-• 60 non-singular solutions (14 real)
-• 0 singular solutions (0 real)
-• 512 paths tracked
-• random seed: 483355
+solve(F)
+```
+```
+Result with 62 solutions
+========================
+• 108 paths tracked
+• 62 non-singular solutions (14 real)
+• random_seed: 0xaf5b2b3b
+• start_system: :polyhedral
 ```
 
 {{<bibtex >}} 

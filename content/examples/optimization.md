@@ -24,11 +24,11 @@ The strategy to find the *global* optimum is to use the [method of Lagrange mult
 
 ```julia
 using HomotopyContinuation, DynamicPolynomials
-@polyvar x y z
+@var x y z
 J = 3x^3*y+y^2*z^2-2x*y-x*4z^3
 g = x^2+y^2+z^2-1
 # Introduce auxillary variable for Lagrangian
-@polyvar λ
+@var λ
 # define Lagrangian
 L = J - λ * g
 ```
@@ -53,7 +53,7 @@ For this we first compute the gradient of $L$ and then use the `solve` routine t
 # compute the gradient
 ∇L = differentiate(L, [x, y, z, λ])
 # Now we solve the polynomial system
-result = solve(∇L)
+result = solve(System(∇L; variables = [x, y, z, λ]))
 ```
 
 ```

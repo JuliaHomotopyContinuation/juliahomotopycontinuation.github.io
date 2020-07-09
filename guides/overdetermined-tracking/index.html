@@ -9,7 +9,7 @@
   <title> Overdetermined systems </title>
 
   
-  <meta name="description" content="How to track solutions of systems with more equations than variables."> 
+  <meta name="description" content="How to solve systems with more equations than variables."> 
   
   
   
@@ -22,7 +22,7 @@
 
 
   <meta property="og:title" content="Overdetermined systems" />
-<meta property="og:description" content="How to track solutions of systems with more equations than variables." />
+<meta property="og:description" content="How to solve systems with more equations than variables." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/overdetermined-tracking/" />
 
@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,12 +138,15 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
     <h1>Overdetermined systems</h1>
-    <p class="hero-lead">We're tracking a solution of an overdetermined system</p>
+    <p class="hero-lead">We are computing solutions of an overdetermined system</p>
   </div>
   <div id="kube-component" class="content">
     
@@ -167,16 +174,18 @@
 <p>$$f(x,y,z) = \begin{bmatrix} xz-y^2 \\ y-z^2 \\ x-yz \\ x + y + z + 1\end{bmatrix}.$$</p>
 <p>This system has 4 equation in 3 variables. One might expect that it has no solution, but actually it has solutions, as is explained <a href="https://en.wikipedia.org/wiki/Rational_normal_curve">here</a>.</p>
 <p>The Julia code is as follows</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
-julia&gt; @polyvar x y z
-julia&gt; solve([x*z - y^2, y - z^2, x - y*z, x + y + z + 1])
-Result with 3 solutions
-==================================
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span>
+solve<span style="color:#f92672"></span>([x<span style="color:#f92672"></span><span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>, y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> z<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>, x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y<span style="color:#f92672"></span><span style="color:#f92672">*</span>z<span style="color:#f92672"></span>, x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>])
+</code></pre></div><pre><code>Result with 3 solutions
+=======================
+• 5 paths tracked
 • 3 non-singular solutions (1 real)
-• 0 singular solutions (0 real)
-• 8 paths tracked
-• random seed: 157717
-</code></pre>
+• 2 excess solutions
+• random_seed: 0xf2aeb943
+• start_system: :polyhedral
+</code></pre><p>Here, the term <code>excess solutions</code> refers to artificially added solutions in order to make the overdetermined system a square system.</p>
+
     
     
   </div>

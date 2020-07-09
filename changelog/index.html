@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Changelog </title>
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="Changelog" />
+<meta property="og:description" content="Version 2.0 Version 2.0 of HomotopyContinuation.jl (HC.jl) is out!
+This release comes with many exciting new features and a major revamp of the internals.
+ModelKit Creating polynomials is now based primarily on our own modeling language ModelKit. Variables are created using the @var macro.
+Polynomials defined with the old @polyvar command continue to be compatible with solve and monodromy_solve. It is possible (and easy) to convert expressions constructed with variables created by @polyvar to ModelKit." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/changelog/" />
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/changelog/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>Changelog</h1>
+    <p class="hero-lead">See what is new in HomotopyContinuation.jl</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+
+
+    <h2 id="version-20">Version 2.0</h2>
+<p>Version 2.0 of HomotopyContinuation.jl (HC.jl) is out!</p>
+<p>This release comes with many exciting new features and a major revamp of the internals.</p>
+<h4 id="modelkit">ModelKit</h4>
+<p>Creating polynomials is now based primarily on our own modeling language <code>ModelKit</code>. Variables are created using the <code>@var</code> macro.</p>
+<p>Polynomials defined with the old <code>@polyvar</code> command continue to be compatible with <code>solve</code> and <code>monodromy_solve</code>. It is possible (and easy) to  convert expressions constructed with variables created by <code>@polyvar</code> to <code>ModelKit</code>.</p>
+<p>While polynomials defined by <code>@polyvar</code> are represented in the monomial basis, polynomials created with <code>@var</code> are represented as straight line programs. The latter can be evaluated significantly more efficiently, which results in faster computations.</p>
+<h4 id="witness-sets">Witness Sets</h4>
+<p>We introduce support for witness sets. This is a data structure that allows to work with positive dimensional components of the solution set of a system of polynomials. The idea is to take a general (affine) linear subspace of the largest dimension such that the linear space intersects the positive dimensional component in finitely many points (in some publications this is referred to as witness-superset).</p>
+<p>We built in special support for constructing (affine) linear subspaces, computing witness sets and moving witness sets around. Furthermore, it is possible to perform monodromy where the “parameters” are linear subspaces. In this case a trace test is used as a stopping criterion.</p>
+<h4 id="certification">Certification</h4>
+<p>We provide certification of non-singular isolated solutions of a square system of polynomials. This is done using <a href="https://en.wikipedia.org/wiki/Interval_arithmetic">interval arithmetic</a> and the Krawczyk method.</p>
+<h4 id="polyhedral-homotopy">Polyhedral homotopy</h4>
+<p>The <code>solve</code> method now uses by default the <a href="/guides/polyhedral.md">polyhedral homotopy method</a> (before the default setting was <a href="/guides/totaldegree.md">total-degree homotopy</a>). The computation of the mixed cells is done by <a href="https://github.com/saschatimme/MixedSubdivisions.jl">MixedSubdivsions.jl</a>.</p>
+<h4 id="more-new-features">More new features</h4>
+<p>Many internal routines have been updated, resulting in faster computations overall. The path tracker is now more robust and can track more numerically challenging paths. The implementation is based on the article Timme, S. &ldquo;Mixed Precision Path Tracking for Polynomial Homotopy Continuation&rdquo;(2020, <a href="https://arxiv.org/abs/1902.02968">arXiv: 1902.02968</a>). We also reworked the endgame to better handle singular solutions of low multiplicity and to avoid degenerate cases where we wrongly classified solutions as singular.</p>
+<h3 id="summary">Summary:</h3>
+<p><strong>New features</strong></p>
+<ul>
+<li>Polyhedral homotopy as default for solving square polynomial systems</li>
+<li>New symbolic input (ModelKit)
+<ul>
+<li>Allows to generate efficient straight line programs (no unnecessary expansion into monomial basis).</li>
+<li>Option to compile straight line programs (default; fast but compilation overhead) or to only interpret them (slower, but no compilation overhead)</li>
+<li>Higher order automatic differentiation</li>
+<li>Optimization of problems (common subexpression elimination, multivariate horner rewrite scheme)</li>
+</ul>
+</li>
+<li>Improved path tracking algorithm as described in Mixed Precision Path Tracking for Polynomial Homotopy Continuation (2020, <a href="https://arxiv.org/abs/1902.02968">arXiv: 1902.02968)</a></li>
+<li>New tropical endgame algorithm</li>
+<li>Standalone Newton's method</li>
+<li>Standalone excess solution check</li>
+<li>(Affine) linear subspaces support
+<ul>
+<li>Easy to construct (affine) linear subspaces using extrinsic ({ x | Ax = b}) or intrinsic coordinates ({B * u + b | u })</li>
+<li>Affine linear subspace homotopy in the affine Grassmanian (intrinsic formulation)</li>
+<li>Affine linear subspace homotopy using extrinsic coordinates</li>
+</ul>
+</li>
+<li>Witness set computations</li>
+<li>Monodromy with affine linear subspaces</li>
+<li>Certification of regular solutions using interval arithmetic (Krawczyk method)</li>
+<li>Easy storing of solutions as text files</li>
+</ul>
+<p><strong>Notable changes</strong></p>
+<ul>
+<li>Solve with many parameters now has a progress bar.</li>
+<li>Regular solutions are now always refined to an accuracy of approximately machine precision.</li>
+<li><code>monodromy_solve</code> doesn’t compute permutations anymore by default (set <code>permutations = true</code>).</li>
+<li>In <code>monodromy_solve</code> the check for duplicate solutions is now significantly more robust by using a dynamic relative tolerance.</li>
+<li>The options in <code>solve</code> are now grouped. For example, the options for the tracker have to be passed as <code>solve(F; tracker_options =(max_steps = 1_000,))</code></li>
+<li><code>CoreTracker</code> is now <code>Tracker</code> and <code>PathTracker</code> is now <code>EndgameTracker</code></li>
+<li><code>SPSystem</code> is succeeded by <code>CompiledSystem</code> and <code>FPSystem</code> by <code>InterpretedSystem</code></li>
+</ul>
+
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

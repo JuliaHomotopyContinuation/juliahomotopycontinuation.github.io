@@ -9,7 +9,7 @@
   <title> Total Degree Homotopy </title>
 
   
-  <meta name="description" content="The totaldegree start system"> 
+  <meta name="description" content="The total degree start system"> 
   
   
   
@@ -22,7 +22,7 @@
 
 
   <meta property="og:title" content="Total Degree Homotopy" />
-<meta property="og:description" content="The totaldegree start system" />
+<meta property="og:description" content="The total degree start system" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/guides/totaldegree/" />
 
@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,31 +138,34 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
     <h1>Total Degree Homotopy</h1>
-    <p class="hero-lead">The totaldegree start system</p>
+    <p class="hero-lead">The total degree start system</p>
   </div>
   <div id="kube-component" class="content">
     
 
 
-    <p>Totaldegree is a particular choice of start system for homotopy continuation.</p>
+    <p>Total degree is a particular choice of start system for homotopy continuation.</p>
 <p>It is the simplest start system for a system</p>
 <p>$$
 F(x_1,\ldots,x_n)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots\\ f_n(x_1,\ldots,x_n) \end{bmatrix}.
 $$</p>
-<p>The totaldegree start system of $F$ is</p>
+<p>The total degree start system of $F$ is</p>
 <p>$$
 G(x_1,\ldots,x_n) = \begin{bmatrix} x_1^{d_1} - a_1 \\ \vdots \\  x_n^{d_n} - a_n\end{bmatrix}, \text{ where } d_i = \text{deg}(F_i),
 $$</p>
 <p>and where the $a_i$ are random numbers. There are $d_1\cdots d_n$ many solutions to this system, which are easy to write down. A <a href="https://en.wikipedia.org/wiki/B%C3%A9zout%27s_theorem">theorem by Bézout</a> says that a system whose $i$-th entry is a polynomial of degree $d_i$ has at most $d_1\cdots d_n$ solutions (if not infinitely many). Hence, tracking all $d_1 \cdots d_n$ solutions of $G$ to $F$ we are can find all solutions of $f$. Such a homotopy is called a <em>total degree homotopy</em>.</p>
 <p>Here is how it works:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
-julia&gt; @polyvar x y;
-julia&gt; f = [x^2 + 2y, y^2 - 2]
+julia&gt; @var x y;
+julia&gt; f = System([x^2 + 2y, y^2 - 2])
 julia&gt; solve(f; start_system = :total_degree)
 Result with 4 solutions
 ==================================

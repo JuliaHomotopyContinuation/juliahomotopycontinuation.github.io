@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="Minimizing a function over the sphere">
 <meta itemprop="description" content="Using HomotopyContinuation.jl for a problem in optimization">
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="333">
+<meta itemprop="wordCount" content="339">
 
 
 
@@ -172,11 +179,11 @@
 $$</p>
 <p>The strategy to find the <em>global</em> optimum is to use the <a href="https://en.wikipedia.org/wiki/Lagrange_multiplier">method of Lagrange multipliers</a> to find <em>all</em> critical points of the objective function such that the equality constraint is satisfied. We start with defining our Lagrangian.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span>
 J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span><span style="color:#f92672">+</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>z<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>x<span style="color:#f92672"></span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span><span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>z<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>
 g<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span>z<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 <span style="color:#75715e"># Introduce auxillary variable for Lagrangian</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> λ<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> λ<span style="color:#f92672"></span>
 <span style="color:#75715e"># define Lagrangian</span>
 L<span style="color:#f92672"></span> <span style="color:#f92672">=</span> J<span style="color:#f92672"></span> <span style="color:#f92672">-</span> λ<span style="color:#f92672"></span> <span style="color:#f92672">*</span> g<span style="color:#f92672"></span>
 </code></pre></div><pre><code>3x³y - 4xz³ + y²z² - x²λ - y²λ - z²λ - 2xy + λ
@@ -188,7 +195,7 @@ $$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># compute the gradient</span>
 ∇L<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(L<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>, y<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>, λ<span style="color:#f92672"></span>])
 <span style="color:#75715e"># Now we solve the polynomial system</span>
-result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(∇L<span style="color:#f92672"></span>)
+result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(System<span style="color:#f92672"></span>(∇L<span style="color:#f92672"></span>; variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span>, y<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>, λ<span style="color:#f92672"></span>]))
 </code></pre></div><pre><code>Result with 26 solutions
 ==================================
 • 26 non-singular solutions (22 real)
@@ -216,7 +223,7 @@ minval<span style="color:#f92672"></span>, minindex<span style="color:#f92672"><
     author =  { Sascha Timme },
     title = { Minimizing a function over the sphere },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/optimization/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

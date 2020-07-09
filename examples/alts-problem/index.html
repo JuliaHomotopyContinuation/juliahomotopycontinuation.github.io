@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="Alt&#39;s problem">
 <meta itemprop="description" content="A classical problem from robotics">
 <meta itemprop="datePublished" content="2019-10-28T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-10-28T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="1642">
+<meta itemprop="wordCount" content="1651">
 
 
 
@@ -166,7 +173,8 @@
 <div id="post-box">
 <div id="post" itemprop="articleBody">
     
-    <p><span style="color: gray">This post was worked out in a <a href="https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/">student seminar</a> that we held at TU Berlin in summer 2019. </span></p>
+    <p><strong>This post currently is only valid for HomotopyContinuation v1</strong></p>
+<p><span style="color: gray">This post was worked out in a <a href="https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/">student seminar</a> that we held at TU Berlin in summer 2019. </span></p>
 <p>A four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:</p>
 <p style="text-align:center;"><img src="/videos/four-bar.mp4" width="400px"/></p>
 <p>The synthesis problem describes the problem of finding all four bars whose coupler curve passes through a given number of precision points. The largest possible number of prescribed precision points is $9$. This problem was first formulated by Alt in 1923 and completely solved by <a href="https://asmedigitalcollection.asme.org/mechanicaldesign/article-abstract/114/1/153/429455/Complete-Solution-of-the-Nine-Point-Path-Synthesis">Wampler et al.</a>
@@ -369,7 +377,7 @@ results<span style="color:#f92672"></span> <span style="color:#f92672">=</span> 
     author =  { Paul Breiding, Anna Eckhardt and Sascha Timme },
     title = { Alt&#39;s problem },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/alts-problem/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

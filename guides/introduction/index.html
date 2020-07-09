@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -181,17 +188,18 @@ Using <a href="https://www.JuliaHomotopyContinuation.org">HomotopyContinuation.j
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># load the package</span>
 <span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 <span style="color:#75715e"># declare variables x and y</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
 <span style="color:#75715e"># define the polynomials</span>
 f₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> y<span style="color:#f92672"></span>
 f₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>x<span style="color:#f92672"></span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
-result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>([f₁<span style="color:#f92672"></span>, f₂<span style="color:#f92672"></span>])
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([f₁<span style="color:#f92672"></span>, f₂<span style="color:#f92672"></span>])
+<span style="color:#a6e22e">@time</span><span style="color:#f92672"></span> result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 18 solutions
-==================================
-• 18 non-singular solutions (4 real)
-• 0 singular solutions (0 real)
+========================
 • 18 paths tracked
-• random seed: 847678
+• 18 non-singular solutions (4 real)
+• random seed: 0x6baaff3a
+• start_system: :polyhedral
 </code></pre>
 <p>Now, the result reports that we found <strong>18</strong> solutions and <strong>4  real</strong> solutions. Why do we have 14 solutions more than expected? The reason is that we do not compute the common zero set of $f_1$ and $f_2$ over the real numbers, but over the <strong>complex numbers</strong>. Although there are usually more complex solutions than real solutions, this makes the problem of computing all real solutions <em>much</em> easier.</p>
 <blockquote>
@@ -209,23 +217,24 @@ result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> s
 <p>The <code>result</code> contains some additional informations about the different solutions.
 Let's take a look at the first real solution:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">results<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>; only_real<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#66d9ef">true</span>)[<span style="color:#ae81ff">1</span>]
-</code></pre></div><pre><code>PathResult
-=================
- • return_code: success
- • t: 0.0
- • solution: Complex{Float64}[-1.67142-2.97795e-29im, 0.655205+1.18329e-29im]
- • accuracy: 5.288e-15
- • residual: 4.481e-16
- • condition_jacobian: 1.177e+00
- • path_number: 3
-</code></pre>
+</code></pre></div><p>PathResult:
+• return_code → :success
+• solution → Complex{Float64}[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
+• accuracy → 3.4595e-16
+• residual → 6.6613e-16
+• condition_jacobian → 5.5554
+• steps → 50 / 0
+• extended_precision → false
+• path_number → 2</p>
 <p>The meaning of those entries is as follows:</p>
 <ul>
-<li><code>return_code: success</code> means that the computation was successful.</li>
+<li><code>return_code → :success</code> means that the computation was successful.</li>
 <li><code>solution</code> is the solution that was computed.</li>
-<li><code>accuracy</code> is an approximation of $\Vert x-x^* \Vert$ where $x$ is the computed solution and $x^* $ is the true solution.</li>
-<li><code>residual</code> is the value of the euclidean norm of $f(x)$, where $x$ is the computed solution.</li>
+<li><code>accuracy</code> is an approximation of $\Vert x-x^* \Vert / \Vert x^* \Vert$ where $x$ is the computed solution and $x^* $ is the true solution.</li>
+<li><code>residual</code> is the value of the infinity norm of $f(x)$, where $x$ is the computed solution.</li>
 <li><code>condition_jacobian</code> is the condition number of the Jacobian of $f$ at the solution. A large value indicates that this solution is close to being singular.</li>
+<li><code>steps</code> is the number of accepted / rejected steps during the tracking.</li>
+<li><code>extended_precision</code> is <code>true</code> if the it was necessary to use extended precision.</li>
 <li><code>path_number</code> the number of the path which resulted int this solution.</li>
 </ul>
 <p>This is already everything you need to know for solving simple polynomial systems! But in order to solve more challenging systems it is helpful to understand the basics about the techniques used in <code>solve</code>. There are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.</p>
@@ -271,6 +280,7 @@ Then a good homotopy is
 $$H(x,t) = \gamma t G(x) + (1-t)F(x)$$
 where $\gamma \in \mathbb{C}$ is a random complex number with absolute value one.</p>
 <p>This construction easily generalizes to polynomial systems with the $n$ polynomials in $n$ variables.
+The resulting homotopy is called the <em>total degree homotopy</em>. For a total degree homotopy you have to set the <code>start_system=:total_degree</code> argument.
 If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then $f$ has at most $d_1 \cdot \ldots \cdot d_n$ many isolated solutions.</p>
 <p>For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:</p>
 <ul>
@@ -278,7 +288,8 @@ If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then 
 <li><a href="/guides/polyhedral">Polyhedral homotopies</a> take the sparsity of the polynomials into account. To each polynomial system you can associate the <a href="https://en.wikipedia.org/wiki/Mixed_volume"><em>mixed volume</em></a> of the Newton polytopes of the polynomials. The <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93Kushnirenko_theorem">Bernstein–Khovanskii–Kushnirenko theorem</a> tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.</li>
 </ul>
 <p>Both multi-homogeneous and polyhedral homotopies are supported by HomotopyContinuation.jl.
-A multi-homogeneous homotopy will automatically be constructed if you pass a set of <code>variable_groups</code> to <code>solve</code>. For a polyhedral homotopy you have to set the <code>start_system=:polyhedral</code> argument.</p>
+A multi-homogeneous homotopy is constructed if you pass a set of <code>variable_groups</code> to <code>solve</code> and set <code>start_system=:total_degree</code>.
+The polyhedral homotopy is currently the default, but can also be explicitly requested by setting the <code>start_system=:polyhedral</code> argument.</p>
 <h2 id="case-study-optimization">Case Study: Optimization</h2>
 <p>Consider the distance from a point $u \in \mathbb{R}^n$ to the variety $X=V(f_1,\ldots,f_m)$.
 We want to solve the following optimization problem:</p>
@@ -311,19 +322,21 @@ $$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\i
 <p><strong>Note</strong>: These are the same equations you get from applying Lagrange multipliers to the optimization problem.</p>
 <p>Now that we derived the critical equations we can go back to our initial example. Let's start with defining the critical equations in Julia.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># define f</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
 f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> y<span style="color:#f92672"></span>
 <span style="color:#75715e"># define new variables u₁, u₂ and λ₁</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>] λ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>]
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>] λ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">1</span>]
 <span style="color:#75715e"># define the jacobian of F</span>
 J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>([f<span style="color:#f92672"></span>], [x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>])
 <span style="color:#75715e"># J&#39; defines the transpose of J</span>
-C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [[x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> u<span style="color:#f92672"></span> <span style="color:#f92672">-</span> J<span style="color:#f92672">&#39;</span><span style="color:#f92672">*</span>λ<span style="color:#f92672"></span>;
-     f<span style="color:#f92672"></span>]
-</code></pre></div><pre><code>3-element Array{DynamicPolynomials.Polynomial{true,Int64},1}:
- -6x⁵λ₁ - 5x⁴yλ₁ - 4x³y²λ₁ - 2xy⁴λ₁ + 8x³λ₁ + 2xλ₁ + x - u₁
- -x⁵λ₁ - 2x⁴yλ₁ - 4x²y³λ₁ - 6y⁵λ₁ + 8y³λ₁ + 2yλ₁ + y - u₂  
- x⁶ + x⁵y + x⁴y² + x²y⁴ + y⁶ - 2x⁴ - 2y⁴ - x² - y² + 2     
+C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([[x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> u<span style="color:#f92672"></span> <span style="color:#f92672">-</span> J<span style="color:#f92672">&#39;</span><span style="color:#f92672">*</span>λ<span style="color:#f92672"></span>; f<span style="color:#f92672"></span>], variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span>;y<span style="color:#f92672"></span>;λ<span style="color:#f92672"></span>], parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>)
+</code></pre></div><pre><code>System of length 3
+ 3 variables: x, y, λ₁
+ 2 parameters: u₁, u₂
+
+ -u₁ + x - λ₁*(5*x^4*y + 4*(-2 + x^2 + y^2)*x^3 + 2*(-1 + x^4 + y^4)*x)
+ -u₂ + y - (4*(-2 + x^2 + y^2)*y^3 + 2*(-1 + x^4 + y^4)*y + x^5)*λ₁
+ x^5*y + (-2 + x^2 + y^2)*(-1 + x^4 + y^4)
 </code></pre>
 <p>We also define the point $u_0 =[-0.32, -0.1]$</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">0.32</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.1</span>]
@@ -331,16 +344,14 @@ C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [[x<sp
  -0.32
  -0.1
 </code></pre>
-<p>Our system $C$ is parametrized by $u$.
-We have to make the substitution $u \Rightarrow u_0$ before we can solve the system.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">C_u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(c<span style="color:#f92672"></span>, u<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> u₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> c<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> C<span style="color:#f92672"></span>]
-res<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(C_u₀<span style="color:#f92672"></span>)
+<p>Our system $C$ is parametrized by $u$ and we want solve the system for the specific value $u = u_0$.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">res<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>; target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u₀<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 36 solutions
-==================================
+========================
+• 36 paths tracked
 • 36 non-singular solutions (8 real)
-• 0 singular solutions (0 real)
-• 216 paths tracked
-• random seed: 58134
+• random seed: 0x1556a953
+• start_system: :polyhedral
 </code></pre>
 <p>We find that our problem has <strong>36</strong> solutions over the complex numbers, and we can see that there are <strong>8</strong> real solutions.</p>
 <p>Let's extract the real points.</p>
@@ -361,9 +372,9 @@ ed_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span
 <p>The optimal solution is found as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> LinearAlgebra<span style="color:#f92672"></span>
 
-dist<span style="color:#f92672"></span>, idx<span style="color:#f92672"></span> <span style="color:#f92672">=</span> findmin<span style="color:#f92672"></span>([norm<span style="color:#f92672"></span>(x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> u<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> x<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> ed_points<span style="color:#f92672"></span>])
-println<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">O</span><span style="color:#e6db74">p</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">m</span><span style="color:#e6db74">a</span><span style="color:#e6db74">l</span><span style="color:#e6db74"> </span><span style="color:#e6db74">s</span><span style="color:#e6db74">o</span><span style="color:#e6db74">l</span><span style="color:#e6db74">u</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">o</span><span style="color:#e6db74">n</span><span style="color:#e6db74">:</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>, ed_points<span style="color:#f92672"></span>[idx<span style="color:#f92672"></span>], <span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">w</span><span style="color:#e6db74">i</span><span style="color:#e6db74">t</span><span style="color:#e6db74">h</span><span style="color:#e6db74"> </span><span style="color:#e6db74">d</span><span style="color:#e6db74">i</span><span style="color:#e6db74">s</span><span style="color:#e6db74">t</span><span style="color:#e6db74">a</span><span style="color:#e6db74">n</span><span style="color:#e6db74">c</span><span style="color:#e6db74">e</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>, sqrt<span style="color:#f92672"></span>(dist<span style="color:#f92672"></span>), <span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">t</span><span style="color:#e6db74">o</span><span style="color:#e6db74"> </span><span style="color:#e6db74">u</span><span style="color:#e6db74">₀</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><pre><code>Optimal solution: [-0.988532, 0.0487366] with distance 1.31382768101552 to u₀
+dist<span style="color:#f92672"></span>, idx<span style="color:#f92672"></span> <span style="color:#f92672">=</span> findmin<span style="color:#f92672"></span>([norm<span style="color:#f92672"></span>(x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> u₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> x<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> ed_points<span style="color:#f92672"></span>])
+println<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">O</span><span style="color:#e6db74">p</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">m</span><span style="color:#e6db74">a</span><span style="color:#e6db74">l</span><span style="color:#e6db74"> </span><span style="color:#e6db74">s</span><span style="color:#e6db74">o</span><span style="color:#e6db74">l</span><span style="color:#e6db74">u</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">o</span><span style="color:#e6db74">n</span><span style="color:#e6db74">:</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>, ed_points<span style="color:#f92672"></span>[idx<span style="color:#f92672"></span>], <span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">w</span><span style="color:#e6db74">i</span><span style="color:#e6db74">t</span><span style="color:#e6db74">h</span><span style="color:#e6db74"> </span><span style="color:#e6db74">d</span><span style="color:#e6db74">i</span><span style="color:#e6db74">s</span><span style="color:#e6db74">t</span><span style="color:#e6db74">a</span><span style="color:#e6db74">n</span><span style="color:#e6db74">c</span><span style="color:#e6db74">e</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>, dist<span style="color:#f92672"></span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74"> </span><span style="color:#e6db74">t</span><span style="color:#e6db74">o</span><span style="color:#e6db74"> </span><span style="color:#e6db74">u</span><span style="color:#e6db74">₀</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><pre><code>Optimal solution: [-0.988532, 0.0487366] with distance 0.684877 to u₀
 </code></pre>
 <p>Here is a visualization of all (real) critical points:</p>
 <figure>
@@ -377,98 +388,68 @@ println<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</sp
 We could apply the same computations as above, but note that we needed to track 216 paths in order to find only 36 solutions. Let's make use of the fact that we know that for almost all values of $u$ there are the same number of critical points and that for the other values $u$ the number of <em>isolated</em> solutions can only <em>decrease</em>.</p>
 <p>We start with computing all critical points to a random <em>complex</em> value $v \in \mathbb{C}^2$. Let's call the set of 36 critical points $S_v$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">v<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span>)
-result_v<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>([subs<span style="color:#f92672"></span>(c<span style="color:#f92672"></span>, u<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> v<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> c<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> C<span style="color:#f92672"></span>])
+result_v<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> v<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 36 solutions
-==================================
+========================
+• 36 paths tracked
 • 36 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
-• 216 paths tracked
-• random seed: 286792
+• random seed: 0x931f06b2
+• start_system: :polyhedral
 </code></pre>
 <p>Remember how we talked above about finding optimal homotopies and how it is hard to do this in general?
 Well, we just computed an optimal start system and now for a given $u_0$ the homotopy</p>
 <p>$$H(x, t) = C_{tv + (1-t)u_0}$$</p>
 <p>is an optimal homotopy! $H$ is called a <em>parameter homotopy</em> since we do a homotopy in the parameter space of our (family) of polynomial systems.</p>
 <p>This strategy is so essential that we support it out of the box with HomotopyContinuation.jl:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(result_v<span style="color:#f92672"></span>); parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>v<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u₀<span style="color:#f92672"></span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">S_v<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(result_v<span style="color:#f92672"></span>)
+solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, S_v<span style="color:#f92672"></span>; start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> v<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u₀<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 36 solutions
-==================================
-• 36 non-singular solutions (8 real)
-• 0 singular solutions (0 real)
+========================
 • 36 paths tracked
-• random seed: 364372
+• 36 non-singular solutions (8 real)
+• random seed: 0x9f847e27
 </code></pre>
 <p>We see that only $36$ paths had to be tracked for finding all $36$ critical points of $u_0$.</p>
 <p><strong>Note:</strong> If the computation of $S_v$ takes some time you should store the solutions (together with $v$!) on your disk. Then you can load them if needed.</p>
 <h3 id="alternative-start-systems">Alternative start systems</h3>
-<p>If we take a look at the defining equations
-$$\begin{array}{rl}x-u &amp;= J(x)^T \lambda \\ F(x) &amp;= 0 \\ \lambda &amp;\in \mathbb{R}^m \end{array}$$
-we can see that the total degree of this system is approximately
-$$D^n\prod_{i=1}^m d_i$$ where $D:= \max_i d_i$, $m$ is the number of equations and $n$ the number of variables.
-This can become large very quickly! However, it is reasonable to expect that the number of solutions is relatively small in comparison.</p>
-<p>There are <strong>two options</strong> to avoid the total degree. The first is fairly simple, instead of the total degree homotopy try to use a <strong>polyhedral homotopy</strong>. Let's try this with our running example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(C_u₀<span style="color:#f92672"></span>; start_system<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>)
-</code></pre></div><pre><code>Result with 36 solutions
-==================================
-• 36 non-singular solutions (8 real)
-• 0 singular solutions (0 real)
-• 36 paths tracked
-• random seed: 509642
-</code></pre>
-<p>And we see that instead of the $216$ paths we tracked initially we only needed to track <strong>36</strong>, so here this is even optimal!</p>
-<p>Sometimes even polyhedral homotopy is not enough. Another approach is a technique called <strong>monodromy</strong> which
+<p>Sometimes the number of paths to track using a simple <code>solve</code> is very large (or even too large).
+Another approach is a technique called <strong>monodromy</strong> which
 uses the fact that our problem has the same number of solutions for almost all values of $u$.
 The idea is the following: assume we have parameter $v \in \mathbb{C}^n$ and suppose we know <strong>one</strong> solution $x_0$ for our problem. We call this a <em>start pair</em>. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
-The amazing part is that this loop induces a <em>permutation</em> on <strong>all</strong> solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with <strong>another</strong> solution than we started. By doing this process repeatedly we can recover <strong>all</strong> solutions!</p>
-<p>This sound's great so let's try to solve our example using this technique! But how do we obtain a start pair? This depends very much on your specific problem, but it can be often solved by either reverse engineering a parameter from a solution or by some knowledge about your problem.</p>
-<p>Our approach here is the following. We first compute a solution to $f$ by intersecting it with a linear space. This will result in $6$ solutions (since $f$ is a curve of degree 6). Then we can use one of these solutions to compute the normal space of $V(f)$ at this point.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># create a random linear space</span>
-l<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sum<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>,<span style="color:#ae81ff">3</span>) <span style="color:#f92672">.*</span> [x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>,<span style="color:#ae81ff">1</span>])
-<span style="color:#75715e"># compute intersection points of the V(f) and V(l) and take the first solution</span>
-s₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> first<span style="color:#f92672"></span>(solutions<span style="color:#f92672"></span>(solve<span style="color:#f92672"></span>([f<span style="color:#f92672"></span>, l<span style="color:#f92672"></span>])))
-<span style="color:#75715e"># The normal space is now generated by</span>
-J_s₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [p<span style="color:#f92672"></span>([x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>s₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> p<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> J<span style="color:#f92672"></span>]
-<span style="color:#75715e"># creat normal vector</span>
-λ₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
-<span style="color:#75715e"># x₀ - u₀ = J_s₀&#39; * λ₀ =&gt; u = x -  J_s₀&#39; * λ₀</span>
-u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> s₀<span style="color:#f92672"></span> <span style="color:#f92672">-</span> transpose<span style="color:#f92672"></span>(J_s₀<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> λ₀<span style="color:#f92672"></span>
-</code></pre></div><pre><code>2-element Array{Complex{Float64},1}:
- -1.3145309760357284 - 6.764765173081119im
-  3.6304286598010447 - 1.3732823625006585im
-</code></pre>
-<p>Let's verify that we computed a correct start pair:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">[p<span style="color:#f92672"></span>(u<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> u₀<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>] <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> s₀<span style="color:#f92672"></span>, λ<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> λ₀<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> p<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> C<span style="color:#f92672"></span>]
-</code></pre></div><pre><code>3-element Array{Complex{Float64},1}:
-                    0.0 + 8.881784197001252e-16im
-                    0.0 + 8.881784197001252e-16im
- 1.7763568394002505e-15 + 6.661338147750939e-16im
-</code></pre>
-<p>Now we can use the <code>monodromy_solve</code> routine to find all solutions.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">result_u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> monodromy_solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, [s₀<span style="color:#f92672"></span>; λ₀<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u<span style="color:#f92672"></span>)
+The amazing part is that this loop induces a <em>permutation</em> on <strong>all</strong> solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with <strong>another</strong> solution than we started. By doing this process repeatedly we can recover <strong>all</strong> solutions!
+The only condition that we need to this is that the loops we construct contain critical points of the parameter space.</p>
+<p>This sound's great so let's try to solve our example using this technique! But how do we obtain a start pair? If you do not provide a start pair, HomotopyContinuation.jl will try to generate a start pair by using Newton's method and random search.
+While simple, this is very often successful.
+Thus, we can use the <code>monodromy_solve</code> routine to find all solutions often without any additional work.
+But for this example, we want to modify the way we construct our loops to ensure that we loop around critical points.
+For more compl</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">parameter_sampler<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">.*</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, length<span style="color:#f92672"></span>(p<span style="color:#f92672"></span>))
+generic_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> monodromy_solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>; parameter_sampler<span style="color:#f92672"></span> <span style="color:#f92672">=</span> parameter_sampler<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>MonodromyResult
-==================================
-• 36 solutions (0 real)
-• return code → heuristic_stop
-• 1255 tracked paths
+=========================
+• return code: :heuristic_stop
+• 36 solutions
+• 360 tracked loops
+• random seed: 0x590db472
 </code></pre>
-<p>We see that the return code is <code>heuristic_stop</code>. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
-The default stopping criterion is to stop after 10 loop without finding any new solutions. We can also set this to another value by
+<p>We see that the return code is <code>:heuristic_stop</code>. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
+The default stopping criterion is to stop after 5 loops without finding any new solutions. We can also set this to another value by
 using the <code>max_loops_no_progress</code> flag. Additionally you can set the expected number with the <code>target_solutions_count</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">result_u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> monodromy_solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, [s₀<span style="color:#f92672"></span>; λ₀<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u<span style="color:#f92672"></span>, max_loops_no_progress<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, target_solutions_count<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">36</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">monodromy_solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>; parameter_sampler<span style="color:#f92672"></span> <span style="color:#f92672">=</span> parameter_sampler<span style="color:#f92672"></span>, max_loops_no_progress<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, target_solutions_count<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">36</span>)
 </code></pre></div><pre><code>MonodromyResult
-==================================
-• 36 solutions (0 real)
-• return code → success
-• 200 tracked paths
+=========================
+• return code: :success
+• 36 solutions
+• 144 tracked loops
+• random seed: 0x82046e34
 </code></pre>
 <p>The solutions in the monodromy result can be used for computing the solutions we are interested in.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(result_u₀<span style="color:#f92672"></span>); parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u₀<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u₀<span style="color:#f92672"></span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(C<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(generic_result<span style="color:#f92672"></span>); start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>parameters<span style="color:#f92672"></span>(generic_result<span style="color:#f92672"></span>), target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u₀<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 36 solutions
-==================================
-• 36 non-singular solutions (8 real)
-• 0 singular solutions (0 real)
+========================
 • 36 paths tracked
-• random seed: 474907
+• 36 non-singular solutions (8 real)
+• random seed: 0x6194c170
 </code></pre>
 <p>The monodromy method is very powerful and also has features like the possibility to compute modulo a group action if there is a group acting on the solution set. For more information see our <a href="https://www.juliahomotopycontinuation.org/guides/monodromy/">monodromy guide</a>.</p>
 <h2 id="more-information">More information</h2>

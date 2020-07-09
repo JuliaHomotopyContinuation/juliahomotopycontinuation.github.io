@@ -7,6 +7,10 @@
   </url>
   
   <url>
+    <loc>/guides/input/</loc>
+  </url>
+  
+  <url>
     <loc>/guides/solve-first-system/</loc>
   </url>
   
@@ -107,10 +111,6 @@
   </url>
   
   <url>
-    <loc>/guides/variable-groups/</loc>
-  </url>
-  
-  <url>
     <loc>/guides/many-systems/</loc>
   </url>
   
@@ -142,15 +142,7 @@
   </url>
   
   <url>
-    <loc>/guides/custom-homotopy/</loc>
-  </url>
-  
-  <url>
     <loc>/guides/data-analysis/</loc>
-  </url>
-  
-  <url>
-    <loc>/guides/all-paths/</loc>
   </url>
   
   <url>
@@ -158,15 +150,7 @@
   </url>
   
   <url>
-    <loc>/guides/projective/</loc>
-  </url>
-  
-  <url>
     <loc>/guides/totaldegree/</loc>
-  </url>
-  
-  <url>
-    <loc>/guides/projective-tracking/</loc>
   </url>
   
   <url>
@@ -221,6 +205,10 @@
   
   <url>
     <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/changelog/</loc>
   </url>
   
   <url>

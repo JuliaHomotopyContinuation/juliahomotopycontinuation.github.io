@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -164,33 +171,34 @@
 
     <p>Choosing a start system for homotopy continuation is an art for itself. We give some basic rules for start systems. They can roughly be subdivided into three classes:</p>
 <h3 class="section-head" id="result"><a>I know nothing about the structure of my polynomial system</a></h3>
-<p>In this case, there are two options: choosing a <a href="/guides/totaldegree">totaldegree</a> start system, or a <a href="/guides/polyhedral">polyhedral</a> start system.</p>
+<p>In this case, there are two options: choosing a <a href="/guides/totaldegree">totaldegree</a> start system, or a <a href="/guides/polyhedral">polyhedral</a> start system (the default).</p>
 <p>The first one is suitable for system, which are dense. The second one is suitable for systems, which are sparse. Here is how it works:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>;
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>;
 f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span>, y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>]
 solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>; start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>total_degree<span style="color:#f92672"></span>) <span style="color:#75715e"># using totaldegree</span>
 solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>; start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>) <span style="color:#75715e"># using polyhedral</span>
 </code></pre></div><h3 class="section-head" id="result"><a>My polynomial system has parameters</a></h3>
 <p>In this case, one should first compute an intermediate solution with random <em>complex</em> coefficients. Why complex? The reason is that tracking over the complex numbers one can easily avoid the locus where homotopy continuation fails (and this is not possible tracking only over the real numbers!).</p>
 <p>Here is an example with parameters <code>p</code>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
-F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
-    x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>,
-    (x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
-    (x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>    
-]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>,
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(
+    [
+        x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>],
+        (x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>y<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
+        (x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>y<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
+    ];
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>
+)
 </code></pre></div><p>Suppose we want to solve the system for <code>p₁ = [1,1,2]</code>. Then, we first solve it for random complex coefficients:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Generate generic parameters by sampling complex numbers from the normal distribution</span>
 p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
-<span style="color:#75715e"># Substitute p₀ for p</span>
-F_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> subs<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, p<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> p₀<span style="color:#f92672"></span>)
 <span style="color:#75715e"># Compute all solutions for F_p₀</span>
-result_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F_p₀<span style="color:#f92672"></span>)
+result_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p₀<span style="color:#f92672"></span>)
 </code></pre></div><p>Now, we track <code>p₀</code> to <code>p₁</code> using a <a href="/guides/parameter-homotopies">parameter homotopy</a>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]
-result_p₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>); parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₀<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₁<span style="color:#f92672"></span>)
+result_p₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>); start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₀<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p₁<span style="color:#f92672"></span>)
 </code></pre></div><p>This approach is particularly useful when one has to solve this system for many different sets of parameters, as we explain in <a href="/guides/many-systems">this guide</a>.</p>
 <h3 class="section-head" id="result"><a>I have one solution of my polynomial system already</a></h3>
 <p>In this case, one should use the <a href="/guides/monodromy">monodromy method</a>.</p>

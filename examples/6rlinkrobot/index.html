@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="The 6R-serial link robot">
 <meta itemprop="description" content="Using HomotopyContinuation.jl for a problem in kinematics">
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="817">
+<meta itemprop="wordCount" content="814">
 
 
 
@@ -184,9 +191,9 @@ and the $p$ encodes the position of the hand. Here $\times$ is the cross product
 <p>see the above reference for a detailed explanation on how these numbers are to be interpreted). Here $\times$ is the cross product in $\mathbb{R}^3$.</p>
 <p>In this notation the forward problem consists of computing $(\alpha,a)$ given the $z_i$ and $p$ and the backward problem consists of computing  $z_2,\ldots,z_5$ that realize some fixed $(\alpha,a,p,z_1,z_6)$ (knowing $z_1,z_6$ means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).</p>
 <p>Assume that $z_1$ and $z_6$ are random unit vectors, $p=(1,1,0)$ and some random $a$ and $\alpha$. We compute all backward solutions. We start with setting up the system.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
 <span style="color:#75715e"># initialize the variables</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>,<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 α<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">5</span>)
 a<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">9</span>)
 <span style="color:#75715e"># define the system of polynomials</span>
@@ -200,21 +207,21 @@ z₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nor
 z₆<span style="color:#f92672"></span> <span style="color:#f92672">=</span> normalize!<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span>))
 F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₁<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">6</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₆<span style="color:#f92672"></span>, p<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]) <span style="color:#66d9ef">for</span> f<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F′<span style="color:#f92672"></span>]
 </code></pre></div><p>Now we can just pass <code>F</code> to <code>solve</code> in order to compute all solutions.</p>
-<pre><code>julia&gt; solve(F)
+<pre><code>julia&gt; solve(F; start_system = :total_degree)
 Result with 16 solutions
-==================================
-• 16 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
+========================
 • 1024 paths tracked
-• random seed: 462257
+• 16 non-singular solutions (0 real)
+• random_seed: 0xb809e6ce
+• start_system: :total_degree
 </code></pre><p>We find 16 solutions, which is the correct number of solutions for these type of systems.</p>
 <p>But if we study the problem a little bit closer, we can see that the equations are bi-homogeneous with respect to the variable groups $\{z_2, z_4\}$ and $\{z_3, z_5\}$.
 The multi-homogeneous Bezout number with respect ot this variable group is</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>[[z<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>,<span style="color:#f92672">:</span>]; z<span style="color:#f92672"></span>[<span style="color:#ae81ff">4</span>,<span style="color:#f92672">:</span>]], [z<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>,<span style="color:#f92672">:</span>]; z<span style="color:#f92672"></span>[<span style="color:#ae81ff">5</span>,<span style="color:#f92672">:</span>]]];
-julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> bezout_number<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>)
-<span style="color:#ae81ff">320</span>
-</code></pre></div><p>We can use this to solve the system more efficiently</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">variable_groups<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [[z<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>,<span style="color:#f92672">:</span>]; z<span style="color:#f92672"></span>[<span style="color:#ae81ff">4</span>,<span style="color:#f92672">:</span>]], [z<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>,<span style="color:#f92672">:</span>]; z<span style="color:#f92672"></span>[<span style="color:#ae81ff">5</span>,<span style="color:#f92672">:</span>]]]
+paths_to_track<span style="color:#f92672"></span>(System<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>); start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>total_degree<span style="color:#f92672"></span>)
+</code></pre></div><pre><code>320
+</code></pre><p>We can use this to solve the system more efficiently</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>; variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>total_degree<span style="color:#f92672"></span>)
 Result<span style="color:#f92672"></span> with<span style="color:#f92672"></span> <span style="color:#ae81ff">16</span> solutions<span style="color:#f92672"></span>
 <span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
 •<span style="color:#f92672"></span> <span style="color:#ae81ff">16</span> non<span style="color:#f92672"></span><span style="color:#f92672">-</span>singular<span style="color:#f92672"></span> solutions<span style="color:#f92672"></span> (<span style="color:#ae81ff">0</span> real<span style="color:#f92672"></span>)
@@ -226,18 +233,17 @@ Result<span style="color:#f92672"></span> with<span style="color:#f92672"></span
 Instead of solving the system from scratch every time (and tracking 324 paths) we can first compute as set of 16 solutions with respect to a &ldquo;generic&rdquo; (complex) set of parameters (offline phase) and then use these start solutions to compute the solutions for the specific parameters we are interested in (online phase). We can do this by using a <a href="/guides/parameter-homotopies/">parameter homotopy</a>.</p>
 <p>Let's start with computing a generic instance.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p_rand<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
-F_rand<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₁<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">6</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₆<span style="color:#f92672"></span>, p<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>p_rand<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> f<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F′<span style="color:#f92672"></span>]
-R_rand<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F_rand<span style="color:#f92672"></span>, variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>)
+F̂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([subs<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₁<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">6</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₆<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> f<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F′<span style="color:#f92672"></span>], parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,  variable_groups<span style="color:#f92672"></span><span style="color:#f92672">=</span>variable_groups<span style="color:#f92672"></span>)
+R_rand<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F̂<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p_rand<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>total_degree<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 16 solutions
-==================================
-• 16 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
+========================
 • 320 paths tracked
-• random seed: 235123
+• 16 non-singular solutions (0 real)
+• random_seed: 0xf04f1c49
+• start_system: :total_degree
 </code></pre><p>Now we can use this to solve for our specific value $q=[2,3,4]$:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">F̂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₁<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>[<span style="color:#ae81ff">6</span>,<span style="color:#f92672">:</span>]<span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z₆<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> f<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F′<span style="color:#f92672"></span>]
-q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
-julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> solve<span style="color:#f92672"></span>(F̂<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(R_rand<span style="color:#f92672"></span>); parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>, start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p_rand<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>q<span style="color:#f92672"></span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]
+solve<span style="color:#f92672"></span>(F̂<span style="color:#f92672"></span>, solutions<span style="color:#f92672"></span>(R_rand<span style="color:#f92672"></span>); start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p_rand<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>q<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 16 solutions
 ==================================
 • 16 non-singular solutions (0 real)
@@ -252,7 +258,7 @@ For even more performance improvements you can take a look at our <a href="/guid
     author =  { Sascha Timme },
     title = { The 6R-serial link robot },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/6rlinkrobot/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

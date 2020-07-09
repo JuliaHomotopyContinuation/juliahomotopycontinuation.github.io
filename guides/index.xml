@@ -20,7 +20,17 @@
       <description>Requirements In order to use HomotopyContinuation.jl you need to have at least Julia 1.1 installed. If this is not the case you can download it at julialang.org. Please see the platform specific instructions if you have trouble installing Julia.
 Installation HomotopyContinuation.jl is available through the Julia package manager. You can enter it by pressing ] in the REPL and then typing
 pkg&amp;gt; add HomotopyContinuation Alternatively, you can also use
-julia&amp;gt; import Pkg julia&amp;gt; Pkg.</description>
+import Pkg Pkg.</description>
+    </item>
+    
+    <item>
+      <title>Problem formulation</title>
+      <link>/guides/input/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/input/</guid>
+      <description>In this guide we want to take a deep dive into the modeling language (ModelKit) provided by HomotopyContinuation.jl and also provide some tips along the way on how to best formulate your specific problem. This guide is complementary to the package function documentation where all available functions are described.
+Variables We start with the basic building block of every problem: variables. You can construct a variable using the Variable constructor. Let&#39;s start by creating variables x and y.</description>
     </item>
     
     <item>
@@ -33,7 +43,7 @@ julia&amp;gt; import Pkg julia&amp;gt; Pkg.</description>
 Solve your first system of equations Consider the following simple system of two polynomials in two variables.
 $$ f=\begin{bmatrix}x^2+2y \\ y^2-2 \end{bmatrix} $$
 Solving the equation $f=0$ can be accomplished as follows
-using HomotopyContinuation # load the package into the current Julia session @polyvar x y; # declare the variables x and y f = [x^2 + 2y, y^2 - 2] result = solve(f) # solve f After the computation has finished, you should see the following output.</description>
+using HomotopyContinuation # load the package into the current Julia session @var x y; # declare the variables x and y f = System([x^2 + 2y, y^2 - 2]) # construct system f result = solve(f) # solve f After the computation has finished, you should see the following output.</description>
     </item>
     
     <item>
@@ -74,7 +84,7 @@ Suppose $x$ is a solution $F(x)=0$ and that $F=F_{u_0}$ is a point in a family o
       
       <guid>/guides/polyhedral/</guid>
       <description>Polyhedral start systems Polyhedral is a particular choice of start system for homotopy continuation.
-The advantage of so called polyhedral homotopies over totaldegree homotopies is that the number of paths to track can be significantly smaller for the polyhedral homotopy.
+The advantage of so called polyhedral homotopies over total degree homotopies is that the number of paths to track can be significantly smaller for the polyhedral homotopy.
 Here is how it works:
 julia&amp;gt; using HomotopyContinuation, PolynomialTestSystems julia&amp;gt; f = equations(cyclic(7)) julia&amp;gt; solve(f; start_system = :polyhedral) Result with 924 solutions ================================== • 924 non-singular solutions (56 real) • 0 singular solutions (0 real) • 924 paths tracked • random seed: 606778 For comparison:</description>
     </item>
@@ -90,17 +100,6 @@ Setting things up Our goal is to have a function writeSystem available which acc
     </item>
     
     <item>
-      <title>Groups of variables</title>
-      <link>/guides/variable-groups/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/guides/variable-groups/</guid>
-      <description>Declaring variable groups can reduce the number of paths that one has to track.
-julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y julia&amp;gt; g = [x*y - 6, x^2 - 5] julia&amp;gt; solve(g, variable_groups=[[x], [y]]) Result with 2 solutions ================================== • 2 non-singular solutions (2 real) • 0 singular solutions (0 real) • 2 paths tracked • random seed: 73638 whereas
-julia&amp;gt; solve(g) Result with 2 solutions ================================== • 2 non-singular solutions (2 real) • 0 singular solutions (0 real) • 4 paths tracked • random seed: 892652 The number of paths tracked is halved using the variable structure.</description>
-    </item>
-    
-    <item>
       <title>Solving many systems in a loop</title>
       <link>/guides/many-systems/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -108,7 +107,7 @@ julia&amp;gt; solve(g) Result with 2 solutions =================================
       <guid>/guides/many-systems/</guid>
       <description>Polynomial systems arising in application very often have a coefficients which are determined by some parameters.
 We now want to show you how you can setup an efficient way to solve this polynomial system for many parameter values. Assume we have the following polynomial system:
-using HomotopyContinuation, DynamicPolynomials @polyvar x y z p[1:3] F = [ x + 3 + 2y + 2y^2 - p[1], (x - 2 + 5y)*z + 4 - p[2] * z, (x + 2 + 4y)*z + 5 - p[3] * z ] First, we compute the solutions for generic parameters and then use a parameter homotopy.</description>
+using HomotopyContinuation @var x y z p[1:3] F = System( [ x + 3 + 2y + 2y^2 - p[1], (x - 2 + 5y) * z + 4 - p[2] * z, (x + 2 + 4y) * z + 5 - p[3] * z, ]; parameters = p ) System of length 3 3 variables: x, y, z 3 parameters: p₁, p₂, p₃ 3 - p₁ + x + 2*y + 2*y^2 4 - z*p₂ + z*(-2 + x + 5*y) 5 - z*p₃ + z*(2 + x + 4*y) First, we compute the solutions for generic parameters and then use a parameter homotopy.</description>
     </item>
     
     <item>
@@ -129,7 +128,7 @@ This system has 4 equation in 3 variables. One might expect that it has no solut
       
       <guid>/guides/start-systems/</guid>
       <description>Choosing a start system for homotopy continuation is an art for itself. We give some basic rules for start systems. They can roughly be subdivided into three classes:
-I know nothing about the structure of my polynomial system In this case, there are two options: choosing a totaldegree start system, or a polyhedral start system.
+I know nothing about the structure of my polynomial system In this case, there are two options: choosing a totaldegree start system, or a polyhedral start system (the default).
 The first one is suitable for system, which are dense. The second one is suitable for systems, which are sparse.</description>
     </item>
     
@@ -146,39 +145,14 @@ $$ f = \begin{bmatrix} ab - 2\\ ac- 1\end{bmatrix}, \quad g = \begin{bmatrix}x +
     </item>
     
     <item>
-      <title>Custom Homotopies</title>
-      <link>/guides/custom-homotopy/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/guides/custom-homotopy/</guid>
-      <description>Introduction To track solutions from a start system $G$ to the target system $F$ we use by default the straight-line homotopy
-$$ H(x,t) := (1-t)F+tG. $$
-But this is in general not the best choice since you usually leave the solution space of your problem. Therefore we support the ability to define arbitrary homotopies where you have the full power of Julia available.
-In the following we will illustrate how to setup a custom homotopy on the following example.</description>
-    </item>
-    
-    <item>
       <title>Data analysis of solutions</title>
       <link>/guides/data-analysis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/data-analysis/</guid>
-      <description>We provide two special functions for analysing data: UniquePoints and Multiplicities. They do the following: suppose that A is an array of real or complex vectors. Then, UniquePoints(A) filters multiple elements of A, such that each entry appears once. On the other hand, multiplicities(A) returns the indices of multiple elements in A.
-UniquePoints Here is the full syntax of UniquePoints
-UniquePoints(A, distance; tol=1e-5) where
- distance is a function to measure the distance between two vectors.</description>
-    </item>
-    
-    <item>
-      <title>Solutions at infinity</title>
-      <link>/guides/all-paths/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/guides/all-paths/</guid>
-      <description>By default, solve(f) return only &amp;ldquo;true&amp;rdquo; solutions of f. But when tracking towards f paths might diverge to infinity (solutions at infinity describe solutions of the homogenization of f which are no solutions of f itself).
-To save the results of all paths, one has to use
-solve(f, save_all_paths = true) Here is an example that has solutions at infinity.
-julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y julia&amp;gt; f = [x^2 - y^2 - 1, x - y] julia&amp;gt; solve(f, save_all_paths = true) Result with 0 solutions ================================== • 0 non-singular solutions (0 real) • 0 singular solutions (0 real) • 2 solutions at infinity • 2 paths tracked • random seed: 229664 </description>
+      <description>We provide two special functions for analysing data: unique_points and multiplicities. They do the following: suppose that A is an array of real or complex vectors. Then, unique_points(A) filters multiple elements of A, such that each entry appears once (given a provided tolerance). On the other hand, multiplicities(A) returns the indices of multiple elements in A.
+Unique points Here is an example:
+julia&amp;gt; using HomotopyContinuation julia&amp;gt; A = [[1.0,0.5], [0.99,0.49], [2.</description>
     </item>
     
     <item>
@@ -187,22 +161,11 @@ julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y julia&amp;gt
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/multiprojective/</guid>
-      <description>When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.
+      <description>When your system has a multi-projective structure, you can declare variables groups for accelerating the computations.
 Here is a simple example for the following system defined over $\mathbb{CP}^1\times \mathbb{CP}^1$:
 $$f(u,y,u,v) = \begin{bmatrix} xy - 6uv\\ x^2 - u^2 \end{bmatrix}.$$
 The Julia code for the variable groups ${x,y}$ and ${u,v}$ is as follows.
-julia&amp;gt; using HomotopyContinuation julia&amp;gt; @polyvar x y u v julia&amp;gt; f = [x*y - 6u*v, x^2 - u^2] julia&amp;gt; S = solve(f, variable_groups=[(x,u), (y,v)]) Result with 2 solutions ================================== • 2 non-singular solutions (0 real) • 0 singular solutions (0 real) • 2 paths tracked • random seed: 127575 With out the declaration of groups we would have</description>
-    </item>
-    
-    <item>
-      <title>Solutions in projective space</title>
-      <link>/guides/projective/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/guides/projective/</guid>
-      <description>Sometimes, one has to compute solutions in projective space $\mathbb{RP}^n$ or $\mathbb{CP}^n$ . This space is defined as the space of all lines in $\mathbb{R}^{n+1}$, respectively $\mathbb{C}^{n+1}$, passing through the origin. HomotopyContinuation.jl automatically recognizes systems of defined over projective space and adjusts the output.
-Here is a simple example involving two random quadrics in $\mathbb{CP}^2$
-using HomotopyContinuation, LinearAlgebra @polyvar x y z v = [x, y, z] F = [ v ⋅ (randn(ComplexF64, 3, 3) * v); v ⋅ (randn(ComplexF64, 3, 3) * v); ] For solving $F=0$ one can just use the solve command</description>
+using HomotopyContinuation @var x y u v f = System([x*y - 6u*v, x^2 - u^2], variable_groups=[[x,u], [y,v]]) System of length 2 4 variables (2 groups): [x, u], [y, v] -6*u*v + x*y -u^2 + x^2 S = solve(f, start_system = :total_degree) Result with 2 solutions ======================= • 2 paths tracked • 2 non-singular solutions (0 real) • random_seed: 0xdf2fbbdb • start_system: :total_degree </description>
     </item>
     
     <item>
@@ -211,24 +174,12 @@ using HomotopyContinuation, LinearAlgebra @polyvar x y z v = [x, y, z] F = [ v �
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/guides/totaldegree/</guid>
-      <description>Totaldegree is a particular choice of start system for homotopy continuation.
+      <description>Total degree is a particular choice of start system for homotopy continuation.
 It is the simplest start system for a system
 $$ F(x_1,\ldots,x_n)=\begin{bmatrix} f_1(x_1,\ldots,x_n) \\ \vdots\\ f_n(x_1,\ldots,x_n) \end{bmatrix}. $$
-The totaldegree start system of $F$ is
+The total degree start system of $F$ is
 $$ G(x_1,\ldots,x_n) = \begin{bmatrix} x_1^{d_1} - a_1 \\ \vdots \\ x_n^{d_n} - a_n\end{bmatrix}, \text{ where } d_i = \text{deg}(F_i), $$
 and where the $a_i$ are random numbers. There are $d_1\cdots d_n$ many solutions to this system, which are easy to write down.</description>
-    </item>
-    
-    <item>
-      <title>Tracking in affine space or in projective space</title>
-      <link>/guides/projective-tracking/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/guides/projective-tracking/</guid>
-      <description>By default, HomotopyContinuation.jl tracks paths in the complex vector space $\mathbb{C}^n$.
-It is also possible to track paths in projective space. This has the advantage that all paths have finite length, because projective space is compact.
-One can tell HomotopyContinuation.jl to track over projective space by using the flag projective_tracking = true:
-using HomotopyContinuation @polyvar x y f = [x^2 + y - 1, y - 4] solve(f, projective_tracking = true) This is the same as</description>
     </item>
     
   </channel>

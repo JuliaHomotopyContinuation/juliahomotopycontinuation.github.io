@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="Cyclooctane">
 <meta itemprop="description" content="The conformation space of cyclooctane">
 <meta itemprop="datePublished" content="2019-06-16T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-06-16T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="664">
+<meta itemprop="wordCount" content="609">
 
 
 
@@ -154,7 +161,7 @@
 <time class="post-time"><span class="icon">
   <i class="fa fa-clock-o" aria-hidden="true"></i>
 </span>
-<span>4 minute read</span>
+<span>3 minute read</span>
 <span class="icon">
  <i class="fa fa-pencil" aria-hidden="true"></i>
 </span>
@@ -178,7 +185,7 @@ The equations for the positions $z_i\in\mathbb{R}^3$ of the carbon atoms satisfy
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>
 
 c²<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]
 z_vec<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>)[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">17</span>] <span style="color:#75715e"># the 17 variables in a vector</span>
 Z<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [zeros<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span>) z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>,<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>] [z<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">6</span>]; z<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">6</span>]; <span style="color:#ae81ff">0</span>] [<span style="color:#f92672">√</span>c²<span style="color:#f92672"></span>; <span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">0</span>]] <span style="color:#75715e"># the eight points in a matrix</span>
 
@@ -187,30 +194,24 @@ F1<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [(Z<s
 F2<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [(Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, i<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>]) <span style="color:#f92672">⋅</span> (Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, i<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">8</span>c²<span style="color:#f92672"></span><span style="color:#f92672">/</span><span style="color:#ae81ff">3</span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]
 F3<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">⋅</span> (Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">7</span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">8</span>c²<span style="color:#f92672"></span><span style="color:#f92672">/</span><span style="color:#ae81ff">3</span>
 F4<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">2</span>]) <span style="color:#f92672">⋅</span> (Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">8</span>] <span style="color:#f92672">-</span> Z<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">2</span>]) <span style="color:#f92672">-</span> <span style="color:#ae81ff">8</span>c²<span style="color:#f92672"></span><span style="color:#f92672">/</span><span style="color:#ae81ff">3</span>
-f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F1<span style="color:#f92672"></span>; F2<span style="color:#f92672"></span>; F3<span style="color:#f92672"></span>; F4<span style="color:#f92672"></span>]
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([F1<span style="color:#f92672"></span>; F2<span style="color:#f92672"></span>; F3<span style="color:#f92672"></span>; F4<span style="color:#f92672"></span>])
 </code></pre></div><p>The plan is now to intersect <code>f=0</code> with a linear space of codimension $2$ many times to get points. The guide <a href="https://www.juliahomotopycontinuation.org/guides/many-systems/">Solving many systems in a loop</a> explains how to do this. We follow this guide and first generate a complex start system.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e"># dimension of the cyclooctane variety</span>
-N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span> <span style="color:#75715e"># ambient dimension</span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> Aᵥ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N<span style="color:#f92672"></span>] bᵥ<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>] <span style="color:#75715e"># variables for the linear equations</span>
-p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [vec<span style="color:#f92672"></span>(Aᵥ<span style="color:#f92672"></span>); bᵥ<span style="color:#f92672"></span>] <span style="color:#75715e"># parameters</span>
-F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [f<span style="color:#f92672"></span>; Aᵥ<span style="color:#f92672"></span> <span style="color:#f92672">*</span> z_vec<span style="color:#f92672"></span> <span style="color:#f92672">-</span> bᵥ<span style="color:#f92672"></span>] <span style="color:#75715e"># the polynomial system we have to solve</span>
-
-<span style="color:#75715e"># now we solve one particular instance for A,b complex. we use this as start system</span>
-A₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, n<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>)
-b₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, n<span style="color:#f92672"></span>)
-p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [vec<span style="color:#f92672"></span>(A₀<span style="color:#f92672"></span>); b₀<span style="color:#f92672"></span>]
-
-F₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [subs<span style="color:#f92672"></span>(Fᵢ<span style="color:#f92672"></span>, p<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> [vec<span style="color:#f92672"></span>(A₀<span style="color:#f92672"></span>); b₀<span style="color:#f92672"></span>]) <span style="color:#66d9ef">for</span> Fᵢ<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> F<span style="color:#f92672"></span>]
-complex_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F₀<span style="color:#f92672"></span>)
-S_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(complex_result<span style="color:#f92672"></span>)
-</code></pre></div><p>Now, we track the solutions from <code>S_p₀</code> towards systems we are interested in (here is a quick comment for algebraic geometers: the size of <code>S_p₀</code> is 1408; in other words, the cyclooctane variety has degree 1408).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">17</span> <span style="color:#75715e"># ambient dimension</span>
+L₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand_subspace<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>; codim<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+R_L₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>; target_subspace<span style="color:#f92672"></span> <span style="color:#f92672">=</span> L₀<span style="color:#f92672"></span>)
+</code></pre></div><pre><code>Result with 1408 solutions
+==========================
+• 32768 paths tracked
+• 1408 non-singular solutions (0 real)
+• random_seed: 0x9edd6171
+• start_system: :polyhedral
+</code></pre><p>Now, we track the solutions from <code>R_L₀</code> towards systems we are interested in (here is a quick comment for algebraic geometers: the size of <code>R_p₀</code> is 1408; in other words, the cyclooctane variety has degree 1408).</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># we compute 100 random intersections</span>
-Ω<span style="color:#f92672"></span>  <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
-    F<span style="color:#f92672"></span>,
-    S_p₀<span style="color:#f92672"></span>;
-    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,
-    start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
-    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [randn<span style="color:#f92672"></span>(n<span style="color:#f92672"></span> <span style="color:#f92672">*</span> N<span style="color:#f92672"></span> <span style="color:#f92672">+</span> n<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>],
+Ω<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+    f<span style="color:#f92672"></span>,
+    solutions<span style="color:#f92672"></span>(R_L₀<span style="color:#f92672"></span>);
+    start_subspace<span style="color:#f92672"></span> <span style="color:#f92672">=</span> L₀<span style="color:#f92672"></span>,
+    target_subspaces<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [rand_subspace<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>; codim<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, real<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>) <span style="color:#66d9ef">for</span> _<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>],
     transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (R<span style="color:#f92672"></span>,p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> real_solutions<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>),
     flatten<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
 )
@@ -224,7 +225,7 @@ Here is a gif that shows 4470 points from the cyclooctane variety, projected ont
     author =  { Paul Breiding },
     title = { Cyclooctane },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/cyclooctane/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

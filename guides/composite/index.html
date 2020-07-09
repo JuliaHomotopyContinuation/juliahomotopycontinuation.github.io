@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -169,9 +176,9 @@
 </code></pre></div><p>For instance, if</p>
 <p>$$ f = \begin{bmatrix} ab - 2\\  ac- 1\end{bmatrix}, \quad g =  \begin{bmatrix}x + y\\ y + 3\\ x + 2\end{bmatrix},$$</p>
 <p>then you solve $f\circ g$ by</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar a b c x y
-julia&gt; f = [a * b - 2, a * c- 1]
-julia&gt; g = [x + y, y + 3, x + 2]
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @var a b c x y
+julia&gt; f = System([a * b - 2, a * c- 1])
+julia&gt; g = System([x + y, y + 3, x + 2])
 julia&gt; solve(f ∘ g)
 Result with 2 solutions
 ==================================
@@ -181,8 +188,8 @@ Result with 2 solutions
 • random seed: 446964
 </code></pre><h3 class="section-head"><a>Composition of several systems</a></h3>
 <p>You can also iterate the above process:</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar u v
-julia&gt; h = [u^2 - 1, u + v - 2]
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @var u v
+julia&gt; h = System([u^2 - 1, u + v - 2])
 julia&gt; solve(f ∘ g ∘ h)
 Result with 4 solutions
 ==================================
@@ -195,9 +202,9 @@ Result with 4 solutions
 <p>$$ f = \begin{bmatrix} ab - q\\  ac - p\end{bmatrix}, \quad g =  \begin{bmatrix}x + y\\ y + 3\\ x + 2\end{bmatrix},$$</p>
 <p>and you want to track solutions from $(p,q) = (1, 2)$ to $(p,q) = (2, 3)$, this is how it works:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; res = solve(f ∘ g)
-julia&gt; @polyvar p q
-julia&gt; f2 = [a * b - q, a * c - p]
-julia&gt; res2 = solve(f2 ∘ g, solutions(res), parameters=[p, q], p₁=[1, 2], p₀=[2, 3])
+julia&gt; @var p q
+julia&gt; f2 = System([a * b - q, a * c - p]; parameters = [p, q]) 
+julia&gt; res2 = solve(f2 ∘ g, solutions(res), p₁=[1, 2], p₀=[2, 3])
 Result with 2 solutions
 ==================================
 • 2 non-singular solutions (2 real)

@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -164,7 +171,7 @@
 
     <h3 class="section-head" id="result"><a>Polyhedral start systems</a></h3>
 <p>Polyhedral is a particular choice of start system for homotopy continuation.</p>
-<p>The advantage of so called polyhedral homotopies over <a href="/guides/totaldegree">totaldegree homotopies</a> is that the number of paths to track can be significantly smaller for the polyhedral homotopy.</p>
+<p>The advantage of so called polyhedral homotopies over <a href="/guides/totaldegree">total degree homotopies</a> is that the number of paths to track can be significantly smaller for the polyhedral homotopy.</p>
 <p>Here is how it works:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation, PolynomialTestSystems
 julia&gt; f = equations(cyclic(7))  
@@ -183,30 +190,30 @@ Result with 924 solutions
 • 0 singular solutions (0 real)
 • 5040 paths tracked
 • random seed: 286291
-</code></pre><p>The number of paths for the totaldegree start system is 5040, while for the polyhedral homotopy it is only 924.</p>
+</code></pre><p>The number of paths for the total degree start system is 5040, while for the polyhedral homotopy it is only 924.</p>
 <p>The underlying idea goes back to <a href="https://dl.acm.org/citation.cfm?id=213837">Huber and Sturmfels</a>.
-In our implementation we use <a href="https://arxiv.org/pdf/1601.02818.pdf">Anders Jensen's algorithm</a>.</p>
+In our implementation we use <a href="https://arxiv.org/pdf/1601.02818.pdf">Anders Jensen's algorithm</a> for the computation of the mixed cells.</p>
 <h3 class="section-head" id="result"><a>Solutions with non-zero entries</a></h3>
-<p>If it is known that all of the zeros of the system have non-zero entries (i.e., that they are points in $(\mathbb{C}\backslash\{0\})^n$), then one can accelerate the computation as follows:</p>
+<p>If it is known that all of the solutions of the system have non-zero entries (i.e., that they are points in $(\mathbb{C}\backslash\{0\})^n$), then one can accelerate the computation as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>; start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>, only_torus<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>)
 </code></pre></div><p>Here is an example:</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @polyvar x y
-julia&gt; f = [2y + 3y^2 - x*y^3, x + 4*x^2 - 2*x^3*y]
-julia&gt; solve(f, start_system=:polyhedral, only_torus=true)
-Result with 3 solutions
-==================================
-• 3 non-singular solutions (3 real)
-• 0 singular solutions (0 real)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([<span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> x<span style="color:#f92672"></span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>, x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span><span style="color:#f92672">*</span>x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>y<span style="color:#f92672"></span>])
+solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>, only_torus<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#66d9ef">true</span>)
+</code></pre></div><pre><code>Result with 3 solutions
+=======================
 • 3 paths tracked
-• random seed: 154150
+• 3 non-singular solutions (3 real)
+• random seed: 0x07df8713
+• start_system: :polyhedral
 </code></pre><p>whereas</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; solve(f, start_system=:polyhedral, only_torus=false)
-Result with 6 solutions
-==================================
-• 6 non-singular solutions (6 real)
-• 0 singular solutions (0 real)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>, only_torus<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#66d9ef">false</span>)
+</code></pre></div><pre><code>Result with 6 solutions
+=======================
 • 8 paths tracked
-• random seed: 45414
+• 6 non-singular solutions (6 real)
+• random seed: 0x60ae238f
+• start_system: :polyhedral
 </code></pre>
     
     

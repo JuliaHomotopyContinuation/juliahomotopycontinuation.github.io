@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -148,29 +155,36 @@
     <p>Polynomial systems arising in application very often have a coefficients which are determined by some parameters.</p>
 <p>We now want to show you how you can setup an efficient way to solve this polynomial system for many parameter values.
 Assume we have the following polynomial system:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span> z<span style="color:#f92672"></span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
 
-F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
-    x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>],
-    (x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
-    (x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>y<span style="color:#f92672"></span>)<span style="color:#f92672">*</span>z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>    
-]
-</code></pre></div><p>First, we compute the
-solutions for generic parameters and then use  a <a href="/guides/parameter-homotopies/">parameter homotopy</a>.</p>
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(
+    [
+        x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>],
+        (x<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>y<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
+        (x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>y<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> z<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">-</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>,
+    ];
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>
+)
+</code></pre></div><pre><code>System of length 3
+ 3 variables: x, y, z
+ 3 parameters: p₁, p₂, p₃
+
+ 3 - p₁ + x + 2*y + 2*y^2
+ 4 - z*p₂ + z*(-2 + x + 5*y)
+ 5 - z*p₃ + z*(2 + x + 4*y)
+</code></pre><p>First, we compute the solutions for generic parameters and then use  a <a href="/guides/parameter-homotopies/">parameter homotopy</a>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Generate generic parameters by sampling complex numbers from the normal distribution</span>
 p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>)
-<span style="color:#75715e"># Substitute p₀ for p</span>
-F_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> subs<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, p<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> p₀<span style="color:#f92672"></span>)
 <span style="color:#75715e"># Compute all solutions for F_p₀</span>
-result_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F_p₀<span style="color:#f92672"></span>)
+result_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p₀<span style="color:#f92672"></span>)
 </code></pre></div><pre><code>Result with 2 solutions
-==================================
+=======================
+• 2 paths tracked
 • 2 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
-• 8 paths tracked
-• random seed: 652079
-</code></pre><p>We see that our polynomial system $F$ has at most <strong>2</strong> isolated solutions (instead of the 8 possible ones).
+• random_seed: 0x3f556de6
+• start_system: :polyhedral
+</code></pre><p>We see that our polynomial system $F$ has at most <strong>2</strong> isolated solutions.
 The idea is to use these two generic solutions to find the solutions for the specific parameters we are interested in.
 For this we are using a <a href="/guides/parameter-homotopies/">parameter homotopy</a> from the generic parameters $p_0$ to the specific parameters.</p>
 <p>This can be done as follows:</p>
@@ -181,16 +195,14 @@ data<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [ra
 data_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
     F<span style="color:#f92672"></span>,
     solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>);
-    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,
     start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
     target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> data<span style="color:#f92672"></span>
 )
-</code></pre></div><p>It is also possible to immediately postprocess the output. For instance, suppose that we are only interested in the real solutions. Then:</p>
+</code></pre></div><p>It is also possible to immediately post-process the output. For instance, suppose that we are only interested in the real solutions. Then:</p>
 <p>This can be done as follows:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">data_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
     F<span style="color:#f92672"></span>,
     solutions<span style="color:#f92672"></span>(result_p₀<span style="color:#f92672"></span>);
-    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>,
     start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span>  p₀<span style="color:#f92672"></span>,
     target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> data<span style="color:#f92672"></span>,
     transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (r<span style="color:#f92672"></span>,p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> real_solutions<span style="color:#f92672"></span>(r<span style="color:#f92672"></span>),

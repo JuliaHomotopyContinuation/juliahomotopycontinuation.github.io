@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -154,9 +161,9 @@ Please see the <a href="https://www.julialang.org/downloads/platform/">platform 
 You can enter it by pressing <code>]</code> in the REPL and then typing</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">pkg<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> add<span style="color:#f92672"></span> HomotopyContinuation<span style="color:#f92672"></span>
 </code></pre></div><p>Alternatively, you can also use</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; import Pkg
-julia&gt; Pkg.add(&quot;HomotopyContinuation&quot;)
-</code></pre><p>After you completed the installation you are ready to start with our <a href="/guides/introduction">introduction to the numerical solution of polynomial systems</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">import</span> Pkg<span style="color:#f92672"></span>
+Pkg<span style="color:#f92672"></span><span style="color:#f92672">.</span>add<span style="color:#f92672"></span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">H</span><span style="color:#e6db74">o</span><span style="color:#e6db74">m</span><span style="color:#e6db74">o</span><span style="color:#e6db74">t</span><span style="color:#e6db74">o</span><span style="color:#e6db74">p</span><span style="color:#e6db74">y</span><span style="color:#e6db74">C</span><span style="color:#e6db74">o</span><span style="color:#e6db74">n</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">n</span><span style="color:#e6db74">u</span><span style="color:#e6db74">a</span><span style="color:#e6db74">t</span><span style="color:#e6db74">i</span><span style="color:#e6db74">o</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><p>After you completed the installation you are ready to start with our <a href="/guides/introduction">introduction to the numerical solution of polynomial systems</a>.</p>
 
     
     

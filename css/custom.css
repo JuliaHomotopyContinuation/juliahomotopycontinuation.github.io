@@ -76,19 +76,25 @@ pre code {
 
 
 #top #top-nav-main li {
-    margin-right: 24px;
+    margin-right: 12px;
 }
 
 #top #top-nav-main {
-    padding-left: 24px;
+    padding-left: 12px;
 }
 
 #top #top-brand {
-    margin-right: 24px;
+    margin-right: 12px;
 }
 
 #top {
-    padding: 0 24px;
+    padding: 0 12px;
+}
+
+@media (min-width: 768px) {
+    #top {
+        height: 56px !important;
+    }
 }
 
 #top #top-nav-main li {
@@ -177,4 +183,16 @@ img.ecosystem-image {
 }
 .pb-2, .py-2 {
     padding-bottom: .5rem!important;
+}
+
+.announcement-banner {
+    background-color: rgba(135, 206, 250, 0.09);
+    border: 1px solid  #bcdff1;
+    border-radius: 4px;
+    color: #31708f;
+    margin: 4px 12px;
+    padding-left:16px;
+    padding:8px;
+    display: flex;
+    justify-content: space-around;
 }

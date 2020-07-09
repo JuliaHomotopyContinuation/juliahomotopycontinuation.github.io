@@ -97,12 +97,14 @@
 
 <body class="page-kube">
   <header>
+<div>
 <div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,7 +138,10 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div id="main">
   <div id="hero">
@@ -145,35 +152,26 @@
     
 
 
-    <p>When your system has a multiprojective structure, you can declare variables groups for accelerating the computations.</p>
+    <p>When your system has a multi-projective structure, you can declare variables groups for accelerating the computations.</p>
 <p>Here is a simple example for the following system defined over $\mathbb{CP}^1\times  \mathbb{CP}^1$:</p>
 <p>$$f(u,y,u,v) = \begin{bmatrix} xy - 6uv\\ x^2 - u^2 \end{bmatrix}.$$</p>
 <p>The Julia code for the variable groups ${x,y}$ and ${u,v}$ is as follows.</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
-julia&gt; @polyvar x y u v
-julia&gt; f = [x*y - 6u*v, x^2 - u^2]
-julia&gt; S = solve(f, variable_groups=[(x,u), (y,v)])
-Result with 2 solutions
-==================================
-• 2 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
-• 2 paths tracked
-• random seed: 127575
-</code></pre><p>With out the declaration of groups we would have</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; S = solve(f)
-Result with 2 solutions
-==================================
-• 2 non-singular solutions (2 real)
-• 0 singular solutions (0 real)
-• 4 paths tracked
-• random seed: 202895
-</code></pre><p>The number of solutions found is the same, but the number of paths tracked is different. This is because</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; bezout_number(f, variable_groups=[[x], [y]])
-2
-julia&gt; bezout_number(f)
-4
-</code></pre><p>It is also possible to declare variable groups for <a href="/guides/variable-groups">affine systems</a>.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">using HomotopyContinuation
+@var x y u v
+f = System([x*y - 6u*v, x^2 - u^2], variable_groups=[[x,u], [y,v]])
+</code></pre><pre><code>System of length 2
+4 variables (2 groups): [x, u], [y, v]
 
+ -6*u*v + x*y
+ -u^2 + x^2
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>total_degree<span style="color:#f92672"></span>)
+</code></pre></div><pre><code>Result with 2 solutions
+=======================
+• 2 paths tracked
+• 2 non-singular solutions (0 real)
+• random_seed: 0xdf2fbbdb
+• start_system: :total_degree
+</code></pre>
     
     
   </div>

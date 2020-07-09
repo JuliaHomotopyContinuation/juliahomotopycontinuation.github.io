@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Problem formulation </title>
+
+  
+  <meta name="description" content="Learn how to formulate your problem"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="Problem formulation" />
+<meta property="og:description" content="Learn how to formulate your problem" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/input/" />
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/input/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>Problem formulation</h1>
+    <p class="hero-lead">Learn how to formulate your problem</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+<nav id="contents">
+  <ol class="js-toc"></ol>
+</nav>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    tocbot.init({
+      
+      tocSelector: ".js-toc",
+      
+      contentSelector: ".content",
+      
+      headingSelector: "h2, h3, h4"
+    });
+  });
+</script>
+
+
+
+
+    <p>In this guide we want to take a deep dive into the modeling language (<code>ModelKit</code>) provided
+by HomotopyContinuation.jl and also provide some tips along the way on how to best
+formulate your specific problem.
+This guide is complementary to the <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/model_kit/">package function documentation</a>
+where all available functions are described.</p>
+<h2 id="variables">Variables</h2>
+<p>We start with the basic building block of every problem: variables.
+You can construct a variable using the <code>Variable</code> constructor.
+Let's start by creating variables <code>x</code> and <code>y</code>.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; using HomotopyContinuation
+julia&gt; x, y = Variable(:x), Variable(:y)
+(x, y)
+</code></pre><p>Since this is somewhat repetitive we provide the macro <code>@var</code> to automatically do this for us</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @var x y
+(x, y)
+</code></pre><p>Often it is convenient to work with a vector or matrix of variables (or even at tensor).
+For this the <code>@var</code> macro interprets Julia's indexing syntax as a hint to create an array of variables</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">## Create variables a₁,a₂,a₃ and b₁₋₁, b₁₋₂, b₂₋₁ and b₂₋₂
+julia&gt; @var a[1:3] b[1:2, 1:2];
+## a is vector
+julia&gt; a
+3-element Array{Variable,1}:
+ a₁
+ a₂
+ a₃
+
+## b is a matrix
+julia&gt; b
+2×2 Array{Variable,2}:
+ b₁₋₁  b₁₋₂
+ b₂₋₁  b₂₋₂
+
+## We can index them as expected
+julia&gt; b[2,2]
+b₂₋₂
+</code></pre><p>Variables are identified by their name, so two variables are identical if they have the same name</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; x == y
+false
+
+julia&gt; x == Variable(:x)
+true
+</code></pre><p>The default variable ordering is lexicographic, independently from when variables got created.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; @var y x
+(y, x)
+
+julia&gt; x &lt; y
+true
+</code></pre><h2 id="expressions">Expressions</h2>
+<p>After constructing variables we can construct some expressions using the basic
+arithmetic functions <code>*</code>, <code>-</code>, <code>+</code>, <code>/</code>.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; f = (x + 2y)^3
+(x + 2y)^3
+</code></pre><p>As you notice the expression exactly stays as we formulated it.
+In case you really want to see the expanded expression you can use <code>expand</code></p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; expand(f)
+12*x*y^2 + 6*x^2*y + x^3 + 8*y^3
+</code></pre><p>You can do also basic manipulations. Let's compute the gradient of  <code>f</code></p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; differentiate(f, [x, y])
+2-element Array{Expression,1}:
+ 3*(x + 2*y)^2
+ 6*(x + 2*y)^2
+
+</code></pre><h2 id="systems">Systems</h2>
+<p>A <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/model_kit/#HomotopyContinuation.ModelKit.System"><code>System</code></a>
+is the basic input to the <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solve/#HomotopyContinuation.solve"><code>solve</code></a> and <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/monodromy/#HomotopyContinuation.monodromy_solve"><code>monodromy_solve</code></a>
+functions of HomotopyContinuation.jl, as well as to many other functions.
+The role of a <code>System</code> is to specify the variable ordering and to (possibly) declare some of the variables as parameters.</p>
+<p>Let's consider <a href="https://www.juliahomotopycontinuation.org/guides/introduction/#solving-the-critical-equations">an example from our introduction guide</a>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># define f</span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">4</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> y<span style="color:#f92672"></span>
+<span style="color:#75715e"># define new variables u₁, u₂ and λ</span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>] λ<span style="color:#f92672"></span>
+<span style="color:#75715e"># Compute the gradient of f</span>
+∇f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, [x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>])
+C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([[x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>] <span style="color:#f92672">-</span> u<span style="color:#f92672"></span> <span style="color:#f92672">-</span> ∇f<span style="color:#f92672"></span> <span style="color:#f92672">.*</span> λ<span style="color:#f92672"></span>; f<span style="color:#f92672"></span>]; variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>,λ<span style="color:#f92672"></span>], parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>)
+</code></pre></div><pre><code>System of length 3
+ 3 variables: x, y, λ
+ 2 parameters: u₁, u₂
+
+ -u₁ + x - λ*(5*x^4*y + 4*(-2 + x^2 + y^2)*x^3 + 2*(-1 + x^4 + y^4)*x)
+ -u₂ + y - λ*(4*(-2 + x^2 + y^2)*y^3 + 2*(-1 + x^4 + y^4)*y + x^5)
+ x^5*y + (-2 + x^2 + y^2)*(-1 + x^4 + y^4)
+</code></pre><p>Here you can see that <code>C</code> is a system consisting of 3 polynomials in 3 variables with 2 parameters <code>u</code>.</p>
+
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

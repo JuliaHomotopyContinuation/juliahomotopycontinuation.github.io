@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="The point on a variety that minimizes the distance to a given point">
 <meta itemprop="description" content="Computing critical points">
 <meta itemprop="datePublished" content="2019-03-26T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-03-26T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="264">
+<meta itemprop="wordCount" content="266">
 
 
 
@@ -177,21 +184,21 @@ $$</p>
 F_u = \begin{bmatrix}\det(\begin{bmatrix}x-u &amp; \nabla_x(f)\end{bmatrix})\\ f(x)\end{bmatrix} =0,
 $$</p>
 <p>where $\nabla_x(f)$ is the gradient of $f$ at $x$. Let's set up this system in Julia.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> DynamicPolynomials<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
 
 u₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>; <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
 
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
 f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> (x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>
 ∇<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
 
 F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [det<span style="color:#f92672"></span>([x<span style="color:#f92672"></span><span style="color:#f92672">-</span>u₀<span style="color:#f92672"></span> ∇<span style="color:#f92672"></span>]); f<span style="color:#f92672"></span>]
-</code></pre></div><p>Now, $x^\star$ is a zero of <code>F</code>, which has totaldegree equal to 12. However, the actual number of solutions is only 3 as was shown in <a href="https://arxiv.org/pdf/1309.0049.pdf">this article</a>. For avoiding computing all 12 paths, we use monodromy instead of totaldegree traicking.</p>
+</code></pre></div><p>Now, $x^\star$ is a zero of <code>F</code>, which has total degree equal to 12. However, the actual number of solutions is only 3 as was shown in <a href="https://arxiv.org/pdf/1309.0049.pdf">this article</a>. For avoiding computing all 12 paths, we use monodromy instead of total degree tracking.</p>
 <p>An initial solution to <code>F</code> is $x_0=(0,1)^T$. Let's use this initial solution for monodromy:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 
 x₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">1</span>]
-<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
 F_u<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [det<span style="color:#f92672"></span>([x<span style="color:#f92672"></span><span style="color:#f92672">-</span>u<span style="color:#f92672"></span> ∇<span style="color:#f92672"></span>]); f<span style="color:#f92672"></span>]
 
 monodromy_solve<span style="color:#f92672"></span>(F_u<span style="color:#f92672"></span>, [x₀<span style="color:#f92672"></span>], u₀<span style="color:#f92672"></span>, parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u<span style="color:#f92672"></span>)
@@ -209,7 +216,7 @@ monodromy_solve<span style="color:#f92672"></span>(F_u<span style="color:#f92672
     author =  { Paul Breiding, Sascha Timme },
     title = { The point on a variety that minimizes the distance to a given point },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/critical-points/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

@@ -97,12 +97,14 @@
 
 
 <body class="page-kube">
-  <header> <div class="show-sm">
+  <header> <div>
+<div class="show-sm">
     <div id="nav-toggle-box">
       <div id="nav-toggle-brand">
         <a href="/">HomotopyContinuation.jl</a>
       </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
     </div>
+  
   </div>
   <div class="hide-sm" id="top">
     <div id="top-brand">
@@ -116,13 +118,15 @@
     
     <li><a href="/examples/" >Examples</a></li>
     
-    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >API Docs</a></li>
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
     
     <li><a href="/about/" >About</a></li>
     
     <li><a href="/faq/" >FAQ</a></li>
     
     <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
     
     <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
     
@@ -134,14 +138,17 @@
       </ul>
     </nav>
   </div>
- </header>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
   <main>
 <div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
     <meta itemprop="name" content="Computing a logarithmic Voronoi cell">
 <meta itemprop="description" content="An adventure at the intersection of statistics and nonlinear algebra.">
 <meta itemprop="datePublished" content="2019-09-02T16:50:00&#43;02:00" />
 <meta itemprop="dateModified" content="2019-09-02T16:50:00&#43;02:00" />
-<meta itemprop="wordCount" content="3033">
+<meta itemprop="wordCount" content="3029">
 
 
 
@@ -318,10 +325,7 @@ sample_points<span style="color:#f92672"></span> <span style="color:#f92672">=</
 
 c₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> B<span style="color:#f92672"></span> <span style="color:#f92672">\</span> (pfav<span style="color:#f92672"></span> <span style="color:#f92672">-</span> vertices<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])
 
-S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(res_generic<span style="color:#f92672"></span>)
-tracker<span style="color:#f92672"></span> <span style="color:#f92672">=</span> pathtracker<span style="color:#f92672"></span>(G<span style="color:#f92672"></span>, S<span style="color:#f92672"></span>; parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>[u<span style="color:#f92672"></span><span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>], start_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>u₀<span style="color:#f92672"></span>, target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>sample_points<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])
-
-<span style="color:#66d9ef">function</span> best_result<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>, p<span style="color:#f92672"></span>)
+<span style="color:#66d9ef">function</span> distance<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>, p<span style="color:#f92672"></span>)
     argmax<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing
     max_mle<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>Inf
     <span style="color:#66d9ef">for</span> r<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> result<span style="color:#f92672"></span>
@@ -338,14 +342,19 @@ tracker<span style="color:#f92672"></span> <span style="color:#f92672">=</span> 
             argmax<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [real<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]) <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">6</span>]
         <span style="color:#66d9ef">end</span>
     <span style="color:#66d9ef">end</span>
-    argmax<span style="color:#f92672"></span>
+    
+    norm<span style="color:#f92672"></span>(pfav<span style="color:#f92672"></span> <span style="color:#f92672">-</span> argmax<span style="color:#f92672"></span>)
 <span style="color:#66d9ef">end</span>
 
-distances<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(sample_points<span style="color:#f92672"></span>) <span style="color:#66d9ef">do</span> p<span style="color:#f92672"></span>
-    set_parameters!<span style="color:#f92672"></span>(tracker<span style="color:#f92672"></span>; target_parameters<span style="color:#f92672"></span><span style="color:#f92672">=</span>p<span style="color:#f92672"></span>)
-    argmax<span style="color:#f92672"></span> <span style="color:#f92672">=</span> best_result<span style="color:#f92672"></span>(solve<span style="color:#f92672"></span>(tracker<span style="color:#f92672"></span>, S<span style="color:#f92672"></span>, threading<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#66d9ef">false</span>), p<span style="color:#f92672"></span>)
-    norm<span style="color:#f92672"></span>(argmax<span style="color:#f92672"></span> <span style="color:#f92672">-</span> pfav<span style="color:#f92672"></span>)
-<span style="color:#66d9ef">end</span>;
+S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(res_generic<span style="color:#f92672"></span>)
+distances<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+    G<span style="color:#f92672"></span>, 
+    S<span style="color:#f92672"></span>;
+    parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [u<span style="color:#f92672"></span><span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>],
+    start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> u₀<span style="color:#f92672"></span>,
+    target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sample_points<span style="color:#f92672"></span>,
+    transform_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> distance<span style="color:#f92672"></span>
+)
 
 green<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sample_coords<span style="color:#f92672"></span>[distances<span style="color:#f92672"></span> <span style="color:#f92672">.&lt;</span> <span style="color:#ae81ff">1e-8</span>]
 
@@ -363,7 +372,7 @@ scatter!<span style="color:#f92672"></span>(c₀<span style="color:#f92672"></sp
     author =  { Yulia Alexandr, Alex Heaton, and Sascha Timme },
     title = { Computing a logarithmic Voronoi cell },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/logarithmic-voronoi/ } },
-    note = { Accessed: July 1, 2020 }
+    note = { Accessed: July 9, 2020 }
 }</code>
 </pre>
 

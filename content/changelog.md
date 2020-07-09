@@ -15,13 +15,13 @@ This release comes with many exciting new features and a major revamp of the int
 
 Creating polynomials is now based primarily on our own modeling language `ModelKit`. Variables are created using the `@var` macro.
 
-Polynomials defined with the old `@polyvar` command continue to be compatible with `solve` and `monodromy_solve`. It is possible (and easy) to  convert expressions created with variables created by `@polyvar` to `ModelKit`
+Polynomials defined with the old `@polyvar` command continue to be compatible with `solve` and `monodromy_solve`. It is possible (and easy) to  convert expressions constructed with variables created by `@polyvar` to `ModelKit`.
 
 While polynomials defined by `@polyvar` are represented in the monomial basis, polynomials created with `@var` are represented as straight line programs. The latter can be evaluated significantly more efficiently, which results in faster computations.
 
 #### Witness Sets
 
-We introduce support for witness sets. This is a data structure that allows to work with positive dimensional components of the solution set of a system of polynomials. The idea is to take a general (affine) linear subspace of the largest dimension such that the linear space intersects the positive dimensional component in finitely many points (in some publications this is referred to as pseudo-witness-sets).
+We introduce support for witness sets. This is a data structure that allows to work with positive dimensional components of the solution set of a system of polynomials. The idea is to take a general (affine) linear subspace of the largest dimension such that the linear space intersects the positive dimensional component in finitely many points (in some publications this is referred to as witness-superset).
 
 We built in special support for constructing (affine) linear subspaces, computing witness sets and moving witness sets around. Furthermore, it is possible to perform monodromy where the “parameters” are linear subspaces. In this case a trace test is used as a stopping criterion.
 
@@ -31,14 +31,15 @@ We provide certification of non-singular isolated solutions of a square system o
 
 #### Polyhedral homotopy
 
-The `solve` method now uses by default the [polyhedral homotopy method](/guides/polyhedral.md) (before the default setting was [total-degree homotopy](/guides/totaldegree.md)). The computation of the mixed cells
-is done by [MixedSubdivsions.jl](https://github.com/saschatimme/MixedSubdivisions.jl).
+The `solve` method now uses by default the [polyhedral homotopy method](/guides/polyhedral.md) (before the default setting was [total-degree homotopy](/guides/totaldegree.md)). The computation of the mixed cells is done by [MixedSubdivsions.jl](https://github.com/saschatimme/MixedSubdivisions.jl).
 
 #### More new features
 
 Many internal routines have been updated, resulting in faster computations overall. The path tracker is now more robust and can track more numerically challenging paths. The implementation is based on the article Timme, S. "Mixed Precision Path Tracking for Polynomial Homotopy Continuation"(2020, [arXiv: 1902.02968](https://arxiv.org/abs/1902.02968)). We also reworked the endgame to better handle singular solutions of low multiplicity and to avoid degenerate cases where we wrongly classified solutions as singular.
 
 ### Summary:
+
+**New features**
 
 - Polyhedral homotopy as default for solving square polynomial systems
 - New symbolic input (ModelKit)

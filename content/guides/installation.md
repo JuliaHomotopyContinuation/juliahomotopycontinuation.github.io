@@ -23,9 +23,9 @@ pkg> add HomotopyContinuation
 
 Alternatively, you can also use
 
-```julia-repl
-julia> import Pkg
-julia> Pkg.add("HomotopyContinuation")
+```julia
+import Pkg
+Pkg.add("HomotopyContinuation")
 ```
 
 After you completed the installation you are ready to start with our [introduction to the numerical solution of polynomial systems](/guides/introduction).

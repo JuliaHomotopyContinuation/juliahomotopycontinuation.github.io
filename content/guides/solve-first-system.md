@@ -25,8 +25,8 @@ Solving the equation $f=0$ can be accomplished as follows
 
 ```julia
 using HomotopyContinuation # load the package into the current Julia session
-@polyvar x y; # declare the variables x and y
-f = [x^2 + 2y, y^2 - 2]
+@var x y; # declare the variables x and y
+f = System([x^2 + 2y, y^2 - 2]) # construct system f
 result = solve(f) # solve f
 ```
 
@@ -34,11 +34,11 @@ After the computation has finished, you should see the following output.
 
 ```julia
 Result with 4 solutions
-==================================
-• 4 non-singular solutions (2 real)
-• 0 singular solutions (0 real)
+=======================
 • 4 paths tracked
-• random seed: 902575
+• 4 non-singular solutions (2 real)
+• random seed: 0x09c7d125
+• start_system: :polyhedral
 ```
 
 We see that $f$ has two real zeros. They are
@@ -50,8 +50,8 @@ julia> realsolutions(result)
  [-1.68179, -1.41421]
 ```
 
-It is possible to interrupt the computations using `control+c`. All solutions that have been computed before the interruption will be returned.
+It is possible to interrupt the computations using `ctrl+c`. All solutions that have been computed before the interruption will be returned.
 
 ### What else should I know?
 
-The [next guide](/guides/introduction) explains in greater detail how to use HomotopyContinuation.jl. You should also check the rest of our detailed [Guides](/guides/) for learning more about the full power of homotopy continuation. Furthermore, our [API Docs](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solving/#The-*solve*-function-1) lists all options of `solve(f)`.
+The [next guide](/guides/introduction) explains in greater detail how to use HomotopyContinuation.jl. You should also check the rest of our detailed [Guides](/guides/) for learning more about the full power of homotopy continuation. Furthermore, our [Reference documentation](https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/solve/) lists all options of `solve(f)`.

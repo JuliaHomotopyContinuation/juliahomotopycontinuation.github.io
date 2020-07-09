@@ -25,9 +25,9 @@ $$ f = \\begin{bmatrix} ab - 2\\\  ac- 1\end{bmatrix}, \\quad g =  \\begin{bmatr
 then you solve $f\circ g$ by
 
 ```julia-repl
-julia> @polyvar a b c x y
-julia> f = [a * b - 2, a * c- 1]
-julia> g = [x + y, y + 3, x + 2]
+julia> @var a b c x y
+julia> f = System([a * b - 2, a * c- 1])
+julia> g = System([x + y, y + 3, x + 2])
 julia> solve(f ∘ g)
 Result with 2 solutions
 ==================================
@@ -41,8 +41,8 @@ Result with 2 solutions
 
 You can also iterate the above process:
 ```julia-repl
-julia> @polyvar u v
-julia> h = [u^2 - 1, u + v - 2]
+julia> @var u v
+julia> h = System([u^2 - 1, u + v - 2])
 julia> solve(f ∘ g ∘ h)
 Result with 4 solutions
 ==================================
@@ -62,9 +62,9 @@ and you want to track solutions from $(p,q) = (1, 2)$ to $(p,q) = (2, 3)$, this 
 
 ```julia-repl
 julia> res = solve(f ∘ g)
-julia> @polyvar p q
-julia> f2 = [a * b - q, a * c - p]
-julia> res2 = solve(f2 ∘ g, solutions(res), parameters=[p, q], p₁=[1, 2], p₀=[2, 3])
+julia> @var p q
+julia> f2 = System([a * b - q, a * c - p]; parameters = [p, q]) 
+julia> res2 = solve(f2 ∘ g, solutions(res), p₁=[1, 2], p₀=[2, 3])
 Result with 2 solutions
 ==================================
 • 2 non-singular solutions (2 real)

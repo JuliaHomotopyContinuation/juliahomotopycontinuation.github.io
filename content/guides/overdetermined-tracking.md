@@ -1,10 +1,10 @@
 +++
 title = "Overdetermined systems"
-description = "How to track solutions of systems with more equations than variables."
+description = "How to solve systems with more equations than variables."
 weight = 7
 draft = false
 toc = true
-bref = "We're tracking a solution of an overdetermined system"
+bref = "We are computing solutions of an overdetermined system"
 group = "feature-guide"
 +++
 
@@ -22,14 +22,19 @@ This system has 4 equation in 3 variables. One might expect that it has no solut
 
 The Julia code is as follows
 
-```julia-repl
-julia> using HomotopyContinuation
-julia> @polyvar x y z
-julia> solve([x*z - y^2, y - z^2, x - y*z, x + y + z + 1])
-Result with 3 solutions
-==================================
-• 3 non-singular solutions (1 real)
-• 0 singular solutions (0 real)
-• 8 paths tracked
-• random seed: 157717
+```julia
+using HomotopyContinuation
+@var x y z
+solve([x*z - y^2, y - z^2, x - y*z, x + y + z + 1])
 ```
+```
+Result with 3 solutions
+=======================
+• 5 paths tracked
+• 3 non-singular solutions (1 real)
+• 2 excess solutions
+• random_seed: 0xf2aeb943
+• start_system: :polyhedral
+```
+
+Here, the term `excess solutions` refers to artificially added solutions in order to make the overdetermined system a square system.

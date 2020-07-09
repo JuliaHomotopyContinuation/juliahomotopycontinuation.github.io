@@ -41,9 +41,9 @@ Assume that $z_1$ and $z_6$ are random unit vectors, $p=(1,1,0)$ and some random
 
 
 ```julia
-using HomotopyContinuation, LinearAlgebra, DynamicPolynomials
+using HomotopyContinuation, LinearAlgebra
 # initialize the variables
-@polyvar z[1:6,1:3] p[1:3]
+@var z[1:6,1:3] p[1:3]
 α = randn(5)
 a = randn(9)
 # define the system of polynomials
@@ -60,13 +60,13 @@ F = [subs(f, z[1,:]=>z₁, z[6,:]=>z₆, p=>[1, 1, 0]) for f in F′]
 
 Now we can just pass `F` to `solve` in order to compute all solutions.
 ```
-julia> solve(F)
+julia> solve(F; start_system = :total_degree)
 Result with 16 solutions
-==================================
-• 16 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
+========================
 • 1024 paths tracked
-• random seed: 462257
+• 16 non-singular solutions (0 real)
+• random_seed: 0xb809e6ce
+• start_system: :total_degree
 ```
 
 
@@ -75,14 +75,16 @@ We find 16 solutions, which is the correct number of solutions for these type of
 But if we study the problem a little bit closer, we can see that the equations are bi-homogeneous with respect to the variable groups $\\{z_2, z_4\\}$ and $\\{z_3, z_5\\}$.
 The multi-homogeneous Bezout number with respect ot this variable group is
 ```julia
-julia> variable_groups=[[z[2,:]; z[4,:]], [z[3,:]; z[5,:]]];
-julia> bezout_number(F; variable_groups=variable_groups)
+variable_groups = [[z[2,:]; z[4,:]], [z[3,:]; z[5,:]]]
+paths_to_track(System(F; variable_groups=variable_groups); start_system = :total_degree)
+```
+```
 320
 ```
 
 We can use this to solve the system more efficiently
 ```julia
-julia> solve(F; variable_groups=variable_groups)
+julia> solve(F; variable_groups=variable_groups, start_system = :total_degree)
 Result with 16 solutions
 ==================================
 • 16 non-singular solutions (0 real)
@@ -99,23 +101,22 @@ Instead of solving the system from scratch every time (and tracking 324 paths) w
 Let's start with computing a generic instance.
 ```julia
 p_rand = randn(ComplexF64, 3)
-F_rand = [subs(f, z[1,:]=>z₁, z[6,:]=>z₆, p=>p_rand) for f in F′]
-R_rand = solve(F_rand, variable_groups=variable_groups)
+F̂ = System([subs(f, z[1,:]=>z₁, z[6,:]=>z₆) for f in F′], parameters = p,  variable_groups=variable_groups)
+R_rand = solve(F̂, target_parameters = p_rand, start_system = :total_degree)
 ```
 ```
 Result with 16 solutions
-==================================
-• 16 non-singular solutions (0 real)
-• 0 singular solutions (0 real)
+========================
 • 320 paths tracked
-• random seed: 235123
+• 16 non-singular solutions (0 real)
+• random_seed: 0xf04f1c49
+• start_system: :total_degree
 ```
 
 Now we can use this to solve for our specific value $q=[2,3,4]$:
 ```julia
-F̂ = [subs(f, z[1,:]=>z₁, z[6,:]=>z₆) for f in F′]
 q = [2,3,4]
-julia> solve(F̂, solutions(R_rand); parameters=p, start_parameters=p_rand, target_parameters=q)
+solve(F̂, solutions(R_rand); start_parameters=p_rand, target_parameters=q)
 ```
 ```
 Result with 16 solutions

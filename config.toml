@@ -19,7 +19,7 @@ HighlightJS = true
     weight = 2
     url = "/examples/"
 [[menu.main]]
-    name = "API Docs"
+    name = "Docs"
     weight = 3
     url = "https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/"
 [[menu.main]]
@@ -36,8 +36,13 @@ HighlightJS = true
     url = "/do-it-yourself"
 
 [[menu.main]]
-    name = "Github"
+    name = "Changelog"
     weight = 7
+    url = "/changelog/"
+
+[[menu.main]]
+    name = "Github"
+    weight = 8
     url = "https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl"
 
 [markup]

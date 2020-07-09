@@ -247,10 +247,7 @@ sample_points = [vertices[1] +  B * v for v in sample_coords];
 
 c₀ = B \ (pfav - vertices[1])
 
-S = solutions(res_generic)
-tracker = pathtracker(G, S; parameters=[u...], start_parameters=u₀, target_parameters=sample_points[1])
-
-function best_result(result, p)
+function distance(result, p)
     argmax = nothing
     max_mle = -Inf
     for r in result
@@ -267,14 +264,19 @@ function best_result(result, p)
             argmax = [real(x[i]) for i in 1:6]
         end
     end
-    argmax
+    
+    norm(pfav - argmax)
 end
 
-distances = map(sample_points) do p
-    set_parameters!(tracker; target_parameters=p)
-    argmax = best_result(solve(tracker, S, threading=false), p)
-    norm(argmax - pfav)
-end;
+S = solutions(res_generic)
+distances = solve(
+    G, 
+    S;
+    parameters = [u...],
+    start_parameters = u₀,
+    target_parameters = sample_points,
+    transform_parameters = distance
+)
 
 green = sample_coords[distances .< 1e-8]
 

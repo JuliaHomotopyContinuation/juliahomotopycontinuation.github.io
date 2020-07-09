@@ -10,6 +10,8 @@ author = "Paul Breiding, Anna Eckhardt and Sascha Timme"
 group = "applications"
 +++
 
+**This post currently is only valid for HomotopyContinuation v1**
+
 <span style="color: gray">This post was worked out in a [student seminar](https://www.math.tu-berlin.de/fachgebiete_ag_diskalg/fachgebiet_algorithmische_algebra/v_menue/veranstaltungen/2019ss/software_seminar_numerical_nonlinear_algebra/) that we held at TU Berlin in summer 2019. </span>
 
 A four bar linkage, also called four bar, is a mechanism of four bars connected in a loop by four joints. One bar is fixed to the ground and on top of the opposing bar sits a triangle called coupler triangle whose apex is called coupler point. In motion this coupler point follows a curve called coupler curve:

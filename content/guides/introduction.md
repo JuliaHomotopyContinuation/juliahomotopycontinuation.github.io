@@ -35,24 +35,20 @@ Using [HomotopyContinuation.jl](https://www.JuliaHomotopyContinuation.org) we ca
 # load the package
 using HomotopyContinuation
 # declare variables x and y
-@polyvar x y
+@var x y
 # define the polynomials
 f₁ = (x^4 + y^4 - 1) * (x^2 + y^2 - 2) + x^5 * y
 f₂ = x^2+2x*y^2 - 2y^2 - 1/2
-result = solve([f₁, f₂])
+F = System([f₁, f₂])
+@time result = solve(F)
 ```
 
-
-
-
     Result with 18 solutions
-    ==================================
-    • 18 non-singular solutions (4 real)
-    • 0 singular solutions (0 real)
+    ========================
     • 18 paths tracked
-    • random seed: 847678
-
-
+    • 18 non-singular solutions (4 real)
+    • random seed: 0x6baaff3a
+    • start_system: :polyhedral
 
 
 Now, the result reports that we found **18** solutions and **4  real** solutions. Why do we have 14 solutions more than expected? The reason is that we do not compute the common zero set of $f_1$ and $f_2$ over the real numbers, but over the **complex numbers**. Although there are usually more complex solutions than real solutions, this makes the problem of computing all real solutions *much* easier.
@@ -89,26 +85,28 @@ results(result; only_real=true)[1]
 
 
 
-    PathResult
-    =================
-     • return_code: success
-     • t: 0.0
-     • solution: Complex{Float64}[-1.67142-2.97795e-29im, 0.655205+1.18329e-29im]
-     • accuracy: 5.288e-15
-     • residual: 4.481e-16
-     • condition_jacobian: 1.177e+00
-     • path_number: 3
+   PathResult:
+    • return_code → :success
+    • solution → Complex{Float64}[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
+    • accuracy → 3.4595e-16
+    • residual → 6.6613e-16
+    • condition_jacobian → 5.5554
+    • steps → 50 / 0
+    • extended_precision → false
+    • path_number → 2
 
 
 
 
 The meaning of those entries is as follows:
 
-* `return_code: success` means that the computation was successful.
+* `return_code → :success` means that the computation was successful.
 * `solution` is the solution that was computed.
-* `accuracy` is an approximation of $\Vert x-x^* \Vert$ where $x$ is the computed solution and $x^* $ is the true solution.
-* `residual` is the value of the euclidean norm of $f(x)$, where $x$ is the computed solution.
+* `accuracy` is an approximation of $\Vert x-x^* \Vert / \Vert x^* \Vert$ where $x$ is the computed solution and $x^* $ is the true solution.
+* `residual` is the value of the infinity norm of $f(x)$, where $x$ is the computed solution.
 * `condition_jacobian` is the condition number of the Jacobian of $f$ at the solution. A large value indicates that this solution is close to being singular.
+* `steps` is the number of accepted / rejected steps during the tracking.
+* `extended_precision` is `true` if the it was necessary to use extended precision.
 * `path_number` the number of the path which resulted int this solution.
 
 This is already everything you need to know for solving simple polynomial systems! But in order to solve more challenging systems it is helpful to understand the basics about the techniques used in `solve`. There are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.
@@ -168,6 +166,7 @@ $$H(x,t) = \gamma t G(x) + (1-t)F(x)$$
 where $\gamma \in \mathbb{C}$ is a random complex number with absolute value one.
 
 This construction easily generalizes to polynomial systems with the $n$ polynomials in $n$ variables.
+The resulting homotopy is called the *total degree homotopy*. For a total degree homotopy you have to set the `start_system=:total_degree` argument.
 If we have the system $f=(f_1,\ldots, f_m)$ with degrees $d_1,\ldots, d_m$ then $f$ has at most $d_1 \cdot \ldots \cdot d_n$ many isolated solutions.
 
 For square polynomial systems, i.e., systems with the same number of polynomials and variables there are also more advanced start systems and homotopies which take into account some of the structure of the problem. These include:
@@ -176,7 +175,8 @@ For square polynomial systems, i.e., systems with the same number of polynomials
 * [Polyhedral homotopies](/guides/polyhedral) take the sparsity of the polynomials into account. To each polynomial system you can associate the [*mixed volume*](https://en.wikipedia.org/wiki/Mixed_volume) of the Newton polytopes of the polynomials. The [Bernstein–Khovanskii–Kushnirenko theorem](https://en.wikipedia.org/wiki/Bernstein–Kushnirenko_theorem) tells us that this mixed volume is an upper bound for the number of isolated solutions with non-zero entries.
 
 Both multi-homogeneous and polyhedral homotopies are supported by HomotopyContinuation.jl.
-A multi-homogeneous homotopy will automatically be constructed if you pass a set of `variable_groups` to `solve`. For a polyhedral homotopy you have to set the `start_system=:polyhedral` argument.
+A multi-homogeneous homotopy is constructed if you pass a set of `variable_groups` to `solve` and set `start_system=:total_degree`.
+The polyhedral homotopy is currently the default, but can also be explicitly requested by setting the `start_system=:polyhedral` argument.
 
 ## Case Study: Optimization
 
@@ -230,24 +230,26 @@ Now that we derived the critical equations we can go back to our initial example
 
 ```julia
 # define f
-@polyvar x y
+@var x y
 f = (x^4 + y^4 - 1) * (x^2 + y^2 - 2) + x^5 * y
 # define new variables u₁, u₂ and λ₁
-@polyvar u[1:2] λ[1:1]
+@var u[1:2] λ[1:1]
 # define the jacobian of F
 J = differentiate([f], [x,y])
 # J' defines the transpose of J
-C = [[x,y] - u - J'*λ;
-     f]
+C = System([[x,y] - u - J'*λ; f], variables = [x;y;λ], parameters = u)
 ```
 
 
 
 
-    3-element Array{DynamicPolynomials.Polynomial{true,Int64},1}:
-     -6x⁵λ₁ - 5x⁴yλ₁ - 4x³y²λ₁ - 2xy⁴λ₁ + 8x³λ₁ + 2xλ₁ + x - u₁
-     -x⁵λ₁ - 2x⁴yλ₁ - 4x²y³λ₁ - 6y⁵λ₁ + 8y³λ₁ + 2yλ₁ + y - u₂  
-     x⁶ + x⁵y + x⁴y² + x²y⁴ + y⁶ - 2x⁴ - 2y⁴ - x² - y² + 2     
+    System of length 3
+     3 variables: x, y, λ₁
+     2 parameters: u₁, u₂
+
+     -u₁ + x - λ₁*(5*x^4*y + 4*(-2 + x^2 + y^2)*x^3 + 2*(-1 + x^4 + y^4)*x)
+     -u₂ + y - (4*(-2 + x^2 + y^2)*y^3 + 2*(-1 + x^4 + y^4)*y + x^5)*λ₁
+     x^5*y + (-2 + x^2 + y^2)*(-1 + x^4 + y^4)
 
 
 
@@ -267,24 +269,18 @@ u₀ = [-0.32, -0.1]
 
 
 
-Our system $C$ is parametrized by $u$.
-We have to make the substitution $u \Rightarrow u_0$ before we can solve the system.
-
+Our system $C$ is parametrized by $u$ and we want solve the system for the specific value $u = u_0$.
 
 ```julia
-C_u₀ = [subs(c, u => u₀) for c in C]
-res = solve(C_u₀)
+res = solve(C; target_parameters = u₀)
 ```
 
-
-
-
     Result with 36 solutions
-    ==================================
+    ========================
+    • 36 paths tracked
     • 36 non-singular solutions (8 real)
-    • 0 singular solutions (0 real)
-    • 216 paths tracked
-    • random seed: 58134
+    • random seed: 0x1556a953
+    • start_system: :polyhedral
 
 
 
@@ -322,11 +318,11 @@ The optimal solution is found as follows:
 ```julia
 using LinearAlgebra
 
-dist, idx = findmin([norm(x - u) for x in ed_points])
-println("Optimal solution: ", ed_points[idx], " with distance ", sqrt(dist), " to u₀")
+dist, idx = findmin([norm(x - u₀) for x in ed_points])
+println("Optimal solution: ", ed_points[idx], " with distance ", dist, " to u₀")
 ```
 
-    Optimal solution: [-0.988532, 0.0487366] with distance 1.31382768101552 to u₀
+    Optimal solution: [-0.988532, 0.0487366] with distance 0.684877 to u₀
 
 
 Here is a visualization of all (real) critical points:
@@ -348,18 +344,18 @@ We start with computing all critical points to a random *complex* value $v \in \
 
 ```julia
 v = randn(ComplexF64, 2)
-result_v = solve([subs(c, u => v) for c in C])
+result_v = solve(C, target_parameters = v)
 ```
 
 
 
 
     Result with 36 solutions
-    ==================================
+    ========================
+    • 36 paths tracked
     • 36 non-singular solutions (0 real)
-    • 0 singular solutions (0 real)
-    • 216 paths tracked
-    • random seed: 286792
+    • random seed: 0x931f06b2
+    • start_system: :polyhedral
 
 
 
@@ -375,18 +371,16 @@ This strategy is so essential that we support it out of the box with HomotopyCon
 
 
 ```julia
-solve(C, solutions(result_v); parameters=u, start_parameters=v, target_parameters=u₀)
+S_v = solutions(result_v)
+solve(C, S_v; start_parameters = v, target_parameters = u₀)
 ```
 
 
-
-
     Result with 36 solutions
-    ==================================
-    • 36 non-singular solutions (8 real)
-    • 0 singular solutions (0 real)
+    ========================
     • 36 paths tracked
-    • random seed: 364372
+    • 36 non-singular solutions (8 real)
+    • random seed: 0x9f847e27
 
 
 
@@ -397,141 +391,65 @@ We see that only $36$ paths had to be tracked for finding all $36$ critical poin
 
 ### Alternative start systems
 
-If we take a look at the defining equations
-$$\begin{array}{rl}x-u &= J(x)^T \lambda \\\\ F(x) &= 0 \\\\ \lambda &\in \mathbb{R}^m \end{array}$$
-we can see that the total degree of this system is approximately
-$$D^n\prod_{i=1}^m d_i$$ where $D:= \max_i d_i$, $m$ is the number of equations and $n$ the number of variables.
-This can become large very quickly! However, it is reasonable to expect that the number of solutions is relatively small in comparison.
-
-There are **two options** to avoid the total degree. The first is fairly simple, instead of the total degree homotopy try to use a **polyhedral homotopy**. Let's try this with our running example:
-
-
-```julia
-solve(C_u₀; start_system=:polyhedral)
-```
-
-
-
-
-    Result with 36 solutions
-    ==================================
-    • 36 non-singular solutions (8 real)
-    • 0 singular solutions (0 real)
-    • 36 paths tracked
-    • random seed: 509642
-
-
-
-
-And we see that instead of the $216$ paths we tracked initially we only needed to track **36**, so here this is even optimal!
-
-
-
-Sometimes even polyhedral homotopy is not enough. Another approach is a technique called **monodromy** which
+Sometimes the number of paths to track using a simple `solve` is very large (or even too large).
+Another approach is a technique called **monodromy** which
 uses the fact that our problem has the same number of solutions for almost all values of $u$.
 The idea is the following: assume we have parameter $v \in \mathbb{C}^n$ and suppose we know **one** solution $x_0$ for our problem. We call this a *start pair*. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
 The amazing part is that this loop induces a *permutation* on **all** solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with **another** solution than we started. By doing this process repeatedly we can recover **all** solutions!
+The only condition that we need to this is that the loops we construct contain critical points of the parameter space.
 
-This sound's great so let's try to solve our example using this technique! But how do we obtain a start pair? This depends very much on your specific problem, but it can be often solved by either reverse engineering a parameter from a solution or by some knowledge about your problem.
-
-Our approach here is the following. We first compute a solution to $f$ by intersecting it with a linear space. This will result in $6$ solutions (since $f$ is a curve of degree 6). Then we can use one of these solutions to compute the normal space of $V(f)$ at this point.
-
-
-```julia
-# create a random linear space
-l = sum(randn(ComplexF64,3) .* [x,y,1])
-# compute intersection points of the V(f) and V(l) and take the first solution
-s₀ = first(solutions(solve([f, l])))
-# The normal space is now generated by
-J_s₀ = [p([x,y]=>s₀) for p in J]
-# creat normal vector
-λ₀ = randn(ComplexF64, 1)
-# x₀ - u₀ = J_s₀' * λ₀ => u = x -  J_s₀' * λ₀
-u₀ = s₀ - transpose(J_s₀) * λ₀
-```
-
-
-
-
-    2-element Array{Complex{Float64},1}:
-     -1.3145309760357284 - 6.764765173081119im
-      3.6304286598010447 - 1.3732823625006585im
-
-
-
-Let's verify that we computed a correct start pair:
-
+This sound's great so let's try to solve our example using this technique! But how do we obtain a start pair? If you do not provide a start pair, HomotopyContinuation.jl will try to generate a start pair by using Newton's method and random search.
+While simple, this is very often successful.
+Thus, we can use the `monodromy_solve` routine to find all solutions often without any additional work.
+But for this example, we want to modify the way we construct our loops to ensure that we loop around critical points.
+For more compl
 
 ```julia
-[p(u => u₀, [x,y] => s₀, λ => λ₀) for p in C]
+parameter_sampler(p) = 10 .* randn(ComplexF64, length(p))
+generic_result = monodromy_solve(C; parameter_sampler = parameter_sampler)
 ```
-
-
-
-
-    3-element Array{Complex{Float64},1}:
-                        0.0 + 8.881784197001252e-16im
-                        0.0 + 8.881784197001252e-16im
-     1.7763568394002505e-15 + 6.661338147750939e-16im
-
-
-
-Now we can use the `monodromy_solve` routine to find all solutions.
-
-
-```julia
-result_u₀ = monodromy_solve(C, [s₀; λ₀], u₀; parameters=u)
-```
-
-
 
 
     MonodromyResult
-    ==================================
-    • 36 solutions (0 real)
-    • return code → heuristic_stop
-    • 1255 tracked paths
+    =========================
+    • return code: :heuristic_stop
+    • 36 solutions
+    • 360 tracked loops
+    • random seed: 0x590db472
 
 
 
 
-We see that the return code is `heuristic_stop`. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
-The default stopping criterion is to stop after 10 loop without finding any new solutions. We can also set this to another value by
+We see that the return code is `:heuristic_stop`. This comes from the fact that we use a heuristic to determine when we found all solutions and can stop.
+The default stopping criterion is to stop after 5 loops without finding any new solutions. We can also set this to another value by
 using the `max_loops_no_progress` flag. Additionally you can set the expected number with the `target_solutions_count`.
 
 
 ```julia
-result_u₀ = monodromy_solve(C, [s₀; λ₀], u₀; parameters=u, max_loops_no_progress=100, target_solutions_count=36)
+monodromy_solve(C; parameter_sampler = parameter_sampler, max_loops_no_progress=100, target_solutions_count=36)
 ```
 
-
-
-
     MonodromyResult
-    ==================================
-    • 36 solutions (0 real)
-    • return code → success
-    • 200 tracked paths
-
-
+    =========================
+    • return code: :success
+    • 36 solutions
+    • 144 tracked loops
+    • random seed: 0x82046e34
 
 
 The solutions in the monodromy result can be used for computing the solutions we are interested in.
 
 
 ```julia
-solve(C, solutions(result_u₀); parameters=u, start_parameters=u₀, target_parameters=u₀)
+solve(C, solutions(generic_result); start_parameters=parameters(generic_result), target_parameters=u₀)
 ```
 
 
-
-
     Result with 36 solutions
-    ==================================
-    • 36 non-singular solutions (8 real)
-    • 0 singular solutions (0 real)
+    ========================
     • 36 paths tracked
-    • random seed: 474907
+    • 36 non-singular solutions (8 real)
+    • random seed: 0x6194c170
 
 
 

@@ -49,16 +49,17 @@ $$
 Now let's solve this optimization problem using homotopy continuation by solving the critical equations. We use the cameras `n₁=1` and `n₂=2`. The camera data
 
 ```julia
-using DynamicPolynomials, LinearAlgebra, HomotopyContinuation
+using HomotopyContinuation, LinearAlgebra
 
-include("cameras.jl")
-include("pictures.jl")
+# download camera and pictures data and load it
+include(download("https://gist.githubusercontent.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b/raw/5e6be8f4c9673f0dd26010b5e0cefc8e953fc1c0/cameras.jl"))
+include(download("https://gist.githubusercontent.com/PBrdng/46436855f3755c5a959a7c5d6ba7e32b/raw/5e6be8f4c9673f0dd26010b5e0cefc8e953fc1c0/pictures.jl"))
 n₁, n₂ = 1, 2
 camera_numbers = [n₁, n₂]
 
-@polyvar x[1:3]
-@polyvar t[1:2]
-@polyvar p[1:2,1:2]
+@var x[1:3]
+@var t[1:2]
+@var p[1:2,1:2]
 
 y = [cams[i][1:2,:]*[x; 1] for i in camera_numbers]
 z = [cams[i][3,:] ⋅ [x; 1] for i in camera_numbers] .* 648
@@ -75,8 +76,10 @@ G = sum(gᵢ ⋅ gᵢ for gᵢ in g)
 For `G` we generate the critical equations `F=0` using Lagrange multipliers.
 
 ```julia
-@polyvar λ[1:2] # the Lagrance multipliers
-F = differentiate(G - sum(λ[i] * (t[i] * z[i] - 1) for i in 1:2), [x;t;λ])
+@var λ[1:2] # the Lagrance multipliers
+L = G - sum(λ[i] * (t[i] * z[i] - 1) for i in 1:2)
+∇L = differentiate(L, [x;t;λ])
+F = System(∇L; variables = [x;t;λ], parameters = vec(p))
 ```
 
 `F` is a system of polynomials in the variables `x`, `t` and `λ` and the parameters `p`. We want to solve this system many times for different parameters. For this, we use the guide on how to [track many systems in a loop](guides/many-systems).
@@ -84,8 +87,7 @@ F = differentiate(G - sum(λ[i] * (t[i] * z[i] - 1) for i in 1:2), [x;t;λ])
 First, we need an initial solution for a random set of parameters.
 ```julia
 p₀ = randn(ComplexF64, 4)
-F₀ = [subs(Fᵢ, vec(p)=>p₀) for Fᵢ in F]
-start = solutions(solve(F₀))
+start = solutions(solve(F; target_parameters = p₀))
 ```
 
 `start` contains 6 solutions. At the end of this example we discuss that the number of critical points `F=0` is indeed 6. Now, we track these 6 solutions towards the photo parameters we are interested in.
@@ -102,7 +104,7 @@ filter!(pᵢ -> all(pᵢ .> 0), photos)
 # we divide the photo coordinates by 648
 # to work with coordinates between 0 and 1
 # (as explained above)
-photos= map(pᵢ -> pᵢ./648, photos)
+map!(pᵢ -> pᵢ./648, photos, photos)
 
 function reconstruction_from_critical_points(R, pᵢ, G)
 	r = real_solutions(R)
@@ -118,7 +120,6 @@ end
 reconstructed_points = solve(
     F,
     start;
-    parameters = vec(p),
     start_parameters =  p₀,
     target_parameters = photos,
     transform_result = (R,pᵢ) -> reconstruction_from_critical_points(R,pᵢ,G)

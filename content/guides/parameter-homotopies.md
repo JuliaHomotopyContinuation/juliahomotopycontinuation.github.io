@@ -31,12 +31,11 @@ Note that you have to provide the start solutions for this kind of homotopy.
 The syntax in HomotopyContinuation.jl to construct such a homotopy is as follows.
 
 ```julia
-solve(F, startsolutions; parameters=params, start_parameters=q, target_parameters=p)
+solve(F, start_solutions; start_parameters=q, target_parameters=p)
 ```
 
 where `p` and `q` are vectors of parameter values for ``F``.
-`params` is a vector of variables that specify the parameters of `F`.
-Necessarily, `length(params)`,  `length(p)`and `length(q)` must all be equal.
+Necessarily, the number of parameters of `F`,  `length(p)`and `length(q)` must all be equal.
 
 
 <h3 class="section-head" id="simple-example"><a href="#simple-example">A simple example</a></h3>
@@ -45,15 +44,16 @@ $$F(x,y,a,b) = \\begin{bmatrix} x^2-a \\\ xy-a+b \\end{bmatrix}.$$
 
 For tracking the solution $(x,y) = (1,1)$ from $(a,b) = (1,0)$ to $(a,b) = (2,5)$ we do the following.
 
-```julia-repl
-julia> @polyvar x y a b
-julia> F = [x^2 - a, x * y - a + b]
-julia> startsolution = [[1, 1]]
-julia> solve(F, startsolution; parameters=[a, b], start_parameters=[1, 0], target_parameters=[2, 5])
-Result with 1 solutions
-==================================
+```
+@var x y a b
+F = System([x^2 - a, x * y - a + b]; variables=[x,y], parameters =[a,b])
+start_solutions = [[1, 1]]
+solve(F, start_solutions; start_parameters=[1, 0], target_parameters=[2, 5])
+```
+```
+Result with 1 solution
+======================
+• 1 path tracked
 • 1 non-singular solution (1 real)
-• 0 singular solutions (0 real)
-• 1 paths tracked
-• random seed: 772337
+• random seed: 0xa45b2f02
 ```

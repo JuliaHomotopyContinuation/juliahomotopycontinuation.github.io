@@ -38,11 +38,11 @@ where $\nabla_x(f)$ is the gradient of $f$ at $x$. Let's set up this system in J
 
 
 ```julia
-using DynamicPolynomials, LinearAlgebra
+using HomotopyContinuation, LinearAlgebra
 
 u₀ = [-2; -1]
 
-@polyvar x[1:2]
+@var x[1:2]
 f = x[1]^2 + x[2]^2 - (x[1]^2 + x[2]^2 + x[1])^2
 ∇ = differentiate(f, x)
 
@@ -50,7 +50,7 @@ F = [det([x-u₀ ∇]); f]
 ```
 
 
-Now, $x^\star$ is a zero of `F`, which has totaldegree equal to 12. However, the actual number of solutions is only 3 as was shown in [this article](https://arxiv.org/pdf/1309.0049.pdf). For avoiding computing all 12 paths, we use monodromy instead of totaldegree traicking.
+Now, $x^\star$ is a zero of `F`, which has total degree equal to 12. However, the actual number of solutions is only 3 as was shown in [this article](https://arxiv.org/pdf/1309.0049.pdf). For avoiding computing all 12 paths, we use monodromy instead of total degree tracking.
 
 
 An initial solution to `F` is $x_0=(0,1)^T$. Let's use this initial solution for monodromy:
@@ -60,7 +60,7 @@ An initial solution to `F` is $x_0=(0,1)^T$. Let's use this initial solution for
 using HomotopyContinuation
 
 x₀ = [0; 1]
-@polyvar u[1:2]
+@var u[1:2]
 F_u = [det([x-u ∇]); f]
 
 monodromy_solve(F_u, [x₀], u₀, parameters = u)

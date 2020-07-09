@@ -27,7 +27,7 @@ We built in special support for constructing (affine) linear subspaces, computin
 
 #### Certification
 
-We provide certification of non-singular isolated solutions of a square system of polynomials. This is done using [interval arithmetic](https://en.wikipedia.org/wiki/Interval_arithmetic) and the Krawczyk method.
+We provide certification of non-singular isolated solutions of a square system of polynomials. This is done using [interval arithmetic](https://en.wikipedia.org/wiki/Interval_arithmetic) and the Krawczyk method. This feature was developed in collaboration with [Kemal Rose](https://www.mis.mpg.de/de/nlalg/nlalg-people/kemal-rose.html).
 
 #### Polyhedral homotopy
 

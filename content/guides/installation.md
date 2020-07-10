@@ -9,7 +9,7 @@ group = "get-started"
 +++
 
 ### Requirements
-In order to use HomotopyContinuation.jl you need to have at least Julia 1.1 installed.
+In order to use HomotopyContinuation.jl you need to have at least Julia 1.4 installed.
 If this is not the case you can download it at [julialang.org](https://julialang.org/downloads/).
 Please see the [platform specific instructions](https://www.julialang.org/downloads/platform/) if you have trouble installing Julia.
 

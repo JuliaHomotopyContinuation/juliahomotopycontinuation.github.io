@@ -40,7 +40,7 @@ using HomotopyContinuation
 f₁ = (x^4 + y^4 - 1) * (x^2 + y^2 - 2) + x^5 * y
 f₂ = x^2+2x*y^2 - 2y^2 - 1/2
 F = System([f₁, f₂])
-@time result = solve(F)
+result = solve(F)
 ```
 
     Result with 18 solutions

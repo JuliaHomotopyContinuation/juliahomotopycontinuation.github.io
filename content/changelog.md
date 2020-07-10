@@ -47,6 +47,7 @@ Many internal routines have been updated, resulting in faster computations overa
     - Option to compile straight line programs (default; fast but compilation overhead) or to only interpret them (slower, but no compilation overhead)
     - Higher order automatic differentiation
     - Optimization of problems (common subexpression elimination, multivariate horner rewrite scheme)
+- `monodromy_solve` doesn't require necessarily an initial start pair anymore. If none is provided, a heuristic is used to automatically find one.
 - Improved path tracking algorithm as described in Mixed Precision Path Tracking for Polynomial Homotopy Continuation (2020, [arXiv: 1902.02968)](https://arxiv.org/abs/1902.02968)
 - New tropical endgame algorithm
 - Standalone Newton's method

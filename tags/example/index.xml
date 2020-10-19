@@ -6,7 +6,7 @@
     <description>Recent content in example on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Jan 2020 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 13 Oct 2020 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/example/index.xml" rel="self" type="application/rss+xml" />
     
@@ -20,6 +20,15 @@
       <description>The reach $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau &amp;gt;0$. The definition of $\tau$ is as follows:
 $$\tau = \sup \{t\mid \text{all $x\in\mathbb{R}^n$ with $\mathrm{dist}(x,M)&amp;lt;t$ have a unique nearest point on $M$}\}$$
 where the distance measure $\mathrm{dist}$ is the Euclidean distance.</description>
+    </item>
+    
+    <item>
+      <title>Sampling and Homology via Bottlenecks</title>
+      <link>/examples/sampling_bottlenecks/</link>
+      <pubDate>Tue, 13 Oct 2020 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/sampling_bottlenecks/</guid>
+      <description>The paper Sampling and homology via bottlenecks by Di Rocco et. al. introduces a novel algorithm for producing a provably dense sample of a smooth and compact algebraic variety. Using the $\textit{bottlenecks}$ we obtain bounds on the density of the sample needed in order to guarantee that the homology of the variety can be recovered from the sample. This example implements the algorithm for the case when the variety is a smooth and compact complete intersection.</description>
     </item>
     
     <item>
@@ -60,7 +69,7 @@ Consider the following problem: Bob has three biased coins. He tosses the first 
       <pubDate>Tue, 02 Jul 2019 21:56:55 +0100</pubDate>
       
       <guid>/examples/sampling/</guid>
-      <description>The article Random points on an algebraic manifold proposes an algorithm for sampling from probability densities on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
+      <description>The article Random points on an algebraic manifold proposes an algorithm for sampling from probability distributions on a variety based on linear slicing. In this example, we want to apply this algorithm to sample from the plane curve
 $$V = \{ x=(x_1,x_2) \in \mathbb{R}^2 \mid x_1^4+x_2^4-3x_1^2-x_1x_2^2-x_2+1=0\}.$$
 intersected with the box $B = [-2,2]\times [-2,2]$.
 Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample from the density $f(x)/(\int_{V} f(x) \mathrm{d}V)$.</description>

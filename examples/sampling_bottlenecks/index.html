@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Sampling and Homology via Bottlenecks </title>
+
+  
+  <meta name="description" content="Sampling an algebraic variety and computing its homology"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Oliver Gäfvert">
+
+
+  <meta property="og:title" content="Sampling and Homology via Bottlenecks" />
+<meta property="og:description" content="Sampling an algebraic variety and computing its homology" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/examples/sampling_bottlenecks/" />
+<meta property="article:published_time" content="2020-10-13T21:56:55+01:00" />
+<meta property="article:modified_time" content="2020-10-13T21:56:55+01:00" />
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/examples/sampling_bottlenecks/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header> <div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  <div class="announcement-banner">
+    <span><strong>Version 2.0 is out! 🎉</strong> Check out the <a href="/changelog/">changelog</a> to see what is new.</span>
+  </div>
+</div> </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    <meta itemprop="name" content="Sampling and Homology via Bottlenecks">
+<meta itemprop="description" content="Sampling an algebraic variety and computing its homology">
+<meta itemprop="datePublished" content="2020-10-13T21:56:55&#43;01:00" />
+<meta itemprop="dateModified" content="2020-10-13T21:56:55&#43;01:00" />
+<meta itemprop="wordCount" content="1446">
+
+
+
+<meta itemprop="keywords" content="example," />
+<div id="hero">
+    <h1 itemprop="headline">  Sampling and Homology via Bottlenecks</h1>
+    
+<blockquote itemprop="description">Sampling an algebraic variety and computing its homology</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>7 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2020-10-13T21:56:55&#43;01:00">13 Oct, 2020</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>The paper <a href="https://arxiv.org/abs/2010.07976">Sampling and homology via bottlenecks</a> by Di Rocco et. al. introduces a novel algorithm for producing a provably dense sample of a smooth and compact algebraic variety. Using the $\textit{bottlenecks}$ we obtain bounds on the density of the sample needed in order to guarantee that the homology of the variety can be recovered from the sample. This example implements the algorithm for the case when the variety is a smooth and compact complete intersection.</p>
+<h2 id="sampling">Sampling</h2>
+<p>By a provably dense sample we mean in the sense of the following definition:</p>
+<p>$\textbf{Definition}.$ A $\textit{sample}$ of a variety $X\subset\Bbb R^n$ is a finite subset
+$E\subset X$. For $\epsilon&gt;0$ a sample $E\subset X$ is called an
+$\epsilon$-sample if for every $x\in X$ there is an element $e\in E$
+such that</p>
+<p>$$|x-e|&lt;\epsilon.$$</p>
+<p>In this case we also say that $E$ is
+$\epsilon$-dense.</p>
+<p>We will consider the following plane curve, $X$, defined by the following equation:
+$$(x_1^3 - x_1x_2^2 + x_2 + 1)^2  (x_1^2 + x_2^2 - 1) + x_2^2 - 5=0$$</p>
+<p style="text-align:center;"><img src="/images/curve_reach.png" width="500px"/></p>
+First we define the equation of the curve in Julia and list some packages that we will need.
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, DynamicPolynomials<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, IterTools<span style="color:#f92672"></span>
+n<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># ambient dimension</span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>] y<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>] p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>] γ[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>]
+
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [(x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">3</span> <span style="color:#f92672">-</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> (x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">5</span>]
+</code></pre></div><p>To produce an $\epsilon$-sample from $X$ we start from its defining
+equations. The basic idea is then to intersect the variety with a grid
+of linear spaces of complementary dimension. Figure (A) below show a curve in $\Bbb R^2$ intersected with
+a 2-dimensional grid.</p>
+<p style="text-align:center;"><img src="/images/sampling_example.png" width="700px"/></p>
+However, to obtain a dense sample it is not enough to intersect with linear spaces of complementary dimension. The density guarantee is achieved by introducing extra sample points given by ad hoc slicing and nearest point computations (see Di Rocco et. al. for details). Figure (B) shows an $\epsilon$-sample of a surface in $\Bbb R^4$ with $\epsilon=0.1$.
+<p>The grid-size is determined by the density needed, but in order to obtain a dense sample we need the grid-size to be at most the size of the narrowest so called $\textit{bottleneck}$ of the variety.</p>
+<p>$\textbf{Theorem}.$ Let $b_2$ be the width of the narrowest bottleneck of $X$ and let
+$\epsilon &gt; 0$. If the grid size is $\delta$ such that $0&lt;\delta \sqrt{n} &lt; \min(\epsilon, 2b_2)$, then
+the sampling algorithm returns an $\epsilon$-sample of $X$.</p>
+<p>A bottleneck of $X$ is a pair of distinct points $x,y \in X$ such that $(x-y)$ is normal to $X$ at
+both $x$ and $y$. Next, we compute the bottlenecks of $X$:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Compute bottlenecks</span>
+d<span style="color:#f92672"></span><span style="color:#f92672">=</span>length<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>) <span style="color:#75715e"># codimension of variety</span>
+k<span style="color:#f92672"></span> <span style="color:#f92672">=</span> n<span style="color:#f92672"></span><span style="color:#f92672">-</span>d<span style="color:#f92672"></span> <span style="color:#75715e"># dimension of variety</span>
+<span style="color:#a6e22e">@polyvar</span><span style="color:#f92672"></span> lambda<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>d<span style="color:#f92672"></span>] mu<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>d<span style="color:#f92672"></span>]; <span style="color:#75715e"># lagrange multipliers</span>
+grad<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> subs<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, x<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> y<span style="color:#f92672"></span>)
+grady<span style="color:#f92672"></span> <span style="color:#f92672">=</span> subs<span style="color:#f92672"></span>(grad<span style="color:#f92672"></span>, x<span style="color:#f92672"></span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> y<span style="color:#f92672"></span>)
+system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F<span style="color:#f92672"></span>; G<span style="color:#f92672"></span>; map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>y<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>dot<span style="color:#f92672"></span>(lambda<span style="color:#f92672"></span>, grad<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, j<span style="color:#f92672"></span>]), <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>); map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>y<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>dot<span style="color:#f92672"></span>(mu<span style="color:#f92672"></span>, grady<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, j<span style="color:#f92672"></span>]), <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>)]
+result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(system<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>)
+
+<span style="color:#75715e"># pick out the smallest bottleneck</span>
+bottlenecks<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(s<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> (s<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>], s<span style="color:#f92672"></span>[n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>n<span style="color:#f92672"></span>]), real_solutions<span style="color:#f92672"></span>(nonsingular<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>)))
+bn_lengths<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sort!<span style="color:#f92672"></span>(map<span style="color:#f92672"></span>(b<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> (norm<span style="color:#f92672"></span>(b<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>b<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]), b<span style="color:#f92672"></span>), bottlenecks<span style="color:#f92672"></span>), by<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])
+δ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> bn_lengths<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]<span style="color:#f92672">/</span>(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>sqrt<span style="color:#f92672"></span>(n<span style="color:#f92672"></span>)) <span style="color:#75715e"># grid-size</span>
+</code></pre></div><p>Our next step is to setup the grid that we will use to sample $X$ and for this we need to compute a bounding box that contains $X$. We compute the bounding box by choosing the center of the box, $q$, (which we will choose as the center of the largest bottleneck from the previous computation). We then compute the point on $X$ which is furthest from $q$, the length from $q$ to this point will give us the size of the bounding box.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> bn_lengths<span style="color:#f92672"></span>[<span style="color:#66d9ef">end</span>][<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> (bn_lengths<span style="color:#f92672"></span>[<span style="color:#66d9ef">end</span>][<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">2</span>]<span style="color:#f92672">-</span>bn_lengths<span style="color:#f92672"></span>[<span style="color:#66d9ef">end</span>][<span style="color:#ae81ff">2</span>][<span style="color:#ae81ff">1</span>])<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F<span style="color:#f92672"></span>; map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>q<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>dot<span style="color:#f92672"></span>(lambda<span style="color:#f92672"></span>, grad<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, j<span style="color:#f92672"></span>]), <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>)]
+result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(system<span style="color:#f92672"></span>, start_system<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>)
+
+critical_points<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sort!<span style="color:#f92672"></span>(map<span style="color:#f92672"></span>(c<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> (norm<span style="color:#f92672"></span>(c<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>q<span style="color:#f92672"></span>), c<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>]), real_solutions<span style="color:#f92672"></span>(nonsingular<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>))), by<span style="color:#f92672"></span> <span style="color:#f92672">=</span> a<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>])
+b<span style="color:#f92672"></span> <span style="color:#f92672">=</span> critical_points<span style="color:#f92672"></span>[<span style="color:#66d9ef">end</span>][<span style="color:#ae81ff">1</span>] <span style="color:#75715e"># length of bounding box</span>
+indices<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [i<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#f92672">-</span>b<span style="color:#f92672"></span><span style="color:#f92672">:</span>δ<span style="color:#f92672"></span><span style="color:#f92672">:</span>b<span style="color:#f92672"></span>]
+</code></pre></div><p>Now we have computed the information we need in order to run the sampling algorithm. The sampling algorithm first intersects $X$ with linear spaces of complementary dimension coming from the grid. It then proceeds to compute the extra sample, which intersects $X$ with linear spaces of higher dimension in order to guarantee that the sample is indeed dense. However, since $X$ has dimension one the extra sample will in this case be empty.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Basic sample</span>
+samples<span style="color:#f92672"></span> <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> s<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> IterTools<span style="color:#f92672"></span><span style="color:#f92672">.</span>subsets<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>, k<span style="color:#f92672"></span>)
+    Ft<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F<span style="color:#f92672"></span>; map<span style="color:#f92672"></span>(i<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[s<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]]<span style="color:#f92672">-</span>p<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>q<span style="color:#f92672"></span>[s<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]], <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>k<span style="color:#f92672"></span>)]
+    p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, k<span style="color:#f92672"></span>)
+    S_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(solve<span style="color:#f92672"></span>(subs<span style="color:#f92672"></span>(Ft<span style="color:#f92672"></span>, [y<span style="color:#f92672"></span>; p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>l<span style="color:#f92672"></span>]] <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> p₀<span style="color:#f92672"></span>)))
+    params<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [[indices<span style="color:#f92672"></span>[jj<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> jj<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> p1<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> p1<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> Iterators<span style="color:#f92672"></span><span style="color:#f92672">.</span>product<span style="color:#f92672"></span>(map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(indices<span style="color:#f92672"></span>), s<span style="color:#f92672"></span>)<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>)][<span style="color:#f92672">:</span>]
+
+    result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+           Ft<span style="color:#f92672"></span>,
+           S_p₀<span style="color:#f92672"></span>;
+           parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>k<span style="color:#f92672"></span>],
+           start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p₀<span style="color:#f92672"></span>,
+           target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> params<span style="color:#f92672"></span>,
+           transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (_r<span style="color:#f92672"></span>, _p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> real_solutions<span style="color:#f92672"></span>(_r<span style="color:#f92672"></span>),
+           flatten<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+       )
+    samples<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vcat<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>, result<span style="color:#f92672"></span>)
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># Extra sample</span>
+<span style="color:#66d9ef">for</span> l<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>k<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">for</span> s<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> IterTools<span style="color:#f92672"></span><span style="color:#f92672">.</span>subsets<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>, l<span style="color:#f92672"></span>)
+        Ft<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [F<span style="color:#f92672"></span>; map<span style="color:#f92672"></span>(i<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[s<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]]<span style="color:#f92672">-</span>p<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>q<span style="color:#f92672"></span>[s<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]], <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>l<span style="color:#f92672"></span>)]
+        grad<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(Ft<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+        Ft<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [Ft<span style="color:#f92672"></span>; map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> x<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>y<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>dot<span style="color:#f92672"></span>(γ[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span><span style="color:#f92672">-</span>k<span style="color:#f92672"></span><span style="color:#f92672">+</span>l<span style="color:#f92672"></span>], grad<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, j<span style="color:#f92672"></span>]), <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>)]
+
+        p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, n<span style="color:#f92672"></span><span style="color:#f92672">+</span>l<span style="color:#f92672"></span>)
+        S_p₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(solve<span style="color:#f92672"></span>(subs<span style="color:#f92672"></span>(Ft<span style="color:#f92672"></span>, [y<span style="color:#f92672"></span>; p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>l<span style="color:#f92672"></span>]] <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> p₀<span style="color:#f92672"></span>)))
+        params<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [vcat<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(<span style="color:#66d9ef">Float64</span>, n<span style="color:#f92672"></span>), [indices<span style="color:#f92672"></span>[jj<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> jj<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> p1<span style="color:#f92672"></span>]) <span style="color:#66d9ef">for</span> p1<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> Iterators<span style="color:#f92672"></span><span style="color:#f92672">.</span>product<span style="color:#f92672"></span>(map<span style="color:#f92672"></span>(j<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(indices<span style="color:#f92672"></span>), s<span style="color:#f92672"></span>)<span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>)][<span style="color:#f92672">:</span>]
+
+        result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
+               Ft<span style="color:#f92672"></span>,
+               S_p₀<span style="color:#f92672"></span>;
+               parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [y<span style="color:#f92672"></span>; p<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>l<span style="color:#f92672"></span>]],
+               start_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> p₀<span style="color:#f92672"></span>,
+               target_parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> params<span style="color:#f92672"></span>,
+               transform_result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (_r<span style="color:#f92672"></span>, _p<span style="color:#f92672"></span>) <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> real_solutions<span style="color:#f92672"></span>(_r<span style="color:#f92672"></span>),
+               flatten<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+           )
+        samples<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vcat<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>, result<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>The result of the sampling algorithm is shown below:</p>
+<p style="text-align:center;"><img src="/images/curve_reach_sample.png" width="700px" /></p>
+<h2 id="homology">Homology</h2>
+<p>Using the sample we may now recover the homology of $X$. It is shown by Di Rocco et. al. that in order to recover the zeroth and first homology of $X$ it is sufficient with a density less than the width of the narrowest bottleneck of $X$. This follows from the following theorem and from the fact that the narrowest bottleneck of $X$ equals the $\textit{weak feature size (wfs)}$ in this case (see Di Rocco et. al. for details).</p>
+<p>$\textbf{Theorem}.$ Let $\epsilon &lt; wfs(X)$ and let $i\in \{0, 1\}$. Let $E$ be an $\epsilon$-dense sample of $X$ and let $S$ be the modified Vietoris-Rips complex constructed from $E$ below. Then, $$H_i(S) \cong H_i(X)$$</p>
+<p>Recovering the homology of from such an $\epsilon$-sample of $X$ requires us to construct a special modification of a Vietoris-Rips complex, which is shown to have the same zeroth and first homology as $X$. We next proceed to compute this modified Vietoris-Rips complex and compute its homology using the software package <a href="http://gregoryhenselman.org/eirene/">Eirene</a>. First we compute the distance matrix of the sample:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> Eirene<span style="color:#f92672"></span>
+ϵ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> bn_lengths<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>] <span style="color:#75715e">#Two times the width of the narrowest bottleneck</span>
+D<span style="color:#f92672"></span> <span style="color:#f92672">=</span> zeros<span style="color:#f92672"></span>((length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>), length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>))) <span style="color:#75715e">#Initialize distance matrix</span>
+
+neighbour_lists<span style="color:#f92672"></span> <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>)
+    push!<span style="color:#f92672"></span>(neighbour_lists<span style="color:#f92672"></span>, [])
+<span style="color:#66d9ef">end</span>
+candidate_lists<span style="color:#f92672"></span> <span style="color:#f92672">=</span> []
+
+<span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>)
+    candidate_list<span style="color:#f92672"></span> <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> (i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>)
+        dist<span style="color:#f92672"></span> <span style="color:#f92672">=</span> norm<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]<span style="color:#f92672">-</span>samples<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>])
+        <span style="color:#66d9ef">if</span> dist<span style="color:#f92672"></span> <span style="color:#f92672">&lt;</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">8</span>)<span style="color:#f92672">*</span>ϵ<span style="color:#f92672"></span>
+            <span style="color:#66d9ef">if</span> dist<span style="color:#f92672"></span> <span style="color:#f92672">&lt;</span> ϵ<span style="color:#f92672"></span>
+                push!<span style="color:#f92672"></span>(neighbour_lists<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>], j<span style="color:#f92672"></span>)
+                push!<span style="color:#f92672"></span>(neighbour_lists<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>], i<span style="color:#f92672"></span>)
+            <span style="color:#66d9ef">else</span>
+                push!<span style="color:#f92672"></span>(candidate_list<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>)
+            <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">end</span>
+        D<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> dist<span style="color:#f92672"></span>
+        D<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>, i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> dist<span style="color:#f92672"></span>
+    <span style="color:#66d9ef">end</span>
+    push!<span style="color:#f92672"></span>(candidate_lists<span style="color:#f92672"></span>, candidate_list<span style="color:#f92672"></span>)
+<span style="color:#66d9ef">end</span>
+
+</code></pre></div><p>The computation of the modified Vietoris-Rips complex can be implemented as a preprocessing step on the distance matrix. To compute the modified Vietoris-Rips complex one then computes the Vieoris-Rips complex from the modified distance matrix. Next we perform this modification of the distance matrix:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">DM<span style="color:#f92672"></span> <span style="color:#f92672">=</span> deepcopy<span style="color:#f92672"></span>(D<span style="color:#f92672"></span>) <span style="color:#75715e">#Modified distance matrix</span>
+thresh<span style="color:#f92672"></span> <span style="color:#f92672">=</span> ϵ<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">^</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>)
+<span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(samples<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> candidate_lists<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+        <span style="color:#66d9ef">for</span> k<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> neighbour_lists<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>]
+            <span style="color:#66d9ef">if</span> D<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, k<span style="color:#f92672"></span>] <span style="color:#f92672">&lt;</span> ϵ<span style="color:#f92672"></span> <span style="color:#f92672">&amp;&amp;</span> D<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>, k<span style="color:#f92672"></span>] <span style="color:#f92672">&lt;</span> ϵ<span style="color:#f92672"></span>
+                DM<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> thresh<span style="color:#f92672"></span>
+                DM<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>, i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> thresh<span style="color:#f92672"></span>
+                <span style="color:#66d9ef">break</span>
+            <span style="color:#66d9ef">end</span>
+        <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Finally we compute the homology of the complex using Eirene.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">H<span style="color:#f92672"></span> <span style="color:#f92672">=</span> eirene<span style="color:#f92672"></span>(DM<span style="color:#f92672"></span>, model<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">v</span><span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;</span>, maxdim<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, minrad<span style="color:#f92672"></span><span style="color:#f92672">=</span>ϵ<span style="color:#f92672"></span>, maxrad<span style="color:#f92672"></span><span style="color:#f92672">=</span>ϵ<span style="color:#f92672"></span>);
+</code></pre></div><p>To verify the result we extract the Betti-numbers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> PrettyTables<span style="color:#f92672"></span>
+pretty_table<span style="color:#f92672"></span>([ betticurve<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, dim<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>] betticurve<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, dim<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]], [<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">β</span><span style="color:#e6db74">_</span><span style="color:#e6db74">0</span><span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">β</span><span style="color:#e6db74">_</span><span style="color:#e6db74">1</span><span style="color:#e6db74">&#34;</span>])
+</code></pre></div><p style="text-align:center;"><img src="/images/curve_reach_betti_table.png" width="150px"/></p>
+<p>To compute the higher homology groups for varieties of larger dimension we make use of local reach estimations. Let $U(E, \epsilon)$ denote the union of all $\epsilon$-balls $B_\epsilon(e)$ for $e\in E$.</p>
+<p>$\textbf{Theorem}.$ If $E$ is a $(\epsilon/2)$-sample of $X$ and
+$\epsilon &lt; \frac{4}{5}\tau_X(e)$ for all $e \in E$, then $X$ and the $\textit{\u{C}ech complex}$ of $U(E, \epsilon)$ have the same homology groups.</p>
+<p>The local reach $\tau_X(e)$ can be bounded from below using a result from Schub Smale theory (see Di Rocco et. al. Section 3.3) which says that
+$$ \frac{1}{7D^{3/2}\mu_{\text{norm}}(F,e)} \leq \tau_X(e) $$
+where $F$ is the system of equations defining $X$, $D$ is the maximum degree of the defining equations and $\mu_{\text{norm}}$ is the condition number of $F$ at $e$. Define</p>
+<p>$$\eta(e)^{-1} := 7D^{3/2}\mu_{\text{norm}}(F,e).$$</p>
+<p>To find a sampling density $\epsilon$ which satisfies the requirements of the above theorem we formulate the following algorithm:</p>
+<p style="text-align:center;"><img src="/images/algorithm_lower_bound_reach.png" width="700px" /></p>
+<strong>Cite this example:</strong>
+<pre style="background: transparent;">
+<code class="language-julia hljs">@Misc{ sampling_bottlenecks2020 ,
+    author =  { Oliver Gäfvert },
+    title = { Sampling and Homology via Bottlenecks },
+    howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/sampling_bottlenecks/ } },
+    note = { Accessed: October 19, 2020 }
+}</code>
+</pre>
+
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Oliver Gäfvert</span>
+    
+  
+  <time datetime="2020-10-13T21:56:55&#43;01:00">
+    13 Oct, 2020
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+            <a href="/examples/">Examples</a>
+          </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

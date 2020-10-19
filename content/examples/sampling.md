@@ -1,10 +1,10 @@
 +++
 date = "2019-07-02T21:56:55+01:00"
-title = "Sampling"
+title = "Sampling a probability distribution on a variety"
 tags = ["example"]
 categories = ["general"]
 draft = false
-description = "Sampling a probability distribution on a variety"
+description = "By intersecting with linear spaces"
 weight = 1
 author = "Paul Breiding"
 group = "math-data"

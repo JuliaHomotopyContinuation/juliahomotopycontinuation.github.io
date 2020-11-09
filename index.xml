@@ -121,6 +121,17 @@ Suppose that $f:V\to \mathbb{R}_+$ is a measurable function. We want to sample f
     </item>
     
     <item>
+      <title>Bacillus Subtilis</title>
+      <link>/examples/bacillus-subtilis/</link>
+      <pubDate>Sun, 16 Jun 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/bacillus-subtilis/</guid>
+      <description>The environmental and energy stress response of the bacterium Bacillus subtilis are modelled in the article
+Narula,Tiwari, and Igoshin: Role of Autoregulation and Relative Synthesis of Operon Partners in Alternative Sigma Factor Networks. PLoS Comput. Biology, 12(12), 2016.
+The protein $\sigma_B$ is the focus of this paper. It is responsible for activating a general stress-response of the bacterium. $\sigma_B$ belongs to the family of $\sigma$ factors. These are a type of so called transcription factors; proteins which govern the expression of genes.</description>
+    </item>
+    
+    <item>
       <title>Cyclooctane</title>
       <link>/examples/cyclooctane/</link>
       <pubDate>Sun, 16 Jun 2019 21:56:55 +0100</pubDate>

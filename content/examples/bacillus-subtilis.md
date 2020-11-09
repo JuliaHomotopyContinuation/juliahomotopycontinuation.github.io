@@ -3,7 +3,7 @@ date = "2019-06-16T21:56:55+01:00"
 title = "Bacillus Subtilis"
 tags = ["example"]
 categories = ["general"]
-draft = true
+draft = false
 description = "environmental and energy stress response of the bacterium Bacillus subtilis"
 weight = 1
 author = "Paul Breiding, Kemal Rose and Sascha Timme"
@@ -123,13 +123,37 @@ Only real positive zeros are physically meaningful. Using our implementation we 
 
 ```julia
 julia> cert = certify(F, S, target_parameters = p)
+CertificationResult
+===================
+• 44 solution candidates given
+• 44 certified solution intervals (12 real)
+• 44 distinct certified solution intervals (12 real)
 ```
 
 We can also certify that among them there is a unique positive one.
 
 ```julia
-c = certificates(cert)
-pos_real = c[findall(is_positive.(c))]
+julia> c = certificates(cert)
+julia> pos_real = c[findall(is_positive.(c))]
+julia> length(pos_real)
+1
+```
+
+The positive real solution has the following values:
+
+```julia
+juila> certified_solution_interval(pos_real[1])
+10×1 Arblib.AcbMatrix:
+[0.00406661084 +/- 5.50e-12] + [+/- 2.45e-12]im
+[0.0557971948 +/- 5.02e-11] + [+/- 2.14e-11]im
+[27.0899869 +/- 4.02e-8] + [+/- 1.63e-8]im
+[1.99593338916 +/- 5.54e-12] + [+/- 2.49e-12]im
+[0.10633375735 +/- 8.88e-12] + [+/- 5.35e-12]im
+[0.303554095 +/- 5.67e-10] + [+/- 2.48e-10]im
+[2.25701026 +/- 2.13e-9] + [+/- 6.14e-10]im
+[8.28821625 +/- 5.01e-9] + [+/- 9.18e-10]im
+[10.42034597 +/- 8.48e-9] + [+/- 6.47e-9]im
+[0.240800757 +/- 5.42e-10] + [+/- 2.59e-10]im
 ```
 
 This is a proof that the dynamical system has a physically meaningful steady state. Moreover, the intervals above provably contain this steady state.

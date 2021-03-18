@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Polynomial systems arising from Nash equilibria </title>
+
+  
+  <meta name="description" content="A story about how game theory meets multilinear systems and product of simplices."> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Irem Portakal">
+
+
+  <meta property="og:title" content="Polynomial systems arising from Nash equilibria" />
+<meta property="og:description" content="A story about how game theory meets multilinear systems and product of simplices." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/examples/nash/" />
+<meta property="article:published_time" content="2021-03-15T21:37:00+02:00" />
+<meta property="article:modified_time" content="2021-03-15T21:37:00+02:00" />
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/examples/nash/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header> <div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  
+</div> </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    <meta itemprop="name" content="Polynomial systems arising from Nash equilibria">
+<meta itemprop="description" content="A story about how game theory meets multilinear systems and product of simplices.">
+<meta itemprop="datePublished" content="2021-03-15T21:37:00&#43;02:00" />
+<meta itemprop="dateModified" content="2021-03-15T21:37:00&#43;02:00" />
+<meta itemprop="wordCount" content="1495">
+
+
+
+<meta itemprop="keywords" content="example," />
+<div id="hero">
+    <h1 itemprop="headline">  Polynomial systems arising from Nash equilibria</h1>
+    
+<blockquote itemprop="description">A story about how game theory meets multilinear systems and product of simplices.</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>8 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="2021-03-15T21:37:00&#43;02:00">15 Mar, 2021</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p><span style="color:gray">Author:</span> <a href="https://math.ovgu.de/iportakal.html">Irem Portakal</a></p>
+<p>Consider three people $A$, $B$ and $C$ playing a non-cooperative game and they have all 3 (mixed) strategies each. Each person has a payoff matrix depending on which strategies have been performed. For example for the person $A$, the entry $A_{ijk} \in \mathbb{Q}$ is the value of the payoff for person $A$ when $A$ performs the strategy $i$, $B$ the strategy $j$ and $C$ the strategy $k$. The indices $i$, $j$, and $k$ run over ${1,2,3}$, thus these define three $3\times 3 \times 3$ matrices (or tensors). Now the question is</p>
+<p style="text-align:center;">
+    <em>
+    When can no player increase their payoff by changing their strategy while assuming the other players have fixed strategies?
+    </em>
+</p>
+<p>This brings us to the notion of <em>Nash equilibria</em>. By <a href="https://www.pnas.org/content/36/1/48">Nash's famous result</a> in 1950, we know that a Nash equilibrium exists for every finite game.</p>
+<h4 id="nash-equilibria-and-multilinear-equations">Nash equilibria and multilinear equations</h4>
+<p>Let us understand Nash equilibria for a 3-person game in terms of multilinear equations. First we denote $a_1$ for the probability that $A$ chooses their first strategy, $a_2$ for the second and $a_3$ for their third. We notate the probabilities for the other players the same way. That means we have</p>
+<p>\begin{equation}
+\begin{array}{l}
+a_1 + a_2 + a_3 = b_1 + b_2 + b_3 = c_1 + c_2 + c_3 = 1 \\<br>
+a_i, b_i, c_i \geq 0, \ \forall i \in {1,2,3}
+\end{array}
+\end{equation}</p>
+<p>Moreover, each player has their payoff matrix $A_{ijk}, B_{ijk}, C_{ijk}$ and these numbers are known to every player.</p>
+<p>Now including the probabilities into our setup, we express how much payoff each player will receive:</p>
+<p>$$ \text{A's payoff} = \pi_1 = \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 A_{ijk} \cdot a_{i} b_{j} c_{k} $$
+$$ \text{B's payoff} = \pi_2 = \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 B_{ijk} \cdot a_{i} b_{j} c_{k} $$
+$$ \text{C's payoff} = \pi_3 = \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 C_{ijk} \cdot a_{i} b_{j} c_{k} $$</p>
+<p>A vector $(a_1,a_2,a_3,b_1,b_2,b_3,c_1,c_2,c_3)$ satisfying $(1)$ is called a <em>Nash equilibrium</em>, if no player can increase their expected payoff by changing their strategy while other two players keep their strategies fixed. This translates to a system of inequalities: For all triples $(u_1,u_2,u_3)$ with $u_1,u_2,u_3 \geq 0$ and $u_1+u_2+u_3=1$</p>
+<p>\begin{equation}
+\begin{darray}{l}
+\pi_1 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 A_{ijk} \cdot u_{i}  \cdot b_{j}  \cdot c_{k} \\[0.5em] \pi_2 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 B_{ijk}  \cdot a_{i}  \cdot u_{j}  \cdot c_{k} \\[0.5em]  \pi_3 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 C_{ijk}  \cdot a_{i}  \cdot b_{j}  \cdot u_{k}.
+\end{darray}
+\end{equation}</p>
+<p>We observe that there are some relations that we can utilize to perceive this semi-algebraic set better. Since $a_1,a_2,a_3 \geq 0$ and $a_1 + a_2 + a_3 = 1$ we obtain the following three equalities from the first inequality of $(2)$:</p>
+<p>$$a_1 (\pi_1 - \sum_{j=1}^3  \sum_{k=1}^3 A_{1jk} \cdot b_{j} \cdot c_{k}) = 0$$
+$$a_2 (\pi_1 - \sum_{j=1}^3  \sum_{k=1}^3 A_{2jk} \cdot b_{j} \cdot c_{k}) = 0$$
+$$a_3 (\pi_1 - \sum_{j=1}^3  \sum_{k=1}^3 A_{3jk} \cdot b_{j} \cdot c_{k}) = 0$$</p>
+<p>and the other six equalities follow similarly:</p>
+<p>$$b_1 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
+$$b_2 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
+$$b_3 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
+$$c_1 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij1} \cdot a_{i} \cdot b_{j}) = 0$$
+$$c_2 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij2} \cdot a_{i} \cdot b_{j}) = 0$$
+$$c_3 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij3} \cdot a_{i} \cdot b_{j}) = 0$$</p>
+<p>where the expressions in the parenthesis are all non-negative. This is a system of 12 multilinear equations in 12 variables.</p>
+<p>Let us investigate the <em>totally mixed Nash equilibria</em> of this game, i.e., all 9 probabilities are strictly positive. Then we can erase the left factors in the nine equations above. Moreover, we can eliminate the variables $\pi_1,\pi_2, \pi_3$ and we set $a_3 = 1 - a_1 - a_2$ etc. This gives rise to a system of 6 equations in 6 variables ${a_1,a_2,b_1,b_2,c_1,c_2}$:</p>
+<p>$$ f_k = \sum_{j=1}^3  \sum_{k=1}^3 (A_{ijk} - A_{1jk}) \cdot b_{j} \cdot c_{k}, \ i = 2,3  $$
+$$ g_k = \sum_{i=1}^3  \sum_{k=1}^3 (B_{ijk} - B_{i1k}) \cdot a_{i} \cdot c_{k}, \ j = 2,3  $$
+$$ h_k = \sum_{i=1}^3  \sum_{j=1}^3 (C_{ijk} - C_{ij1}) \cdot a_{i} \cdot b_{j}, \ k = 2,3  $$</p>
+<p>For a more detailed discussion also with a general setting, we refer to <a href="https://math.berkeley.edu/~bernd/cbms.pdf">Solving systems of polynomial equations</a> by Bernd Sturmfels.</p>
+<h4 id="systems-of-polynomials-and-mixed-volume">Systems of polynomials and mixed volume</h4>
+<p>There is a boundary for the number of solutions of this system of multilinear equations:</p>
+<p>By <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93Kushnirenko_theorem">Bernstein, Khovanskii and Kushnirenko (BKK) theorem</a> from 1975, we know that the number of isolated solutions in $(\mathbb{C}^*)^n$ for a system of $n$ polynomials in $n$ variables is bounded by the mixed volume of the associated <a href="https://en.wikipedia.org/wiki/Newton_polytope">Newton polytope</a> of those polynomials. In our case, we have a mutinomial system where the associated Newton polytopes are products of simplices. More precisely we investigate the mixed volume of the tuple $(\Delta^{(1)}, \Delta^{(1)}, \Delta^{(2)}, \Delta^{(2)}, \Delta^{(3)}, \Delta^{(3)})$ where</p>
+<p>$$ \text{New}(f_k) = \Delta^{(1)} := {0} \times \Delta_{2} \times \Delta_{2} $$
+$$ \text{New}(g_k) = \Delta^{(2)} := \Delta_{2} \times {0} \times \Delta_{2} $$
+$$ \text{New}(h_k) = \Delta^{(3)} := \Delta_{2} \times \Delta_{2} \times {0}. $$</p>
+<p>Although in general it is challenging to calculate mixed volumes, there is a combinatorial way for the tuples of product of simplices introduced by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022053196922140"> McKelvey &amp; McLennan (1997)</a>. Let us label our players $A$, $B$, and $C$ as first, second and third player. The mixed volume of the tuple is the number of certain partitions of the set of six unknowns ${a_2,a_3,b_2,b_3,c_2,c_3}$ (the first indices removed) into 3 disjoint subsets (number of people playing) $B_1, B_2, B_3$ such that</p>
+<ul>
+<li>the cardinality of each subset is $2$ (the number of strategies of the $i$th person minus $1$)
+and</li>
+<li>the $i$th block $B_i$ is disjoint from the set of variables of the $i$th person.</li>
+</ul>
+<p>This results gives us that there are 10 such partitions. This is also the maximal number of the totally mixed Nash equilibria of a non-cooperative 3-person game.</p>
+<h4 id="using-homotopycontinuation">Using HomotopyContinuation</h4>
+<p>How do we calculate this in Julia using <code>HomotopyContinuation.jl</code>? We do not need to eliminate our system to 6 equations as before, since the calculation is already very fast. However, the observation was crucial in order to observe the relation to product of simplices and mixed volume.</p>
+<p>Let us choose $81$ rational number for payoff matrices of three players and declare the variables and the system of 12 multilinear equations.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+
+<span style="color:#75715e"># small helper to transform a 3x9 matrix into a 3x3x3 tensor</span>
+unflatten<span style="color:#f92672"></span>(M<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> reshape<span style="color:#f92672"></span>(M<span style="color:#f92672"></span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">3</span>)
+
+<span style="color:#75715e"># Setup payoff matrices</span>
+A<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
+  <span style="color:#ae81ff">34</span> <span style="color:#ae81ff">162</span> <span style="color:#ae81ff">170</span> <span style="color:#ae81ff">140</span> <span style="color:#ae81ff">174</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">183</span> <span style="color:#ae81ff">104</span> <span style="color:#ae81ff">68</span> <span style="color:#ae81ff">18</span>
+  <span style="color:#ae81ff">136</span> <span style="color:#ae81ff">200</span> <span style="color:#ae81ff">72</span> <span style="color:#ae81ff">166</span> <span style="color:#ae81ff">140</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">854</span> <span style="color:#ae81ff">126</span> <span style="color:#ae81ff">72</span> <span style="color:#ae81ff">20</span>
+  <span style="color:#ae81ff">80</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">106</span> <span style="color:#ae81ff">132</span> <span style="color:#ae81ff">196</span> <span style="color:#ae81ff">122</span> <span style="color:#ae81ff">174</span> <span style="color:#ae81ff">86</span> <span style="color:#ae81ff">94</span>
+] <span style="color:#f92672">|&gt;</span> unflatten<span style="color:#f92672"></span>
+
+B<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
+  <span style="color:#ae81ff">56</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">1712</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1506</span> <span style="color:#ae81ff">74</span> <span style="color:#ae81ff">150</span> <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">150</span>
+  <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">80</span> <span style="color:#ae81ff">196</span> <span style="color:#ae81ff">182</span> <span style="color:#ae81ff">116</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">44</span> <span style="color:#ae81ff">186</span> <span style="color:#ae81ff">60</span>
+  <span style="color:#ae81ff">12</span> <span style="color:#ae81ff">48</span> <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">64</span> <span style="color:#ae81ff">160</span> <span style="color:#ae81ff">46</span> <span style="color:#ae81ff">80</span> <span style="color:#ae81ff">192</span> <span style="color:#ae81ff">82</span>
+] <span style="color:#f92672">|&gt;</span> unflatten<span style="color:#f92672"></span>
+
+C<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [
+  <span style="color:#ae81ff">104</span> <span style="color:#ae81ff">162</span> <span style="color:#ae81ff">655</span> <span style="color:#ae81ff">116</span> <span style="color:#ae81ff">130</span> <span style="color:#ae81ff">559</span> <span style="color:#ae81ff">134</span> <span style="color:#ae81ff">138</span> <span style="color:#ae81ff">4</span>
+  <span style="color:#ae81ff">72</span> <span style="color:#ae81ff">192</span> <span style="color:#ae81ff">162</span> <span style="color:#ae81ff">122</span> <span style="color:#ae81ff">188</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">168</span> <span style="color:#ae81ff">62</span> <span style="color:#ae81ff">108</span>
+  <span style="color:#ae81ff">134</span> <span style="color:#ae81ff">24</span> <span style="color:#ae81ff">70</span> <span style="color:#ae81ff">118</span> <span style="color:#ae81ff">98</span> <span style="color:#ae81ff">30</span> <span style="color:#ae81ff">132</span> <span style="color:#ae81ff">180</span> <span style="color:#ae81ff">52</span>
+] <span style="color:#f92672">|&gt;</span> unflatten<span style="color:#f92672"></span>
+
+<span style="color:#75715e"># Define the system</span>
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] b<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] c<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] π[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([
+  sum<span style="color:#f92672"></span>(a<span style="color:#f92672"></span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+  sum<span style="color:#f92672"></span>(b<span style="color:#f92672"></span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+  sum<span style="color:#f92672"></span>(c<span style="color:#f92672"></span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+  [a<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> (π[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> sum<span style="color:#f92672"></span>(A<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,j<span style="color:#f92672"></span>,k<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> b<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> c<span style="color:#f92672"></span>[k<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>, k<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)) <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+  [b<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> (π[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> sum<span style="color:#f92672"></span>(a<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> B<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,j<span style="color:#f92672"></span>,k<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> c<span style="color:#f92672"></span>[k<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>, k<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)) <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+  [c<span style="color:#f92672"></span>[k<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> (π[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">-</span> sum<span style="color:#f92672"></span>(a<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> b<span style="color:#f92672"></span>[j<span style="color:#f92672"></span>] <span style="color:#f92672">*</span> C<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,j<span style="color:#f92672"></span>,k<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>, j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)) <span style="color:#66d9ef">for</span> k<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>]
+])
+</code></pre></div><p>Since we are interested in solutions in $(\mathbb{C}^*)^{12}$, we specify the <code>only_non_zero</code> option.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">res<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>, only_non_zero<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>)
+</code></pre></div><p>This results in 10 solutions, which makes sense, since we have chosen the coefficients &ldquo;generic enough&rdquo; and the mixed volume we calculated is 10.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">Result<span style="color:#f92672"></span> with<span style="color:#f92672"></span> <span style="color:#ae81ff">10</span> solutions<span style="color:#f92672"></span>
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">10</span> paths<span style="color:#f92672"></span> tracked<span style="color:#f92672"></span>
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">10</span> non<span style="color:#f92672"></span><span style="color:#f92672">-</span>singular<span style="color:#f92672"></span> solutions<span style="color:#f92672"></span> (<span style="color:#ae81ff">2</span> real<span style="color:#f92672"></span>)
+•<span style="color:#f92672"></span> random_seed<span style="color:#f92672"></span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0xf49c340b</span>
+•<span style="color:#f92672"></span> start_system<span style="color:#f92672"></span><span style="color:#f92672">:</span> <span style="color:#f92672">:</span>polyhedral<span style="color:#f92672"></span>
+</code></pre></div><p>Since the variables we deal with are probabilities, let us check the real positive solutions.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">real_solutions<span style="color:#f92672"></span>(res<span style="color:#f92672"></span>)
+<span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Float64</span>,<span style="color:#ae81ff">1</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+[<span style="color:#ae81ff">0.4986377135389655</span>, <span style="color:#ae81ff">0.20497746403393063</span>, <span style="color:#ae81ff">0.29638482242710384</span>, <span style="color:#ae81ff">24.110739028828174</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">24.959899763377788</span>, <span style="color:#ae81ff">1.849160734549614</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.48668613393152915</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.007206923748673497</span>, <span style="color:#ae81ff">1.4938930576802028</span>, <span style="color:#ae81ff">2685.5086474566797</span>, <span style="color:#ae81ff">137.95452288150625</span>, <span style="color:#ae81ff">91.36517280277019</span>]
+ [<span style="color:#ae81ff">0.14285714285714288</span>, <span style="color:#ae81ff">0.28571428571428575</span>, <span style="color:#ae81ff">0.5714285714285714</span>, <span style="color:#ae81ff">0.375</span>, <span style="color:#ae81ff">0.37499999999999994</span>, <span style="color:#ae81ff">0.25000000000000006</span>, <span style="color:#ae81ff">0.5555555555555556</span>, <span style="color:#ae81ff">0.1111111111111111</span>, <span style="color:#ae81ff">0.33333333333333326</span>, <span style="color:#ae81ff">95.44444444444444</span>, <span style="color:#ae81ff">73.11111111111111</span>, <span style="color:#ae81ff">121.35714285714286</span>]
+
+valid_real_solutions<span style="color:#f92672"></span> <span style="color:#f92672">=</span> filter<span style="color:#f92672"></span>(s<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> all<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">9</span>] <span style="color:#f92672">.&gt;</span> <span style="color:#ae81ff">0</span>), real_solutions<span style="color:#f92672"></span>(res<span style="color:#f92672"></span>))
+<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Float64</span>,<span style="color:#ae81ff">1</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+[<span style="color:#ae81ff">0.14285714285714288</span>, <span style="color:#ae81ff">0.28571428571428575</span>, <span style="color:#ae81ff">0.5714285714285714</span>, <span style="color:#ae81ff">0.375</span>, <span style="color:#ae81ff">0.37499999999999994</span>, <span style="color:#ae81ff">0.25000000000000006</span>, <span style="color:#ae81ff">0.5555555555555556</span>, <span style="color:#ae81ff">0.1111111111111111</span>, <span style="color:#ae81ff">0.33333333333333326</span>, <span style="color:#ae81ff">95.44444444444444</span>, <span style="color:#ae81ff">73.11111111111111</span>, <span style="color:#ae81ff">121.35714285714286</span>]
+</code></pre></div><p>This is actually a rational solution. We use a chained fraction approximation to find the rational approximation and evaluate it to see if this is the correct one. It turns out that this specific 3-person game has exactly one totally mixed Nash equilibrium.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">rationalize<span style="color:#f92672"></span><span style="color:#f92672">.</span>(valid_real_solutions<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>], tol<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>)
+<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Rational</span>{<span style="color:#66d9ef">Int64</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+    <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
+    <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
+    <span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
+    <span style="color:#ae81ff">3</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>
+    <span style="color:#ae81ff">3</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">8</span>
+    <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">4</span>
+    <span style="color:#ae81ff">5</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>
+    <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>
+    <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">3</span>
+  <span style="color:#ae81ff">859</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>
+  <span style="color:#ae81ff">658</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">9</span>
+ <span style="color:#ae81ff">1699</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">14</span>
+
+f<span style="color:#f92672"></span>(rat<span style="color:#f92672"></span>)
+<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Int32</span>,<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+ <span style="color:#ae81ff">0</span>
+</code></pre></div><strong>Cite this example:</strong>
+<pre style="background: transparent;">
+<code class="language-julia hljs">@Misc{ nash2021 ,
+    author =  { Irem Portakal },
+    title = { Polynomial systems arising from Nash equilibria },
+    howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/nash/ } },
+    note = { Accessed: March 18, 2021 }
+}</code>
+</pre>
+
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Irem Portakal</span>
+    
+  
+  <time datetime="2021-03-15T21:37:00&#43;02:00">
+    15 Mar, 2021
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+            <a href="/examples/">Examples</a>
+          </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

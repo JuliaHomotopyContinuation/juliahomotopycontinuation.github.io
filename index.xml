@@ -6,7 +6,7 @@
     <description>Recent content on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Oct 2020 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 15 Mar 2021 21:37:00 +0200</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -65,6 +65,16 @@ Equivalently, we can see the solutions of this system of equations as the common
       <description>The reach $\tau$ of an embedded manifold $M\subset \mathbb{R}^n$ is an important complexity measure for methods in computational topology, statistics and machine learning. Namely, estimating $M$, or functionals of $M$, requires regularity conditions and a common regularity assumption is that the reach $\tau &amp;gt;0$. The definition of $\tau$ is as follows:
 $$\tau = \sup \{t\mid \text{all $x\in\mathbb{R}^n$ with $\mathrm{dist}(x,M)&amp;lt;t$ have a unique nearest point on $M$}\}$$
 where the distance measure $\mathrm{dist}$ is the Euclidean distance.</description>
+    </item>
+    
+    <item>
+      <title>Polynomial systems arising from Nash equilibria</title>
+      <link>/examples/nash/</link>
+      <pubDate>Mon, 15 Mar 2021 21:37:00 +0200</pubDate>
+      
+      <guid>/examples/nash/</guid>
+      <description>Author: Irem Portakal
+Consider three people $A$, $B$ and $C$ playing a non-cooperative game and they have all 3 (mixed) strategies each. Each person has a payoff matrix depending on which strategies have been performed. For example for the person $A$, the entry $A_{ijk} \in \mathbb{Q}$ is the value of the payoff for person $A$ when $A$ performs the strategy $i$, $B$ the strategy $j$ and $C$ the strategy $k$. The indices $i$, $j$, and $k$ run over ${1,2,3}$, thus these define three $3\times 3 \times 3$ matrices (or tensors).</description>
     </item>
     
     <item>

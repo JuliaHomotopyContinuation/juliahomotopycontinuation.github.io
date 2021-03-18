@@ -203,22 +203,22 @@ $$a_2 (\pi_1 - \sum_{j=1}^3  \sum_{k=1}^3 A_{2jk} \cdot b_{j} \cdot c_{k}) = 0$$
 $$a_3 (\pi_1 - \sum_{j=1}^3  \sum_{k=1}^3 A_{3jk} \cdot b_{j} \cdot c_{k}) = 0$$</p>
 <p>and the other six equalities follow similarly:</p>
 <p>$$b_1 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
-$$b_2 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
-$$b_3 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i1k} \cdot a_{i} \cdot c_{k}) = 0$$
+$$b_2 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i2k} \cdot a_{i} \cdot c_{k}) = 0$$
+$$b_3 (\pi_2 - \sum_{i=1}^3  \sum_{k=1}^3 B_{i3k} \cdot a_{i} \cdot c_{k}) = 0$$
 $$c_1 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij1} \cdot a_{i} \cdot b_{j}) = 0$$
 $$c_2 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij2} \cdot a_{i} \cdot b_{j}) = 0$$
 $$c_3 (\pi_3 - \sum_{i=1}^3  \sum_{j=1}^3 C_{ij3} \cdot a_{i} \cdot b_{j}) = 0$$</p>
 <p>where the expressions in the parenthesis are all non-negative. This is a system of 12 multilinear equations in 12 variables.</p>
 <p>Let us investigate the <em>totally mixed Nash equilibria</em> of this game, i.e., all 9 probabilities are strictly positive. Then we can erase the left factors in the nine equations above. Moreover, we can eliminate the variables $\pi_1,\pi_2, \pi_3$ and we set $a_3 = 1 - a_1 - a_2$ etc. This gives rise to a system of 6 equations in 6 variables ${a_1,a_2,b_1,b_2,c_1,c_2}$:</p>
-<p>$$ f_k = \sum_{j=1}^3  \sum_{k=1}^3 (A_{ijk} - A_{1jk}) \cdot b_{j} \cdot c_{k}, \ i = 2,3  $$
-$$ g_k = \sum_{i=1}^3  \sum_{k=1}^3 (B_{ijk} - B_{i1k}) \cdot a_{i} \cdot c_{k}, \ j = 2,3  $$
+<p>$$ f_i = \sum_{j=1}^3  \sum_{k=1}^3 (A_{ijk} - A_{1jk}) \cdot b_{j} \cdot c_{k}, \ i = 2,3  $$
+$$ g_j = \sum_{i=1}^3  \sum_{k=1}^3 (B_{ijk} - B_{i1k}) \cdot a_{i} \cdot c_{k}, \ j = 2,3  $$
 $$ h_k = \sum_{i=1}^3  \sum_{j=1}^3 (C_{ijk} - C_{ij1}) \cdot a_{i} \cdot b_{j}, \ k = 2,3  $$</p>
 <p>For a more detailed discussion also with a general setting, we refer to <a href="https://math.berkeley.edu/~bernd/cbms.pdf">Solving systems of polynomial equations</a> by Bernd Sturmfels.</p>
 <h4 id="systems-of-polynomials-and-mixed-volume">Systems of polynomials and mixed volume</h4>
 <p>There is a boundary for the number of solutions of this system of multilinear equations:</p>
 <p>By <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93Kushnirenko_theorem">Bernstein, Khovanskii and Kushnirenko (BKK) theorem</a> from 1975, we know that the number of isolated solutions in $(\mathbb{C}^*)^n$ for a system of $n$ polynomials in $n$ variables is bounded by the mixed volume of the associated <a href="https://en.wikipedia.org/wiki/Newton_polytope">Newton polytope</a> of those polynomials. In our case, we have a mutinomial system where the associated Newton polytopes are products of simplices. More precisely we investigate the mixed volume of the tuple $(\Delta^{(1)}, \Delta^{(1)}, \Delta^{(2)}, \Delta^{(2)}, \Delta^{(3)}, \Delta^{(3)})$ where</p>
-<p>$$ \text{New}(f_k) = \Delta^{(1)} := {0} \times \Delta_{2} \times \Delta_{2} $$
-$$ \text{New}(g_k) = \Delta^{(2)} := \Delta_{2} \times {0} \times \Delta_{2} $$
+<p>$$ \text{New}(f_i) = \Delta^{(1)} := {0} \times \Delta_{2} \times \Delta_{2} $$
+$$ \text{New}(g_j) = \Delta^{(2)} := \Delta_{2} \times {0} \times \Delta_{2} $$
 $$ \text{New}(h_k) = \Delta^{(3)} := \Delta_{2} \times \Delta_{2} \times {0}. $$</p>
 <p>Although in general it is challenging to calculate mixed volumes, there is a combinatorial way for the tuples of product of simplices introduced by <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022053196922140"> McKelvey &amp; McLennan (1997)</a>. Let us label our players $A$, $B$, and $C$ as first, second and third player. The mixed volume of the tuple is the number of certain partitions of the set of six unknowns ${a_2,a_3,b_2,b_3,c_2,c_3}$ (the first indices removed) into 3 disjoint subsets (number of people playing) $B_1, B_2, B_3$ such that</p>
 <ul>

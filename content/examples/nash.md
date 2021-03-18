@@ -169,7 +169,7 @@ valid_real_solutions = filter(s -> all(s[1:9] .> 0), real_solutions(res))
 
 This is actually a rational solution. We use a chained fraction approximation to find the rational approximation and evaluate it to see if this is the correct one. It turns out that this specific 3-person game has exactly one totally mixed Nash equilibrium. 
 ```julia
-rationalize.(valid_real_solutions[1], tol = 1e-8)
+rat = rationalize.(valid_real_solutions[1], tol = 1e-8)
 12-element Array{Rational{Int64},1}:
     1//7
     2//7

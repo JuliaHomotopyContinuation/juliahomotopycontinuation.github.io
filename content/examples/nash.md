@@ -30,8 +30,7 @@ Let us understand Nash equilibria for a 3-person game in terms of multilinear eq
 
 \begin{equation}
 \begin{array}{l}
-a_1 + a_2 + a_3 = b_1 + b_2 + b_3 = c_1 + c_2 + c_3 = 1 \\\\
-a_i, b_i, c_i \geq 0, \ \forall i \in \{1,2,3\}
+a_1 + a_2 + a_3 = b_1 + b_2 + b_3 = c_1 + c_2 + c_3 = 1 \\\\a_i, b_i, c_i \geq 0, \ \forall i \in \{1,2,3\}
 \end{array}
 \end{equation}
 

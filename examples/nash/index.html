@@ -146,7 +146,7 @@
 <meta itemprop="description" content="A story about how game theory meets multilinear systems and product of simplices.">
 <meta itemprop="datePublished" content="2021-03-15T21:37:00&#43;02:00" />
 <meta itemprop="dateModified" content="2021-03-15T21:37:00&#43;02:00" />
-<meta itemprop="wordCount" content="1494">
+<meta itemprop="wordCount" content="1496">
 
 
 
@@ -284,7 +284,7 @@ valid_real_solutions<span style="color:#f92672"></span> <span style="color:#f926
 <span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Float64</span>,<span style="color:#ae81ff">1</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
 [<span style="color:#ae81ff">0.14285714285714288</span>, <span style="color:#ae81ff">0.28571428571428575</span>, <span style="color:#ae81ff">0.5714285714285714</span>, <span style="color:#ae81ff">0.375</span>, <span style="color:#ae81ff">0.37499999999999994</span>, <span style="color:#ae81ff">0.25000000000000006</span>, <span style="color:#ae81ff">0.5555555555555556</span>, <span style="color:#ae81ff">0.1111111111111111</span>, <span style="color:#ae81ff">0.33333333333333326</span>, <span style="color:#ae81ff">95.44444444444444</span>, <span style="color:#ae81ff">73.11111111111111</span>, <span style="color:#ae81ff">121.35714285714286</span>]
 </code></pre></div><p>This is actually a rational solution. We use a chained fraction approximation to find the rational approximation and evaluate it to see if this is the correct one. It turns out that this specific 3-person game has exactly one totally mixed Nash equilibrium.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">rationalize<span style="color:#f92672"></span><span style="color:#f92672">.</span>(valid_real_solutions<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>], tol<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">rat<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rationalize<span style="color:#f92672"></span><span style="color:#f92672">.</span>(valid_real_solutions<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>], tol<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>)
 <span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Rational</span>{<span style="color:#66d9ef">Int64</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
     <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
     <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>

@@ -21,7 +21,7 @@ The last case is called a degenerate conic.
 
 [Steiner's conic problem](https://en.wikipedia.org/wiki/Steiner%27s_conic_problem) asks the question of how many conics are tangent to five given conics. This webpage gives an answer to a slightly different question:
 <p style="width: 100%; text-align: center;">
-*Which conics are tangent to your five conics?*
+<em>Which conics are tangent to your five conics?</em>
 </p>
 
 Plug in the coefficients of your five personal conics, and get the answers in a second (your conics must be sufficiently generic in the sense that the 3264 *complex* conics tangent to your five conics are all isolated; in particular, degenerate conics are not allowed).

@@ -144,7 +144,7 @@
     <meta itemprop="name" content="Symmetroids">
 <meta itemprop="description" content="Computing the degree of a cubic symmetroid">
 
-<meta itemprop="wordCount" content="630">
+<meta itemprop="wordCount" content="677">
 
 
 
@@ -157,7 +157,7 @@
 <time class="post-time"><span class="icon">
   <i class="fa fa-clock-o" aria-hidden="true"></i>
 </span>
-<span>3 minute read</span>
+<span>4 minute read</span>
 <span class="icon">
  <i class="fa fa-pencil" aria-hidden="true"></i>
 </span>
@@ -247,7 +247,16 @@ L₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Sys
 • 1879 tracked loops
 • random_seed → 0x47a4214e
 </code></pre><p>This shows that the degree of the cubic symmetroid is $310$.</p>
-<p>We reuse the code for quartic symmetroids replacing <code>d = 3</code> by <code>d = 4</code>.  After three months the computation had found $849998$ solutions. At this point the computation was aborted manually, because it hadn't found any more solution in a week. This led us to state Conjecture that the degree $\delta$ of the quartic symmetroid is
+<p>We certify that the 310 solutions are true solutions.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; c = certify(L₂ ∘ f ∘ L₁,
+    solutions(points);
+    target_parameters = points.parameters)
+CertificationResult
+===================
+• 310 solution candidates given
+• 310 certified solution intervals (0 real, 310 complex)
+• 310 distinct certified solution intervals (0 real, 310 complex)
+</code></pre><p>We reuse the code for quartic symmetroids replacing <code>d = 3</code> by <code>d = 4</code>.  After three months the computation had found $849998$ solutions. At this point the computation was aborted manually, because it hadn't found any more solution in a week. This led us to state Conjecture that the degree $\delta$ of the quartic symmetroid is
 $850000\leq \delta \leq 851000$. Determining the exact number is an open problem.</p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">

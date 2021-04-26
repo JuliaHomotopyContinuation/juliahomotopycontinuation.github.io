@@ -144,7 +144,7 @@
     <meta itemprop="name" content="Symmetroids">
 <meta itemprop="description" content="Computing the degree of a cubic symmetroid">
 
-<meta itemprop="wordCount" content="712">
+<meta itemprop="wordCount" content="752">
 
 
 
@@ -225,24 +225,34 @@ s<span style="color:#f92672"></span> <span style="color:#f92672">=</span> S1<spa
 
 <span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> b<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>dimQ<span style="color:#f92672"></span>]
 L₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(S<span style="color:#f92672"></span> <span style="color:#f92672">*</span> b<span style="color:#f92672"></span> <span style="color:#f92672">+</span> s<span style="color:#f92672"></span>)
-</code></pre></div><p>We want to use <a href="https://www.juliahomotopycontinuation.org/guides/monodromy/">monodromy</a> to solve the intersection of <code>f ∘ L₁</code> with the linear space given by $L_2 = \{R\cdot f(a) = r\}$. For this, we consider the first row of $[R, r]$ as varying. We introduce new variables <code>k</code>.</p>
+</code></pre></div><p>We want to use <a href="https://www.juliahomotopycontinuation.org/guides/monodromy/">monodromy</a> to solve the intersection of <code>f ∘ L₁</code> with the linear space given by $L_2 = \{R\cdot f(a) = r\}$. For this, we consider the first row of $[R, r]$ as varying. We introduce new variables <code>k</code>. We also introduce an initial solution <code>b₁</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> k<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] f₀<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>)]
+
+b₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, dimQ<span style="color:#f92672"></span>)
+f₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(b₁<span style="color:#f92672"></span>))
+
 R1<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>))<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>
 R<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [transpose<span style="color:#f92672"></span>(k<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N<span style="color:#f92672"></span>]); R1<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(dimQ<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), <span style="color:#f92672">:</span>]]
-r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [k<span style="color:#f92672"></span>[N<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]; randn<span style="color:#f92672"></span>(dimQ<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [k<span style="color:#f92672"></span>[N<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]; R<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span><span style="color:#f92672">:</span><span style="color:#66d9ef">end</span>, <span style="color:#f92672">:</span>] <span style="color:#f92672">*</span> f₁<span style="color:#f92672"></span>]
 
 L₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(
            R<span style="color:#f92672"></span> <span style="color:#f92672">*</span> f₀<span style="color:#f92672"></span> <span style="color:#f92672">-</span> r<span style="color:#f92672"></span>,
            variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> f₀<span style="color:#f92672"></span>;
            parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> k<span style="color:#f92672"></span>
            );
+</code></pre></div><p>The parameters for the initial solution <code>b₁</code> are the following.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">p₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>)
+params<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [p₁<span style="color:#f92672"></span>; transpose<span style="color:#f92672"></span>(p₁<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> f₁<span style="color:#f92672"></span>]
 </code></pre></div><p>Now, we can compute the zeros of <code>L₂ ∘ f ∘ L₁</code> using monodromy. It is enough to compute one zero in each fiber. This is why we compare points with the distance function</p>
 <p>$$\mathrm{dist}(b_1,b_2) = \Vert (f\circ L_1)(b_1) - (f\circ L_1)(b_2)\Vert_\infty.$$</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">dist<span style="color:#f92672"></span>(b₁<span style="color:#f92672"></span>,b₂<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> norm<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(b₁<span style="color:#f92672"></span>)) <span style="color:#f92672">-</span> f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(b₂<span style="color:#f92672"></span>)), Inf)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">dist<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>,y<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> norm<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>)) <span style="color:#f92672">-</span> f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(y<span style="color:#f92672"></span>)), Inf)
 </code></pre></div><p>Finally, we execute the monodromy function.</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; points = monodromy_solve(L₂ ∘ f ∘ L₁,
-                   distance = dist;
-                   compile = false)
+                   [b₁],
+                   params,
+                   distance = dist,
+                   compile = false
+                   )
 MonodromyResult
 ===============
 • return_code → :heuristic_stop

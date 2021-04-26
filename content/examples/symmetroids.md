@@ -89,13 +89,18 @@ s = S1[:, dimQ + 1]
 L₁ = System(S * b + s)
 ```
 
-We want to use [monodromy](https://www.juliahomotopycontinuation.org/guides/monodromy/) to solve the intersection of `f ∘ L₁` with the linear space given by $L_2 = \\{R\\cdot f(a) = r\\}$. For this, we consider the first row of $[R, r]$ as varying. We introduce new variables `k`.
+We want to use [monodromy](https://www.juliahomotopycontinuation.org/guides/monodromy/) to solve the intersection of `f ∘ L₁` with the linear space given by $L_2 = \\{R\\cdot f(a) = r\\}$. For this, we consider the first row of $[R, r]$ as varying. We introduce new variables `k`. We also introduce an initial solution `b₁`.
+
 
 ```julia
 @var k[1:N+1] f₀[1:length(f)]
+
+b₁ = randn(ComplexF64, dimQ)
+f₁ = f(L₁(b₁))
+
 R1 = qr(randn(ComplexF64, N, N)).Q
 R = [transpose(k[1:N]); R1[1:(dimQ-1), :]]
-r = [k[N+1]; randn(dimQ-1)]
+r = [k[N+1]; R[2:end, :] * f₁]
 
 L₂ = System(
            R * f₀ - r,
@@ -104,19 +109,29 @@ L₂ = System(
            );
 ```
 
+The parameters for the initial solution `b₁` are the following.
+
+```julia
+p₁ = randn(ComplexF64, N)
+params = [p₁; transpose(p₁) * f₁]
+```
+
 Now, we can compute the zeros of `L₂ ∘ f ∘ L₁` using monodromy. It is enough to compute one zero in each fiber. This is why we compare points with the distance function
 
 $$\mathrm{dist}(b_1,b_2) = \Vert (f\circ L_1)(b_1) - (f\circ L_1)(b_2)\Vert_\infty.$$
 
 ```julia
-dist(b₁,b₂) = norm(f(L₁(b₁)) - f(L₁(b₂)), Inf)
+dist(x,y) = norm(f(L₁(x)) - f(L₁(y)), Inf)
 ```
 Finally, we execute the monodromy function.
 
 ```julia-repl
 julia> points = monodromy_solve(L₂ ∘ f ∘ L₁,
-                   distance = dist;
-                   compile = false)
+                   [b₁],
+                   params,
+                   distance = dist,
+                   compile = false
+                   )
 MonodromyResult
 ===============
 • return_code → :heuristic_stop

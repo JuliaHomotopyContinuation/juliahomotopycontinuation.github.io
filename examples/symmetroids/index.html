@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Symmetroids </title>
+
+  
+  <meta name="description" content="Computing the degree of a cubic symmetroid"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="Paul Breiding, Christian Ikenmeyer, Mateusz Michalek, and Reuven Hodges">
+
+
+  <meta property="og:title" content="Symmetroids" />
+<meta property="og:description" content="Computing the degree of a cubic symmetroid" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/examples/symmetroids/" />
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/examples/symmetroids/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header> <div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/do-it-yourself" >Do It Yourself</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  
+</div> </header>
+  <main>
+<div class="push-center" itemscope itemtype="http://schema.org/API DocsPosting">
+    <meta itemprop="name" content="Symmetroids">
+<meta itemprop="description" content="Computing the degree of a cubic symmetroid">
+
+<meta itemprop="wordCount" content="713">
+
+
+
+<meta itemprop="keywords" content="example," />
+<div id="hero">
+    <h1 itemprop="headline">  Symmetroids</h1>
+    
+<blockquote itemprop="description">Computing the degree of a cubic symmetroid</blockquote>
+
+<time class="post-time"><span class="icon">
+  <i class="fa fa-clock-o" aria-hidden="true"></i>
+</span>
+<span>4 minute read</span>
+<span class="icon">
+ <i class="fa fa-pencil" aria-hidden="true"></i>
+</span>
+
+  Published: <time datetime="0001-01-01T00:00:00&#43;00:00">1 Jan, 0001</time>
+
+</time>
+</div>
+<div id="post-box">
+<div id="post" itemprop="articleBody">
+    
+    <p>We make a numerical computation to determine the degree of the cubic symmetroid</p>
+<p>$$Q_3:= \{\det(x_0A_0 + x_1A_1 + x_2A_2 + x_3A_3)\mid A_i\in \mathbb{C}^{3\times 3}, A_i^T = A_i, 0\leq i\leq 3\}.$$</p>
+<p>First, we compute the dimension of $Q_3$.
+We use affine coordinates by setting the first matrix to be $A_0 = \mathrm{diag}(a_{1},a_{2},a_3)$, where $a_1,a_2,a_3$ are variables. Then, we have the following situation:</p>
+<p>$$
+f:V \to W,\;
+(a_1,a_2,a_3,A_1,A_2,A_3) \mapsto \text{coefficients of }\det\Big(\sum_{i=0}^4x_iA_i\Big),
+$$</p>
+<p>where $D = \dim_{\mathbb C} V = 21$, $N = \dim W_{\mathbb C}  = 20$, and coefficients means the coefficients as a polynomial in $x$.</p>
+<p>We set up $f$ in <code>julia</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
+d<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>; n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>
+<span style="color:#75715e"># D = dim V, N = dim W</span>
+M<span style="color:#f92672"></span> <span style="color:#f92672">=</span> binomial<span style="color:#f92672"></span>(d<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+D<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (n<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> M<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>
+N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> binomial<span style="color:#f92672"></span>(n<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> d<span style="color:#f92672"></span>, d<span style="color:#f92672"></span>)
+
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>D<span style="color:#f92672"></span>]
+<span style="color:#75715e"># Construct symmetric matrices with variable entries</span>
+A<span style="color:#f92672"></span> <span style="color:#f92672">=</span> map<span style="color:#f92672"></span>(<span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>) <span style="color:#66d9ef">do</span> ℓ<span style="color:#f92672"></span>
+  Aᵢ<span style="color:#f92672"></span>  <span style="color:#f92672">=</span> []
+  <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>d<span style="color:#f92672"></span>
+           k<span style="color:#f92672"></span> <span style="color:#f92672">=</span> ℓ<span style="color:#f92672"></span> <span style="color:#f92672">*</span> M<span style="color:#f92672"></span> <span style="color:#f92672">+</span> sum<span style="color:#f92672"></span>(d<span style="color:#f92672"></span><span style="color:#f92672">-</span>j<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">:</span>i<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+           push!<span style="color:#f92672"></span>(Aᵢ<span style="color:#f92672"></span>, [zeros<span style="color:#f92672"></span>(i<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>); a<span style="color:#f92672"></span>[k<span style="color:#f92672"></span><span style="color:#f92672">-</span>(d<span style="color:#f92672"></span><span style="color:#f92672">-</span>i<span style="color:#f92672"></span>)<span style="color:#f92672">:</span>k<span style="color:#f92672"></span>]])
+  <span style="color:#66d9ef">end</span>
+  Aᵢ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> hcat<span style="color:#f92672"></span>(Aᵢ<span style="color:#f92672"></span><span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>)
+  (Aᵢ<span style="color:#f92672"></span> <span style="color:#f92672">+</span> transpose<span style="color:#f92672"></span>(Aᵢ<span style="color:#f92672"></span>)) <span style="color:#f92672">./</span> <span style="color:#ae81ff">2</span>
+<span style="color:#66d9ef">end</span>
+
+A₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [a<span style="color:#f92672"></span>[D<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>] <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">0</span> a<span style="color:#f92672"></span>[D<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#ae81ff">0</span>; <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> a<span style="color:#f92672"></span>[D<span style="color:#f92672"></span>]]
+μ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">.*</span> A₀<span style="color:#f92672"></span> <span style="color:#f92672">+</span> sum<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>[i<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">.*</span> A<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+
+<span style="color:#75715e"># f is equal to the coefficients of det(μ) as a polynomial in x</span>
+f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(coefficients<span style="color:#f92672"></span>(det<span style="color:#f92672"></span>(μ<span style="color:#f92672"></span>), x<span style="color:#f92672"></span>))
+</code></pre></div><p>To determine the dimension of $Q_3$ we compute the rank of the Jacobian matrix of $f$ at a random point.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">J₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> jacobian<span style="color:#f92672"></span>(InterpretedSystem<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>), randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>,D<span style="color:#f92672"></span>))
+dimQ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rank<span style="color:#f92672"></span>(J₀<span style="color:#f92672"></span>)
+dim_fibers<span style="color:#f92672"></span> <span style="color:#f92672">=</span> D<span style="color:#f92672"></span>  <span style="color:#f92672">-</span> dimQ<span style="color:#f92672"></span>
+</code></pre></div><p>We get</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; dimQ, dim_fibers
+(16, 5)
+</code></pre><p>The degree of $Q_3$ multiplied by the degree of a general fiber $f^{-1}(h), h\in Q_3,$ is thus the number of isolated complex solutions of the following system of $16$ polynomial equations in the $16$ variables $b=(b_1,\ldots,b_{16})$:</p>
+<p>$$
+R \cdot f(a) = r \quad \text{ and } \quad  a = S\cdot b + s,
+$$</p>
+<p>where
+$R \in \mathbb{C}^{16 \times 20}$, $r \in \mathbb{C}^{16}$,
+$S \in \mathbb{C}^{21\times 16}$ and $s \in \mathbb{C}^{21}$
+are chosen randomly.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e"># Compute a linear space a = S b + s</span>
+S1<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, D<span style="color:#f92672"></span>, D<span style="color:#f92672"></span>))<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>
+S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> S1<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>dimQ<span style="color:#f92672"></span>]
+s<span style="color:#f92672"></span> <span style="color:#f92672">=</span> S1<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, dimQ<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]
+
+<span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> b<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>dimQ<span style="color:#f92672"></span>]
+L₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(S<span style="color:#f92672"></span> <span style="color:#f92672">*</span> b<span style="color:#f92672"></span> <span style="color:#f92672">+</span> s<span style="color:#f92672"></span>)
+</code></pre></div><p>We want to use <a href="https://www.juliahomotopycontinuation.org/guides/monodromy/">monodromy</a> to solve the intersection of <code>f ∘ L₁</code> with the linear space given by $L_2 = \{R\cdot f(a) = r\}$. For this, we consider the first row of $[R, r]$ as varying. We introduce new variables <code>k</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> k<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] f₀<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>length<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>)]
+R1<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>, N<span style="color:#f92672"></span>))<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>
+R<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [transpose<span style="color:#f92672"></span>(k<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>N<span style="color:#f92672"></span>]); R1<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(dimQ<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>), <span style="color:#f92672">:</span>]]
+r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [k<span style="color:#f92672"></span>[N<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]; randn<span style="color:#f92672"></span>(dimQ<span style="color:#f92672"></span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+
+L₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(
+           R<span style="color:#f92672"></span> <span style="color:#f92672">*</span> f₀<span style="color:#f92672"></span> <span style="color:#f92672">-</span> r<span style="color:#f92672"></span>,
+           variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> f₀<span style="color:#f92672"></span>;
+           parameters<span style="color:#f92672"></span> <span style="color:#f92672">=</span> k<span style="color:#f92672"></span>
+           );
+</code></pre></div><p>Now, we can compute the zeros of <code>L₂ ∘ f ∘ L₁</code> using monodromy. It is enough to compute one zero in each fiber. This is why we compare points with the distance function</p>
+<p>$$\mathrm{dist}(b_1,b_2) = \Vert (f\circ L_1)(b_1) - (f\circ L_1)(b_2)\Vert_\infty.$$</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">dist<span style="color:#f92672"></span>(b₁<span style="color:#f92672"></span>,b₂<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> norm<span style="color:#f92672"></span>(f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(b₁<span style="color:#f92672"></span>)) <span style="color:#f92672">-</span> f<span style="color:#f92672"></span>(L₁<span style="color:#f92672"></span>(b₂<span style="color:#f92672"></span>)), Inf)
+</code></pre></div><p>Finally, we execute the monodromy function.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; points = monodromy_solve(L₂ ∘ f ∘ L₁,
+                   distance = dist;
+                   compile = false)
+MonodromyResult
+===============
+• return_code → :heuristic_stop
+• 305 solutions
+• 2435 tracked loops
+• random_seed → 0xfa48c9b2
+</code></pre><p>This shows that the degree of the cubic symmetroid is $305$.</p>
+<p>(This was proven by Vainsencher in <a href="https://www.tandfonline.com/doi/abs/10.1081/AGB-120022456">this article</a>.)</p>
+<p>We certify that the 305 solutions are true solutions.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; c = certify(L₂ ∘ f ∘ L₁,
+    solutions(points);
+    target_parameters = points.parameters)
+CertificationResult
+===================
+• 305 solution candidates given
+• 305 certified solution intervals (0 real, 305 complex)
+• 305 distinct certified solution intervals (0 real, 305 complex)
+</code></pre><p>We reuse the code for quartic symmetroids replacing <code>d = 3</code> by <code>d = 4</code>.  After three months the computation had found $849998$ solutions. At this point the computation was aborted manually, because it hadn't found any more solution in a week. This led us to state Conjecture that the degree $\delta$ of the quartic symmetroid is
+$850000\leq \delta \leq 851000$. Determining the exact number is an open problem.</p>
+<strong>Cite this example:</strong>
+<pre style="background: transparent;">
+<code class="language-julia hljs">@Misc{ symmetroids2021 ,
+    author =  { Paul Breiding, Christian Ikenmeyer, Mateusz Michalek, and Reuven Hodges },
+    title = { Symmetroids },
+    howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/symmetroids/ } },
+    note = { Accessed: April 26, 2021 }
+}</code>
+</pre>
+
+
+
+</div>
+
+<div class="">
+    <p>
+  Published
+  
+    
+      by <span itemprop="author">Paul Breiding, Christian Ikenmeyer, Mateusz Michalek, and Reuven Hodges</span>
+    
+  
+  <time datetime="0001-01-01T00:00:00&#43;00:00">
+    1 Jan, 0001
+  </time>
+  
+</p>
+
+    
+</div>
+
+
+    
+</div>
+</div>
+</main>
+  <footer>   <footer id="footer">
+    <nav>
+      <ul>
+        <li><span>HomotopyContinuation.jl</span></li>
+        <li>
+          <a href="/about/">About</a>
+        </li>
+        <li>
+            <a href="/examples/">Examples</a>
+          </li>
+        <li>
+          <a href="/guides/">Guides</a>
+        </li>
+      </ul>
+    </nav>
+    
+  </footer> </footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

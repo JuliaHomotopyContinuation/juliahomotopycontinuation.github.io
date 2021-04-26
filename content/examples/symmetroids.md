@@ -65,7 +65,7 @@ julia> dimQ, dim_fibers
 (15, 3)
 ```
 
-The degree of $Q_3$ is thus the number of isolated complex solutions of the following system of $18$ polynomial equations in the $18$ variables $a$:
+The degree of $Q_3$ is thus the number of isolated complex solutions of the following system of $18$ polynomial equations in the $18$ variables $a=(A_1,A_2,A_3)$:
 
 $$
 R \cdot f(a) = r \\quad \text{ and } \\quad  a = S b + s,

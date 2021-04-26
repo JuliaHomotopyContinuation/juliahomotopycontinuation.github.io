@@ -116,6 +116,10 @@
   </url>
   
   <url>
+    <loc>/examples/symmetroids/</loc>
+  </url>
+  
+  <url>
     <loc>/guides/macaulay2/</loc>
     <lastmod>2019-04-15T18:56:55+01:00</lastmod>
   </url>

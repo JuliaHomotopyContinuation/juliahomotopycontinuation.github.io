@@ -122,6 +122,19 @@ julia> points = monodromy_solve(L₂ ∘ f ∘ L₁,
 ```
 This shows that the degree of the cubic symmetroid is $310$.
 
+We certify that the 310 solutions are true solutions.
+
+```julia-repl
+julia> c = certify(L₂ ∘ f ∘ L₁,
+    solutions(points);
+    target_parameters = points.parameters)
+CertificationResult
+===================
+• 310 solution candidates given
+• 310 certified solution intervals (0 real, 310 complex)
+• 310 distinct certified solution intervals (0 real, 310 complex)
+```
+
 We reuse the code for quartic symmetroids replacing `d = 3` by `d = 4`.  After three months the computation had found $849998$ solutions. At this point the computation was aborted manually, because it hadn't found any more solution in a week. This led us to state Conjecture that the degree $\delta$ of the quartic symmetroid is
 $850000\leq \delta \leq 851000$. Determining the exact number is an open problem.
 

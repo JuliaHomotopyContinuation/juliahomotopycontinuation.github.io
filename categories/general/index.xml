@@ -204,18 +204,6 @@ $$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
     </item>
     
     <item>
-      <title>Symmetroids</title>
-      <link>/examples/symmetroids/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/examples/symmetroids/</guid>
-      <description>We make a numerical computation to determine the degree of the cubic symmetroid
-$$Q_3:= \{\det(x_0A_0 + x_1A_1 + x_2A_2 + x_3A_3)\mid A_i\in \mathbb{C}^{3\times 3}, A_i^T = A_i, 0\leq i\leq 3\}.$$
-First, we compute the dimension of $Q_3$. We use affine coordinates by setting $A_0 = \mathbf 1_3$ equal to the $3\times 3$ identity matrix. Then, we have the following situation:
-$$ f:V \to W,\; (A_1,A_2,A_3) \mapsto \text{coefficients of }\det(x_0\mathbf 1_3 + x_1A_1 + x_2A_2 + x_3A_3), $$</description>
-    </item>
-    
-    <item>
       <title>Tritangents</title>
       <link>/examples/tritangents/</link>
       <pubDate>Mon, 26 Nov 2018 21:56:55 +0100</pubDate>

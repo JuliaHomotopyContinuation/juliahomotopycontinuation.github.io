@@ -1,5 +1,5 @@
 +++
-date = "2021-26-00:00:00"
+date = "2021-03-26T21:56:55+01:00"
 title = "Symmetroids"
 tags = ["example"]
 categories = ["general"]

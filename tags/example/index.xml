@@ -6,7 +6,7 @@
     <description>Recent content in example on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Mar 2021 21:37:00 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 26 Mar 2021 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/tags/example/index.xml" rel="self" type="application/rss+xml" />
     
@@ -194,6 +194,18 @@ Integrating functions with homotopy continuation Let $n=\mathrm{dim} V$, and let
     </item>
     
     <item>
+      <title>Symmetroids</title>
+      <link>/examples/symmetroids/</link>
+      <pubDate>Fri, 26 Mar 2021 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/symmetroids/</guid>
+      <description>We make a numerical computation to determine the degree of the cubic symmetroid
+$$Q_3:= \{\det(x_0A_0 + x_1A_1 + x_2A_2 + x_3A_3)\mid A_i\in \mathbb{C}^{3\times 3}, A_i^T = A_i, 0\leq i\leq 3\}.$$
+First, we compute the dimension of $Q_3$. We use coordinates by setting the first matrix to be $A_0 = \mathrm{diag}(a_{1},a_{2},a_3)$, where $a_1,a_2,a_3$ are variables. Then, we have the following situation:
+$$ f:V \to W,\; (a_1,a_2,a_3,A_1,A_2,A_3) \mapsto \text{coefficients of }\det\Big(\sum_{i=0}^4x_iA_i\Big), $$</description>
+    </item>
+    
+    <item>
       <title>Tensor decomposition and homotopy continuation</title>
       <link>/examples/cpd/</link>
       <pubDate>Mon, 10 Dec 2018 21:56:55 +0100</pubDate>
@@ -201,18 +213,6 @@ Integrating functions with homotopy continuation Let $n=\mathrm{dim} V$, and let
       <guid>/examples/cpd/</guid>
       <description>In this blog I want to repeat the computations from the article &amp;ldquo;Homotopy Techniques for Tensor Decomposition and Perfect Identifiability&amp;rdquo; by Hauenstein, Oeding, Ottaviani and Sommese. In that article they compute the number of canonical polyadic decompositions (CPD) of a random $2\times 2\times 2\times 3$-tensor by using the monodromy method. It is known that with probability one a random complex $2\times 2\times 2\times 3$-tensor has rank equal to 4:
 $$ T = \sum_{i=1}^4 a_i \otimes b_i \otimes c_i \otimes d_i,$$</description>
-    </item>
-    
-    <item>
-      <title>Symmetroids</title>
-      <link>/examples/symmetroids/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/examples/symmetroids/</guid>
-      <description>We make a numerical computation to determine the degree of the cubic symmetroid
-$$Q_3:= \{\det(x_0A_0 + x_1A_1 + x_2A_2 + x_3A_3)\mid A_i\in \mathbb{C}^{3\times 3}, A_i^T = A_i, 0\leq i\leq 3\}.$$
-First, we compute the dimension of $Q_3$. We use coordinates by setting the first matrix to be $A_0 = \mathrm{diag}(a_{1},a_{2},a_3)$, where $a_1,a_2,a_3$ are variables. Then, we have the following situation:
-$$ f:V \to W,\; (a_1,a_2,a_3,A_1,A_2,A_3) \mapsto \text{coefficients of }\det\Big(\sum_{i=0}^4x_iA_i\Big), $$</description>
     </item>
     
     <item>

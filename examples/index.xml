@@ -6,7 +6,7 @@
     <description>Recent content in Examples on HomotopyContinuation.jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Mar 2021 21:56:55 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 31 May 2021 21:56:55 +0100</lastBuildDate>
     
 	<atom:link href="/examples/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Low rank tensor recovery</title>
       <link>/examples/tensor-recovery/</link>
-      <pubDate>Tue, 02 Jul 2019 21:56:55 +0100</pubDate>
+      <pubDate>Mon, 31 May 2021 21:56:55 +0100</pubDate>
       
       <guid>/examples/tensor-recovery/</guid>
       <description>Consider the problem of reconstructing a tensor $T\in\mathbb R^{n_1\times \cdots \times n_d}$ from linear measurements $\mu_1(T), \ldots, \mu_s(T)$, where each $\mu_i: \mathbb R^{n_1\times \cdots \times n_d}\to \mathbb R$ is a linear function.

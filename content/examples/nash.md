@@ -28,12 +28,13 @@ This brings us to the notion of *Nash equilibria*. By <a href="https://www.pnas.
 
 Let us understand Nash equilibria for a 3-person game in terms of multilinear equations. First we denote $a_1$ for the probability that $A$ chooses their first strategy, $a_2$ for the second and $a_3$ for their third. We notate the probabilities for the other players the same way. That means we have
 
+$$
 \begin{equation}
-\begin{array}{l}
-a_1 + a_2 + a_3 = b_1 + b_2 + b_3 = c_1 + c_2 + c_3 = 1 \\\\a_i, b_i, c_i \geq 0, \ \forall i \in \{1,2,3\}
-\end{array}
+\begin{darray}{l}
+a_1 + a_2 + a_3 = b_1 + b_2 + b_3 = c_1 + c_2 + c_3 = 1 \\\\ a_i, b_i, c_i \geq 0, \ \forall i \in \{1,2,3\}
+\end{darray}
 \end{equation}
-
+$$
 
 Moreover, each player has their payoff matrix $A_{ijk}, B_{ijk}, C_{ijk}$ and these numbers are known to every player.
 
@@ -45,11 +46,13 @@ $$ \text{C's payoff} = \pi_3 = \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 C_{ijk} 
 
 A vector $(a_1,a_2,a_3,b_1,b_2,b_3,c_1,c_2,c_3)$ satisfying $(1)$ is called a *Nash equilibrium*, if no player can increase their expected payoff by changing their strategy while other two players keep their strategies fixed. This translates to a system of inequalities: For all triples $(u_1,u_2,u_3)$ with $u_1,u_2,u_3 \geq 0$ and $u_1+u_2+u_3=1$
 
+$$
 \begin{equation}
 \begin{darray}{l}
 \pi_1 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 A_{ijk} \cdot u_{i}  \cdot b_{j}  \cdot c_{k} \\\\[0.5em] \pi_2 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 B_{ijk}  \cdot a_{i}  \cdot u_{j}  \cdot c_{k} \\\\[0.5em]  \pi_3 \geq \sum_{i=1}^3  \sum_{j=1}^3  \sum_{k=1}^3 C_{ijk}  \cdot a_{i}  \cdot b_{j}  \cdot u_{k}.
 \end{darray}
 \end{equation}
+$$
 
 We observe that there are some relations that we can utilize to perceive this semi-algebraic set better. Since $a_1,a_2,a_3 \geq 0$ and $a_1 + a_2 + a_3 = 1$ we obtain the following three equalities from the first inequality of $(2)$:
 

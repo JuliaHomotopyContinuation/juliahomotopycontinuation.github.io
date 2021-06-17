@@ -20,7 +20,19 @@ $$\mu(T) = (\mu_1(T), \ldots, \mu_s(T)) = y.$$
 
 Therefore, in order to have the tensor recovery well-posed we need some additional assumption. One common assumption is that the tensor $T$ has low rank. If $s$ is larger than the dimension of rank-$r$ tensors in $\mathbb R^{n_1\times \cdots \times n_d}$, then for a general measurement $\mu$ almost all tensors $T$ can be recovered *uniquely*: $\mu^{-1}(\mu(T)) = \\{T\\}$. We will confirm this experimentally.
 
-In this example we will recover a $3\times 3\times 3$ tensor of rank $2$ from $s=15$ measurements. The dimension of rank-$2$ tensors in $\mathbb R^{3\times 3\times 3}$ is 14, so that $s=15$ enables unique recovery for almost all $T$.
+In this example we will recover a $3\times 3\times 3$ tensor of rank $2$ from $s=15$ measurements. The dimension $d$ of rank-$2$ tensors in $\mathbb R^{3\times 3\times 3}$ is
+
+```julia
+d = 14
+```
+
+so that
+
+```julia
+s = 15
+```
+
+measurements suffice for unique recovery for almost all $T$.
 
 We parametrize our tensors as follows:
 $$T = a_1 \otimes b_1 \otimes c_1 + a_2 \otimes b_2 \otimes c_2,$$
@@ -47,19 +59,18 @@ T₀ = evaluate(T, vec([a b c]) => vec([a₀ b₀ c₀]))
 We first consider the case when $\mu$ is a *randomly chosen* projection. We sample $\mu$ by sampling a $s\times 3^3$ Gaussian matrix $M$. Note that, if $y=MT$, then $Q^Ty = RT$ where $QR = M$ is the $QR$-decomposition of $M$. Therefore, it suffices to take the $R$-factor in the definition of the random map. The sparseness of $R$ is helpful when using the [polyhedral homotopy](https://www.juliahomotopycontinuation.org/guides/polyhedral/) later.
 ```julia
 ## random projection with s = 15
-s = 15
-M = qr(randn(s,3^3)).R
+M₁ = qr(randn(s,3^3)).R
 ```
 
 We define the measurement map and evaluate it at $T_0$.
 ```julia
-μ = M * T
-y = M * T₀
+μ₁ = M₁ * T
+y₁ = M₁ * T₀
 ```
 
 Now, we can set up a system of polynomials equations for recovery:
 ```julia
-F = System(μ - y, variables = vec([a b c]))
+F = System(μ₁ - y₁, variables = vec([a b c]))
 ```
 which we solve directly:
 ```julia-repl
@@ -100,16 +111,24 @@ Next, we consider the case when $\mu$ is a coordinate projection.
 Let us randomly choose $s=15$ entries of $T$.
 ```julia
 using StatsBase
-s = 15
 Id = diagm(0 => ones(3^3))
-M = Id[sample(1:3^3, s, replace = false), :]
-μ = M * T
+M₂ = Id[sample(1:3^3, s, replace = false), :]
+μ₂ = M₂ * T
+```
+
+Let us first check, if we can expect to recover points from $\mu$. For this, we evaluate the Jacobian $J$ of $T$ at $(a_0,b_0,c_0)$ and multiply it by $M$. If this has rank equal to $d=14$ we can expect recoverability.
+
+```julia-repl
+julia> J = differentiate(T, vec([a b c]))
+julia> J₀ = evaluate(J, vec([a b c]) => vec([a₀ b₀ c₀]))
+julia> rank(M₂ * J₀)
+14
 ```
 
 We can then proceed as before and recover $T_0$ from the measurement $y = \mu(T_0)$.
 ```julia
-y = M * T₀
-G = System(μ - y, variables = vec([a b c]))
+y₂ = M₂ * T₀
+G = System(μ₂ - y₂, variables = vec([a b c]))
 ```
 
 Solving $G$ gives the following result:
@@ -142,5 +161,33 @@ julia> norm(T₀ - recovered_tensors_unique[1])
 ```
 
 As above we conclude that we have uniquely recovered $T_0$.
+
+
+## Condition numbers
+
+The condition number of the recovering map at the data point $y\in\mathbb R^s$ is
+
+$$\kappa(y) = \frac{1}{\sigma_{\min}(MQ)},$$
+
+where $M$ is the matrix defining $\mu$ and $Q$ is a matrix whose columns form an orthonormal basis for the tangent space of rank-2 tensors at $T$.
+```julia
+Q = (qr(J₀).Q)[:, 1:d]
+```
+
+ We compute the condition number for both measurement maps:
+
+For the randomly chosen projection we have
+
+```julia-repl
+julia> κ₁ = 1/svdvals(M₁ * Q)[end]
+2.3828877488792153
+```
+
+For the coordinate projection we have
+
+```julia-repl
+julia> κ₂ = 1/svdvals(M₂ * Q)[end]
+188.6820598623247
+```
 
 {{<bibtex >}}

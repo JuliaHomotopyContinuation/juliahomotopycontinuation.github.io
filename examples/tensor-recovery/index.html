@@ -146,7 +146,7 @@
 <meta itemprop="description" content="Reconstructing a tensor from linear measurements">
 <meta itemprop="datePublished" content="2021-05-31T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2021-05-31T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="735">
+<meta itemprop="wordCount" content="885">
 
 
 
@@ -159,7 +159,7 @@
 <time class="post-time"><span class="icon">
   <i class="fa fa-clock-o" aria-hidden="true"></i>
 </span>
-<span>4 minute read</span>
+<span>5 minute read</span>
 <span class="icon">
  <i class="fa fa-pencil" aria-hidden="true"></i>
 </span>
@@ -176,7 +176,11 @@
 <p>For a fixed measurement $y\in\mathbb R^s$, there are infinitely many tensors $T\in\mathbb R^{n_1\times \cdots \times n_d}$ with</p>
 <p>$$\mu(T) = (\mu_1(T), \ldots, \mu_s(T)) = y.$$</p>
 <p>Therefore, in order to have the tensor recovery well-posed we need some additional assumption. One common assumption is that the tensor $T$ has low rank. If $s$ is larger than the dimension of rank-$r$ tensors in $\mathbb R^{n_1\times \cdots \times n_d}$, then for a general measurement $\mu$ almost all tensors $T$ can be recovered <em>uniquely</em>: $\mu^{-1}(\mu(T)) = \{T\}$. We will confirm this experimentally.</p>
-<p>In this example we will recover a $3\times 3\times 3$ tensor of rank $2$ from $s=15$ measurements. The dimension of rank-$2$ tensors in $\mathbb R^{3\times 3\times 3}$ is 14, so that $s=15$ enables unique recovery for almost all $T$.</p>
+<p>In this example we will recover a $3\times 3\times 3$ tensor of rank $2$ from $s=15$ measurements. The dimension $d$ of rank-$2$ tensors in $\mathbb R^{3\times 3\times 3}$ is</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">d<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">14</span>
+</code></pre></div><p>so that</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">s<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
+</code></pre></div><p>measurements suffice for unique recovery for almost all $T$.</p>
 <p>We parametrize our tensors as follows:
 $$T = a_1 \otimes b_1 \otimes c_1 + a_2 \otimes b_2 \otimes c_2,$$
 where $a_i,b_i,c_i\in \mathbb R^3$ for $i=1,2$.</p>
@@ -194,13 +198,12 @@ T₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> eva
 <h2 id="random-measurements">Random measurements</h2>
 <p>We first consider the case when $\mu$ is a <em>randomly chosen</em> projection. We sample $\mu$ by sampling a $s\times 3^3$ Gaussian matrix $M$. Note that, if $y=MT$, then $Q^Ty = RT$ where $QR = M$ is the $QR$-decomposition of $M$. Therefore, it suffices to take the $R$-factor in the definition of the random map. The sparseness of $R$ is helpful when using the <a href="https://www.juliahomotopycontinuation.org/guides/polyhedral/">polyhedral homotopy</a> later.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#75715e">## random projection with s = 15</span>
-s<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
-M<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>,<span style="color:#ae81ff">3</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>))<span style="color:#f92672">.</span>R<span style="color:#f92672"></span>
+M₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(randn<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>,<span style="color:#ae81ff">3</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>))<span style="color:#f92672">.</span>R<span style="color:#f92672"></span>
 </code></pre></div><p>We define the measurement map and evaluate it at $T_0$.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">μ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T<span style="color:#f92672"></span>
-y<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T₀<span style="color:#f92672"></span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">μ₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M₁<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T<span style="color:#f92672"></span>
+y₁<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M₁<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T₀<span style="color:#f92672"></span>
 </code></pre></div><p>Now, we can set up a system of polynomials equations for recovery:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(μ<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y<span style="color:#f92672"></span>, variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(μ₁<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y₁<span style="color:#f92672"></span>, variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
 </code></pre></div><p>which we solve directly:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; S_F = solve(F)
 Result with 2 solutions
@@ -225,13 +228,17 @@ recovered_tensors_unique<span style="color:#f92672"></span> <span style="color:#
 <p>Next, we consider the case when $\mu$ is a coordinate projection.</p>
 <p>Let us randomly choose $s=15$ entries of $T$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> StatsBase<span style="color:#f92672"></span>
-s<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">15</span>
 Id<span style="color:#f92672"></span> <span style="color:#f92672">=</span> diagm<span style="color:#f92672"></span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> ones<span style="color:#f92672"></span>(<span style="color:#ae81ff">3</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>))
-M<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Id<span style="color:#f92672"></span>[sample<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>, s<span style="color:#f92672"></span>, replace<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>), <span style="color:#f92672">:</span>]
-μ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T<span style="color:#f92672"></span>
-</code></pre></div><p>We can then proceed as before and recover $T_0$ from the measurement $y = \mu(T_0)$.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">y<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T₀<span style="color:#f92672"></span>
-G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(μ<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y<span style="color:#f92672"></span>, variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
+M₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Id<span style="color:#f92672"></span>[sample<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span><span style="color:#f92672">^</span><span style="color:#ae81ff">3</span>, s<span style="color:#f92672"></span>, replace<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>), <span style="color:#f92672">:</span>]
+μ₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M₂<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T<span style="color:#f92672"></span>
+</code></pre></div><p>Let us first check, if we can expect to recover points from $\mu$. For this, we evaluate the Jacobian $J$ of $T$ at $(a_0,b_0,c_0)$ and multiply it by $M$. If this has rank equal to $d=14$ we can expect recoverability.</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; J = differentiate(T, vec([a b c]))
+julia&gt; J₀ = evaluate(J, vec([a b c]) =&gt; vec([a₀ b₀ c₀]))
+julia&gt; rank(M₂ * J₀)
+14
+</code></pre><p>We can then proceed as before and recover $T_0$ from the measurement $y = \mu(T_0)$.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">y₂<span style="color:#f92672"></span> <span style="color:#f92672">=</span> M₂<span style="color:#f92672"></span> <span style="color:#f92672">*</span> T₀<span style="color:#f92672"></span>
+G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>(μ₂<span style="color:#f92672"></span> <span style="color:#f92672">-</span> y₂<span style="color:#f92672"></span>, variables<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
 </code></pre></div><p>Solving $G$ gives the following result:</p>
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; S_G = solve(G)
 Result with 2 solutions
@@ -251,13 +258,25 @@ recovered_tensors_unique<span style="color:#f92672"></span> <span style="color:#
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; norm(T₀ - recovered_tensors_unique[1])
 5.380932148235815e-15
 </code></pre><p>As above we conclude that we have uniquely recovered $T_0$.</p>
-<strong>Cite this example:</strong>
+<h2 id="condition-numbers">Condition numbers</h2>
+<p>The condition number of the recovering map at the data point $y\in\mathbb R^s$ is</p>
+<p>$$\kappa(y) = \frac{1}{\sigma_{\min}(MQ)},$$</p>
+<p>where $M$ is the matrix defining $\mu$ and $Q$ is a matrix whose columns form an orthonormal basis for the tangent space of rank-2 tensors at $T$.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">Q<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (qr<span style="color:#f92672"></span>(J₀<span style="color:#f92672"></span>)<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>)[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>d<span style="color:#f92672"></span>]
+</code></pre></div><p>We compute the condition number for both measurement maps:</p>
+<p>For the randomly chosen projection we have</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; κ₁ = 1/svdvals(M₁ * Q)[end]
+2.3828877488792153
+</code></pre><p>For the coordinate projection we have</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; κ₂ = 1/svdvals(M₂ * Q)[end]
+188.6820598623247
+</code></pre><strong>Cite this example:</strong>
 <pre style="background: transparent;">
 <code class="language-julia hljs">@Misc{ tensor-recovery2021 ,
     author =  { Paul Breiding, Fulvio Gesmundo, Mateusz Michalek, and Nick Vannieuwenhoven },
     title = { Low rank tensor recovery },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/tensor-recovery/ } },
-    note = { Accessed: June 1, 2021 }
+    note = { Accessed: June 17, 2021 }
 }</code>
 </pre>
 

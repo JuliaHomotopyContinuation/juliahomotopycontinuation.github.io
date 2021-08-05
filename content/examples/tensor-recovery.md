@@ -60,6 +60,8 @@ Now, $y$ is a vector that contains the observed coordinates of $T$.
 We define the coordinate projection $\mu$ that projects onto the observed coordinates of $T$:
 
 ```julia
+using LinearAlgebra
+n = [4; 3; 2]
 Id = diagm(0 => ones(prod(n)))
 μ = Id[observed_entries, :]
 ```
@@ -76,10 +78,9 @@ To get a one-to-one parametrization we set the last entries of $a_1,a_2,b_1,b_2$
 
 Let us implement this in Julia.
 ```julia
-using HomotopyContinuation, LinearAlgebra
+using HomotopyContinuation
 
 ## 𝕋 = 4x3x2 tensor of rank r=2
-n = [4; 3; 2]
 r = 2
 @var a[1:r, 1:(n[1]-1)] b[1:r, 1:(n[2]-1)] c[1:r, 1:n[3]]
 𝕋 = sum( kron(c[i,:], [b[i,:];1], [a[i,:];1]) for i in 1:r)
@@ -119,24 +120,6 @@ Let us take a look at the recovered tensors:
 julia> T₁ = reshape(recovered_tensors[1], 4, 3, 2)
 4×3×2 Array{Float64, 3}:
 [:, :, 1] =
-  -32.0    8.0  -24.0
-   72.0  -40.0  -56.0
- -104.0   40.0   -8.0
-  -40.0   16.0    0.0
-
-[:, :, 2] =
- -26.0  10.0   -2.0
- -57.0  27.0   21.0
- -11.0   1.0  -17.0
-  -1.0  -1.0   -7.0
-```
-
-The other solutions is
-
-```julia-repl
-julia> T₂ = reshape(recovered_tensors[1], 4, 3, 2)
-4×3×2 Array{Float64, 3}:
-[:, :, 1] =
   -32.0       411.518   -24.0
    72.0      1112.91   1075.77
  -104.0        40.0    -728.216
@@ -147,6 +130,24 @@ julia> T₂ = reshape(recovered_tensors[1], 4, 3, 2)
  -57.0  27.0       -396.574
  -11.0   1.0        -78.642
   -1.0   0.388769    -7.0
+```
+
+The other solutions is
+
+```julia-repl
+julia> T₂ = reshape(recovered_tensors[2], 4, 3, 2)
+4×3×2 Array{Float64, 3}:
+[:, :, 1] =
+-32.0    8.0  -24.0
+ 72.0  -40.0  -56.0
+-104.0   40.0   -8.0
+-40.0   16.0    0.0
+
+[:, :, 2] =
+-26.0  10.0   -2.0
+-57.0  27.0   21.0
+-11.0   1.0  -17.0
+-1.0  -1.0   -7.0
 ```
 
 It is interesting to observe that both tensors coincide, up to $14$ significant digits, in the unobserved coordinate $(1,1,2)$ with value $-26$. This implies that augmenting $\mu$ with a projection to this coordinate (so it projects to $s = d+1$ coordinates) will not eliminate either completed tensor, even though this number of measurements generically suffices for generic identifiability!
@@ -162,7 +163,7 @@ where $M$ is the matrix defining $\mu$ and $Q$ is a matrix whose columns form an
 We compute $Q$ by using a QR-decomposition of the Jacobian matrix of `𝕋` at the computed solutions.
 ```julia
 d = 14
-J = differentiate(μ * 𝕋, vec([a b c]))
+J = differentiate(𝕋, vec([a b c]))
 Js = [evaluate(J, vec([a b c]) => sol) for sol in real_solutions(S_F)]
 Qs = [(qr(J).Q)[:, 1:d] for J in Js]
 ```

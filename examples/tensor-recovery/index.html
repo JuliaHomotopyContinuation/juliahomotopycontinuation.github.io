@@ -146,7 +146,7 @@
 <meta itemprop="description" content="Reconstructing a tensor from linear measurements">
 <meta itemprop="datePublished" content="2021-05-31T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2021-05-31T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="970">
+<meta itemprop="wordCount" content="969">
 
 
 
@@ -202,7 +202,9 @@ y<span style="color:#f92672"></span> <span style="color:#f92672">=</span> vec<sp
 y<span style="color:#f92672"></span> <span style="color:#f92672">=</span> convert<span style="color:#f92672"></span>(<span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}, y<span style="color:#f92672"></span>)
 </code></pre></div><p>Now, $y$ is a vector that contains the observed coordinates of $T$.</p>
 <p>We define the coordinate projection $\mu$ that projects onto the observed coordinates of $T$:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">Id<span style="color:#f92672"></span> <span style="color:#f92672">=</span> diagm<span style="color:#f92672"></span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> ones<span style="color:#f92672"></span>(prod<span style="color:#f92672"></span>(n<span style="color:#f92672"></span>)))
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> LinearAlgebra<span style="color:#f92672"></span>
+n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>; <span style="color:#ae81ff">3</span>; <span style="color:#ae81ff">2</span>]
+Id<span style="color:#f92672"></span> <span style="color:#f92672">=</span> diagm<span style="color:#f92672"></span>(<span style="color:#ae81ff">0</span> <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> ones<span style="color:#f92672"></span>(prod<span style="color:#f92672"></span>(n<span style="color:#f92672"></span>)))
 μ<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Id<span style="color:#f92672"></span>[observed_entries<span style="color:#f92672"></span>, <span style="color:#f92672">:</span>]
 </code></pre></div><h2 id="setting-up-a-polynomial-system">Setting up a polynomial system</h2>
 <p>To recover $T$ from $\mu(T)$ we define a polynomial system. First, we parametrize rank-2 tensors as follows:
@@ -211,10 +213,9 @@ where $a_i,b_i,c_i\in \mathbb R^3$ for $i=1,2$.</p>
 <p>Here, $\mathbb T$ should be understood as a function in $a_1,a_2,b_1,b_2,c_1,c_2$.</p>
 <p>To get a one-to-one parametrization we set the last entries of $a_1,a_2,b_1,b_2$ equal to $1$ (this parametrizes a Euclidean dense subset of all rank-$2$ tensors).</p>
 <p>Let us implement this in Julia.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 
 <span style="color:#75715e">## 𝕋 = 4x3x2 tensor of rank r=2</span>
-n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4</span>; <span style="color:#ae81ff">3</span>; <span style="color:#ae81ff">2</span>]
 r<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
 <span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> a<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>r<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] b<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>r<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(n<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)] c<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>r<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>n<span style="color:#f92672"></span>[<span style="color:#ae81ff">3</span>]]
 𝕋<span style="color:#f92672"></span> <span style="color:#f92672">=</span> sum<span style="color:#f92672"></span>( kron<span style="color:#f92672"></span>(c<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,<span style="color:#f92672">:</span>], [b<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,<span style="color:#f92672">:</span>];<span style="color:#ae81ff">1</span>], [a<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>,<span style="color:#f92672">:</span>];<span style="color:#ae81ff">1</span>]) <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>r<span style="color:#f92672"></span>)
@@ -239,20 +240,6 @@ recovered_tensors<span style="color:#f92672"></span> <span style="color:#f92672"
 <pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; T₁ = reshape(recovered_tensors[1], 4, 3, 2)
 4×3×2 Array{Float64, 3}:
 [:, :, 1] =
-  -32.0    8.0  -24.0
-   72.0  -40.0  -56.0
- -104.0   40.0   -8.0
-  -40.0   16.0    0.0
-
-[:, :, 2] =
- -26.0  10.0   -2.0
- -57.0  27.0   21.0
- -11.0   1.0  -17.0
-  -1.0  -1.0   -7.0
-</code></pre><p>The other solutions is</p>
-<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; T₂ = reshape(recovered_tensors[1], 4, 3, 2)
-4×3×2 Array{Float64, 3}:
-[:, :, 1] =
   -32.0       411.518   -24.0
    72.0      1112.91   1075.77
  -104.0        40.0    -728.216
@@ -263,6 +250,20 @@ recovered_tensors<span style="color:#f92672"></span> <span style="color:#f92672"
  -57.0  27.0       -396.574
  -11.0   1.0        -78.642
   -1.0   0.388769    -7.0
+</code></pre><p>The other solutions is</p>
+<pre><code class="language-julia-repl" data-lang="julia-repl">julia&gt; T₂ = reshape(recovered_tensors[2], 4, 3, 2)
+4×3×2 Array{Float64, 3}:
+[:, :, 1] =
+-32.0    8.0  -24.0
+ 72.0  -40.0  -56.0
+-104.0   40.0   -8.0
+-40.0   16.0    0.0
+
+[:, :, 2] =
+-26.0  10.0   -2.0
+-57.0  27.0   21.0
+-11.0   1.0  -17.0
+-1.0  -1.0   -7.0
 </code></pre><p>It is interesting to observe that both tensors coincide, up to $14$ significant digits, in the unobserved coordinate $(1,1,2)$ with value $-26$. This implies that augmenting $\mu$ with a projection to this coordinate (so it projects to $s = d+1$ coordinates) will not eliminate either completed tensor, even though this number of measurements generically suffices for generic identifiability!</p>
 <h2 id="condition-numbers">Condition numbers</h2>
 <p>Let us compute the condition numbers of the recovered tensors. It is defined as</p>
@@ -270,7 +271,7 @@ recovered_tensors<span style="color:#f92672"></span> <span style="color:#f92672"
 <p>where $M$ is the matrix defining $\mu$ and $Q$ is a matrix whose columns form an orthonormal basis for the tangent space of rank-2 tensors at $T$.</p>
 <p>We compute $Q$ by using a QR-decomposition of the Jacobian matrix of <code>𝕋</code> at the computed solutions.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">d<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">14</span>
-J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(μ<span style="color:#f92672"></span> <span style="color:#f92672">*</span> 𝕋<span style="color:#f92672"></span>, vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
+J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differentiate<span style="color:#f92672"></span>(𝕋<span style="color:#f92672"></span>, vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]))
 Js<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [evaluate<span style="color:#f92672"></span>(J<span style="color:#f92672"></span>, vec<span style="color:#f92672"></span>([a<span style="color:#f92672"></span> b<span style="color:#f92672"></span> c<span style="color:#f92672"></span>]) <span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span> sol<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> sol<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> real_solutions<span style="color:#f92672"></span>(S_F<span style="color:#f92672"></span>)]
 Qs<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [(qr<span style="color:#f92672"></span>(J<span style="color:#f92672"></span>)<span style="color:#f92672">.</span>Q<span style="color:#f92672"></span>)[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>d<span style="color:#f92672"></span>] <span style="color:#66d9ef">for</span> J<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> Js<span style="color:#f92672"></span>]
 </code></pre></div><p>We compute the condition numbers for our computed solutions:</p>

@@ -18,25 +18,59 @@ For a fixed measurement $y\in\mathbb R^s$, there are infinitely many tensors $T\
 
 $$\mu(T) = (\mu_1(T), \ldots, \mu_s(T)) = y.$$
 
-Therefore, in order to have the tensor recovery well-posed we need some additional assumption. One common assumption is that the tensor $T$ has low rank. If $s$ is larger than the dimension of rank-$r$ tensors in $\mathbb R^{n_1\times \cdots \times n_d}$, then for a general measurement $\mu$ almost all tensors $T$ can be recovered *uniquely*: $\mu^{-1}(\mu(T)) = \\{T\\}$. We will confirm this experimentally.
+Therefore, in order to have the tensor recovery well-posed we need some additional assumption. One common assumption is that the tensor $T$ has low rank. If $s$ is equal to the dimension of rank-$r$ tensors in $\mathbb R^{n_1\times \cdots \times n_d}$, then for a general measurement $\mu$ almost all tensors $T$ can be recovered: $\mu^{-1}(\mu(T))$ is finite. We will confirm this experimentally.
 
-In this example we will recover a $3\times 3\times 3$ tensor of rank $2$ from $s=15$ measurements. The dimension $d$ of rank-$2$ tensors in $\mathbb R^{3\times 3\times 3}$ is
+In this example we will recover a $4\times 3\times 2$ tensor of rank $2$ from the following incomplete tensor displayed by two $4\times 3$ slices:
 
-```julia
-d = 14
+$$ T = \\begin{bmatrix} -32   & ?     & -24\\\ 72    & ?     & ?  \\\ -104  & 40    & ? \\\ ?     & 16    & 0\\end{bmatrix}\quad \\begin{bmatrix}?   & 10    & ? \\\ -57   & 27    & ?\\\ -11   & 1     & ?\\\ -1    & ?     & -7\\end{bmatrix}.$$
+
+
+The symbol ? means that this coordinate is not observed. In `julia` we use the symbol `:?` for denoting unobserved entries.
+
+```julia-repl
+julia> T = reshape([
+        -32 :? -24 :? 10 :?;
+        72 :? :? -57 27 :?;
+        -104 40 :? -11 1 :?;
+        :? 16 0 -1 :? -7], 4,3,2)
+4×3×2 Array{Any, 3}:
+[:, :, 1] =
+  -32      :?  -24
+   72      :?     :?
+ -104    40       :?
+     :?  16      0
+
+[:, :, 2] =
+    :?  10      :?
+ -57    27      :?
+ -11     1      :?
+  -1      :?  -7
 ```
 
-so that
+The number of observed entries is 14. This equals he dimension $d$ of rank-$2$ tensors in $\mathbb R^{4\times 3\times 2}$, so recovery is possible, in principle. Let us define the input data for the recovery problem and denote it by $y$:
 
 ```julia
-s = 15
+observed_entries = findall(vec(T) .!= :?)
+y = vec(T)[observed_entries]
+y = convert(Vector{Float64}, y)
 ```
 
-measurements suffice for unique recovery for almost all $T$.
+Now, $y$ is a vector that contains the observed coordinates of $T$.
 
-We parametrize our tensors as follows:
-$$T = a_1 \otimes b_1 \otimes c_1 + a_2 \otimes b_2 \otimes c_2,$$
+We define the coordinate projection $\mu$ that projects onto the observed coordinates of $T$:
+
+```julia
+Id = diagm(0 => ones(prod(n)))
+μ = Id[observed_entries, :]
+```
+
+## Setting up a polynomial system
+
+To recover $T$ from $\mu(T)$ we define a polynomial system. First, we parametrize rank-2 tensors as follows:
+$$\mathbb T = a_1 \otimes b_1 \otimes c_1 + a_2 \otimes b_2 \otimes c_2,$$
 where $a_i,b_i,c_i\in \mathbb R^3$ for $i=1,2$.
+
+Here, $\mathbb T$ should be understood as a function in $a_1,a_2,b_1,b_2,c_1,c_2$.
 
 To get a one-to-one parametrization we set the last entries of $a_1,a_2,b_1,b_2$ equal to $1$ (this parametrizes a Euclidean dense subset of all rank-$2$ tensors).
 
@@ -44,150 +78,108 @@ Let us implement this in Julia.
 ```julia
 using HomotopyContinuation, LinearAlgebra
 
-## T = 3x3x3 tensor of rank 2
-@var a[1:2, 1:2] b[1:2, 1:2] c[1:2, 1:3]
-T = sum( kron([a[i,:];1], [b[i,:];1], c[i,:]) for i in 1:2)
-```
-Let us sample a random rank-$2$ tensor $T₀$.
-```julia
-a₀ = randn(2,2); b₀ = randn(2,2); c₀ = randn(2,3)
-T₀ = evaluate(T, vec([a b c]) => vec([a₀ b₀ c₀]))
-```
-<br>
-
-## Random measurements
-We first consider the case when $\mu$ is a *randomly chosen* projection. We sample $\mu$ by sampling a $s\times 3^3$ Gaussian matrix $M$. Note that, if $y=MT$, then $Q^Ty = RT$ where $QR = M$ is the $QR$-decomposition of $M$. Therefore, it suffices to take the $R$-factor in the definition of the random map. The sparseness of $R$ is helpful when using the [polyhedral homotopy](https://www.juliahomotopycontinuation.org/guides/polyhedral/) later.
-```julia
-## random projection with s = 15
-M₁ = qr(randn(s,3^3)).R
-```
-
-We define the measurement map and evaluate it at $T_0$.
-```julia
-μ₁ = M₁ * T
-y₁ = M₁ * T₀
+## 𝕋 = 4x3x2 tensor of rank r=2
+n = [4; 3; 2]
+r = 2
+@var a[1:r, 1:(n[1]-1)] b[1:r, 1:(n[2]-1)] c[1:r, 1:n[3]]
+𝕋 = sum( kron(c[i,:], [b[i,:];1], [a[i,:];1]) for i in 1:r)
 ```
 
 Now, we can set up a system of polynomials equations for recovery:
 ```julia
-F = System(μ₁ - y₁, variables = vec([a b c]))
+F = System(μ * 𝕋 - y, variables = vec([a b c]))
 ```
 which we solve directly:
 ```julia-repl
 julia> S_F = solve(F)
-Result with 2 solutions
+Result with 6 solutions
 =======================
-• 8009 paths tracked
-• 2 non-singular solutions (2 real)
-• 1564 excess solutions
-• random_seed: 0x7fd9606f
+• 23 paths tracked
+• 6 non-singular solutions (4 real)
+• random_seed: 0x40c65a1d
 • start_system: :polyhedral
 ```
 
-We see that we there are two real solutions. They correspond to the $\mathbb Z/2\mathbb Z$ action on the solutions which interchanges the summands in the definition of $T$.
+We see that we there are 4 real solutions. They come in pairs of two corresponding to the $\mathbb Z/2\mathbb Z$ action which interchanges the summands in the definition of $T$.
 
-We can check that both solutions give the same tensor:
+We can check that we get 2 distinct solutions:
 ```julia
-recovered_tensors = [evaluate(T, vec([a b c]) => sol) for sol in real_solutions(S_F)]
-recovered_tensors_unique = unique_points(recovered_tensors)
+recovered_tensors = [evaluate(𝕋, vec([a b c]) => sol) for sol in real_solutions(S_F)]
+recovered_tensors = unique_points(recovered_tensors)
 ```
 
 The number of recovered tensors is
 ```julia-repl
-julia> length(recovered_tensors_unique)
-1
+julia> length(recovered_tensors)
+2
 ```
-which shows that we have uniquely recovered $T_0$:
+
+Let us take a look at the recovered tensors:
 ```julia-repl
-julia> norm(T₀ - recovered_tensors_unique[1])
-3.6619745506726126e-15
-```
-<br>
+julia> T₁ = reshape(recovered_tensors[1], 4, 3, 2)
+4×3×2 Array{Float64, 3}:
+[:, :, 1] =
+  -32.0    8.0  -24.0
+   72.0  -40.0  -56.0
+ -104.0   40.0   -8.0
+  -40.0   16.0    0.0
 
-## Coordinate projections
-
-Next, we consider the case when $\mu$ is a coordinate projection.
-
-Let us randomly choose $s=15$ entries of $T$.
-```julia
-using StatsBase
-Id = diagm(0 => ones(3^3))
-M₂ = Id[sample(1:3^3, s, replace = false), :]
-μ₂ = M₂ * T
+[:, :, 2] =
+ -26.0  10.0   -2.0
+ -57.0  27.0   21.0
+ -11.0   1.0  -17.0
+  -1.0  -1.0   -7.0
 ```
 
-Let us first check, if we can expect to recover points from $\mu$. For this, we evaluate the Jacobian $J$ of $T$ at $(a_0,b_0,c_0)$ and multiply it by $M$. If this has rank equal to $d=14$ we can expect recoverability.
+The other solutions is
 
 ```julia-repl
-julia> J = differentiate(T, vec([a b c]))
-julia> J₀ = evaluate(J, vec([a b c]) => vec([a₀ b₀ c₀]))
-julia> rank(M₂ * J₀)
-14
+julia> T₂ = reshape(recovered_tensors[1], 4, 3, 2)
+4×3×2 Array{Float64, 3}:
+[:, :, 1] =
+  -32.0       411.518   -24.0
+   72.0      1112.91   1075.77
+ -104.0        40.0    -728.216
+   -1.11448    16.0       0.0
+
+[:, :, 2] =
+ -26.0  10.0       -182.054
+ -57.0  27.0       -396.574
+ -11.0   1.0        -78.642
+  -1.0   0.388769    -7.0
 ```
 
-We can then proceed as before and recover $T_0$ from the measurement $y = \mu(T_0)$.
-```julia
-y₂ = M₂ * T₀
-G = System(μ₂ - y₂, variables = vec([a b c]))
-```
-
-Solving $G$ gives the following result:
-```julia-repl
-julia> S_G = solve(G)
-Result with 2 solutions
-=======================
-• 102 paths tracked
-• 2 non-singular solutions (2 real)
-• 8 excess solutions
-• random_seed: 0xa249d8ef
-• start_system: :polyhedral
-```
-
-As before we get 2 real solutions which we can use to get $T_0$:
-```julia
-recovered_tensors = [evaluate(T, vec([a b c]) => sol) for sol in real_solutions(S_G)]
-recovered_tensors_unique = unique_points(recovered_tensors)
-```
-
-The number of recovered tensors is
-```julia-repl
-julia> length(recovered_tensors_unique)
-1
-```
-and the distance of the recovered tensor to $T_0$ is:
-```julia-repl
-julia> norm(T₀ - recovered_tensors_unique[1])
-5.380932148235815e-15
-```
-
-As above we conclude that we have uniquely recovered $T_0$.
-
+It is interesting to observe that both tensors coincide, up to $14$ significant digits, in the unobserved coordinate $(1,1,2)$ with value $-26$. This implies that augmenting $\mu$ with a projection to this coordinate (so it projects to $s = d+1$ coordinates) will not eliminate either completed tensor, even though this number of measurements generically suffices for generic identifiability!
 
 ## Condition numbers
 
-The condition number of the recovering map at the data point $y\in\mathbb R^s$ is
+Let us compute the condition numbers of the recovered tensors. It is defined as
 
-$$\kappa(y) = \frac{1}{\sigma_{\min}(MQ)},$$
+$$\kappa(T) = \frac{1}{\sigma_{\min}(MQ)},$$
 
 where $M$ is the matrix defining $\mu$ and $Q$ is a matrix whose columns form an orthonormal basis for the tangent space of rank-2 tensors at $T$.
+
+We compute $Q$ by using a QR-decomposition of the Jacobian matrix of `𝕋` at the computed solutions.
 ```julia
-Q = (qr(J₀).Q)[:, 1:d]
+d = 14
+J = differentiate(μ * 𝕋, vec([a b c]))
+Js = [evaluate(J, vec([a b c]) => sol) for sol in real_solutions(S_F)]
+Qs = [(qr(J).Q)[:, 1:d] for J in Js]
 ```
 
- We compute the condition number for both measurement maps:
+We compute the condition numbers for our computed solutions:
 
-For the randomly chosen projection we have
 
 ```julia-repl
-julia> κ₁ = 1/svdvals(M₁ * Q)[end]
-2.3828877488792153
+julia> [1/svdvals(μ * Q)[end] for Q in Qs]
+4-element Vector{Float64}:
+ 1907.954236908041
+   11.641768946763904
+ 1907.9542369079288
+   11.641768946763932
 ```
 
-For the coordinate projection we have
+The fact that each number appears twice is again due to the $\mathbb Z/2\mathbb Z$ action on the solutions.
 
-```julia-repl
-julia> κ₂ = 1/svdvals(M₂ * Q)[end]
-188.6820598623247
-```
-
+Hence, `T₁` has a condition number of about 1907 and `T₂` a condition number of about 11.
 {{<bibtex >}}

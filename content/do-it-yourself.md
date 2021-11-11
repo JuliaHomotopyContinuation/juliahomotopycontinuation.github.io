@@ -4,7 +4,7 @@ description = "3264 conics in a second."
 type = "special"
 layout = "do-it-yourself"
 date = "2019-02-12T21:56:55+01:00"
-author = "Paul Breiding, Bernd Sturmfels and Sascha Timme"
+author = "Paul Breiding, Bernd Sturmfels and Sascha Timme. Max-Planck Institute for Mathematics in the Sciences, Inselstr. 22, 04103 Leipzig.
 +++
 
 

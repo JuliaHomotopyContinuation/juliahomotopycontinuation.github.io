@@ -39,7 +39,7 @@ The empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots
 
 #### Example: volume of a planar curve
 
-Let us now use the empirical mean of $\overline{f}(A,b)$ for $f(x)=1$ to approximate the volume of the curve $C = \\{x^4+y^4-3x^2-xy^2-x+1 = 0\\}$. A plot of the curve is shown next.
+Let us now use the empirical mean of $\overline{f}(A,b)$ for $f(x)=1$ to approximate the volume of the curve $C = \\{x^4+y^4-3x^2-xy^2-y+1 = 0\\}$. A plot of the curve is shown next.
 
 <p style="text-align:center;"><img src="/images/curve0.png" width="400px"/></p>
 
@@ -49,7 +49,7 @@ Let us define the equation for $C$ in `Julia`.
 ```julia
 using HomotopyContinuation, LinearAlgebra, Statistics
 @var x[1:2]
-F = System([x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1])
+F = [x[1]^4+x[2]^4-3x[1]^2-x[1]*x[2]^2-x[2]+1]
 ```
 
 We also define $\overline{f}$.

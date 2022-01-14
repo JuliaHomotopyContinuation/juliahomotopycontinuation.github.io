@@ -185,12 +185,12 @@
 <p>$$\mathbb{E}  \overline{f}(A,b) = \int_V f(x)  \mathrm{d} x.$$</p>
 <p>The empirical mean $\mathrm{E}(f,k) = \frac{1}{k}(\overline{f}(A_1,b_1) + \cdots \overline{f}(A_k,b_k))$ for $k$ sample pairs $(A_1,b_1),\ldots, (A_k,b_k)$ converges to the integral of $f$ over $V$ as $k\to \infty$.</p>
 <h4 id="example-volume-of-a-planar-curve">Example: volume of a planar curve</h4>
-<p>Let us now use the empirical mean of $\overline{f}(A,b)$ for $f(x)=1$ to approximate the volume of the curve $C = \{x^4+y^4-3x^2-xy^2-x+1 = 0\}$. A plot of the curve is shown next.</p>
+<p>Let us now use the empirical mean of $\overline{f}(A,b)$ for $f(x)=1$ to approximate the volume of the curve $C = \{x^4+y^4-3x^2-xy^2-y+1 = 0\}$. A plot of the curve is shown next.</p>
 <p style="text-align:center;"><img src="/images/curve0.png" width="400px"/></p>
 <p>Let us define the equation for $C$ in <code>Julia</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>, LinearAlgebra<span style="color:#f92672"></span>, Statistics<span style="color:#f92672"></span>
 <span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">2</span>]
-F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>])
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">+</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">4</span><span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span>x<span style="color:#f92672"></span>[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]
 </code></pre></div><p>We also define $\overline{f}$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">f<span style="color:#f92672"></span>(x<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#75715e"># so that ∫ f(x) dx gives the volume</span>
 
@@ -241,11 +241,11 @@ julia&gt; s² / (ε^2 * k)
 </code></pre><p>Therefore, we can safely conclude that $\mathrm{vol}( C ) \approx 11.2$.</p>
 <strong>Cite this example:</strong>
 <pre style="background: transparent;">
-<code class="language-julia hljs">@Misc{ monte-carlo-integration2021 ,
+<code class="language-julia hljs">@Misc{ monte-carlo-integration2022 ,
     author =  { Paul Breiding },
     title = { Monte Carlo integration },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/monte-carlo-integration/ } },
-    note = { Accessed: November 11, 2021 }
+    note = { Accessed: January 14, 2022 }
 }</code>
 </pre>
 

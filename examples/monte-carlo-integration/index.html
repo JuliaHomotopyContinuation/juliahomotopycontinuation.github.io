@@ -146,7 +146,7 @@
 <meta itemprop="description" content="Integrating functions on a variety">
 <meta itemprop="datePublished" content="2019-07-02T21:56:55&#43;01:00" />
 <meta itemprop="dateModified" content="2019-07-02T21:56:55&#43;01:00" />
-<meta itemprop="wordCount" content="554">
+<meta itemprop="wordCount" content="563">
 
 
 
@@ -208,14 +208,15 @@ J<span style="color:#f92672"></span> <span style="color:#f92672">=</span> differ
     <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">end</span>
 <span style="color:#66d9ef">function</span> α<span style="color:#f92672"></span>(z<span style="color:#f92672"></span>, J<span style="color:#f92672"></span>)
-    N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> normalize!<span style="color:#f92672"></span>([j<span style="color:#f92672"></span>(x<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z<span style="color:#f92672"></span>) <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#66d9ef">in</span> J<span style="color:#f92672"></span>])
-    Γ<span style="color:#f92672"></span> <span style="color:#f92672">*</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> (z<span style="color:#f92672"></span> <span style="color:#f92672">⋅</span> N<span style="color:#f92672"></span>)<span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">/</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> z⋅z<span style="color:#f92672"></span>)<span style="color:#f92672">^</span>(n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+    Q<span style="color:#f92672"></span>, R<span style="color:#f92672"></span> <span style="color:#f92672">=</span> qr<span style="color:#f92672"></span>(J<span style="color:#f92672"></span>(x<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#f92672">&gt;</span>z<span style="color:#f92672"></span>)<span style="color:#f92672">&#39;</span>)
+    NₓM<span style="color:#f92672"></span> <span style="color:#f92672">=</span> Q<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(N<span style="color:#f92672"></span> <span style="color:#f92672">-</span> n<span style="color:#f92672"></span>)] <span style="color:#f92672">*</span> (Q<span style="color:#f92672"></span>[<span style="color:#f92672">:</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>(N<span style="color:#f92672"></span> <span style="color:#f92672">-</span> n<span style="color:#f92672"></span>)])<span style="color:#f92672">&#39;</span> 
+    <span style="color:#66d9ef">return</span> sqrt<span style="color:#f92672"></span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> z⋅<span style="color:#f92672"></span>(NₓM<span style="color:#f92672"></span> <span style="color:#f92672">*</span> z<span style="color:#f92672"></span>)) <span style="color:#f92672">/</span> sqrt<span style="color:#f92672"></span>((<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> z⋅z<span style="color:#f92672"></span>)<span style="color:#f92672">^</span>(n<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)) <span style="color:#f92672">*</span> Γ<span style="color:#f92672"></span>
 <span style="color:#66d9ef">end</span>
 </code></pre></div><p>For computing $f(A,b)$ we have to intersect $V$ with linear spaces. Following <a href="/guides/many-systems">this guide</a> we first create a suitable start system by intersecting $V$ with a random complex linear space of dimension $N-n$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">L₀<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rand_subspace<span style="color:#f92672"></span>(N<span style="color:#f92672"></span>; dim<span style="color:#f92672"></span> <span style="color:#f92672">=</span> N<span style="color:#f92672"></span> <span style="color:#f92672">-</span> n<span style="color:#f92672"></span>)
 start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>, target_subspace<span style="color:#f92672"></span> <span style="color:#f92672">=</span> L₀<span style="color:#f92672"></span>)
 start_sols<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solutions<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>)
-</code></pre></div><p>Now, we track <code>start_sols</code> towards $10^7$ random Gaussian linear spaces.</p>
+</code></pre></div><p>Now, we track <code>start_sols</code> towards $10^5$ random Gaussian linear spaces.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">k<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span><span style="color:#f92672">^</span><span style="color:#ae81ff">5</span>
 <span style="color:#75715e">#track towards k random linear spaces</span>
 empirical_distribution<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(
@@ -245,7 +246,7 @@ julia&gt; s² / (ε^2 * k)
     author =  { Paul Breiding },
     title = { Monte Carlo integration },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/monte-carlo-integration/ } },
-    note = { Accessed: January 14, 2022 }
+    note = { Accessed: January 21, 2022 }
 }</code>
 </pre>
 

@@ -71,8 +71,9 @@ function f̄(R)
     end
 end
 function α(z, J)
-    N = normalize!([j(x=>z) for j in J])
-    Γ * sqrt(1 + (z ⋅ N)^2) / sqrt(1 + z⋅z)^(n+1)
+    Q, R = qr(J(x=>z)')
+    NₓM = Q[:, 1:(N - n)] * (Q[:, 1:(N - n)])' 
+    return sqrt(1 + z⋅(NₓM * z)) / sqrt((1 + z⋅z)^(n+1)) * Γ
 end
 ```
 
@@ -85,7 +86,7 @@ start_sols = solutions(start)
 ```
 
 
-Now, we track `start_sols` towards $10^7$ random Gaussian linear spaces.
+Now, we track `start_sols` towards $10^5$ random Gaussian linear spaces.
 
 ```julia
 k = 10^5

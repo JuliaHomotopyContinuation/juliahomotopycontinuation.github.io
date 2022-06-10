@@ -34,7 +34,7 @@ First we define the equation of the curve in Julia and list some packages that w
 ```julia
 using HomotopyContinuation, DynamicPolynomials, LinearAlgebra, IterTools
 n=2 # ambient dimension
-@polyvar x[1:n] y[1:n] p[1:n] γ[1:n]
+@var x[1:n] y[1:n] p[1:n] γ[1:n]
 
 F = [(x[1]^3 - x[1]*x[2]^2 + x[2] + 1)^2 * (x[1]^2 + x[2]^2 - 1) + x[2]^2 - 5]
 ```
@@ -60,12 +60,13 @@ both $x$ and $y$. Next, we compute the bottlenecks of $X$:
 # Compute bottlenecks
 d=length(F) # codimension of variety
 k = n-d # dimension of variety
-@polyvar lambda[1:d] mu[1:d]; # lagrange multipliers
-grad = differentiate(F, x)
+@var λ[1:d] μ[1:d]; # lagrange multipliers
+∇ = differentiate(F, x)
 G = subs(F, x => y)
-grady = subs(grad, x => y)
-system = [F; G; map(j -> x[j]-y[j]-dot(lambda, grad[:, j]), 1:n); map(j -> x[j]-y[j]-dot(mu, grady[:, j]), 1:n)]
-result = solve(system, start_system = :polyhedral)
+∇y = subs(∇, x => y)
+system = [F; G; map(j -> x[j]-y[j]-dot(λ, ∇[:, j]), 1:n); map(j -> x[j]-y[j]-dot(μ, ∇y[:, j]), 1:n)]
+result = solve(system)
+
 
 # pick out the smallest bottleneck
 bottlenecks = map(s -> (s[1:n], s[n+1:2*n]), real_solutions(nonsingular(result)))
@@ -77,8 +78,8 @@ Our next step is to setup the grid that we will use to sample $X$ and for this w
 
 ```julia
 q = bn_lengths[end][2][1] + (bn_lengths[end][2][2]-bn_lengths[end][2][1])/2
-system = [F; map(j -> x[j]-q[j]-dot(lambda, grad[:, j]), 1:n)]
-result = solve(system, start_system = :polyhedral)
+system = [F; map(j -> x[j]-q[j]-dot(λ, ∇[:, j]), 1:n)]
+result = solve(system)
 
 critical_points = sort!(map(c -> (norm(c[1:n]-q), c[1:n]), real_solutions(nonsingular(result))), by = a -> a[1])
 b = critical_points[end][1] # length of bounding box
@@ -93,7 +94,7 @@ samples = []
 for s in IterTools.subsets(1:n, k)
     Ft = [F; map(i -> x[s[i]]-p[i]-q[s[i]], 1:k)]
     p₀ = randn(ComplexF64, k)
-    S_p₀ = solutions(solve(subs(Ft, [y; p[1:l]] => p₀)))
+    S_p₀ = solutions(solve(subs(Ft, p[1:k] => p₀)))
     params = [[indices[jj] for jj in p1] for p1 in Iterators.product(map(j-> 1:length(indices), s)...)][:]
 
     result = solve(
@@ -108,12 +109,13 @@ for s in IterTools.subsets(1:n, k)
     samples = vcat(samples, result)
 end
 
+
 # Extra sample
 for l in 1:k-1
     for s in IterTools.subsets(1:n, l)
         Ft = [F; map(i -> x[s[i]]-p[i]-q[s[i]], 1:l)]
-        grad = differentiate(Ft, x)
-        Ft = [Ft; map(j -> x[j]-y[j]-dot(γ[1:n-k+l], grad[:, j]), 1:n)]
+        ∇ = differentiate(Ft, x)
+        Ft = [Ft; map(j -> x[j]-y[j]-dot(γ[1:n-k+l], ∇[:, j]), 1:n)]
 
         p₀ = randn(ComplexF64, n+l)
         S_p₀ = solutions(solve(subs(Ft, [y; p[1:l]] => p₀)))
@@ -134,6 +136,11 @@ end
 ```
 
 The result of the sampling algorithm is shown below:
+```julia
+sample_matrix = hcat(samples...)
+scatter(sample_matrix[1,:], sample_matrix[2,:],
+        legend = false)
+```
 <p style="text-align:center;"><img src="/images/curve_reach_sample.png" width="700px" /></p>
 
 

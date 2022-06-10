@@ -137,6 +137,7 @@ end
 
 The result of the sampling algorithm is shown below:
 ```julia
+using Plots
 sample_matrix = hcat(samples...)
 scatter(sample_matrix[1,:], sample_matrix[2,:],
         legend = false)

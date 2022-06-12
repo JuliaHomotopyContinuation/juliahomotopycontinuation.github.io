@@ -36,3 +36,10 @@ More information on how this works can be found in the article [3264 conics in a
 <div id="action-buttons">
   <a class="button primary big" href="https://www.juliahomotopycontinuation.org/3264/" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">If you want to read about 3264 real conics, click here.</a>
 </div>
+
+<br>
+<div id="action-buttons">
+  <a class="button primary big" href="https://www.mis.mpg.de/imprint/index.html" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">Imprint</a>
+
+  <a class="button primary big" href="https://www.mis.mpg.de/imprint/privacy-policy.html" onclick="_gaq.push(['_trackEvent', 'kube', 'download']);">Privacy Policy</a>
+</div>

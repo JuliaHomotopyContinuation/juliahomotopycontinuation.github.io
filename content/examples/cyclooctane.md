@@ -29,7 +29,7 @@ In this example, we demonstrate how to obtain points from the cyclooctane variet
 Let's define the equations in Julia for $c^2 = 2$. For this, we use the following normalization: since the equation of cyclooctane are invariant under simultaneous translation and rotation of the $z_i$, we define $z_1$ to be the origin, $z_8=(c,0,0)$ and $z_7$ to be rotated, such that its last entry is equal to zero. Thus we get a system of equations in $17$ variables.
 
 ```julia
-using HomotopyContinuation, LinearAlgebra, DynamicPolynomials
+using HomotopyContinuation, LinearAlgebra
 
 c² = 2
 @var z[1:3, 1:6]

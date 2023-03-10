@@ -17,7 +17,7 @@ A numerical irreducible decomposition of a system of polynomial equations $F(x)$
 
 **Careful:** The implementation is not yet final and should be considered experimental.
 
-For example, the following code decomposes the zero set of a system that consists of a hypersurface of degree 2, two curves of degree 4 each and 8 points. 
+For example, the following code decomposes the zero set of a system that consists of a hypersurface of degree 2, two curves of degree 4 and eight points. 
 
 
 ```julia
@@ -49,7 +49,7 @@ Numerical irreducible decomposition with 4 components
 ╰───────────┴───────────────────────╯
 ```
 
-Notice that in dimension 0, the 8 points are summarized as one component (a single point is always an irreducible component).
+Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).
 
 One can also use 
 ```julia

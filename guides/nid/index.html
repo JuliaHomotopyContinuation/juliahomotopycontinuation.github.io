@@ -170,7 +170,7 @@
     <h3 class="section-head" id="nid"><a href="#nid">Numerical Irreducible Decomposition</a></h3>
 <p>A numerical irreducible decomposition of a system of polynomial equations $F(x)$ is the decomposition of the zero set of $F$ into <a href="https://en.wikipedia.org/wiki/Irreducible_component">irreducible components</a>.</p>
 <p><strong>Careful:</strong> The implementation is not yet final and should be considered experimental.</p>
-<p>For example, the following code decomposes the zero set of a system that consists of a hypersurface of degree 2, two curves of degree 4 each and 8 points.</p>
+<p>For example, the following code decomposes the zero set of a system that consists of a hypersurface of degree 2, two curves of degree 4 and eight points.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 <span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span>, y<span style="color:#f92672"></span>, z<span style="color:#f92672"></span>
 p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> (x<span style="color:#f92672"></span> <span style="color:#f92672">*</span> y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> z<span style="color:#f92672"></span>
@@ -194,7 +194,7 @@ N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> numeri
 │<span style="color:#f92672"></span>     <span style="color:#ae81ff">1</span>     │<span style="color:#f92672"></span>        (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>)         │<span style="color:#f92672"></span>
 │<span style="color:#f92672"></span>     <span style="color:#ae81ff">0</span>     │<span style="color:#f92672"></span>           <span style="color:#ae81ff">8</span>           │<span style="color:#f92672"></span>
 ╰───────────┴───────────────────────╯<span style="color:#f92672"></span>
-</code></pre></div><p>Notice that in dimension 0, the 8 points are summarized as one component (a single point is always an irreducible component).</p>
+</code></pre></div><p>Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).</p>
 <p>One can also use</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">nid<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
 </code></pre></div><p>This will compute exact same thing as <code>numerical_irreducible_decomposition(F)</code>.</p>

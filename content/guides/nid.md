@@ -33,7 +33,7 @@ N = numerical_irreducible_decomposition(F)
 ```
 
 The output is as follows. 
-```julia
+```
 Numerical irreducible decomposition with 4 components
 • 1 component(s) of dimension 2.
 • 2 component(s) of dimension 1.
@@ -67,7 +67,7 @@ The algorithm consists of 2 steps. The first step is [u-regeneration](https://ar
 R = regeneration(F)
 ```
 
-```julia
+```
 3-element Vector{WitnessSet}:
  Witness set for dimension 2 of degree 2
  Witness set for dimension 1 of degree 8

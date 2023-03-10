@@ -181,20 +181,20 @@ F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [p<spa
 
 N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> numerical_irreducible_decomposition<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
 </code></pre></div><p>The output is as follows.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">Numerical<span style="color:#f92672"></span> irreducible<span style="color:#f92672"></span> decomposition<span style="color:#f92672"></span> with<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> components<span style="color:#f92672"></span>
-•<span style="color:#f92672"></span> <span style="color:#ae81ff">1</span> component<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>) of<span style="color:#f92672"></span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">2.</span>
-•<span style="color:#f92672"></span> <span style="color:#ae81ff">2</span> component<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>) of<span style="color:#f92672"></span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">1.</span>
-•<span style="color:#f92672"></span> <span style="color:#ae81ff">1</span> component<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>) of<span style="color:#f92672"></span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">0.</span>
+<pre><code>Numerical irreducible decomposition with 4 components
+• 1 component(s) of dimension 2.
+• 2 component(s) of dimension 1.
+• 1 component(s) of dimension 0.
 
- degree<span style="color:#f92672"></span> table<span style="color:#f92672"></span> of<span style="color:#f92672"></span> components<span style="color:#f92672"></span><span style="color:#f92672">:</span>
-╭───────────┬───────────────────────╮<span style="color:#f92672"></span>
-│<span style="color:#f92672"></span> dimension<span style="color:#f92672"></span> │<span style="color:#f92672"></span> degrees<span style="color:#f92672"></span> of<span style="color:#f92672"></span> components<span style="color:#f92672"></span> │<span style="color:#f92672"></span>
-├───────────┼───────────────────────┤<span style="color:#f92672"></span>
-│<span style="color:#f92672"></span>     <span style="color:#ae81ff">2</span>     │<span style="color:#f92672"></span>           <span style="color:#ae81ff">2</span>           │<span style="color:#f92672"></span>
-│<span style="color:#f92672"></span>     <span style="color:#ae81ff">1</span>     │<span style="color:#f92672"></span>        (<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">4</span>)         │<span style="color:#f92672"></span>
-│<span style="color:#f92672"></span>     <span style="color:#ae81ff">0</span>     │<span style="color:#f92672"></span>           <span style="color:#ae81ff">8</span>           │<span style="color:#f92672"></span>
-╰───────────┴───────────────────────╯<span style="color:#f92672"></span>
-</code></pre></div><p>Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).</p>
+ degree table of components:
+╭───────────┬───────────────────────╮
+│ dimension │ degrees of components │
+├───────────┼───────────────────────┤
+│     2     │           2           │
+│     1     │        (4, 4)         │
+│     0     │           8           │
+╰───────────┴───────────────────────╯
+</code></pre><p>Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).</p>
 <p>One can also use</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">nid<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
 </code></pre></div><p>This will compute exact same thing as <code>numerical_irreducible_decomposition(F)</code>.</p>
@@ -202,11 +202,11 @@ N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> numeri
 <h2 id="regeneration">Regeneration</h2>
 <p>The algorithm consists of 2 steps. The first step is <a href="https://arxiv.org/abs/2206.02869">u-regeneration</a> by Duff, Leykin and Rodriguez. The output of the regeneration algorithm is a vector of <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/witness_sets/">witness sets</a>, one for each dimension. The witness set $W_i$ in dimension $i$ gives $\{F=0\} \cap L_i$ where $L_i$ is a random linear space of codimension $i$; i.e., $W_i$ represents the union of irreducible components in dimension $i$.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">R<span style="color:#f92672"></span> <span style="color:#f92672">=</span> regeneration<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#ae81ff">3</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Vector</span>{WitnessSet<span style="color:#f92672"></span>}<span style="color:#f92672">:</span>
- Witness<span style="color:#f92672"></span> set<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">2</span> of<span style="color:#f92672"></span> degree<span style="color:#f92672"></span> <span style="color:#ae81ff">2</span>
- Witness<span style="color:#f92672"></span> set<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">1</span> of<span style="color:#f92672"></span> degree<span style="color:#f92672"></span> <span style="color:#ae81ff">8</span>
- Witness<span style="color:#f92672"></span> set<span style="color:#f92672"></span> <span style="color:#66d9ef">for</span> dimension<span style="color:#f92672"></span> <span style="color:#ae81ff">0</span> of<span style="color:#f92672"></span> degree<span style="color:#f92672"></span> <span style="color:#ae81ff">8</span>
-</code></pre></div><p>The second step decomposes the output of <code>regeneration</code> into irreducible components using monodromy.</p>
+</code></pre></div><pre><code>3-element Vector{WitnessSet}:
+ Witness set for dimension 2 of degree 2
+ Witness set for dimension 1 of degree 8
+ Witness set for dimension 0 of degree 8
+</code></pre><p>The second step decomposes the output of <code>regeneration</code> into irreducible components using monodromy.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">decompose<span style="color:#f92672"></span>(R<span style="color:#f92672"></span>)
 </code></pre></div><p>The output of <code>decompose(R)</code> is then the same as the output of <code>nid(F)</code>.</p>
 

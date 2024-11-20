@@ -215,16 +215,16 @@ result<span style="color:#f92672"></span> <span style="color:#f92672">=</span> s
 <p>The <code>result</code> contains some additional informations about the different solutions.
 Let's take a look at the first real solution:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">results<span style="color:#f92672"></span>(result<span style="color:#f92672"></span>; only_real<span style="color:#f92672"></span><span style="color:#f92672">=</span><span style="color:#66d9ef">true</span>)[<span style="color:#ae81ff">1</span>]
-</code></pre></div><p>PathResult:
-• return_code → :success
-• solution → Complex{Float64}[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
-• accuracy → 3.4595e-16
-• residual → 6.6613e-16
-• condition_jacobian → 5.5554
-• steps → 50 / 0
-• extended_precision → false
-• path_number → 2</p>
-<p>The meaning of those entries is as follows:</p>
+   PathResult<span style="color:#f92672"></span><span style="color:#f92672">:</span>
+    •<span style="color:#f92672"></span> return_code<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#f92672">:</span>success<span style="color:#f92672"></span>
+    •<span style="color:#f92672"></span> solution<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#66d9ef">Complex</span>{<span style="color:#66d9ef">Float64</span>}[<span style="color:#f92672">-</span><span style="color:#ae81ff">0.9368979667963298</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2.938735877055719e-39</span>im, <span style="color:#ae81ff">0.31228408173860095</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">4.70197740328915e-38</span>im]
+    •<span style="color:#f92672"></span> accuracy<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#ae81ff">3.4595e-16</span>
+    •<span style="color:#f92672"></span> residual<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#ae81ff">6.6613e-16</span>
+    •<span style="color:#f92672"></span> condition_jacobian<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#ae81ff">5.5554</span>
+    •<span style="color:#f92672"></span> steps<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#ae81ff">50</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">0</span>
+    •<span style="color:#f92672"></span> extended_precision<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#66d9ef">false</span>
+    •<span style="color:#f92672"></span> path_number<span style="color:#f92672"></span> →<span style="color:#f92672"></span> <span style="color:#ae81ff">2</span>
+</code></pre></div><p>The meaning of those entries is as follows:</p>
 <ul>
 <li><code>return_code → :success</code> means that the computation was successful.</li>
 <li><code>solution</code> is the solution that was computed.</li>

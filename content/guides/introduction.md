@@ -80,11 +80,6 @@ Let's take a look at the first real solution:
 
 ```julia
 results(result; only_real=true)[1]
-```
-
-
-
-
    PathResult:
     • return_code → :success
     • solution → Complex{Float64}[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
@@ -94,7 +89,7 @@ results(result; only_real=true)[1]
     • steps → 50 / 0
     • extended_precision → false
     • path_number → 2
-
+```
 
 
 

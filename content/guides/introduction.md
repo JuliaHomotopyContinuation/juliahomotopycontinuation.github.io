@@ -66,7 +66,7 @@ real_solutions(result)
 
 
 
-    4-element Array{Array{Float64,1},1}:
+    4-element Vector{Vector{Float64}}:
      [-1.67142, 0.655205]
      [-0.936898, 0.312284]
      [0.820979, -0.697133]
@@ -82,7 +82,7 @@ Let's take a look at the first real solution:
 results(result; only_real=true)[1]
    PathResult:
     • return_code → :success
-    • solution → Complex{Float64}[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
+    • solution → ComplexF64[-0.9368979667963298 + 2.938735877055719e-39im, 0.31228408173860095 - 4.70197740328915e-38im]
     • accuracy → 3.4595e-16
     • residual → 6.6613e-16
     • condition_jacobian → 5.5554
@@ -101,8 +101,8 @@ The meaning of those entries is as follows:
 * `residual` is the value of the infinity norm of $f(x)$, where $x$ is the computed solution.
 * `condition_jacobian` is the condition number of the Jacobian of $f$ at the solution. A large value indicates that this solution is close to being singular.
 * `steps` is the number of accepted / rejected steps during the tracking.
-* `extended_precision` is `true` if the it was necessary to use extended precision.
-* `path_number` the number of the path which resulted int this solution.
+* `extended_precision` is `true` if it was necessary to use extended precision.
+* `path_number` the number of the path which resulted in this solution.
 
 This is already everything you need to know for solving simple polynomial systems! But in order to solve more challenging systems it is helpful to understand the basics about the techniques used in `solve`. There are many more advanced features in HomotopyContinuation.jl to help you with solving your particular polynomial system.
 
@@ -195,7 +195,7 @@ We could formulate our problem as the constrained optimization problem
 
 $$\min (x + 0.32)^2 + (y+0.1)^2 \quad \text{ s.t.} \quad  f(x,y) = 0 $$
 
-Now this a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a random point we might get as a result a *local* minimum *but* we do **not** know whether this is the global minimum!
+Now this is a non-linear, non-convex minimization problem and therefore it can have multiple local minima as well as local maxima and saddle points. If we approach this problem with a simple gradient descent algorithm starting from a random point we might get as a result a *local* minimum *but* we do **not** know whether this is the global minimum!
 
 In order to make sure that we find the *optimal* solution we will compute **all** critical points of this optimization problem.
 If we count the number of critical points over the *complex numbers* then this number will *almost always* be the same. It is called the *Euclidean Distance degree* of $X=V(f)$.
@@ -258,7 +258,7 @@ u₀ = [-0.32, -0.1]
 
 
 
-    2-element Array{Float64,1}:
+    2-element Vector{Float64}:
      -0.32
      -0.1
 
@@ -295,7 +295,7 @@ ed_points = map(p -> p[1:2], real_sols)
 
 
 
-    8-element Array{Array{Float64,1},1}:
+    8-element Vector{Vector{Float64}}:
      [1.63906, -0.958966]  
      [0.577412, 1.27259]   
      [-1.57227, 1.0613]    
@@ -390,8 +390,8 @@ Sometimes the number of paths to track using a simple `solve` is very large (or 
 Another approach is a technique called **monodromy** which
 uses the fact that our problem has the same number of solutions for almost all values of $u$.
 The idea is the following: assume we have parameter $v \in \mathbb{C}^n$ and suppose we know **one** solution $x_0$ for our problem. We call this a *start pair*. Now take two other (random) parameter values $v_1, v_2 \in \mathbb{C}^n$ and track the solution $x_0$ with a parameter homotopy from $v$ to $v_1$, then from $v_1$ to $v_2$ and then from $v_2$ back to $v$.
-The amazing part is that this loop induces a *permutation* on **all** solutions of our system, i.e., even the ones we do not yet know! This means that the we can end up with **another** solution than we started. By doing this process repeatedly we can recover **all** solutions!
-The only condition that we need to this is that the loops we construct contain critical points of the parameter space.
+The amazing part is that this loop induces a *permutation* on **all** solutions of our system, i.e., even the ones we do not know yet! This means that we can end up with **another** solution than we started. By doing this process repeatedly we can recover **all** solutions!
+The only condition that we need for this is that the loops we construct contain critical points of the parameter space.
 
 This sound's great so let's try to solve our example using this technique! But how do we obtain a start pair? If you do not provide a start pair, HomotopyContinuation.jl will try to generate a start pair by using Newton's method and random search.
 While simple, this is very often successful.
@@ -407,7 +407,7 @@ generic_result = monodromy_solve(C; parameter_sampler = parameter_sampler)
 
     MonodromyResult
     =========================
-    • return code: :heuristic_stop
+    • return code → :heuristic_stop
     • 36 solutions
     • 360 tracked loops
     • random seed: 0x590db472
@@ -426,7 +426,7 @@ monodromy_solve(C; parameter_sampler = parameter_sampler, max_loops_no_progress=
 
     MonodromyResult
     =========================
-    • return code: :success
+    • return code → :success
     • 36 solutions
     • 144 tracked loops
     • random seed: 0x82046e34

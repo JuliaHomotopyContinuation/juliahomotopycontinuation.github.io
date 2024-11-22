@@ -77,7 +77,7 @@ Now let's solve this optimization problem using homotopy continuation by solving
 $$\tau = 0.01.$$
 
 ```julia
-using HomotopyContinuation, LinearAlgebra, DelimitedFiles, StatsBase
+using HomotopyContinuation, LinearAlgebra, StatsBase
 
 τ = 0.01
 m = 5

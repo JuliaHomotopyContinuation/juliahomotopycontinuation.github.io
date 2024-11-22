@@ -30,7 +30,7 @@ Now `points2D` is a $3\times N$ matrix, where $N$ is the number of images. The f
 A rolling shutter camera captures images line by line over time. These lines are called scanlines. 
 
 <figure>
-<img src="/images/rollingshutter1.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<p style="text-align:center;"><img src="/images/rollingshutter1.png" width="600px"/></p>
 <figcaption style="text-align:center;">
 The 2D image taken with our rolling shutter camera. The color encodes the scanline that takes a picture of that point.
 </figcaption>
@@ -39,7 +39,7 @@ The 2D image taken with our rolling shutter camera. The color encodes the scanli
 Similarly `points3D` is a $4\times N$ matrix, where $N$ is the number of images. The columns of `points2D` and `points3D` are synchronized in the sense that the $i$-th column of `points2D` is the image of the $i$-th column of `points3D`.
 
 <figure>
-<img src="/images/rollingshutter2.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<p style="text-align:center;"><img src="/images/rollingshutter2.png" width="600px"/></p>
 <figcaption style="text-align:center;">
 The 3D points that we take an image from. The color encodes the scanline that takes a picture of that point.
 </figcaption>
@@ -150,7 +150,7 @@ R1, t1, v1 = reshape(recovery[1:9], 3, 3), recovery[10:12], recovery[13:15]
 Here is the reconstructed data:
 
 <figure>
-<img src="/images/rollingshutter3.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<p style="text-align:center;"><img src="/images/rollingshutter3.png" width="600px"/></p>
 <figcaption style="text-align:center;">
 The reconstructed camera is in red, the velocity $v$ is in green. The plot shows the 3D points and the image points on the camera plane.
 </figcaption>

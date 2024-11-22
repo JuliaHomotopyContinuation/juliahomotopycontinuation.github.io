@@ -66,7 +66,7 @@ real_solutions(result)
 
 
 
-    4-element Vector{Vector{Float64,1}}:
+    4-element Vector{Vector{Float64}}:
      [-1.67142, 0.655205]
      [-0.936898, 0.312284]
      [0.820979, -0.697133]

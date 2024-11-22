@@ -147,6 +147,17 @@ using HomotopyContinuation, DynamicPolynomials @var x y z J = 3x^3*y+y^2*z^2-2x*
     </item>
     
     <item>
+      <title>Rolling shutter cameras</title>
+      <link>/examples/rolling-shutter/</link>
+      <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>
+      
+      <guid>/examples/rolling-shutter/</guid>
+      <description>We want to find the absolute pose for a calibrated rolling shutter camera. Suppose we have the following information available:
+ A set of 3D scene points expressed in the world coordinate frame. Sets of 2D points in the two-dimensional images, where each set corresponds to one 3D point.  Let us load the data:
+using DelimitedFileslink1 = &amp;#34;https://gist.githubusercontent.com/PBrdng/e17d0e3bc4d983734238b9cb8386d560/raw/07272b125a6ad03c791fdf99e741318f1d85149b/3Dpoints&amp;#34;link2 = &amp;#34;https://gist.githubusercontent.com/PBrdng/e17d0e3bc4d983734238b9cb8386d560/raw/07272b125a6ad03c791fdf99e741318f1d85149b/2Dpoints&amp;#34;points3D = readdlm(download(link1)) |&amp;gt; transposepoints2D = readdlm(download(link2)) |&amp;gt; transposeNow points2D is a $3\times N$ matrix, where $N$ is the number of images.</description>
+    </item>
+    
+    <item>
       <title>The 6R-serial link robot</title>
       <link>/examples/6rlinkrobot/</link>
       <pubDate>Tue, 26 Mar 2019 21:56:55 +0100</pubDate>

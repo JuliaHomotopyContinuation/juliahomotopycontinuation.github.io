@@ -150,7 +150,7 @@ R1, t1, v1 = reshape(recovery[1:9], 3, 3), recovery[10:12], recovery[13:15]
 Here is the reconstructed data:
 
 <figure>
-<img src="/images/rollingshutter1.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
+<img src="/images/rollingshutter3.png" style="width:80%;display: block;margin-left: auto;margin-right: auto;">
 <figcaption style="text-align:center;">
 The reconstructed camera is in red, the velocity $v$ is in green. The plot shows the 3D points and the image points on the camera plane.
 </figcaption>

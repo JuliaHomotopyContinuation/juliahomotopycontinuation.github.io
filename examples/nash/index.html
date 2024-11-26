@@ -146,7 +146,7 @@
 <meta itemprop="description" content="A story about how game theory meets multilinear systems and product of simplices.">
 <meta itemprop="datePublished" content="2021-03-15T21:37:00&#43;02:00" />
 <meta itemprop="dateModified" content="2021-03-15T21:37:00&#43;02:00" />
-<meta itemprop="wordCount" content="1501">
+<meta itemprop="wordCount" content="1502">
 
 
 
@@ -233,7 +233,7 @@ and</li>
 <p>This results gives us that there are 10 such partitions. This is also the maximal number of the totally mixed Nash equilibria of a non-cooperative 3-person game.</p>
 <h4 id="using-homotopycontinuation">Using HomotopyContinuation</h4>
 <p>How do we calculate this in Julia using <code>HomotopyContinuation.jl</code>? We do not need to eliminate our system to 6 equations as before, since the calculation is already very fast. However, the observation was crucial in order to observe the relation to product of simplices and mixed volume.</p>
-<p>Let us choose $81$ rational number for payoff matrices of three players and declare the variables and the system of 12 multilinear equations.</p>
+<p>Let us choose $81$ rational numbers for the payoff matrices of three players and declare the variables and the system of 12 multilinear equations.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
 
 <span style="color:#75715e"># small helper to transform a 3x9 matrix into a 3x3x3 tensor</span>
@@ -285,11 +285,11 @@ f<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System
  [<span style="color:#ae81ff">0.14285714285714288</span>, <span style="color:#ae81ff">0.28571428571428575</span>, <span style="color:#ae81ff">0.5714285714285714</span>, <span style="color:#ae81ff">0.375</span>, <span style="color:#ae81ff">0.37499999999999994</span>, <span style="color:#ae81ff">0.25000000000000006</span>, <span style="color:#ae81ff">0.5555555555555556</span>, <span style="color:#ae81ff">0.1111111111111111</span>, <span style="color:#ae81ff">0.33333333333333326</span>, <span style="color:#ae81ff">95.44444444444444</span>, <span style="color:#ae81ff">73.11111111111111</span>, <span style="color:#ae81ff">121.35714285714286</span>]
 
 valid_real_solutions<span style="color:#f92672"></span> <span style="color:#f92672">=</span> filter<span style="color:#f92672"></span>(s<span style="color:#f92672"></span> <span style="color:#f92672">-</span><span style="color:#f92672">&gt;</span> all<span style="color:#f92672"></span>(s<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">9</span>] <span style="color:#f92672">.&gt;</span> <span style="color:#ae81ff">0</span>), real_solutions<span style="color:#f92672"></span>(res<span style="color:#f92672"></span>))
-<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Float64</span>,<span style="color:#ae81ff">1</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}}<span style="color:#f92672">:</span>
 [<span style="color:#ae81ff">0.14285714285714288</span>, <span style="color:#ae81ff">0.28571428571428575</span>, <span style="color:#ae81ff">0.5714285714285714</span>, <span style="color:#ae81ff">0.375</span>, <span style="color:#ae81ff">0.37499999999999994</span>, <span style="color:#ae81ff">0.25000000000000006</span>, <span style="color:#ae81ff">0.5555555555555556</span>, <span style="color:#ae81ff">0.1111111111111111</span>, <span style="color:#ae81ff">0.33333333333333326</span>, <span style="color:#ae81ff">95.44444444444444</span>, <span style="color:#ae81ff">73.11111111111111</span>, <span style="color:#ae81ff">121.35714285714286</span>]
 </code></pre></div><p>This is actually a rational solution. We use a chained fraction approximation to find the rational approximation and evaluate it to see if this is the correct one. It turns out that this specific 3-person game has exactly one totally mixed Nash equilibrium.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">rat<span style="color:#f92672"></span> <span style="color:#f92672">=</span> rationalize<span style="color:#f92672"></span><span style="color:#f92672">.</span>(valid_real_solutions<span style="color:#f92672"></span>[<span style="color:#ae81ff">1</span>], tol<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-8</span>)
-<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Rational</span>{<span style="color:#66d9ef">Int64</span>},<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
+<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Rational</span>{<span style="color:#66d9ef">Int64</span>}}<span style="color:#f92672">:</span>
     <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
     <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
     <span style="color:#ae81ff">4</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">7</span>
@@ -304,26 +304,26 @@ valid_real_solutions<span style="color:#f92672"></span> <span style="color:#f926
  <span style="color:#ae81ff">1699</span><span style="color:#f92672">/</span><span style="color:#f92672">/</span><span style="color:#ae81ff">14</span>
 
 f<span style="color:#f92672"></span>(rat<span style="color:#f92672"></span>)
-<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Array</span>{<span style="color:#66d9ef">Int32</span>,<span style="color:#ae81ff">1</span>}<span style="color:#f92672">:</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
- <span style="color:#ae81ff">0</span>
+<span style="color:#ae81ff">12</span><span style="color:#f92672">-</span>element<span style="color:#f92672"></span> <span style="color:#66d9ef">Vector</span>{<span style="color:#66d9ef">Float64</span>}<span style="color:#f92672">:</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
+ <span style="color:#ae81ff">0.0</span>
 </code></pre></div><strong>Cite this example:</strong>
 <pre style="background: transparent;">
 <code class="language-julia hljs">@Misc{ nash2024 ,
     author =  { Irem Portakal },
     title = { Polynomial systems arising from Nash equilibria },
     howpublished = { \url{ https://www.JuliaHomotopyContinuation.org/examples/nash/ } },
-    note = { Accessed: November 22, 2024 }
+    note = { Accessed: November 26, 2024 }
 }</code>
 </pre>
 

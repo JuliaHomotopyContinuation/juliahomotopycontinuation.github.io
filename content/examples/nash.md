@@ -103,7 +103,7 @@ This results gives us that there are 10 such partitions. This is also the maxima
 
 How do we calculate this in Julia using `HomotopyContinuation.jl`? We do not need to eliminate our system to 6 equations as before, since the calculation is already very fast. However, the observation was crucial in order to observe the relation to product of simplices and mixed volume.
 
-Let us choose $81$ rational number for payoff matrices of three players and declare the variables and the system of 12 multilinear equations.
+Let us choose $81$ rational numbers for the payoff matrices of three players and declare the variables and the system of 12 multilinear equations.
 ```julia
 using HomotopyContinuation
 
@@ -166,14 +166,14 @@ real_solutions(res)
  [0.14285714285714288, 0.28571428571428575, 0.5714285714285714, 0.375, 0.37499999999999994, 0.25000000000000006, 0.5555555555555556, 0.1111111111111111, 0.33333333333333326, 95.44444444444444, 73.11111111111111, 121.35714285714286]
 
 valid_real_solutions = filter(s -> all(s[1:9] .> 0), real_solutions(res))
-1-element Array{Array{Float64,1},1}:
+1-element Vector{Vector{Float64}}:
 [0.14285714285714288, 0.28571428571428575, 0.5714285714285714, 0.375, 0.37499999999999994, 0.25000000000000006, 0.5555555555555556, 0.1111111111111111, 0.33333333333333326, 95.44444444444444, 73.11111111111111, 121.35714285714286]
 ```
 
 This is actually a rational solution. We use a chained fraction approximation to find the rational approximation and evaluate it to see if this is the correct one. It turns out that this specific 3-person game has exactly one totally mixed Nash equilibrium. 
 ```julia
 rat = rationalize.(valid_real_solutions[1], tol = 1e-8)
-12-element Array{Rational{Int64},1}:
+12-element Vector{Rational{Int64}}:
     1//7
     2//7
     4//7
@@ -188,19 +188,19 @@ rat = rationalize.(valid_real_solutions[1], tol = 1e-8)
  1699//14
 
 f(rat)
-12-element Array{Int32,1}:
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
- 0
+12-element Vector{Float64}:
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
+ 0.0
 ```
 
 {{<bibtex >}}

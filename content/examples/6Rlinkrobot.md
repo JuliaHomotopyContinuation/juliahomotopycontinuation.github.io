@@ -29,9 +29,7 @@ Let us denote by $z_1,\ldots,z_6$ the unit vectors that point in the direction o
 
 for $\alpha=(\alpha_1\ldots, \alpha_5)$ and $a=(a_1,\ldots,a_9)$ and $p=(p_1,p_2,p_3)$.
 The $\alpha_i$ are the "twist angle" between joints, the $a_i$ are the "link length" between joint axes
-and the $p$ encodes the position of the hand. Here $\times$ is the cross product in $\mathbb{R}^3$.
-
-see the above reference for a detailed explanation on how these numbers are to be interpreted). Here $\times$ is the cross product in $\mathbb{R}^3$.
+and the $p$ encodes the position of the hand (see the above reference for a detailed explanation on how these numbers are to be interpreted). Here $\times$ is the cross product in $\mathbb{R}^3$.
 
 
 In this notation the forward problem consists of computing $(\alpha,a)$ given the $z_i$ and $p$ and the backward problem consists of computing  $z_2,\ldots,z_5$ that realize some fixed $(\alpha,a,p,z_1,z_6)$ (knowing $z_1,z_6$ means that the position where the robot is attached to the ground  and the position where its hand should be are fixed).
@@ -70,7 +68,7 @@ Result with 16 solutions
 ```
 
 
-We find 16 solutions, which is the correct number of solutions for these type of systems.
+We find 16 solutions, which is the correct number of solutions for this type of systems.
 
 But if we study the problem a little bit closer, we can see that the equations are bi-homogeneous with respect to the variable groups $\\{z_2, z_4\\}$ and $\\{z_3, z_5\\}$.
 The multi-homogeneous Bezout number with respect ot this variable group is

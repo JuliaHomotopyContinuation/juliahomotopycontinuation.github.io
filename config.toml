@@ -31,11 +31,6 @@ HighlightJS = true
     weight = 5
     url = "/faq/"
 [[menu.main]]
-    name = "Do It Yourself"
-    weight = 6
-    url = "/do-it-yourself"
-
-[[menu.main]]
     name = "Changelog"
     weight = 7
     url = "/changelog/"

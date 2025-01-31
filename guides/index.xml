@@ -168,6 +168,17 @@ julia&amp;gt; using HomotopyContinuation julia&amp;gt; A = [[1.0,0.5], [0.99,0.4
     </item>
     
     <item>
+      <title>Implement a custom homotopy</title>
+      <link>/guides/custom-homotopy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/guides/custom-homotopy/</guid>
+      <description>This guide explains how to implement a homotopy of the form $$H(x,t).$$ In HomotopyContinuation.jl a homotopy is a struct for which one must implement a few (in-place) functions, namely
+ModelKit.evaluate! ModelKit.evaluate_and_jacobian! ModelKit.taylor! As the names suggest, these functions
+ evaluate $H(x,t)$ at $(x,t)$, evaluate $H(x,t)$ and compute the jacobian at $(x,t)$, and compute the taylor expansion of $H(x,t)$ with respect to $t$ at $(x,t)$.  In fact, $H(x,t)$ does not even need to be a polynomial function, neither in $x$ nor $t$.</description>
+    </item>
+    
+    <item>
       <title>Solutions in a product of projective spaces</title>
       <link>/guides/multiprojective/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

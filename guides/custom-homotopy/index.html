@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta name="generator" content="Hugo 0.60.0" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Implement a custom homotopy </title>
+
+  
+  <meta name="description" content="How to set up customized homotopies"> 
+  
+  
+  
+  
+  
+
+  
+
+  <meta name="author" content="">
+
+
+  <meta property="og:title" content="Implement a custom homotopy" />
+<meta property="og:description" content="How to set up customized homotopies" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/guides/custom-homotopy/" />
+
+
+  
+
+
+
+
+  
+  
+  
+  
+  
+
+  <link rel="canonical" href="/guides/custom-homotopy/">  
+
+  
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+  <link href="/css/font.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.min.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.legenda.css" rel="stylesheet" type="text/css">
+  <link href="/css/highlight.css" rel="stylesheet" type="text/css">
+  <link href="/css/master.css" rel="stylesheet" type="text/css">
+  <link href="/css/kube.demo.css" rel="stylesheet" type="text/css">
+
+
+  <script src="/js/jquery-2.1.4.min.js" type="text/javascript"> </script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"> </script>
+
+  <script type="text/javascript" src="/js/tocbot.min.js"></script>
+
+
+    
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130815722-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    console.log(document.location.hostname.search("juliahomotopycontinuation.org") )
+    
+    if (document.location.hostname.search("juliahomotopycontinuation.org") == -1) {
+      window['ga-disable-UA-130815722-1'] = true;
+    }
+
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130815722-1');
+  </script>
+
+
+  
+
+    
+    
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-light.min.css">
+    <script src="/js/highlight.pack.js"></script>
+    <script src="/js/init-highlight.js"></script>
+ 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.css" integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/katex.min.js" integrity="sha384-FaFLTlohFghEIZkw6VGwmf9ISTubWAVYW8tG8+w2LAIftJEULZABrF9PPFv+tVkH" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.13.0/dist/contrib/auto-render.min.js" integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    
+    <link href="/css/custom.css" rel="stylesheet" type="text/css">
+    
+</head>
+
+
+<body class="page-kube">
+  <header>
+<div>
+<div class="show-sm">
+    <div id="nav-toggle-box">
+      <div id="nav-toggle-brand">
+        <a href="/">HomotopyContinuation.jl</a>
+      </div><a data-component="toggleme" data-target="#top" href="#" id="nav-toggle"><i class="kube-menu"></i></a>
+    </div>
+  
+  </div>
+  <div class="hide-sm" id="top">
+    <div id="top-brand">
+      <a href="/" title="home">HomotopyContinuation.jl</a>
+    </div>
+    <nav id="top-nav-main">
+      <ul> 
+       
+       
+    <li><a href="/guides/" >Guides</a></li>
+    
+    <li><a href="/examples/" >Examples</a></li>
+    
+    <li><a href="https://juliahomotopycontinuation.github.io/HomotopyContinuation.jl/stable/" >Docs</a></li>
+    
+    <li><a href="/about/" >About</a></li>
+    
+    <li><a href="/faq/" >FAQ</a></li>
+    
+    <li><a href="/changelog/" >Changelog</a></li>
+    
+    <li><a href="https://www.github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl" >Github</a></li>
+    
+      </ul>
+    </nav>
+    <nav id="top-nav-extra"> 
+      <ul>
+          
+      </ul>
+    </nav>
+  </div>
+  
+</div> </header>
+  <main>
+<div id="main">
+  <div id="hero">
+    <h1>Implement a custom homotopy</h1>
+    <p class="hero-lead">How to set up a custom homotopy</p>
+  </div>
+  <div id="kube-component" class="content">
+    
+<nav id="contents">
+  <ol class="js-toc"></ol>
+</nav>
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function() {
+    tocbot.init({
+      
+      tocSelector: ".js-toc",
+      
+      contentSelector: ".content",
+      
+      headingSelector: "h2, h3, h4"
+    });
+  });
+</script>
+
+
+
+
+    <p>This guide explains how to implement a homotopy of the form
+$$H(x,t).$$
+In <code>HomotopyContinuation.jl</code> a homotopy is a <code>struct</code> for which one must implement a few (in-place) functions, namely</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate!<span style="color:#f92672"></span>
+ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate_and_jacobian!<span style="color:#f92672"></span>
+ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>taylor!<span style="color:#f92672"></span>
+</code></pre></div><p>As the names suggest, these functions</p>
+<ul>
+<li>evaluate $H(x,t)$ at $(x,t)$,</li>
+<li>evaluate $H(x,t)$  and compute the jacobian at $(x,t)$, and</li>
+<li>compute the taylor expansion of $H(x,t)$ with respect to $t$ at $(x,t)$.</li>
+</ul>
+<p>In fact, $H(x,t)$ does not even need to be a polynomial function, neither in $x$ nor $t$. The algorithm only depends the implementation of these three functions and tracks $t$ from $t=1$ to $t=0$.</p>
+<h3 class="section-head" id="homotopies"><a href="#homotopies">Implementing an example homotopy</a></h3>
+<p>Let us illustrate how this works in an example. We want to implement a homotopy that, given systems of polynomials $F(x)$ and $G(x)$, is given by</p>
+<p>$$H(x,t) = \gamma\cdot \sin(t\cdot \pi/2)\cdot G(x) +  \cos(t\cdot \pi/2) \cdot F(x), \quad 0\leq t\leq 1,$$</p>
+<p>where $\gamma \in\mathbb C$.</p>
+<p>In this case, we have $H(x,1)=G(x)$ and $H(x,0)=F(x)$. That is, $G(x)$ is our start system and $F(x)$ our target system.</p>
+<p>This is similar to a <a href="https://www.juliahomotopycontinuation.org/HomotopyContinuation.jl/stable/homotopies/#StraightLineHomotopy">straight line homotopy</a> $H(x,t) = \gamma \cdot t \cdot G(x) + (1-t)\cdot F(x)$.
+We copy the <a href="https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl/blob/main/src/homotopies/straight_line_homotopy.jl">code</a> for a <code>StraightLineHomotopy</code>, adapt it to our setting and call the result  <code>TrigonometricHomotopy</code>.</p>
+<p>In the following, we explain some of the implemented functions, but not all. The complete code is at the end of this guide.</p>
+<p>The <code>struct</code> that defines our <code>TrigonometricHomotopy</code> could look like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">using</span> HomotopyContinuation<span style="color:#f92672"></span>
+
+<span style="color:#66d9ef">struct</span> TrigonometricHomotopy<span style="color:#f92672"></span>{S<span style="color:#f92672"></span><span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>, T<span style="color:#f92672"></span><span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>} <span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span> AbstractHomotopy<span style="color:#f92672"></span>
+    start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>S<span style="color:#f92672"></span>
+    target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>T<span style="color:#f92672"></span>
+    γ<span style="color:#f92672">:</span><span style="color:#f92672">:</span>ComplexF64<span style="color:#f92672"></span>
+    half_pi<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Float64</span>
+
+    u<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    ū<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    v̄<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    U<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Matrix</span>{ComplexF64<span style="color:#f92672"></span>}
+
+    dv_start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>,ComplexF64<span style="color:#f92672"></span>}
+    dv_target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>,ComplexF64<span style="color:#f92672"></span>}
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Here, <code>start</code> and <code>target</code> are start and target system, respectively. We also save $\pi/24 in <code>half_pi</code> so that we don't need to compute it all the time. The remaining entries are for caching.</p>
+<p>The <code>evaluate!</code> function comes next:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate!<span style="color:#f92672"></span>(
+    u<span style="color:#f92672"></span>,
+    H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>,
+    x<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>},
+    t<span style="color:#f92672"></span>,
+    p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing,
+)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>v̄<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>ū<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">.*</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>), cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>v̄<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>ū<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Here, <code>ts</code> and <code>tt</code> are the coefficients at $t$ of $G$ and $F$, respectively. Notice that the coefficient of $G$ is indeed $\gamma \cdot \sin(t \cdot \pi/2)$ and the coefficient of $F$ is $\cos(t \cdot \pi/2)$.</p>
+<p>The <code>evaluate_and_jacobian!</code> is similar, but includes the Jacobian:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate_and_jacobian!<span style="color:#f92672"></span>(
+    u<span style="color:#f92672"></span>,
+    U<span style="color:#f92672"></span>,
+    H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>,
+    x<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">AbstractVector</span>{T<span style="color:#f92672"></span>},
+    t<span style="color:#f92672"></span>,
+    p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing,
+) where<span style="color:#f92672"></span> {T<span style="color:#f92672"></span>}
+    evaluate_and_jacobian!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, U<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate_and_jacobian!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>U<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">.*</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>), cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span>), i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    nothing
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Finally, we implement <code>ModelKit.taylor!</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>taylor!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, <span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Val</span>{<span style="color:#ae81ff">1</span>}, H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>, t<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">*</span> cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span>, <span style="color:#f92672">-</span>sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span>
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    u<span style="color:#f92672"></span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Here, the coefficients are given by differentiating $\gamma \sin(t\cdot \pi/2)$ and $\cos(t\cdot \pi/2)$ at $t$. The input <code>::Val{1}</code> indicated that this function returns the first derivative with respect to $t$. We also have to implement higher order derivatives (see the complete code at the end of this guide).</p>
+<h3 class="section-head" id="homotopies"><a href="#homotopies">Running our custom homotopy</a></h3>
+<p>Let us use our homotopy on the following data:</p>
+<p>$$G(x) = \begin{pmatrix} x^2 - 1\\ y^2 - 1\end{pmatrix}, \quad F(x) = \begin{pmatrix} y^2 + xy + 1\\ -x^2 + x + 2y - 2\end{pmatrix}$$</p>
+<p>choosing $\gamma\in\mathbb C$ at random.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#a6e22e">@var</span><span style="color:#f92672"></span> x<span style="color:#f92672"></span> y<span style="color:#f92672"></span>
+G<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>])
+F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> System<span style="color:#f92672"></span>([y<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span> <span style="color:#f92672">*</span> y<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>; <span style="color:#f92672">-</span>x<span style="color:#f92672"></span><span style="color:#f92672">^</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> x<span style="color:#f92672"></span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>y<span style="color:#f92672"></span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>])
+
+γ <span style="color:#f92672">=</span> exp<span style="color:#f92672"></span>(rand<span style="color:#f92672"></span>() <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> pi <span style="color:#f92672">*</span> im)
+H<span style="color:#f92672"></span> <span style="color:#f92672">=</span> TrigonometricHomotopy<span style="color:#f92672"></span>(G<span style="color:#f92672"></span>, F<span style="color:#f92672"></span>; γ <span style="color:#f92672">=</span> γ)
+</code></pre></div><p>Now, <code>H</code> is a <code>TrigonometricHomotopy</code> and we can track the zeros of $G$ from $t=1$ to $t=0$ along this homotopy.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> starts<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>], [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>], [<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]
+julia<span style="color:#f92672"></span><span style="color:#f92672">&gt;</span> S<span style="color:#f92672"></span> <span style="color:#f92672">=</span> solve<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, starts<span style="color:#f92672"></span>)
+ Result<span style="color:#f92672"></span> with<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> solutions<span style="color:#f92672"></span>
+<span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span><span style="color:#f92672">=</span>
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> paths<span style="color:#f92672"></span> tracked<span style="color:#f92672"></span>
+•<span style="color:#f92672"></span> <span style="color:#ae81ff">4</span> non<span style="color:#f92672"></span><span style="color:#f92672">-</span>singular<span style="color:#f92672"></span> solutions<span style="color:#f92672"></span> (<span style="color:#ae81ff">0</span> real<span style="color:#f92672"></span>)
+•<span style="color:#f92672"></span> random_seed<span style="color:#f92672"></span><span style="color:#f92672">:</span> nothing
+</code></pre></div><p>The computation was successful and all $4$ zeros of $F$ were computed!</p>
+<h3 class="section-head" id="homotopies"><a href="#homotopies">Comparing with a straight line homotopy</a></h3>
+<p>Let us compare our newly implemented homotopy with a <code>StraightLineHomotopy</code>.</p>
+<pre><code>H_SL = StraightLineHomotopy(G, F; γ = γ)
+</code></pre><p>We wish to plot every single point tracked along the way. For this, we can use the following code:</p>
+<pre><code>T = Tracker(H)
+T_SL = Tracker(H_SL)
+
+pts = Vector{ComplexF64}()
+for (x, t) in iterator(T, starts[1], 1.0, 0.0)
+    push!(pts, x[1])
+end
+
+pts_SL = Vector{ComplexF64}()
+for (x, t) in iterator(T_SL, starts[1], 1.0, 0.0)
+    push!(pts_SL, x[1])
+end
+</code></pre><p>Now, <code>pts</code> contains the list of points tracked along our <code>TrigonometricHomotopy</code> when starting at <code>starts[1] = [1,1]</code>. Similarly, <code>pts_SL</code> contains the points tracked along a <code>StraightLineHomotopy</code>.</p>
+<p>We plot the result:</p>
+<pre><code>using Plots
+
+scatter(real(pts), imag(pts), markercolor = :steelblue, markersize = 10, legend = false)
+scatter!(real(pts_SL), imag(pts_SL), markercolor = :indianred, markersize = 10)
+for i in 2:length(pts)
+    v = pts[i] - pts[i-1]
+    a = pts[i-1:i] + [0.25 .* v; -0.25 .* v]
+    plot!(real(a) ,  imag(a) , linecolor = :black, linewidth = 2, arrow=true, opacity = 0.75)
+end
+plot!()
+</code></pre><p style="text-align:center;"><img src="/images/tracking.png" width="500px"/></p>
+<p>The blue points have been tracked by our <code>TrigonometricHomotopy</code> while the red points have been tracked by the <code>StraightLineHomotopy</code>.
+As we can see, both homotopies start and arrive at the same point, but the intermediate points are different.</p>
+<h3 class="section-head" id="homotopies"><a href="#homotopies">The complete code for our example</a></h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia"><span style="color:#66d9ef">struct</span> TrigonometricHomotopy<span style="color:#f92672"></span>{S<span style="color:#f92672"></span><span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>, T<span style="color:#f92672"></span><span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>} <span style="color:#f92672">&lt;</span><span style="color:#f92672">:</span> AbstractHomotopy<span style="color:#f92672"></span>
+    start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>S<span style="color:#f92672"></span>
+    target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>T<span style="color:#f92672"></span>
+    γ<span style="color:#f92672">:</span><span style="color:#f92672">:</span>ComplexF64<span style="color:#f92672"></span>
+    half_pi<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Float64</span>
+
+    u<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    ū<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    v̄<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>}
+    U<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Matrix</span>{ComplexF64<span style="color:#f92672"></span>}
+
+    dv_start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>,ComplexF64<span style="color:#f92672"></span>}
+    dv_target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>,ComplexF64<span style="color:#f92672"></span>}
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> TrigonometricHomotopy<span style="color:#f92672"></span>(
+    start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>System<span style="color:#f92672"></span>,
+    target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>System<span style="color:#f92672"></span>;
+    kwargs<span style="color:#f92672"></span><span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>,
+)
+    TrigonometricHomotopy<span style="color:#f92672"></span>(
+        fixed<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>),
+        fixed<span style="color:#f92672"></span>(target<span style="color:#f92672"></span>);
+        kwargs<span style="color:#f92672"></span><span style="color:#f92672">.</span><span style="color:#f92672">.</span><span style="color:#f92672">.</span>,
+    )
+<span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">function</span> TrigonometricHomotopy<span style="color:#f92672"></span>(
+    start<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>,
+    target<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>AbstractSystem<span style="color:#f92672"></span>;
+    γ <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>,
+    gamma<span style="color:#f92672"></span> <span style="color:#f92672">=</span> γ,
+)
+    size<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>) <span style="color:#f92672">=</span><span style="color:#f92672">=</span> size<span style="color:#f92672"></span>(target<span style="color:#f92672"></span>) <span style="color:#f92672">||</span> throw<span style="color:#f92672"></span>(
+        <span style="color:#66d9ef">ArgumentError</span>(
+            <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">S</span><span style="color:#e6db74">t</span><span style="color:#e6db74">a</span><span style="color:#e6db74">r</span><span style="color:#e6db74">t</span><span style="color:#e6db74"> </span><span style="color:#e6db74">a</span><span style="color:#e6db74">n</span><span style="color:#e6db74">d</span><span style="color:#e6db74"> </span><span style="color:#e6db74">t</span><span style="color:#e6db74">a</span><span style="color:#e6db74">r</span><span style="color:#e6db74">g</span><span style="color:#e6db74">e</span><span style="color:#e6db74">t</span><span style="color:#e6db74"> </span><span style="color:#e6db74">d</span><span style="color:#e6db74">o</span><span style="color:#e6db74"> </span><span style="color:#e6db74">n</span><span style="color:#e6db74">o</span><span style="color:#e6db74">t</span><span style="color:#e6db74"> </span><span style="color:#e6db74">h</span><span style="color:#e6db74">a</span><span style="color:#e6db74">v</span><span style="color:#e6db74">e</span><span style="color:#e6db74"> </span><span style="color:#e6db74">t</span><span style="color:#e6db74">h</span><span style="color:#e6db74">e</span><span style="color:#e6db74"> </span><span style="color:#e6db74">s</span><span style="color:#e6db74">a</span><span style="color:#e6db74">m</span><span style="color:#e6db74">e</span><span style="color:#e6db74"> </span><span style="color:#e6db74">s</span><span style="color:#e6db74">i</span><span style="color:#e6db74">z</span><span style="color:#e6db74">e</span><span style="color:#e6db74">,</span><span style="color:#e6db74"> </span><span style="color:#e6db74">g</span><span style="color:#e6db74">o</span><span style="color:#e6db74">t</span><span style="color:#e6db74"> </span><span style="color:#e6db74">$</span>(size<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>))<span style="color:#e6db74"> </span><span style="color:#e6db74">a</span><span style="color:#e6db74">n</span><span style="color:#e6db74">d</span><span style="color:#e6db74"> </span><span style="color:#e6db74">$</span>(size<span style="color:#f92672"></span>(target<span style="color:#f92672"></span>))<span style="color:#e6db74">&#34;</span>,
+        ),
+    )
+
+    m<span style="color:#f92672"></span>, n<span style="color:#f92672"></span> <span style="color:#f92672">=</span> size<span style="color:#f92672"></span>(start<span style="color:#f92672"></span>)
+    u<span style="color:#f92672"></span> <span style="color:#f92672">=</span> zeros<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>)
+    ū<span style="color:#f92672"></span> <span style="color:#f92672">=</span> zeros<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>)
+    v̄<span style="color:#f92672"></span> <span style="color:#f92672">=</span> zeros<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>)
+    U<span style="color:#f92672"></span> <span style="color:#f92672">=</span> zeros<span style="color:#f92672"></span>(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>, n<span style="color:#f92672"></span>)
+    half_pi<span style="color:#f92672"></span> <span style="color:#f92672">=</span> π <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
+
+    dv_start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>}(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>)
+    dv_target<span style="color:#f92672"></span> <span style="color:#f92672">=</span> TaylorVector<span style="color:#f92672"></span>{<span style="color:#ae81ff">5</span>}(ComplexF64<span style="color:#f92672"></span>, m<span style="color:#f92672"></span>)
+
+    TrigonometricHomotopy<span style="color:#f92672"></span>(
+        start<span style="color:#f92672"></span>,
+        target<span style="color:#f92672"></span>,
+        ComplexF64<span style="color:#f92672"></span>(gamma<span style="color:#f92672"></span>),
+        half_pi<span style="color:#f92672"></span>,
+        u<span style="color:#f92672"></span>,
+        ū<span style="color:#f92672"></span>,
+        v̄<span style="color:#f92672"></span>,
+        U<span style="color:#f92672"></span>,
+        dv_start<span style="color:#f92672"></span>,
+        dv_target<span style="color:#f92672"></span>,
+    )
+<span style="color:#66d9ef">end</span>
+
+Base<span style="color:#f92672"></span><span style="color:#f92672">.</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>) <span style="color:#f92672">=</span> size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>)
+
+<span style="color:#66d9ef">function</span> Base<span style="color:#f92672"></span><span style="color:#f92672">.</span>show<span style="color:#f92672"></span>(io<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">IO</span>, mime<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">MIME</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">t</span><span style="color:#e6db74">e</span><span style="color:#e6db74">x</span><span style="color:#e6db74">t</span><span style="color:#e6db74">/</span><span style="color:#e6db74">p</span><span style="color:#e6db74">l</span><span style="color:#e6db74">a</span><span style="color:#e6db74">i</span><span style="color:#e6db74">n</span><span style="color:#e6db74">&#34;</span>, H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>)
+    println<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, typeof<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>), <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&#34;</span>)
+    println<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">γ</span><span style="color:#e6db74">:</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ)
+    println<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">G</span><span style="color:#e6db74">:</span><span style="color:#e6db74"> </span><span style="color:#e6db74">&#34;</span>)
+    show<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, mime<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>)
+    println<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">F</span><span style="color:#e6db74">:</span><span style="color:#e6db74">&#34;</span>)
+    show<span style="color:#f92672"></span>(io<span style="color:#f92672"></span>, mime<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>)
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate!<span style="color:#f92672"></span>(
+    u<span style="color:#f92672"></span>,
+    H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>,
+    x<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Vector</span>{ComplexF64<span style="color:#f92672"></span>},
+    t<span style="color:#f92672"></span>,
+    p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing,
+)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>v̄<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>ū<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">.*</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>), cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>v̄<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>ū<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>, t<span style="color:#f92672"></span>, p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing)
+    evaluate!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">.*</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>), cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    u<span style="color:#f92672"></span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>evaluate_and_jacobian!<span style="color:#f92672"></span>(
+    u<span style="color:#f92672"></span>,
+    U<span style="color:#f92672"></span>,
+    H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>,
+    x<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">AbstractVector</span>{T<span style="color:#f92672"></span>},
+    t<span style="color:#f92672"></span>,
+    p<span style="color:#f92672"></span> <span style="color:#f92672">=</span> nothing,
+) where<span style="color:#f92672"></span> {T<span style="color:#f92672"></span>}
+    evaluate_and_jacobian!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, U<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate_and_jacobian!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>U<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">.*</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>), cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>)
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">for</span> j<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">2</span>), i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>U<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, j<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    nothing
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>taylor!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, <span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Val</span>{<span style="color:#ae81ff">1</span>}, H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>, t<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+    evaluate!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, x<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    ts<span style="color:#f92672"></span>, tt<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">*</span> cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span>, <span style="color:#f92672">-</span>sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span>
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">@inbounds</span><span style="color:#f92672"></span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> ts<span style="color:#f92672"></span> <span style="color:#f92672">*</span> u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> tt<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>]
+    <span style="color:#66d9ef">end</span>
+    u<span style="color:#f92672"></span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">function</span> ModelKit<span style="color:#f92672"></span><span style="color:#f92672">.</span>taylor!<span style="color:#f92672"></span>(
+    u<span style="color:#f92672"></span>,
+    v<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span><span style="color:#66d9ef">Val</span>{K<span style="color:#f92672"></span>},
+    H<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TrigonometricHomotopy<span style="color:#f92672"></span>,
+    tx<span style="color:#f92672"></span><span style="color:#f92672">:</span><span style="color:#f92672">:</span>TaylorVector<span style="color:#f92672"></span>,
+    t<span style="color:#f92672"></span>,
+) where<span style="color:#f92672"></span> {K<span style="color:#f92672"></span>}
+    taylor!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_start<span style="color:#f92672"></span>, v<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>start<span style="color:#f92672"></span>, tx<span style="color:#f92672"></span>)
+    taylor!<span style="color:#f92672"></span>(H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_target<span style="color:#f92672"></span>, v<span style="color:#f92672"></span>, H<span style="color:#f92672"></span><span style="color:#f92672">.</span>target<span style="color:#f92672"></span>, tx<span style="color:#f92672"></span>)
+
+    t0<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> t<span style="color:#f92672"></span>
+    <span style="color:#66d9ef">for</span> i<span style="color:#f92672"></span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span>size<span style="color:#f92672"></span>(H<span style="color:#f92672"></span>, <span style="color:#ae81ff">1</span>)
+        start<span style="color:#f92672"></span> <span style="color:#f92672">=</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>γ <span style="color:#f92672">*</span> (cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_start<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, K<span style="color:#f92672"></span>] <span style="color:#f92672">+</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_start<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, K<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>])
+        target<span style="color:#f92672"></span> <span style="color:#f92672">=</span> cos<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_target<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, K<span style="color:#f92672"></span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> sin<span style="color:#f92672"></span>(t0<span style="color:#f92672"></span>) <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>half_pi<span style="color:#f92672"></span> <span style="color:#f92672">*</span> H<span style="color:#f92672"></span><span style="color:#f92672">.</span>dv_target<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>, K<span style="color:#f92672"></span>]
+        u<span style="color:#f92672"></span>[i<span style="color:#f92672"></span>] <span style="color:#f92672">=</span> start<span style="color:#f92672"></span> <span style="color:#f92672">+</span> target<span style="color:#f92672"></span>
+    <span style="color:#66d9ef">end</span>
+    u<span style="color:#f92672"></span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div>
+    
+    
+  </div>
+</div>
+</main>
+  <footer></footer>
+
+
+  <script src="/js/kube.js" type="text/javascript">
+  </script>
+  <script src="/js/kube.legenda.js" type="text/javascript">
+  </script>
+  <script src="/js/master.js" type="text/javascript">
+  </script>
+  <script type="text/javascript">
+     document.addEventListener("DOMContentLoaded", function() {
+           renderMathInElement(document.body, {delimiters: [
+          {left: "$$", right: "$$", display: true},
+          {left: "$", right: "$", display: false},
+          {left: "``", right: "``", display: false},
+          
+          
+          
+        ]});
+      });</script>
+</body>
+
+</html>

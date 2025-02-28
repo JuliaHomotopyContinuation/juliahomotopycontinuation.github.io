@@ -34,19 +34,19 @@ N = numerical_irreducible_decomposition(F)
 
 The output is as follows. 
 ```
-Numerical irreducible decomposition with 4 components
+Numerical irreducible decomposition with 11 components
 • 1 component(s) of dimension 2.
 • 2 component(s) of dimension 1.
-• 1 component(s) of dimension 0.
+• 8 component(s) of dimension 0.
 
  degree table of components:
-╭───────────┬───────────────────────╮
-│ dimension │ degrees of components │
-├───────────┼───────────────────────┤
-│     2     │           2           │
-│     1     │        (4, 4)         │
-│     0     │           8           │
-╰───────────┴───────────────────────╯
+╭───────────┬──────────────────────────╮
+│ dimension │  degrees of components   │
+├───────────┼──────────────────────────┤
+│     2     │            2             │
+│     1     │          (4, 4)          │
+│     0     │ (1, 1, 1, 1, 1, 1, 1, 1) │
+╰───────────┴──────────────────────────╯
 ```
 
 Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).

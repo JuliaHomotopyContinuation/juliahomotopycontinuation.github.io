@@ -179,19 +179,19 @@ F<span style="color:#f92672"></span> <span style="color:#f92672">=</span> [p<spa
 
 N<span style="color:#f92672"></span> <span style="color:#f92672">=</span> numerical_irreducible_decomposition<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)
 </code></pre></div><p>The output is as follows.</p>
-<pre><code>Numerical irreducible decomposition with 4 components
+<pre><code>Numerical irreducible decomposition with 11 components
 • 1 component(s) of dimension 2.
 • 2 component(s) of dimension 1.
-• 1 component(s) of dimension 0.
+• 8 component(s) of dimension 0.
 
  degree table of components:
-╭───────────┬───────────────────────╮
-│ dimension │ degrees of components │
-├───────────┼───────────────────────┤
-│     2     │           2           │
-│     1     │        (4, 4)         │
-│     0     │           8           │
-╰───────────┴───────────────────────╯
+╭───────────┬──────────────────────────╮
+│ dimension │  degrees of components   │
+├───────────┼──────────────────────────┤
+│     2     │            2             │
+│     1     │          (4, 4)          │
+│     0     │ (1, 1, 1, 1, 1, 1, 1, 1) │
+╰───────────┴──────────────────────────╯
 </code></pre><p>Notice that in dimension 0 the 8 points are summarized as one component (a single point is always an irreducible component).</p>
 <p>One can also use</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-julia" data-lang="julia">nid<span style="color:#f92672"></span>(F<span style="color:#f92672"></span>)

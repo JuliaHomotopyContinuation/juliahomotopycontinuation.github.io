@@ -110,7 +110,7 @@ F = System(SteadyStates,
 Now, we solve `F=0` for the parameter values `p`.
 
 ```julia
-julia> S = solve(F, target_parameters = p)
+S = solve(F, target_parameters = p)
 Result with 44 solutions
 ========================
 • 76 paths tracked
@@ -122,7 +122,7 @@ Result with 44 solutions
 Only real positive zeros are physically meaningful. Using our implementation we can certify that there are 12 real zeros:
 
 ```julia
-julia> cert = certify(F, S, target_parameters = p)
+cert = certify(F, S, target_parameters = p)
 CertificationResult
 ===================
 • 44 solution candidates given
@@ -133,16 +133,16 @@ CertificationResult
 We can also certify that among them there is a unique positive one.
 
 ```julia
-julia> c = certificates(cert)
-julia> pos_real = c[findall(is_positive.(c))]
-julia> length(pos_real)
+c = certificates(cert)
+pos_real = c[findall(is_positive.(c))]
+length(pos_real)
 1
 ```
 
 The positive real solution has the following values:
 
 ```julia
-juila> certified_solution_interval(pos_real[1])
+certified_solution_interval(pos_real[1])
 10×1 Arblib.AcbMatrix:
 [0.00406661084 +/- 5.50e-12] + [+/- 2.45e-12]im
 [0.0557971948 +/- 5.02e-11] + [+/- 2.14e-11]im

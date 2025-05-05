@@ -44,7 +44,7 @@ Result with 4 solutions
 We see that $f$ has two real zeros. They are
 
 ```julia-repl
-julia> realsolutions(result)
+julia> real_solutions(result)
 2-element Array{Array{Float64,1},1}:
  [1.68179, -1.41421]
  [-1.68179, -1.41421]

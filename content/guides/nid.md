@@ -15,8 +15,6 @@ group = "feature-guide"
 
 A numerical irreducible decomposition of a system of polynomial equations $F(x)$ is the decomposition of the zero set of $F$ into [irreducible components](https://en.wikipedia.org/wiki/Irreducible_component). 
 
-**Careful:** The implementation is not yet final and should be considered experimental.
-
 For example, the following code decomposes the zero set of a system that consists of a hypersurface of degree 2, two curves of degree 4 and eight points. 
 
 
@@ -35,6 +33,7 @@ N = numerical_irreducible_decomposition(F)
 The output is as follows. 
 ```
 Numerical irreducible decomposition with 11 components
+======================================================
 • 1 component(s) of dimension 2.
 • 2 component(s) of dimension 1.
 • 8 component(s) of dimension 0.
@@ -77,7 +76,26 @@ R = regeneration(F)
 The second step decomposes the output of `regeneration` into irreducible components using monodromy.
 
 ```julia
-decompose(R)
+dec = decompose(R)
 ```
 
-The output of `decompose(R)` is then the same as the output of `nid(F)`.
+```
+11-element Vector{WitnessSet}:
+ Witness set for dimension 2 of degree 2
+ Witness set for dimension 1 of degree 4
+ Witness set for dimension 1 of degree 4
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+ Witness set for dimension 0 of degree 1
+```
+
+The output of `decompose(R)` can then be turned into the same output as that of `nid(F)` by running 
+
+```julia
+NumericalIrreducibleDecomposition(dec)
+```
